@@ -9,4 +9,21 @@
     = javascript_include_tag 'application'
     
   %body
+    / Navigation
+    %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.mb-4
+      .container
+        %a.navbar-brand{:href => "index.html"} Lot Wing
+        %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
+          %span.navbar-toggler-icon
+        #navbarResponsive.collapse.navbar-collapse
+          %ul.navbar-nav.ml-auto
+            %li.nav-item
+              %a.nav-link{:href => "about.html"} About
+            %li.nav-item
+              %a.nav-link{:href => "services.html"} Services
+            %li.nav-item
+              %a.nav-link{:href => "contact.html"} Contact
+            = render partial: 'layouts/shared/logged_in_nav' if user_signed_in?
+            = render partial: 'layouts/shared/logged_out_nav' unless user_signed_in?
+            
     = yield
