@@ -1,24 +1,25 @@
 / Page Content
-.container
+.container-fluid
   .row
-    .col-lg-6
-      %h2 Modern Business Features
-      %p The Modern Business template by Start Bootstrap includes:
-      %ul
-        %li
-          %strong Bootstrap v4
-        %li jQuery
-        %li Font Awesome
-        %li Working contact form with validation
-        %li Unstyled page elements for easy customization
-      %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.
-    .col-lg-6
-      %img.img-fluid.rounded{:alt => "", :src => "http://placehold.it/700x450"}/
-  / /.row
-  %hr/
-  / Call to Action Section
-  .row.mb-4
-    .col-md-8
-      %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.
-    .col-md-4
-      %a.btn.btn-lg.btn-secondary.btn-block{:href => "#"} Call to Action
+    .col-lg-4
+      %h2.text-center Lot Activity
+      %ul.list-group.list-group-flush
+        - (0..8).each do |i|
+          %li.list-group-item.d-flex.justify-content-between.align-items-center.py-1
+            Cras justo odio
+            %span.badge.badge-primary.badge-pill= i
+      %hr.py-0.my-0.mb-4
+      %h2.text-center Notices
+      .row
+        - (0..3).each do |i|
+          .col-md-6
+            .card.mb-4
+              %img.card-img-top{:alt => "Card image cap", :src => "https://via.placeholder.com/150x150"}/
+              .card-body
+                %p.card-text Some quick example 
+                %a.btn.btn-primary.btn-sm{:href => "#"} Go somewhere
+
+      
+    .col-lg-8
+      %img.img-fluid.rounded{:alt => "", :src => "https://hrishiballal.files.wordpress.com/2016/02/3dscene.png"}/
+  

@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title Lot Wing
+    %title LotWing
     = csrf_meta_tags
     %meta{charset: 'utf-8'}
     
@@ -10,20 +10,24 @@
     
   %body
     / Navigation
-    %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.mb-4
+    %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.mb-1
       .container
         %a.navbar-brand{:href => "index.html"} Lot Wing
         %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
           %span.navbar-toggler-icon
         #navbarResponsive.collapse.navbar-collapse
           %ul.navbar-nav.ml-auto
-            %li.nav-item
-              %a.nav-link{:href => "about.html"} About
-            %li.nav-item
-              %a.nav-link{:href => "services.html"} Services
-            %li.nav-item
-              %a.nav-link{:href => "contact.html"} Contact
             = render partial: 'layouts/shared/logged_in_nav' if user_signed_in?
             = render partial: 'layouts/shared/logged_out_nav' unless user_signed_in?
-            
+       
+    .container     
+      %ul.nav.nav-tabs.nav-justified.mb-2
+        %li.nav-item
+          %a.nav-link.active{:href => "#"} Home
+        %li.nav-item
+          %a.nav-link{:href => "#"} Reports
+        %li.nav-item
+          %a.nav-link{:href => "#"} Map Builder
+        %li.nav-item
+          %a.nav-link.disabled{:href => "#"} Disabled
     = yield
