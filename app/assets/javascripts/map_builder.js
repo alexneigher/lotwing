@@ -29,7 +29,7 @@ $(function(){
       url:"/api/shapes",
       dataType: "json",
       success: function(data){
-        for(let i=0, size=data.length; i<size; i++){
+        for(var i=0, size=data.length; i<size; i++){
           add_shape_to_map(data[i], map)
         }
 
