@@ -5,6 +5,6 @@ class HomeController < ApplicationController
   end
 
   def map_builder
-    
+    @shapes = Shape.all
   end
 end

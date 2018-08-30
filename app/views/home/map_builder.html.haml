@@ -6,9 +6,13 @@
 .container-fluid
   .row
     .col-md-4  
-      #shape-list
-
       %hr
+
+      %ul.list-group
+        - @shapes.each do |shape|
+          %li.list-group-item
+            %i.fa.fa-car
+            = "Parking Area: #{shape.id}"
       %h3 Draw new shape on the map
       = form_for :shape, url: shapes_path, method: :post do |f|
         .form-group
