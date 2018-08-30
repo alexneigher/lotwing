@@ -1,0 +1,11 @@
+%script{:src => "https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js"}
+%script{:src => "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.4/mapbox-gl-draw.js"}
+%link{:href => "https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css", :rel => "stylesheet"}/
+%link{:href => "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.4/mapbox-gl-draw.css", :rel => "stylesheet", :type => "text/css"}/
+= javascript_include_tag('map_builder')
+
+.row
+  .col-md-4
+    buttons and intera
+  .col-md-8
+    #map{:style => "width: 100%; height: 550px;"}

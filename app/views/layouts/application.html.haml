@@ -20,14 +20,17 @@
             = render partial: 'layouts/shared/logged_in_nav' if user_signed_in?
             = render partial: 'layouts/shared/logged_out_nav' unless user_signed_in?
        
-    .container     
-      %ul.nav.nav-tabs.nav-justified.mb-2
-        %li.nav-item
-          %a.nav-link.active{:href => "#"} Home
-        %li.nav-item
-          %a.nav-link{:href => "#"} Reports
-        %li.nav-item
-          %a.nav-link{:href => "#"} Map Builder
-        %li.nav-item
-          %a.nav-link.disabled{:href => "#"} Disabled
+    .container   
+      - if user_signed_in?  
+        %ul.nav.nav-tabs.nav-justified.mb-2
+          %li.nav-item
+            = link_to root_path, class: 'nav-link active' do
+              Home
+          %li.nav-item
+            %a.nav-link{:href => "#"} Reports
+          %li.nav-item
+            = link_to map_builder_path, class: 'nav-link' do
+              Map Builder
+          %li.nav-item
+            %a.nav-link.disabled{:href => "#"} Disabled
     = yield
