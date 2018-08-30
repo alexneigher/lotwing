@@ -16,8 +16,6 @@ $(function(){
 
   map.addControl(draw, 'top-left');
 
-  map.on('draw.click')    
-
   map.on('draw.create', function (e) {
     //save to server?
     $("#shape_geo_info").val(JSON.stringify(e.features[0]));
