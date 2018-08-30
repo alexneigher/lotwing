@@ -36,7 +36,7 @@ $(function(){
         //recenter the map
         var coordinates = data[0].geo_info.geometry.coordinates;
         map.fitBounds(coordinates[0], {
-          padding: 1000,
+          padding: 100,
           duration: 0
         });
       },
