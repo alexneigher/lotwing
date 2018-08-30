@@ -15,7 +15,6 @@
 //= require jquery_ujs
 //= require popper
 //= require bootstrap
-//= require_tree .
 
 $(function(){
   $("a[rel~=popover], .has-popover").popover()

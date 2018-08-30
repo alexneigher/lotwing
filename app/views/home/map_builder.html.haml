@@ -3,9 +3,16 @@
 %link{:href => "https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css", :rel => "stylesheet"}/
 %link{:href => "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.4/mapbox-gl-draw.css", :rel => "stylesheet", :type => "text/css"}/
 = javascript_include_tag('map_builder')
+.container-fluid
+  .row
+    .col-md-4  
+      #shape-list
 
-.row
-  .col-md-4
-    buttons and intera
-  .col-md-8
-    #map{:style => "width: 100%; height: 550px;"}
+      %hr
+      %h3 Draw new shape on the map
+      = form_for :shape, url: shapes_path, method: :post do |f|
+        .form-group
+          = f.text_area :geo_info, class: 'form-control'
+        = f.submit class: 'btn btn-sm btn-primary'
+    .col-md-8
+      #map{:style => "width: 100%; height: 550px;"}
