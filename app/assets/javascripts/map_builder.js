@@ -6,6 +6,7 @@ $(function(){
     zoom: 10,
     style: 'mapbox://styles/mapbox/satellite-v9'
   });
+
   var draw = new MapboxDraw({
     displayControlsDefault: false,
     controls: {
