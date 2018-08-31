@@ -2,24 +2,21 @@
 .container-fluid
   .row
     .col-lg-4
-      %h2.text-center Lot Activity
+      %h2.text-center.mt-3 Lot Activity
       %ul.list-group.list-group-flush
-        - (0..8).each do |i|
+        - (0..10).each do |i|
           %li.list-group-item.d-flex.justify-content-between.align-items-center.py-1
             Cras justo odio
             %span.badge.badge-primary.badge-pill= i
-      %hr.py-0.my-0.mb-4
-      %h2.text-center Notices
-      .row
-        - (0..3).each do |i|
-          .col-md-6
-            .card.mb-4
-              %img.card-img-top{:alt => "Card image cap", :src => "https://via.placeholder.com/150x150"}/
-              .card-body
-                %p.card-text Some quick example 
-                %a.btn.btn-primary.btn-sm{:href => "#"} Go somewhere
-
-      
+    
     .col-lg-8
       %img.img-fluid.rounded{:alt => "", :src => "https://hrishiballal.files.wordpress.com/2016/02/3dscene.png"}/
-  
+  %h2.text-center.pt-3 Notices
+  .row
+    - (0..3).each do |i|
+      .col-md-3
+        .card.my-4
+          %img.card-img-top{:alt => "Card image cap", :src => "https://via.placeholder.com/150x150"}/
+          .card-body
+            %p.card-text Some quick example 
+            %a.btn.btn-primary.btn-sm{:href => "#"} Go somewhere

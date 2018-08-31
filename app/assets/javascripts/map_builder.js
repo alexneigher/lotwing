@@ -23,7 +23,7 @@ $(function(){
 
   map.on('load', function () {
 
-    var counties = $.ajax({
+    $.ajax({
       url:"/api/shapes",
       dataType: "json",
       success: function(data){
@@ -32,9 +32,9 @@ $(function(){
         }
 
         //recenter the map
-        var coordinates = data[0].geo_info.geometry.coordinates;
-        map.fitBounds(coordinates[0], {
-          padding: 100,
+        var bbox = turf.extent(data[0].geo_info.geometry);
+        map.fitBounds(bbox, {
+          padding: 50,
           duration: 0
         });
       },
@@ -42,8 +42,6 @@ $(function(){
         alert(xhr.statusText)
       }
     });
-
-  
   });
 
 })//$(function)

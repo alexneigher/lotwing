@@ -9,6 +9,13 @@ class ShapesController < ApplicationController
     redirect_to map_builder_path
   end
 
+  def destroy
+    @shape = Shape.find(params[:id])
+    @shape.destroy
+
+    redirect_to map_builder_path
+  end
+
   private
     def shape_params
       params.require(:shape).permit(:geo_info)
