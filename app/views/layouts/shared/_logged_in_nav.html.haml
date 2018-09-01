@@ -1,5 +1,5 @@
 %li.nav-item
-  %a.nav-link{:href => "about.html"} Volkswagen Sunnyvale
+  %a.nav-link{:href => "about.html"}= current_user.dealership&.name
 %li.nav-item.dropdown
   %a#navbarDropdownBlog.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#"}
     = current_user.full_name
