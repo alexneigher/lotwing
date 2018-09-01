@@ -4,7 +4,11 @@ class ShapesController < ApplicationController
   def create
     geo_info = JSON.parse(params[:shape][:geo_info])
 
-    Shape.create!(geo_info: geo_info)
+    Shape.create!( 
+                  dealership_id: current_dealership.id,
+                  geo_info: geo_info, 
+                  shape_type: params[:shape][:shape_type].to_i 
+                )
 
     redirect_to map_builder_path
   end
@@ -15,10 +19,5 @@ class ShapesController < ApplicationController
 
     redirect_to map_builder_path
   end
-
-  private
-    def shape_params
-      params.require(:shape).permit(:geo_info)
-    end
 
 end

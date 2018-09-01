@@ -1,6 +1,8 @@
 %script{:src => "https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js"}
 %script{:src => "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.4/mapbox-gl-draw.js"}
 %script{:src => "https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js"}
+%script{:src => "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js"}
+%link{:href => "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css", :rel => "stylesheet", :type => "text/css"}/
 %link{:href => "https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css", :rel => "stylesheet"}/
 %link{:href => "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.4/mapbox-gl-draw.css", :rel => "stylesheet", :type => "text/css"}/
 = javascript_include_tag('map_builder')
@@ -12,15 +14,16 @@
         - @shapes.each do |shape|
           %li.list-group-item
             %i.fa.fa-car
-            = "Parking Area: #{shape.id}"
+            = "#{shape.shape_type.titleize}: #{shape.id}"
             .pull-right
               =link_to shape_path(shape), method: :delete do
                 %i.fa.fa-trash
-      .bg-light.mt-5
+      #shape-form.d-none.bg-light.mt-5
         .card-body
           = form_for :shape, url: shapes_path, method: :post do |f|
             .form-group
-              = f.text_area :geo_info, class: 'form-control', placeholder: 'Draw new shape on the map'
+              = f.select :shape_type, Shape.shape_types.to_a, {}, class: 'form-control'
+              = f.text_area :geo_info, class: 'd-none form-control', placeholder: 'Draw new shape on the map'
             = f.submit class: 'btn btn-sm btn-primary'
     .col-md-8
       #map{:style => "width: 100%; height: 550px;"}

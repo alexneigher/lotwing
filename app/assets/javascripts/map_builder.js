@@ -15,11 +15,17 @@ $(function(){
     }  
   });
 
+  map.addControl(new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken
+  }));
+
+
   map.addControl(draw, 'top-left');
 
   map.on('draw.create', function (e) {
     //save to server?
-    $("#shape_geo_info").val(JSON.stringify(e.features[0]));
+    $('#shape-form').removeClass('d-none');
+    $("#shape-form #shape_geo_info").val(JSON.stringify(e.features[0]));
   });
 
   map.on('load', function () {
@@ -29,15 +35,17 @@ $(function(){
       dataType: "json",
       success: function(data){
         for(var i=0, size=data.length; i<size; i++){
+          console.log(data[i]);
           add_shape_to_map(data[i], map)
         }
-
-        //recenter the map
-        var bbox = turf.extent(data[0].geo_info.geometry);
-        map.fitBounds(bbox, {
-          padding: 50,
-          duration: 0
-        });
+        if (data.length > 0) {
+          //recenter the map
+          var bbox = turf.extent(data[0].geo_info.geometry);
+          map.fitBounds(bbox, {
+            padding: 50,
+            duration: 0
+          });
+        }
       },
       error: function (xhr) {
         alert(xhr.statusText)
@@ -50,7 +58,7 @@ $(function(){
 
 function add_shape_to_map(shape, map){
   map.addLayer({
-      'id': "space_"+shape.id,
+      'id': "" + shape.shape_type + shape.id,
       'type': 'fill',
       'source': {
           'type': 'geojson',
@@ -58,8 +66,18 @@ function add_shape_to_map(shape, map){
       },
       'layout': {},
       'paint': {
-          'fill-color': '#088',
-          'fill-opacity': 0.8
+          'fill-color': map_shape_type_to_color(shape.shape_type),
+          'fill-opacity': 0.5
       }
     });
+}
+
+function map_shape_type_to_color(shape_type) {
+  var hash  = {
+                "parking_space": "red",
+                "parking_area": 'green',
+                "parking_lot": 'blue',
+                "building": 'white',
+              }
+  return hash[shape_type]
 }
