@@ -70,7 +70,7 @@ function add_shapes_to_map(data, map, shape_type){
     return false;
   };
   geo_info = []
-  for(let i=0, size=features.length; i<size; i++){
+  for(var i=0, size=features.length; i<size; i++){
     features[i].geo_info.properties.shape_id = shape_type +"_" + features[i].id
     
     geo_info.push(features[i].geo_info)
