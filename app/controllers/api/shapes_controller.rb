@@ -2,7 +2,7 @@ module Api
   class ShapesController < ApplicationController
    
     def index
-      @shapes = current_dealership.shapes.order(shape_type: :desc).all
+      @shapes = current_user.dealership.shapes.order(shape_type: :desc).all
       render json: @shapes
     end
   end

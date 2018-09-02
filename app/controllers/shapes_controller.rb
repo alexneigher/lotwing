@@ -5,7 +5,7 @@ class ShapesController < ApplicationController
     geo_info = JSON.parse(params[:shape][:geo_info])
 
     Shape.create!( 
-                  dealership_id: current_dealership.id,
+                  dealership_id: current_user.dealership.id,
                   geo_info: geo_info, 
                   shape_type: params[:shape][:shape_type].to_i 
                 )
