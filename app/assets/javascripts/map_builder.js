@@ -11,7 +11,6 @@ $(function(){
     displayControlsDefault: false,
     controls: {
       polygon: true,
-      trash: true
     }  
   });
 
@@ -34,18 +33,20 @@ $(function(){
       url:"/api/shapes",
       dataType: "json",
       success: function(data){
-        for(var i=0, size=data.length; i<size; i++){
-          console.log(data[i]);
-          add_shape_to_map(data[i], map)
-        }
-        if (data.length > 0) {
-          //recenter the map
-          var bbox = turf.extent(data[0].geo_info.geometry);
-          map.fitBounds(bbox, {
-            padding: 50,
-            duration: 0
-          });
-        }
+        add_shapes_to_map(data, map, 'parking_lot');
+        add_shapes_to_map(data, map, 'parking_area');
+        add_shapes_to_map(data, map, 'building');
+
+        add_shapes_to_map(data, map, 'parking_space');
+
+        // if (data.length > 0) {
+        //   //recenter the map
+        //   var bbox = turf.extent(data[0].geo_info.geometry);
+        //   map.fitBounds(bbox, {
+        //     padding: 50,
+        //     duration: 0
+        //   });
+        // }
       },
       error: function (xhr) {
         alert(xhr.statusText)
@@ -53,24 +54,46 @@ $(function(){
     });
   });
 
+  map.on('click', 'parking_space', function(e){
+    //find the element on the left side, highlight it
+
+    id = e.features[0].properties.shape_id
+    $('#'+id).addClass('list-group-item-success').siblings().removeClass('list-group-item-success');
+  })
+
 })//$(function)
 
 
-function add_shape_to_map(shape, map){
+function add_shapes_to_map(data, map, shape_type){
+  features = data[shape_type]
+  if (!features){
+    return false;
+  };
+  geo_info = []
+  for(let i=0, size=features.length; i<size; i++){
+    features[i].geo_info.properties.shape_id = shape_type +"_" + features[i].id
+    
+    geo_info.push(features[i].geo_info)
+  }
   map.addLayer({
-      'id': "" + shape.shape_type + shape.id,
-      'type': 'fill',
-      'source': {
-          'type': 'geojson',
-          'data': shape.geo_info
-      },
-      'layout': {},
-      'paint': {
-          'fill-color': map_shape_type_to_color(shape.shape_type),
-          'fill-opacity': 0.5
-      }
-    });
+    'id': shape_type,
+    'type': 'fill',
+    'source': {
+        'type': 'geojson',
+        "data": {
+                  "type": "FeatureCollection",
+                  "features": geo_info
+                }
+    },
+    'layout': {},
+    'paint': {
+        'fill-color': map_shape_type_to_color(shape_type),
+        'fill-opacity': 0.5
+    }
+  });
 }
+
+
 
 function map_shape_type_to_color(shape_type) {
   var hash  = {

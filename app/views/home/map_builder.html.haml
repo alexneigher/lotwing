@@ -12,7 +12,7 @@
       %hr
       %ul.list-group
         - @shapes.each do |shape|
-          %li.list-group-item
+          %li.list-group-item{id: "#{shape.shape_type}_#{shape.id}" }
             %i.fa.fa-car
             = "#{shape.shape_type.titleize}: #{shape.id}"
             .pull-right
