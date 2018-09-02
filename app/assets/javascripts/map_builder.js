@@ -36,17 +36,16 @@ $(function(){
         add_shapes_to_map(data, map, 'parking_lot');
         add_shapes_to_map(data, map, 'parking_area');
         add_shapes_to_map(data, map, 'building');
-
         add_shapes_to_map(data, map, 'parking_space');
 
-        // if (data.length > 0) {
-        //   //recenter the map
-        //   var bbox = turf.extent(data[0].geo_info.geometry);
-        //   map.fitBounds(bbox, {
-        //     padding: 50,
-        //     duration: 0
-        //   });
-        // }
+        if (data['parking_lot'].length > 0) {
+          //recenter the map
+          var bbox = turf.extent(data['parking_lot'][0].geo_info.geometry);
+          map.fitBounds(bbox, {
+            padding: 50,
+            duration: 0
+          });
+        }
       },
       error: function (xhr) {
         alert(xhr.statusText)
@@ -60,6 +59,7 @@ $(function(){
     id = e.features[0].properties.shape_id
     $('#'+id).addClass('list-group-item-success').siblings().removeClass('list-group-item-success');
   })
+
 
 })//$(function)
 
