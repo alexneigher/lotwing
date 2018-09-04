@@ -1,6 +1,6 @@
 $(function(){
   mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleG5laWdoZXIiLCJhIjoiY2psZ3I1bTllMDF5ZjNwdDUydjQzMWJ1cCJ9.nG0jV5mQE65ySlh66w5faQ';
-  var map = new mapboxgl.Map({
+  window.map = new mapboxgl.Map({
     container: 'map',
     center: [-122.4194, 37.7749],
     zoom: 10,
@@ -14,34 +14,34 @@ $(function(){
     }  
   });
 
-  map.addControl(new MapboxGeocoder({
+  window.map.addControl(new MapboxGeocoder({
       accessToken: mapboxgl.accessToken
   }));
 
 
-  map.addControl(draw, 'top-left');
+  window.map.addControl(draw, 'top-left');
 
-  map.on('draw.create', function (e) {
+  window.map.on('draw.create', function (e) {
     //save to server?
     $('#shape-form').removeClass('d-none');
     $("#shape-form #shape_geo_info").val(JSON.stringify(e.features[0]));
   });
 
-  map.on('load', function () {
+  window.map.on('load', function () {
 
     $.ajax({
       url:"/api/shapes",
       dataType: "json",
       success: function(data){
-        add_shapes_to_map(data, map, 'parking_lot');
-        add_shapes_to_map(data, map, 'parking_area');
-        add_shapes_to_map(data, map, 'building');
-        add_shapes_to_map(data, map, 'parking_space');
+        add_shapes_to_map(data, window.map, 'parking_lot');
+        add_shapes_to_map(data, window.map, 'parking_area');
+        add_shapes_to_map(data, window.map, 'building');
+        add_shapes_to_map(data, window.map, 'parking_space');
 
         if (data['parking_lot'].length > 0) {
           //recenter the map
           var bbox = turf.extent(data['parking_lot'][0].geo_info.geometry);
-          map.fitBounds(bbox, {
+          window.map.fitBounds(bbox, {
             padding: 50,
             duration: 0
           });
@@ -53,7 +53,7 @@ $(function(){
     });
   });
 
-  map.on('click', 'parking_space', function(e){
+  window.map.on('click', 'parking_space', function(e){
     //find the element on the left side, highlight it
 
     id = e.features[0].properties.shape_id
@@ -71,7 +71,7 @@ function add_shapes_to_map(data, map, shape_type){
   };
   geo_info = []
   for(var i=0, size=features.length; i<size; i++){
-    features[i].geo_info.properties.shape_id = shape_type +"_" + features[i].id
+    features[i].geo_info.properties.shape_id = features[i].id
     
     geo_info.push(features[i].geo_info)
   }

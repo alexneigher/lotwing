@@ -1,16 +1,16 @@
 / Page Content
+= render partial: 'shared/maxbox_dependencies'
+= javascript_include_tag('map_builder')
+= javascript_include_tag('map_interactor')
 .container-fluid
   .row
     .col-lg-4
-      %h2.text-center.mt-3 Lot Activity
-      %ul.list-group.list-group-flush
-        - (0..10).each do |i|
-          %li.list-group-item.d-flex.justify-content-between.align-items-center.py-1
-            Cras justo odio
-            %span.badge.badge-primary.badge-pill= i
-    
+      %h2.m-0.mt-3 Lot View
+      %small.small.text-muted
+        (click on a parking space to see status)
+      #parkingSpaceInfoContainer.pt-3
     .col-lg-8
-      %img.img-fluid.rounded{:alt => "", :src => "https://hrishiballal.files.wordpress.com/2016/02/3dscene.png"}/
+      #map{:style => "width: 100%; height: 550px;"}
   %h2.text-center.pt-3 Notices
   .row
     - (0..3).each do |i|

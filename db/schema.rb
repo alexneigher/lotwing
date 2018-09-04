@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180901144728) do
+ActiveRecord::Schema.define(version: 20180904024805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,19 @@ ActiveRecord::Schema.define(version: 20180901144728) do
     t.index ["dealership_id"], name: "index_users_on_dealership_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "vehicles", force: :cascade do |t|
+    t.string "vin"
+    t.string "make"
+    t.string "model"
+    t.string "year"
+    t.string "color"
+    t.integer "mileage"
+    t.bigint "dealership_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dealership_id"], name: "index_vehicles_on_dealership_id"
   end
 
 end

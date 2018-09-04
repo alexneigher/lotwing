@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   get :map_builder, to: 'home#map_builder'
 
   resources :shapes
+
+  resources :vehicles
 end
