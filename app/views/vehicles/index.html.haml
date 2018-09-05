@@ -8,24 +8,21 @@
               %th ID
               %th VIN
               %th Year/Make/Model
-              %th Mileage
-              %th Price
               %th.text-center 
                 %i.fa.fa-pencil
           %tbody
             - @vehicles.each do |vehicle|
               %tr
-                %td= contract.id
-                %td
-                  = link_to contract.customer_full_name, internal_contract_path(contract)
-                  - if contract.extra_names.present?
-                    %i.fa.fa-users.text-muted.small.pad05x{ title: contract.extra_names, data:{ toggle:"tooltip" }}
-                %td= contract.sent ? contract.sent_at.strftime('%m/%d/%Y') : '--'
-                %td= contract.payment_plan&.payments_remaining_count
-                %td= number_to_currency(contract.payment_plan&.amount_paid)
-                %td= number_to_currency(contract.payment_plan&.amount_outstanding)
+                %td= vehicle.id
+                %td= vehicle.vin
+                  
+                %td= "#{vehicle.year} #{vehicle.make} #{vehicle.model}"
+                %td.text-center
+                  = link_to edit_vehicle_path(vehicle) do
+                    %i.fa.fa-pencil
 
-        
+        = link_to "Add Vehicle", new_vehicle_path, class: 'btn btn-small btn-primary'
+
               
 
         =# paginate @vehicles     

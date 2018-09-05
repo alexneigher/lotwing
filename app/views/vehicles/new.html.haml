@@ -1,0 +1,21 @@
+.row.justify-content-center
+  .col-md-6.py-3
+    %h2.text-center New Vehicle
+    .card.mt-3
+      .card-body
+        = form_for :vehicle, url: vehicles_path, method: :post do |f|
+          = f.hidden_field :dealership_id, value: current_user.dealership.id
+          .form-group
+            %label Year
+            = f.text_field :year, placeholder: '1990', class: 'form-control'
+          .form-group
+            %label Make
+            = f.text_field :make, placeholder: 'Volkswagen', class: 'form-control'
+          .form-group
+            %label Model
+            = f.text_field :model, placeholder: 'Pasat', class: 'form-control'
+          .form-group
+            %label VIN
+            = f.text_field :vin, placeholder: '1234EDFGR45', class: 'form-control'
+          .form-group
+            =f.submit 'Save', class: 'btn btn-block btn-success'

@@ -13,5 +13,13 @@ Rails.application.routes.draw do
 
   resources :shapes
 
-  resources :vehicles
+  resources :vehicles do
+    collection do
+      get :vin_search
+    end
+  end
+
+  resources :tags do
+    get :deactivate
+  end
 end

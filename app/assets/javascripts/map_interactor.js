@@ -25,11 +25,15 @@ function render_parking_space_data(data){
   str = "<div>Parking Space Id: " + data.shape.id + "</div>" +
         "<hr>";
   if (data.vehicle){
+    $('#newTagForm').addClass('d-none');
+    $('#newTagForm #tag_shape_id').val();
 
-    str += "Occupied: <div>" + data.vehicle.make + " - " + data.vehicle.model + "</div>"
+    str += "Occupied: <div>" + data.vehicle.make + " - " + data.vehicle.model + "</div>" +
+           "<a href='/tags/"+data.tag.id+"/deactivate'>clear this parking space</a>"
 
   }else{
-    str +=  "<div>Currently Empty</div>" 
+    $('#newTagForm').removeClass('d-none');
+    $('#newTagForm #tag_shape_id').val(data.shape.id);
   }
        
   $el.html(str);

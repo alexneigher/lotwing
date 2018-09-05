@@ -1,0 +1,27 @@
+#newTagForm.d-none
+  Tag New Vehicle
+  = form_for :tag, url: tags_path, method: :post do |f|
+    = text_field_tag "vin_search", nil, placeholder: 'VIN Search', class: 'vehicle-search-field form-control'
+    = f.hidden_field :shape_id
+  #search-results
+
+:javascript
+  $(function(){
+
+    $('.vehicle-search-field').keyup(function(){
+      value = $(this).val();
+      shape_id = $("#tag_shape_id").val();
+
+      if (value.length >= 3){
+        $.ajax({
+          method: 'GET',
+          url: "/vehicles/vin_search",
+          data: {vin_search: value, shape_id: shape_id },
+        })
+      }
+      else{
+        $('#search-results').html('');
+      }
+    });
+
+  })

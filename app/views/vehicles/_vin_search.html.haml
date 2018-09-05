@@ -1,0 +1,5 @@
+%ul.list-group
+  - @vehicles.each do |vehicle|
+    = link_to tags_path(tag: {vehicle_id: vehicle.id, shape_id: @shape_id}), method: :post do
+      %li.list-group-item
+        = "#{vehicle.make} #{vehicle.model} - #{vehicle.vin}"
