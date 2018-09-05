@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180904024805) do
+ActiveRecord::Schema.define(version: 20180905032106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 20180904024805) do
     t.integer "shape_type"
     t.bigint "dealership_id"
     t.index ["dealership_id"], name: "index_shapes_on_dealership_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.bigint "vehicle_id"
+    t.bigint "shape_id"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shape_id"], name: "index_tags_on_shape_id"
+    t.index ["vehicle_id"], name: "index_tags_on_vehicle_id"
   end
 
   create_table "users", force: :cascade do |t|

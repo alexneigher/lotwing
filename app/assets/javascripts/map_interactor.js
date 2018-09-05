@@ -22,9 +22,15 @@ function render_parking_space_data(data){
   $el = $('#parkingSpaceInfoContainer');
 
   console.log(data);
-  str = "<div>Parking Space Id: " + data.id + "</div>" +
-        "<hr>" +
-        "<div>Currently Empty</div" 
+  str = "<div>Parking Space Id: " + data.shape.id + "</div>" +
+        "<hr>";
+  if (data.vehicle){
 
+    str += "Occupied: <div>" + data.vehicle.make + " - " + data.vehicle.model + "</div>"
+
+  }else{
+    str +=  "<div>Currently Empty</div>" 
+  }
+       
   $el.html(str);
 }

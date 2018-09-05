@@ -8,7 +8,7 @@ module Api
 
     def show
       @shape = current_user.dealership.shapes.find(params[:id])
-      render json: @shape
+      render json: {shape: @shape, vehicle: @shape.vehicle }
     end
   end
 end
