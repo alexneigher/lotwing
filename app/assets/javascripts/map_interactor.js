@@ -1,4 +1,18 @@
 $(function(){
+  window.map.setStyle({
+    version: 8,
+    sources: {
+    },
+    layers: [
+      {
+        id: 'background',
+        type: 'background',
+        paint: { 
+          'background-color': 'white' 
+        }
+      }
+    ]
+  })
   window.map.on('click', 'full_parking_space', function(e){
     parking_space_click(e);
   })
