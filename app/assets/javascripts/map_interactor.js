@@ -10,7 +10,6 @@ $(function(){
 
 function parking_space_click(e){
   //render info about this particular parking spot
-
   id = e.features[0].properties.shape_id
   $.ajax({
     url:"/api/shapes/" + id,
@@ -25,7 +24,7 @@ function parking_space_click(e){
 }
 
 function render_parking_space_data(data){
-  $el = $('#parkingSpaceInfoContainer');
+  $el = $('#parkingSpaceInfoContainer')
 
   console.log(data);
   str = "<div>Parking Space Id: " + data.shape.id + "</div>" +

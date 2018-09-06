@@ -56,7 +56,14 @@ $(function(){
     });
   });
 
-  window.map.on('click', 'empty_parking_space full_parking_space', function(e){
+  window.map.on('click', 'empty_parking_space', function(e){
+    //find the element on the left side, highlight it
+
+    id = e.features[0].properties.shape_id
+    $('#'+id).addClass('list-group-item-success').siblings().removeClass('list-group-item-success');
+  })
+
+  window.map.on('click', 'full_parking_space', function(e){
     //find the element on the left side, highlight it
 
     id = e.features[0].properties.shape_id
