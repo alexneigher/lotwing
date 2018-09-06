@@ -33,10 +33,13 @@ $(function(){
       url:"/api/shapes",
       dataType: "json",
       success: function(data){
+        console.log(data);
         add_shapes_to_map(data, window.map, 'parking_lot');
         add_shapes_to_map(data, window.map, 'parking_area');
         add_shapes_to_map(data, window.map, 'building');
-        add_shapes_to_map(data, window.map, 'parking_space');
+        add_shapes_to_map(data, window.map, 'empty_parking_space');
+        add_shapes_to_map(data, window.map, 'full_parking_space');
+
 
         if (data['parking_lot'].length > 0) {
           //recenter the map
@@ -53,7 +56,7 @@ $(function(){
     });
   });
 
-  window.map.on('click', 'parking_space', function(e){
+  window.map.on('click', 'empty_parking_space full_parking_space', function(e){
     //find the element on the left side, highlight it
 
     id = e.features[0].properties.shape_id
@@ -97,7 +100,8 @@ function add_shapes_to_map(data, map, shape_type){
 
 function map_shape_type_to_color(shape_type) {
   var hash  = {
-                "parking_space": "red",
+                "full_parking_space": "yellow",
+                "empty_parking_space": "red",
                 "parking_area": 'green',
                 "parking_lot": 'blue',
                 "building": 'white',
