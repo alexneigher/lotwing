@@ -8,7 +8,9 @@ class VehiclesController < ApplicationController
   end
 
   def vin_search
-    @vehicles = Vehicle.where("vin ILIKE ?", "%#{params[:vin_search]}%")
+    @vehicles = Vehicle
+                  .where("vin ILIKE ?", "%#{params[:vin_search]}%")
+                  
     @shape_id = params[:shape_id]
   end
 

@@ -20,15 +20,12 @@
                 %i.fa.fa-car
                 = vehicle.vin
               .col
-                - if vehicle.parking_space.present?
+                - if vehicle.current_parking_tag.present?
                   Parked
                   = link_to 'Remove Tag', tag_deactivate_path(vehicle.current_parking_tag)
                 - else
                   Not Parked
-              
-      
-      
 
     .col-lg-8
-      #map{:style => "width: 100%; height: 550px;border: 1px solid #dee2e6;"}
+      #map{ :style => "width: 100%; height: 550px;border: 1px solid #dee2e6;" }
   
