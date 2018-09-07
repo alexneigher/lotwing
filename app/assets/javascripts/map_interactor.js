@@ -39,12 +39,12 @@ function parking_space_click(e){
 
 function render_parking_space_data(data){
   if (data.vehicle){
+    $('#newTagForm').addClass('d-none');
+    $('#newTagForm #tag_shape_id').val(null);
     $('.vehicle-list').removeClass('focused');
-
     $('#vehicle_'+data.vehicle.id).addClass('focused');
     
   }else{
-
     $('.vehicle-list').removeClass('focused');
     $('#newTagForm').removeClass('d-none');
     $('#newTagForm #tag_shape_id').val(data.shape.id);
