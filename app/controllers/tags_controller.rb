@@ -1,9 +1,11 @@
 class TagsController < ApplicationController
 
   def create
+    @vehicle = Vehicle.find(params[:tag][:vehicle_id])
+    @vehicle.tags.update_all(active: false)
+    
     @tag = Tag.create(tag_params)
     
-    #this should deactivate the other tag associated w/ this vehicle and space
 
     redirect_to root_path
   end
