@@ -13,6 +13,7 @@ $(function(){
       }
     ]
   })
+
   window.map.on('click', 'full_parking_space', function(e){
     parking_space_click(e);
   })

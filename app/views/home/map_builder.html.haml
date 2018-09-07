@@ -5,12 +5,14 @@
     .col-md-4  
       #shape-form.d-none.bg-light.mt-5
         .card-body
-          %h3 Add new shape
+          %h3 Add Shapes
           = form_for :shape, url: shapes_path, method: :post do |f|
             .form-group
               = f.select :shape_type, Shape.shape_types.to_a, {}, class: 'form-control'
-              = f.text_area :geo_info, class: 'd-none form-control', placeholder: 'Draw new shape on the map'
+              = f.text_area :geo_info, class: 'form-control d-none', placeholder: 'Draw new shape on the map'
             = f.submit class: 'btn btn-sm btn-primary'
+      
+      #exportSave.btn.btn-primary.d-none Export and Save
 
       %hr
       %ul.list-group

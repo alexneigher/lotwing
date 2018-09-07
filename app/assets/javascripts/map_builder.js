@@ -7,24 +7,19 @@ $(function(){
     style: 'mapbox://styles/mapbox/satellite-v9'
   });
 
-  var draw = new MapboxDraw({
-    displayControlsDefault: false,
-    controls: {
-      polygon: true,
-    }  
-  });
+  window.draw = new MapboxDraw();
+
+  // investigate line slice
+  // https://github.com/BrunoSalerno/mapbox-gl-draw-cut-line-mode
 
   window.map.addControl(new MapboxGeocoder({
       accessToken: mapboxgl.accessToken
   }));
 
-
-  window.map.addControl(draw, 'top-left');
+  window.map.addControl(window.draw, 'top-left');
 
   window.map.on('draw.create', function (e) {
-    //save to server?
-    $('#shape-form').removeClass('d-none');
-    $("#shape-form #shape_geo_info").val(JSON.stringify(e.features[0]));
+    $('#exportSave').removeClass('d-none');
   });
 
   window.map.on('load', function () {
@@ -33,7 +28,6 @@ $(function(){
       url:"/api/shapes",
       dataType: "json",
       success: function(data){
-        console.log(data);
         add_shapes_to_map(data, window.map, 'parking_lot');
         add_shapes_to_map(data, window.map, 'parking_area');
         add_shapes_to_map(data, window.map, 'building');
@@ -68,6 +62,16 @@ $(function(){
 
     id = e.features[0].properties.shape_id
     $('#'+id).addClass('list-group-item-success').siblings().removeClass('list-group-item-success');
+  })
+
+
+  // when ready to save, toggle the actual form visitibility
+  $('#exportSave').click(function(){
+    $(this).addClass('d-none');
+
+    shapes = window.draw.getAll().features;
+    $("#shape-form #shape_geo_info").val( JSON.stringify(shapes) );
+    $('#shape-form').removeClass('d-none');
   })
 
 
