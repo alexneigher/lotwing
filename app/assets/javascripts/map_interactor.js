@@ -38,22 +38,16 @@ function parking_space_click(e){
 }
 
 function render_parking_space_data(data){
-  $el = $('#parkingSpaceInfoContainer')
-
-  console.log(data);
-  str = "<div>Parking Space Id: " + data.shape.id + "</div>" +
-        "<hr>";
   if (data.vehicle){
-    $('#newTagForm').addClass('d-none');
-    $('#newTagForm #tag_shape_id').val();
+    $('.vehicle-list').removeClass('focused');
 
-    str += "Occupied: <div>" + data.vehicle.make + " - " + data.vehicle.model + "</div>" +
-           "<a href='/tags/"+data.tag.id+"/deactivate'>clear this parking space</a>"
-
+    $('#vehicle_'+data.vehicle.id).addClass('focused');
+    
   }else{
+
+    $('.vehicle-list').removeClass('focused');
     $('#newTagForm').removeClass('d-none');
     $('#newTagForm #tag_shape_id').val(data.shape.id);
   }
        
-  $el.html(str);
 }

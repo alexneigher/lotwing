@@ -1,0 +1,13 @@
+.vehicle-list{
+  .deactivate-tag{
+    display: none;
+  }
+
+  &.focused{
+    background-color: red;
+    
+    .deactivate-tag{
+      display: block;
+    }
+  }
+}

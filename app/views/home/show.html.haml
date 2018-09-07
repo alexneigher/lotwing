@@ -7,19 +7,28 @@
     .col-lg-4
       %h2.m-0.mt-3 Lot View
       %small.small.text-muted
-        (click on a parking space to see status)
-      #parkingSpaceInfoContainer.pt-3
-      
+        - @grouped_shapes.each do |k, v|
+          = pluralize(v, k).titleize
+
       = render partial: 'tags/new'
+
+      %ul.list-group
+        - @vehicles.each do |vehicle|
+          %li.list-group-item.vehicle-list{id: dom_id(vehicle)}
+            .row
+              .col
+                %i.fa.fa-car
+                = vehicle.vin
+              .col
+                - if vehicle.parking_space.present?
+                  Parked
+                  = link_to 'Remove Tag', tag_deactivate_path(vehicle.current_parking_tag)
+                - else
+                  Not Parked
+              
+      
+      
 
     .col-lg-8
       #map{:style => "width: 100%; height: 550px;border: 1px solid #dee2e6;"}
-  %h2.text-center.pt-3 Notices
-  .row
-    - (0..3).each do |i|
-      .col-md-3
-        .card.my-4
-          %img.card-img-top{:alt => "Card image cap", :src => "https://via.placeholder.com/150x150"}/
-          .card-body
-            %p.card-text Some quick example 
-            %a.btn.btn-primary.btn-sm{:href => "#"} Go somewhere
+  
