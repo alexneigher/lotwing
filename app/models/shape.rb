@@ -1,7 +1,7 @@
 class Shape < ApplicationRecord
   belongs_to :dealership
   
-  has_many :tags
+  has_many :tags, dependent: :destroy
   has_many :vehicles, through: :tags
 
   has_one :current_vehicle_tag, -> { where active: true }, class_name: 'Tag'

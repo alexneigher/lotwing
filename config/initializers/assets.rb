@@ -13,4 +13,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w( map_builder.js map_interactor.js )
+Rails.application.config.assets.precompile += %w( map_builder.js map_interactor.js vendor/leaflet_path_transform.js )

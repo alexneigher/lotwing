@@ -5,7 +5,8 @@
     .col-md-4  
       #shape-form.d-none.bg-light.mt-5
         .card-body
-          %h3 Add new shape
+          %btn.btn-primary.btn#export Save Map
+
           = form_for :shape, url: shapes_path, method: :post do |f|
             .form-group
               = f.select :shape_type, Shape.shape_types.to_a, {}, class: 'form-control'
@@ -14,6 +15,7 @@
 
       %hr
       %ul.list-group
+
         - @shapes.each do |shape|
           %li.list-group-item{id: "#{shape.id}" }
             %i.fa.fa-car

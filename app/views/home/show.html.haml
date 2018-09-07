@@ -7,7 +7,8 @@
     .col-lg-4
       %h2.m-0.mt-3 Lot View
       %small.small.text-muted
-        (click on a parking space to see status)
+        = "#{Shape.where(shape_type: 'parking_space').count} Parking spaces"
+        
       #parkingSpaceInfoContainer.pt-3
       
       = render partial: 'tags/new'
