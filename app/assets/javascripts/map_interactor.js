@@ -87,11 +87,11 @@ function render_parking_space_data(data){
   if (data.vehicle){
     $('#newTagForm').addClass('d-none');
     $('#newTagForm #tag_shape_id').val(null);
-    $('.vehicle-list').removeClass('focused');
-    $('#vehicle_'+data.vehicle.id).addClass('focused');
+    $('.vehicle-list').removeClass('list-group-item-success');
+    $('#vehicle_'+data.vehicle.id).addClass('list-group-item-success');
     
   }else{
-    $('.vehicle-list').removeClass('focused');
+    $('.vehicle-list').removeClass('list-group-item-success');
     $('#newTagForm').removeClass('d-none');
     $('#newTagForm #tag_shape_id').val(data.shape.id);
   }
