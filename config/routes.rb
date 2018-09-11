@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   namespace :api do
-    resources :shapes
+    resources :shapes do
+      collection do
+        get :vehicles_index
+      end
+    end
   end
 
   devise_for :users

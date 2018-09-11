@@ -32,8 +32,7 @@ $(function(){
         add_shapes_to_map(data, window.map, 'parking_lot');
         add_shapes_to_map(data, window.map, 'parking_area');
         add_shapes_to_map(data, window.map, 'building');
-        add_shapes_to_map(data, window.map, 'empty_parking_space');
-        add_shapes_to_map(data, window.map, 'full_parking_space');
+        add_shapes_to_map(data, window.map, 'parking_space');
 
 
         if (data['parking_lot'].length > 0) {
@@ -51,14 +50,7 @@ $(function(){
     });
   });
 
-  window.map.on('click', 'empty_parking_space', function(e){
-    //find the element on the left side, highlight it
-
-    id = e.features[0].properties.shape_id
-    $('#'+id).addClass('list-group-item-success').siblings().removeClass('list-group-item-success');
-  })
-
-  window.map.on('click', 'full_parking_space', function(e){
+  window.map.on('click', 'parking_space', function(e){
     //find the element on the left side, highlight it
 
     id = e.features[0].properties.shape_id

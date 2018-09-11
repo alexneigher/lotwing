@@ -18,4 +18,8 @@
             %label VIN
             = f.text_field :vin, placeholder: '1234EDFGR45', class: 'form-control'
           .form-group
+            %label 
+              Used Vehicle?
+              = f.check_box :is_used
+          .form-group
             =f.submit 'Save', class: 'btn btn-block btn-success'

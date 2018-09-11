@@ -22,14 +22,17 @@ $(function(){
   window.map.on('load', function () {
 
     $.ajax({
-      url:"/api/shapes",
+      url:"/api/shapes/vehicles_index",
       dataType: "json",
       success: function(data){
+        console.log(data);
         add_shapes_to_map(data, window.map, 'parking_lot');
         add_shapes_to_map(data, window.map, 'parking_area');
         add_shapes_to_map(data, window.map, 'building');
+        add_shapes_to_map(data, window.map, 'used_vehicle_occupied_space');
+        add_shapes_to_map(data, window.map, 'new_vehicle_occupied_space');
         add_shapes_to_map(data, window.map, 'empty_parking_space');
-        add_shapes_to_map(data, window.map, 'full_parking_space');
+
 
 
         if (data['parking_lot'].length > 0) {
@@ -47,11 +50,15 @@ $(function(){
     });
   });
 
-  window.map.on('click', 'empty_parking_space', function(e){
+  window.map.on('click', 'new_vehicle_occupied_space', function(e){
     parking_space_click(e);
   })
 
-  window.map.on('click', 'full_parking_space', function(e){
+  window.map.on('click', 'used_vehicle_occupied_space', function(e){
+    parking_space_click(e);
+  })
+
+  window.map.on('click', 'empty_parking_space', function(e){
     parking_space_click(e);
   })
 
