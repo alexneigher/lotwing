@@ -23,6 +23,7 @@ function add_shapes_to_map(data, map, shape_type){
     'paint': {
         'fill-color': map_shape_type_to_color(shape_type),
         'fill-outline-color': map_shape_type_to_outline(shape_type),
+        'fill-opacity': map_shape_type_to_opacity(shape_type)
     }
   });
 }
@@ -46,5 +47,13 @@ function map_shape_type_to_outline(shape_type){
     return '#FF9933'
   }else{
     return '#fff'
+  }
+}
+
+function map_shape_type_to_opacity(shape_type){
+  if (shape_type == 'parking_lot'){
+    return 0.5
+  }else{
+    return 1
   }
 }
