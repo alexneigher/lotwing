@@ -1,3 +1,22 @@
+function center_map(data){
+  if (data['parking_lot'].length > 0) {
+    //recenter the map
+    var bbox = turf.extent(data['parking_lot'][0].geo_info.geometry);
+    window.map.fitBounds(bbox, {
+      padding: 0,
+      duration: 0
+    });
+    set_bearing();
+  }
+}
+
+function set_bearing(){
+  bearing = $('#dealership_map_bearing').val();
+  if (bearing){
+    window.map.setBearing(bearing)
+  }
+}
+
 function add_shapes_to_map(data, map, shape_type){
   features = data[shape_type]
   if (!features){

@@ -4,6 +4,7 @@ $(function(){
     container: 'map',
     center: [-122.4194, 37.7749],
     zoom: 10,
+    bearing: -60, // bearing in degrees
     style: {
       version: 8,
       sources: {},
@@ -17,6 +18,13 @@ $(function(){
         }
       ]
     }
+  });
+
+  map.on('mousemove', function (e) {
+      var features = map.queryRenderedFeatures(e.point);
+      //maybe use this
+      console.log(features);
+      //document.getElementById('features').innerHTML = JSON.stringify(features, null, 2);
   });
 
   window.map.on('load', function () {
@@ -33,16 +41,8 @@ $(function(){
         add_shapes_to_map(data, window.map, 'new_vehicle_occupied_space');
         add_shapes_to_map(data, window.map, 'empty_parking_space');
 
+        center_map(data);
 
-
-        if (data['parking_lot'].length > 0) {
-          //recenter the map
-          var bbox = turf.extent(data['parking_lot'][0].geo_info.geometry);
-          window.map.fitBounds(bbox, {
-            padding: 5,
-            duration: 0
-          });
-        }
       },
       error: function (xhr) {
         alert(xhr.statusText)

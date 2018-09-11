@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   resources :shapes
 
+  resources :dealerships, only: [:update]
+  
   resources :vehicles do
     collection do
       get :vin_search

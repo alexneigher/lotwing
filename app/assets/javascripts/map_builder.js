@@ -35,14 +35,7 @@ $(function(){
         add_shapes_to_map(data, window.map, 'parking_space');
 
 
-        if (data['parking_lot'].length > 0) {
-          //recenter the map
-          var bbox = turf.extent(data['parking_lot'][0].geo_info.geometry);
-          window.map.fitBounds(bbox, {
-            padding: 5,
-            duration: 0
-          });
-        }
+        center_map(data);
       },
       error: function (xhr) {
         alert(xhr.statusText)
@@ -65,6 +58,11 @@ $(function(){
     shapes = window.draw.getAll().features;
     $("#shape-form #shape_geo_info").val( JSON.stringify(shapes) );
     $('#shape-form').removeClass('d-none');
+  })
+
+  //bind listener to map rotate inout
+  $("#dealership_map_bearing").on('keyup',function(){
+    window.map.setBearing(this.value);
   })
 
 

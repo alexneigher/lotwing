@@ -3,6 +3,21 @@
 .container-fluid
   .row
     .col-md-4  
+      .bg-light.p-2
+        %small.small
+          %strong
+            Map Settings 
+          %br
+        = form_for current_user.dealership, url: dealership_path(current_user.dealership), method: :put do |f|
+          .row
+            .col-5
+              %label.small
+                Bearing (Rotation Angle)
+              = f.number_field :map_bearing, class: 'form-control input-sm', placeholder: '280'
+            .col-1
+              %label
+              =f.submit 'Update', class: 'btn btn-sm btn-success mt-2'
+      
       #shape-form.d-none.bg-light.mt-5
         .card-body
           %h3 Add Shapes
