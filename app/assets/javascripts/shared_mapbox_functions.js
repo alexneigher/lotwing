@@ -34,7 +34,7 @@ function map_shape_type_to_color(shape_type) {
                 'empty_parking_space': '#cccccc',
                 'parking_space': '#cccccc',
                 "parking_area": 'green',
-                "parking_lot": 'transparent',
+                "parking_lot": '#ffffff',
                 "building": '#FF9933',
               }
 
@@ -45,6 +45,6 @@ function map_shape_type_to_outline(shape_type){
   if (shape_type == 'parking_lot'){
     return '#FF9933'
   }else{
-    return 'transparent'
+    return '#fff'
   }
 }
