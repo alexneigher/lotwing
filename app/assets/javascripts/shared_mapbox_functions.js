@@ -7,6 +7,7 @@ function center_map(data){
       duration: 0
     });
     set_bearing();
+    set_zoom();
   }
 }
 
@@ -14,6 +15,13 @@ function set_bearing(){
   bearing = $('#dealership_map_bearing').val();
   if (bearing){
     window.map.setBearing(bearing)
+  }
+}
+
+function set_zoom(){
+  zoom = $('#dealership_map_zoom').val();
+  if (zoom){
+    window.map.setZoom(zoom)
   }
 }
 

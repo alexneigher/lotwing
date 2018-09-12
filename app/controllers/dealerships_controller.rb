@@ -8,6 +8,6 @@ class DealershipsController < ApplicationController
 
   private
     def dealership_params
-      params.require(:dealership).permit(:map_bearing)
+      params.require(:dealership).permit(:map_bearing, :map_zoom)
     end
 end

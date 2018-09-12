@@ -34,7 +34,6 @@ $(function(){
         add_shapes_to_map(data, window.map, 'building');
         add_shapes_to_map(data, window.map, 'parking_space');
 
-
         center_map(data);
       },
       error: function (xhr) {
@@ -64,6 +63,11 @@ $(function(){
   $("#dealership_map_bearing").on('keyup',function(){
     window.map.setBearing(this.value);
   })
+
+  // //bind listener to map zoom inout
+  // $("#dealership_map_zoom").on('keyup',function(){
+  //   window.map.setZoom(this.value);
+  // })
 
 
 })//$(function)
