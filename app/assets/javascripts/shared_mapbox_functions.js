@@ -36,6 +36,7 @@ function add_shapes_to_map(data, map, shape_type){
     
     geo_info.push(features[i].geo_info)
   }
+  
   map.addLayer({
     'id': shape_type,
     'type': 'fill',
