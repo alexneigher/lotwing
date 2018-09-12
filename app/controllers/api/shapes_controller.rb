@@ -26,7 +26,6 @@ module Api
       render json: @shapes
                       .group_by(&:shape_type)
                       .merge(
-
                               new_vehicle_occupied_space: @new_vehicle_occupied_space,
                               used_vehicle_occupied_space: @used_vehicle_occupied_space,
                               empty_parking_space: @empty_parking_space
