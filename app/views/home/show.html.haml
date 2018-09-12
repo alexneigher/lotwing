@@ -16,7 +16,7 @@
           %li.list-group-item.vehicle-list{id: dom_id(vehicle)}
             .row
               .col
-                %i.fa.fa-car
+                %i.fa.fa-car{class: (vehicle.is_used? ? "text-green" : "text-blue").to_s}
                 = vehicle.vin
               .col
                 - if vehicle.current_parking_tag.present?
