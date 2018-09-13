@@ -2,13 +2,68 @@
 = javascript_include_tag('lot_view')
 .container-fluid
   .row
-    .col-lg-3
-      %h3.m-0.mt-3.text-center Lot View
+    .col-lg-4
+      %ul.media-list.mt-3
+        %li.media
+          %a.pull-left{:href => "#"}
+            %img.rounded-circle.img-thumbnail{:alt => "", :src => "https://picsum.photos/80"}/
+          .media-body.small.p-2
+            %span.text-muted.pull-right
+              %small.text-muted 30 min ago
+            %strong.text-success Michael Vanstein
+            %p.pt-1
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Lorem ipsum dolor sit amet,
+        %hr.my-2
+        %li.media
+          %a.pull-left{:href => "#"}
+            %img.rounded-circle.img-thumbnail{:alt => "", :src => "https://picsum.photos/80"}/
+          .media-body.small.p-2
+            %span.text-muted.pull-right
+              %small.text-muted 45 min ago
+            %strong.text-success Steven Carman
+            %p.pt-1
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Lorem ipsum dolor sit amet,
+        %hr.my-2
+        %li.media
+          %a.pull-left{:href => "#"}
+            %img.rounded-circle.img-thumbnail{:alt => "", :src => "https://picsum.photos/80"}/
+          .media-body.small.p-2
+            %span.text-muted.pull-right
+              %small.text-muted about an hour ago
+            %strong.text-success Jen Motorlin
+            %p.pt-1
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Lorem ipsum dolor sit amet,
+        %hr.my-2
+        %li.media
+          %a.pull-left{:href => "#"}
+            %img.rounded-circle.img-thumbnail{:alt => "", :src => "https://picsum.photos/80"}/
+          .media-body.small.p-2
+            %span.text-muted.pull-right
+              %small.text-muted about an hour ago
+            %strong.text-success Jen Motorlin
+            %p.pt-1
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Lorem ipsum dolor sit amet,
+        %hr.my-2
+        %li.media
+          %a.pull-left{:href => "#"}
+            %img.rounded-circle.img-thumbnail{:alt => "", :src => "https://picsum.photos/80"}/
+          .media-body.small.p-2
+            %span.text-muted.pull-right
+              %small.text-muted about an hour ago
+            %strong.text-success Jen Motorlin
+            %p.pt-1
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Lorem ipsum dolor sit amet,
+              
       
-    .col-lg-9
+    .col-lg-8
       #map{ :style => "width: 100%; height: 550px" }
       
       .d-none
         //place all dom-dependent info here
         %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
-        %input#dealership_map_zoom{value: current_user.dealership.map_zoom }
+        %input#dealership_map_zoom{value: current_user.dealership.map_zoom }  
