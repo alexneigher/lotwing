@@ -65,9 +65,9 @@ $(function(){
   })
 
   // //bind listener to map zoom inout
-  // $("#dealership_map_zoom").on('keyup',function(){
-  //   window.map.setZoom(this.value);
-  // })
+  $("#dealership_map_zoom").on('keyup',function(){
+    window.map.setZoom(this.value);
+  })
 
 
 })//$(function)
