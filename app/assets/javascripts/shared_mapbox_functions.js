@@ -1,7 +1,25 @@
+function fetch_data_and_render(shape_type){
+  $.ajax({
+    url:"/api/shapes/"+shape_type,
+    dataType: "json",
+    success: function(data){
+      console.log(data);
+      add_shapes_to_map(data, window.map, shape_type);
+      
+      if (shape_type == 'parking_lots'){
+        center_map(data);
+      }
+    },
+    error: function (xhr) {
+      alert(xhr.statusText)
+    }
+  });
+}
+
 function center_map(data){
-  if (data['parking_lot'].length > 0) {
+  if (data['parking_lots'].length > 0) {
     //recenter the map
-    var bbox = turf.extent(data['parking_lot'][0].geo_info.geometry);
+    var bbox = turf.extent(data['parking_lots'][0].geo_info.geometry);
     window.map.fitBounds(bbox, {
       padding: 0,
       duration: 0
@@ -58,20 +76,20 @@ function add_shapes_to_map(data, map, shape_type){
 
 function map_shape_type_to_color(shape_type) {
   var hash  = {
-                "new_vehicle_occupied_space": "#006699",
-                "used_vehicle_occupied_space": "#66CC00",
-                'empty_parking_space': '#cccccc',
-                'parking_space': '#cccccc',
-                "parking_area": 'green',
-                "parking_lot": '#e0e0e0',
-                "building": '#FF9933',
+                "new_vehicle_occupied_spaces": "#006699",
+                "used_vehicle_occupied_spaces": "#66CC00",
+                'empty_parking_spaces': '#cccccc',
+                'parking_spaces': '#cccccc',
+                "parking_areas": 'green',
+                "parking_lots": '#e0e0e0',
+                "buildings": '#FF9933',
               }
 
   return hash[shape_type]
 }
 
 function map_shape_type_to_outline(shape_type){
-  if (shape_type == 'parking_lot'){
+  if (shape_type == 'parking_lots'){
     return '#FF9933'
   }else{
     return '#fff'
@@ -79,7 +97,7 @@ function map_shape_type_to_outline(shape_type){
 }
 
 function map_shape_type_to_opacity(shape_type){
-  if (shape_type == 'parking_lot'){
+  if (shape_type == 'parking_lots'){
     return 0.3
   }else{
     return 1

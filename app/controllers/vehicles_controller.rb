@@ -1,7 +1,10 @@
 class VehiclesController < ApplicationController
   
   def index
-    @vehicles = current_user.dealership.vehicles
+    dealership = current_user.dealership
+
+    @grouped_shapes = dealership.shapes.group(:shape_type).count
+    @vehicles = dealership.vehicles.includes(:current_parking_tag)
   end
 
   def new
@@ -18,7 +21,6 @@ class VehiclesController < ApplicationController
     Vehicle.create(vehicle_params)
     redirect_to vehicles_path
   end
-
 
 
   private

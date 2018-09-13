@@ -25,7 +25,7 @@ $(function(){
       closeOnClick: false
   });
 
-  map.on('mouseenter', 'used_vehicle_occupied_space', function(e) {
+  map.on('mouseenter', 'used_vehicle_occupied_spaces', function(e) {
      
       var coordinates = e.features[0].geometry.coordinates;
       var description = "Shape: " + e.features[0].properties.shape_id;
@@ -42,25 +42,22 @@ $(function(){
         .addTo(map);
   });
 
-  map.on('mouseleave', 'used_vehicle_occupied_space', function() {
+  map.on('mouseleave', 'used_vehicle_occupied_spaces', function() {
       popup.remove();
   });
 
   window.map.on('load', function () {
 
+    fetch_data_and_render('parking_lots');
+    fetch_data_and_render('buildings');
+    
     $.ajax({
-      url:"/api/shapes/vehicles_index",
+      url:"/api/shapes/parking_spaces",
       dataType: "json",
       success: function(data){
-        console.log(data);
-        add_shapes_to_map(data, window.map, 'parking_lot');
-        add_shapes_to_map(data, window.map, 'parking_area');
-        add_shapes_to_map(data, window.map, 'building');
-        add_shapes_to_map(data, window.map, 'used_vehicle_occupied_space');
-        add_shapes_to_map(data, window.map, 'new_vehicle_occupied_space');
-        add_shapes_to_map(data, window.map, 'empty_parking_space');
-
-        center_map(data);
+        add_shapes_to_map(data, window.map, 'used_vehicle_occupied_spaces');
+        add_shapes_to_map(data, window.map, 'new_vehicle_occupied_spaces');
+        add_shapes_to_map(data, window.map, 'empty_parking_spaces');
 
       },
       error: function (xhr) {
@@ -69,15 +66,15 @@ $(function(){
     });
   });
 
-  window.map.on('click', 'new_vehicle_occupied_space', function(e){
+  window.map.on('click', 'new_vehicle_occupied_spaces', function(e){
     parking_space_click(e);
   })
 
-  window.map.on('click', 'used_vehicle_occupied_space', function(e){
+  window.map.on('click', 'used_vehicle_occupied_spaces', function(e){
     parking_space_click(e);
   })
 
-  window.map.on('click', 'empty_parking_space', function(e){
+  window.map.on('click', 'empty_parking_spaces', function(e){
     parking_space_click(e);
   })
 

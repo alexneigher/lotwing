@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   namespace :api do
     resources :shapes do
       collection do
-        get :vehicles_index
+        get :parking_lots
+        get :buildings
+        get :parking_spaces
       end
     end
   end

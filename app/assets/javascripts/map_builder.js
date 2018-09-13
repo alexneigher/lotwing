@@ -29,10 +29,11 @@ $(function(){
       url:"/api/shapes",
       dataType: "json",
       success: function(data){
-        add_shapes_to_map(data, window.map, 'parking_lot');
-        add_shapes_to_map(data, window.map, 'parking_area');
-        add_shapes_to_map(data, window.map, 'building');
-        add_shapes_to_map(data, window.map, 'parking_space');
+        console.log(data);
+        add_shapes_to_map(data, window.map, 'parking_lots');
+        add_shapes_to_map(data, window.map, 'parking_areas');
+        add_shapes_to_map(data, window.map, 'buildings');
+        add_shapes_to_map(data, window.map, 'parking_spaces');
 
         center_map(data);
       },
@@ -42,7 +43,7 @@ $(function(){
     });
   });
 
-  window.map.on('click', 'parking_space', function(e){
+  window.map.on('click', 'parking_spaces', function(e){
     //find the element on the left side, highlight it
 
     id = e.features[0].properties.shape_id

@@ -5,16 +5,15 @@ class TagsController < ApplicationController
     @vehicle.tags.update_all(active: false)
     
     @tag = Tag.create(tag_params)
-    
 
-    redirect_to root_path
+    redirect_to vehicle_manager_path
   end
 
   def deactivate
     @tag = Tag.find(params[:tag_id])
     @tag.update(active: false)
 
-    redirect_to root_path
+    redirect_to vehicle_manager_path
   end
 
   private

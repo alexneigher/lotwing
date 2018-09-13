@@ -1,38 +1,11 @@
-/ Page Content
 = render partial: 'shared/maxbox_dependencies'
-= javascript_include_tag('map_interactor')
+= javascript_include_tag('lot_view')
 .container-fluid
   .row
-    .col-lg-4
-      %h2.m-0.mt-3 Lot View
-      %small.small.text-muted
-        - @grouped_shapes.each do |k, v|
-          = pluralize(v, k).titleize
-
-      = render partial: 'tags/new'
-
-      %ul.list-group
-        - @vehicles.each do |vehicle|
-          %li.list-group-item.vehicle-list{id: dom_id(vehicle)}
-            .row
-              .col
-                %i.fa.fa-car{class: (vehicle.is_used? ? "text-green" : "text-blue").to_s}
-                = vehicle.vin
-              .col
-                - if vehicle.current_parking_tag.present?
-                  Parked
-                  = time_ago_in_words( vehicle.current_parking_tag.created_at) + " ago"
-                  - if vehicle.current_parking_tag.note.present?
-                    %i.fa.fa-file.has-popover.text-success{data: { content: vehicle.current_parking_tag.note, placement: "bottom" }}
-
-                - else
-                  Not Parked
-              .col-1
-                - if vehicle.current_parking_tag.present?
-                  = link_to tag_deactivate_path(vehicle.current_parking_tag) do
-                    %i.fa.fa-refresh
-
-    .col-lg-8
+    .col-lg-3
+      %h3.m-0.mt-3.text-center Lot View
+      
+    .col-lg-9
       #map{ :style => "width: 100%; height: 550px" }
       
       .d-none
