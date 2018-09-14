@@ -84,11 +84,11 @@ function handle_mouseover(e){
 }
 
 function tooltip_html(data){
-  str = "<div>VIN: <strong>"+data.vehicle.vin+"</strong></div>" +
-        "<div>"+data.vehicle.year+" "+data.vehicle.make+"</div>" +
-        "<div>"+data.vehicle.model+" "+data.vehicle.color+"</div>" +
-        "<div>"+data.tag.note+"</div>" +
-        "<div>"+days_ago(data.tag.created_at)+" days in stock</div>"
+  str = render_vehicle_vin(data) +
+        render_vehicle_year_make(data) + 
+        render_vehicle_model_color(data) +
+        render_tag_note(data) +
+        "<div>"+days_ago(data.vehicle.created_at)+" days in stock</div>"
   return str
 }
 
@@ -97,4 +97,40 @@ function days_ago(created_at_date){
   var date1 = new Date(created_at_date);
   
   return Math.round((date2-date1)/(1000*60*60*24));
+}
+
+// Generate the hTML for the tooltip
+function render_vehicle_vin(data){
+  if (data.vehicle.vin){
+   return "<div>VIN: <strong>"+data.vehicle.vin+"</strong></div>"
+  }else{
+    return ""
+  }
+}
+
+function render_vehicle_year_make(data){
+  if (data.vehicle.year && data.vehicle.make){
+    return "<div>"+data.vehicle.year+" "+data.vehicle.make+"</div>"
+  }else{
+    return ""
+  }
+  
+}
+
+function render_tag_note(data){
+  if (data.tag.note){
+    return "<div>"+data.tag.note+"</div>"
+  }else{
+    return ""
+  }
+  
+}
+
+function render_vehicle_model_color(data){
+  if (data.vehicle.model && data.vehicle.color){
+    return "<div>"+data.vehicle.model+" "+data.vehicle.color+"</div>"
+  }else{
+    return ""
+  }
+  
 }
