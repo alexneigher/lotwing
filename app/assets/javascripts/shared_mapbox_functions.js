@@ -68,7 +68,6 @@ function add_shapes_to_map(data, map, shape_type){
     'layout': {},
     'paint': {
         'fill-color': map_shape_type_to_color(shape_type),
-        'fill-outline-color': map_shape_type_to_outline(shape_type),
         'fill-opacity': map_shape_type_to_opacity(shape_type)
     }
   });
@@ -78,27 +77,20 @@ function map_shape_type_to_color(shape_type) {
   var hash  = {
                 "new_vehicle_occupied_spaces": "#006699",
                 "used_vehicle_occupied_spaces": "#66CC00",
-                'empty_parking_spaces': '#cccccc',
+                'empty_parking_spaces': '#FFFFFF',
                 'parking_spaces': '#cccccc',
                 "parking_areas": 'green',
-                "parking_lots": '#e0e0e0',
+                "parking_lots": '#CCCCCC',
                 "buildings": '#FF9933',
               }
 
   return hash[shape_type]
 }
 
-function map_shape_type_to_outline(shape_type){
-  if (shape_type == 'parking_lots'){
-    return '#FF9933'
-  }else{
-    return '#fff'
-  }
-}
 
 function map_shape_type_to_opacity(shape_type){
   if (shape_type == 'parking_lots'){
-    return 0.3
+    return 0.4
   }else{
     return 1
   }
