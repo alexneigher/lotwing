@@ -3,7 +3,6 @@ function fetch_data_and_render(shape_type){
     url:"/api/shapes/"+shape_type,
     dataType: "json",
     success: function(data){
-      console.log(data);
       add_shapes_to_map(data, window.map, shape_type);
       
       if (shape_type == 'parking_lots'){
