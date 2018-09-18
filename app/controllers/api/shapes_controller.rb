@@ -39,7 +39,9 @@ module Api
 
     def show
       @shape = current_user.dealership.shapes.find(params[:id])
-      render json: { shape: @shape, events: @shape.current_vehicle_tag&.events, vehicle: @shape.vehicle }
+
+      serialized_events = @shape.current_vehicle_tag&.events.includes(tag: :shape).map{|e| EventSerializer.new(e, includes:[:user]) }
+      render json: { shape: @shape, events: serialized_events, vehicle: @shape.vehicle }
     end
   end
 end

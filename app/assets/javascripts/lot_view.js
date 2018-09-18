@@ -60,12 +60,10 @@ $(function(){
       success: function(data){
         geo_json_array = []
         for(var i = 0; i < data.events.length; i++){
-
           tag_json = JSON.parse(data.events[i]);
           geo_json = tag_json.data.attributes.parking_space;
           geo_json_array.push(geo_json);
         }
-        console.log(geo_json_array);
         map.loadImage('https://upload.wikimedia.org/wikipedia/commons/d/de/MB_line_1_icon.png', function(error, image) {
                 if (error) throw error;
                 map.addImage('icon', image);
@@ -161,6 +159,7 @@ function render_event(data){
   str = ""
   if (data.events){
     for(var i = 0; i < data.events.length; i++){
+      console.log(data.events[i]);
       str += "<div>User "+data.events[i].user_id +" "+data.events[i].event_type+"</div>"
     }
     
