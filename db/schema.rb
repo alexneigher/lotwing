@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180912151808) do
+ActiveRecord::Schema.define(version: 20180918000536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,18 @@ ActiveRecord::Schema.define(version: 20180912151808) do
     t.datetime "updated_at", null: false
     t.decimal "map_bearing"
     t.decimal "map_zoom"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "tag_id"
+    t.integer "event_type", default: 0
+    t.text "event_details"
+    t.boolean "acknowledged", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_events_on_tag_id"
+    t.index ["user_id"], name: "index_events_on_user_id"
   end
 
   create_table "shapes", force: :cascade do |t|

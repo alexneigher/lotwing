@@ -6,6 +6,8 @@ class TagsController < ApplicationController
     
     @tag = Tag.create(tag_params)
 
+    @tag.events.create(user_id: current_user.id, event_type: "tag")
+
     redirect_to vehicles_path
   end
 

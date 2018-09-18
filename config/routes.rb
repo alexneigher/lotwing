@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   resources :shapes
 
+  resources :events, only: [:show, :update]
+
   resources :dealerships, only: [:update]
   
   resources :vehicles do
