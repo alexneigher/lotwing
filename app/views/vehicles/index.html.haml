@@ -22,8 +22,6 @@
                 - if vehicle.current_parking_tag.present?
                   Parked
                   = time_ago_in_words( vehicle.current_parking_tag.created_at) + " ago"
-                  - if vehicle.current_parking_tag.note.present?
-                    %i.fa.fa-file.has-popover.text-success{data: { content: vehicle.current_parking_tag.note, placement: "bottom" }}
 
                 - else
                   Not Parked

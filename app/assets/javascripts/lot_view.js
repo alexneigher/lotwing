@@ -46,7 +46,17 @@ $(function(){
         add_shapes_to_map(data, window.map, 'used_vehicle_occupied_spaces');
         add_shapes_to_map(data, window.map, 'new_vehicle_occupied_spaces');
         add_shapes_to_map(data, window.map, 'empty_parking_spaces');
+      },
+      error: function (xhr) {
+        alert(xhr.statusText)
+      }
+    });
 
+    $.ajax({
+      url:"/api/events",
+      dataType: "json",
+      success: function(data){
+        console.log('events');
       },
       error: function (xhr) {
         alert(xhr.statusText)
@@ -117,9 +127,9 @@ function render_vehicle_year_make(data){
   
 }
 
-function render_tag_note(data){
-  if (data.tag.note){
-    return "<div>"+data.tag.note+"</div>"
+function render_tag_event(data){
+  if (data.tag.event){
+    return "<div>"+data.tag.event+"</div>"
   }else{
     return ""
   }
