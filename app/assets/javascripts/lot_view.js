@@ -39,6 +39,7 @@ $(function(){
     fetch_data_and_render('parking_lots');
     fetch_data_and_render('buildings');
     
+    // fetch parking spaces
     $.ajax({
       url:"/api/shapes/parking_spaces",
       dataType: "json",
@@ -52,11 +53,39 @@ $(function(){
       }
     });
 
+    // fetch all events to render icons
     $.ajax({
       url:"/api/events",
       dataType: "json",
       success: function(data){
-        console.log('events');
+        geo_json_array = []
+        for(var i = 0; i < data.events.length; i++){
+
+          tag_json = JSON.parse(data.events[i]);
+          geo_json = tag_json.data.attributes.parking_space;
+          geo_json_array.push(geo_json);
+        }
+        console.log(geo_json_array);
+        map.loadImage('https://upload.wikimedia.org/wikipedia/commons/d/de/MB_line_1_icon.png', function(error, image) {
+                if (error) throw error;
+                map.addImage('icon', image);
+                map.addLayer({
+                    "id": "points",
+                    "type": "symbol",
+                    "source": {
+                        "type": "geojson",
+                        "data": {
+                            "type": "FeatureCollection",
+                            "features": geo_json_array
+                        }
+                    },
+                    "layout": {
+                        "icon-image": "icon",
+                        "icon-size": 0.01
+                    }
+                });
+            });
+
       },
       error: function (xhr) {
         alert(xhr.statusText)
@@ -97,8 +126,9 @@ function tooltip_html(data){
   str = render_vehicle_vin(data) +
         render_vehicle_year_make(data) + 
         render_vehicle_model_color(data) +
-        render_tag_note(data) +
-        "<div>"+days_ago(data.vehicle.created_at)+" days in stock</div>"
+        "<div>"+days_ago(data.vehicle.created_at)+" days in stock</div>" +
+        render_event(data)
+
   return str
 }
 
@@ -127,12 +157,16 @@ function render_vehicle_year_make(data){
   
 }
 
-function render_tag_event(data){
-  if (data.tag.event){
-    return "<div>"+data.tag.event+"</div>"
-  }else{
-    return ""
+function render_event(data){
+  str = ""
+  if (data.events){
+    for(var i = 0; i < data.events.length; i++){
+      str += "<div>User "+data.events[i].user_id +" "+data.events[i].event_type+"</div>"
+    }
+    
   }
+
+  return str
   
 }
 

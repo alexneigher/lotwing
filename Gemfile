@@ -19,6 +19,9 @@ gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
+# A lightning fast JSON:API serializer for Ruby Objects.
+gem 'fast_jsonapi'
+
 # A gem to automate using jQuery with Rails
 gem 'jquery-rails'
 

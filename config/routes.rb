@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   namespace :api do
+    resources :events
     resources :shapes do
       collection do
         get :parking_lots
