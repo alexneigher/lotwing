@@ -14,17 +14,11 @@
                 %small.text-muted= time_ago_in_words(event.created_at)
               %strong.text-success= event.user.full_name
               %p.pt-1
-                %strong
-                  = event.event_type
-                = event.tag.vehicle.make 
-                = event.tag.vehicle.model
-                = event.tag.vehicle.year 
-                %br
-                Lorem Ipsum event details if there were any additional details added
+                = event_type_short_description(event)
+                
                 = link_to "...see more", event_path(event)
           %hr.my-2
-        
-              
+      
       
     .col-lg-8
       #map{ :style => "width: 100%; height: 550px" }

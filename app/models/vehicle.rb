@@ -5,4 +5,9 @@ class Vehicle < ApplicationRecord
   has_one :current_parking_tag, -> { where(active: true) }, class_name: 'Tag'
   
   has_one :parking_space, through: :current_parking_tag, source: :shape
+
+
+  def full_description
+    "#{year} #{make} #{model}"
+  end
 end
