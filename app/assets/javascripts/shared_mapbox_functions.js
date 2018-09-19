@@ -95,3 +95,55 @@ function map_shape_type_to_opacity(shape_type){
     return 1
   }
 }
+
+
+function add_events_to_map(data, map, event_type){
+  var geo_json_array = []
+
+  for(var i = 0; i < data[event_type].length; i++){
+    tag_json = JSON.parse(data[event_type][i]);
+    geo_json = tag_json.data.attributes.parking_space;
+    geo_json_array.push(geo_json);
+  }
+
+  map.loadImage(map_image_url_to_event_type(event_type), function(error, image) {
+      if (error) throw error;
+      map.addImage(event_type+"_image", image);
+      map.addLayer({
+          "id": event_type,
+          "type": "symbol",
+          "source": {
+              "type": "geojson",
+              "data": {
+                  "type": "FeatureCollection",
+                  "features": geo_json_array
+              }
+          },
+          "layout": {
+              "icon-image": event_type+"_image",
+              "icon-size": map_event_type_to_size(event_type)
+          }
+      });
+  });
+  
+}
+
+function map_image_url_to_event_type(event_type){
+  var hash  = {
+                "tag_events": "https://upload.wikimedia.org/wikipedia/commons/d/de/MB_line_1_icon.png",
+                "test_drive_events": "https://vignette.wikia.nocookie.net/leapfrog/images/b/be/Yellow_Circle.png",
+                
+              }
+
+  return hash[event_type]
+}
+
+function map_event_type_to_size(event_type){
+  var hash  = {
+                "tag_events": 0.01,
+                "test_drive_events": 0.1
+                
+              }
+
+  return hash[event_type]
+}

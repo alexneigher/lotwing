@@ -58,32 +58,8 @@ $(function(){
       url:"/api/events",
       dataType: "json",
       success: function(data){
-        geo_json_array = []
-        for(var i = 0; i < data.events.length; i++){
-          tag_json = JSON.parse(data.events[i]);
-          geo_json = tag_json.data.attributes.parking_space;
-          geo_json_array.push(geo_json);
-        }
-        map.loadImage('https://upload.wikimedia.org/wikipedia/commons/d/de/MB_line_1_icon.png', function(error, image) {
-                if (error) throw error;
-                map.addImage('icon', image);
-                map.addLayer({
-                    "id": "points",
-                    "type": "symbol",
-                    "source": {
-                        "type": "geojson",
-                        "data": {
-                            "type": "FeatureCollection",
-                            "features": geo_json_array
-                        }
-                    },
-                    "layout": {
-                        "icon-image": "icon",
-                        "icon-size": 0.01
-                    }
-                });
-            });
-
+        add_events_to_map(data, window.map, "tag_events");
+        add_events_to_map(data, window.map, "test_drive_events");
       },
       error: function (xhr) {
         alert(xhr.statusText)
