@@ -47,27 +47,32 @@ $(function(){
         add_shapes_to_map(data, window.map, 'used_vehicle_occupied_spaces');
         add_shapes_to_map(data, window.map, 'new_vehicle_occupied_spaces');
         add_shapes_to_map(data, window.map, 'empty_parking_spaces');
+
+        fetch_events_and_render();
       },
       error: function (xhr) {
         alert(xhr.statusText)
       }
     });
 
-    // fetch all events to render icons
-    $.ajax({
-      url:"/api/events",
-      dataType: "json",
-      success: function(data){
-        add_events_to_map(data, window.map, "tag_events");
-        add_events_to_map(data, window.map, "test_drive_events");
-      },
-      error: function (xhr) {
-        alert(xhr.statusText)
-      }
-    });
   });
 
 })//$(function)
+
+function fetch_events_and_render(){
+  // fetch all events to render icons
+  $.ajax({
+    url:"/api/events",
+    dataType: "json",
+    success: function(data){
+      add_events_to_map(data, window.map, "tag_events");
+      add_events_to_map(data, window.map, "test_drive_events");
+    },
+    error: function (xhr) {
+      alert(xhr.statusText)
+    }
+  });
+}
 
 function handle_mouseover(e){
   var coordinates = e.features[0].geometry.coordinates;

@@ -6,7 +6,9 @@ module EventsHelper
       when 'test_drive'
         "Vehicle: #{vehicle.vin} (#{vehicle.full_description}) was taken for a test drive."
       when 'tag'
-        "Vehicle: #{vehicle.vin} (#{vehicle.full_description}) was tagged in its current parking spot."
+        "Vehicle: #{vehicle.vin} (#{vehicle.full_description}) moved to a new parking spot."
+      when "odometer_update"
+        "The odometer on vehicle: #{vehicle.vin} (#{vehicle.full_description}) has a new reading."
     end
   end
 end
