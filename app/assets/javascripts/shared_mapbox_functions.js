@@ -130,9 +130,9 @@ function add_events_to_map(data, map, event_type){
 
 function map_image_url_to_event_type(event_type){
   var hash  = {
-                "tag_events": "https://upload.wikimedia.org/wikipedia/commons/d/de/MB_line_1_icon.png",
+                "note_events": "https://upload.wikimedia.org/wikipedia/commons/d/de/MB_line_1_icon.png",
                 "test_drive_events": "https://vignette.wikia.nocookie.net/leapfrog/images/b/be/Yellow_Circle.png",
-                
+                "tag_events": "map_icons/tag.png"
               }
 
   return hash[event_type]
@@ -140,9 +140,9 @@ function map_image_url_to_event_type(event_type){
 
 function map_event_type_to_size(event_type){
   var hash  = {
-                "tag_events": 0.007,
-                "test_drive_events": 0.07
-                
+                "note_events": 0.007,
+                "test_drive_events": 0.07,
+                "tag_events": 0.04
               }
 
   return hash[event_type]

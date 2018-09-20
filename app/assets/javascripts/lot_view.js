@@ -65,6 +65,7 @@ function fetch_events_and_render(){
     url:"/api/events",
     dataType: "json",
     success: function(data){
+      add_events_to_map(data, window.map, "note_events");
       add_events_to_map(data, window.map, "tag_events");
       add_events_to_map(data, window.map, "test_drive_events");
     },
