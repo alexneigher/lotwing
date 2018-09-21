@@ -47,10 +47,14 @@ function add_shapes_to_map(data, map, shape_type){
   if (!features){
     return false;
   };
+
   geo_info = []
+
   for(var i=0, size=features.length; i<size; i++){
     features[i].geo_info.properties.shape_id = features[i].id
-    
+
+    features[i].geo_info.properties.fill_opacity = shape_opacity(features[i].most_recently_tagged_at, shape_type);
+
     geo_info.push(features[i].geo_info)
   }
   
@@ -68,7 +72,7 @@ function add_shapes_to_map(data, map, shape_type){
     'paint': {
         'fill-color': map_shape_type_to_color(shape_type),
         'fill-outline-color': "#CCCCCC",
-        'fill-opacity': map_shape_type_to_opacity(shape_type)
+        'fill-opacity': ['get', 'fill_opacity']
     }
   });
 }
@@ -79,7 +83,6 @@ function map_shape_type_to_color(shape_type) {
                 "used_vehicle_occupied_spaces": "#66CC00",
                 'empty_parking_spaces': '#FFFFFF',
                 'parking_spaces': '#cccccc',
-                "parking_areas": 'green',
                 "parking_lots": '#CCCCCC',
                 "buildings": '#FF9933',
               }
@@ -132,7 +135,6 @@ function map_image_url_to_event_type(event_type){
   var hash  = {
                 "note_events": "https://upload.wikimedia.org/wikipedia/commons/d/de/MB_line_1_icon.png",
                 "test_drive_events": "https://vignette.wikia.nocookie.net/leapfrog/images/b/be/Yellow_Circle.png",
-                "tag_events": "map_icons/tag.png"
               }
 
   return hash[event_type]
@@ -142,8 +144,26 @@ function map_event_type_to_size(event_type){
   var hash  = {
                 "note_events": 0.007,
                 "test_drive_events": 0.07,
-                "tag_events": 0.04
               }
 
   return hash[event_type]
+}
+
+function shape_opacity(most_recently_tagged_at, shape_type){
+  if (shape_type == 'parking_lots'){
+    return 0.4
+  }else if(shape_type == "used_vehicle_occupied_spaces" || shape_type == "new_vehicle_occupied_spaces"){
+    
+    // for parking spaces that are more than 12 hours old, make them transparent
+    hours_old = Math.abs(new Date() - new Date(most_recently_tagged_at)) / 36e5
+    if (hours_old > 12){
+      return 0.4
+    }else{
+      return 1
+    }
+
+  }else{
+    return 1
+  }
+  
 }

@@ -25,8 +25,9 @@ module Api
     def parking_spaces
       @parking_spaces = current_user.dealership.shapes.where(shape_type: 'parking_space')
 
-      @new_vehicle_occupied_space =  @parking_spaces.joins(:vehicle).where(vehicles: {is_used: false})
-      @used_vehicle_occupied_space =  @parking_spaces.joins(:vehicle).where(vehicles: {is_used: true})
+      @new_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {is_used: false})
+
+      @used_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {is_used: true})
       
       @empty_parking_space = @parking_spaces - [@new_vehicle_occupied_space + @used_vehicle_occupied_space].flatten
 

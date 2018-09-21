@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180918003624) do
+ActiveRecord::Schema.define(version: 20180921153652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20180918003624) do
     t.datetime "updated_at", null: false
     t.integer "shape_type"
     t.bigint "dealership_id"
+    t.datetime "most_recently_tagged_at"
     t.index ["dealership_id"], name: "index_shapes_on_dealership_id"
   end
 
