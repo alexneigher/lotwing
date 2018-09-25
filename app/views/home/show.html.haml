@@ -12,7 +12,7 @@
                 %small.text-muted= time_ago_in_words(event.created_at)
               %strong.text-success= event.user.full_name
               %p.pt-1.mb-0
-                = event_type_short_description(event)
+                = event_type_short_description(event).html_safe
                 
                 = link_to "...see more", event_path(event)
           %hr.my-2
