@@ -140,8 +140,7 @@ function render_event(data){
   str = ""
   if (data.events){
     for(var i = 0; i < data.events.length; i++){
-      console.log(data.events[i]);
-      str += "<div>User "+data.events[i].user_id +" "+data.events[i].event_type+"</div>"
+      str += "<div>"+data.events[i].data.attributes.summary+"</div>"
     }
     
   }
