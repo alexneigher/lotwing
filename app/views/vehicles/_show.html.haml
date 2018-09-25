@@ -1,0 +1,15 @@
+=# @vehicle.inspect
+
+.table-responsive
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        %th= "#{@vehicle.make} #{@vehicle.model} History"
+        
+    %tbody
+      - @vehicle.tags.includes(:events).each do |tag|
+        %tr
+          %td
+            = tag.inspect
+            = tag.events.inspect
+

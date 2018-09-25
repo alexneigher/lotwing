@@ -7,6 +7,10 @@ class VehiclesController < ApplicationController
     @vehicles = dealership.vehicles.includes(:current_parking_tag)
   end
 
+  def show
+    @vehicle = Vehicle.find(params[:id])
+  end
+
   def new
   end
 
