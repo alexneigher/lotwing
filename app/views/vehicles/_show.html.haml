@@ -1,15 +1,21 @@
 =# @vehicle.inspect
 
 .table-responsive
-  %table.table.table-bordered.table-striped
+  %table.table.table-bordered.table-striped.table-sm
     %thead
       %tr
-        %th= "#{@vehicle.make} #{@vehicle.model} History"
+        %th{colspan: 4}= "#{@vehicle.make} #{@vehicle.model} History"
         
     %tbody
-      - @vehicle.tags.includes(:events).each do |tag|
-        %tr
-          %td
-            = tag.inspect
-            = tag.events.inspect
-
+      - @vehicle.tags.includes(events: :user).each do |tag|
+        - tag.events.each do |event|
+          %tr
+            %td= event.event_type.upcase
+            %td
+              = "Created By #{event.user.full_name} #{event.created_at.strftime('%m/%d/%Y')}"
+              %br
+              = event.event_details
+            %td
+              - if event.event_type == "note"
+                = link_to "clear note", "#"
+            %td
