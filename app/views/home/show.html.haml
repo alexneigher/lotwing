@@ -3,7 +3,20 @@
 .container-fluid
   .row
     .col-lg-4
-      %ul.media-list.mt-3.mb-0
+      .bg-light.p-3
+        
+        = form_tag root_path(params["sort_filters"]) do
+
+          .row
+            .col-md-6
+              %small.small New or Used
+              = select_tag 'sort_filters[new_or_used]', options_for_select(['All','New', 'Used'], nil), class: 'form-control'
+            .col-md-6
+              %small.small Make
+              = select_tag 'sort_filters[make]', options_for_select(['All','Jeep', 'Volvo'], nil), class: 'form-control'
+
+
+      %ul.media-list.mt-3.mb-0.px-0
         - @user_events.each do |event|
 
           %li.media
@@ -16,7 +29,6 @@
                 
                 = link_to "...see more", event_path(event)
           %hr.my-2
-      
       
     .col-lg-8
       #map{ :style => "width: 100%; height: 550px" }
