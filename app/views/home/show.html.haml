@@ -3,17 +3,15 @@
 .container-fluid
   .row
     .col-lg-4
-      %ul.media-list.mt-3
+      %ul.media-list.mt-3.mb-0
         - @user_events.each do |event|
 
           %li.media
-            %a.pull-left{:href => "#"}
-              %img.rounded-circle.img-thumbnail{:alt => "", :src => "https://picsum.photos/80"}/
-            .media-body.small.p-2
+            .media-body.small.px-2.py-0
               %span.text-muted.pull-right
                 %small.text-muted= time_ago_in_words(event.created_at)
               %strong.text-success= event.user.full_name
-              %p.pt-1
+              %p.pt-1.mb-0
                 = event_type_short_description(event)
                 
                 = link_to "...see more", event_path(event)
