@@ -1,21 +1,29 @@
 =# @vehicle.inspect
-
-.table-responsive
-  %table.table.table-bordered.table-striped.table-sm
-    %thead
-      %tr
-        %th{colspan: 4}= "#{@vehicle.make} #{@vehicle.model} History"
-        
-    %tbody
-      - @vehicle.tags.includes(events: :user).each do |tag|
-        - tag.events.each do |event|
-          %tr
-            %td= event.event_type.upcase
-            %td
-              = "Created By #{event.user.full_name} #{event.created_at.strftime('%m/%d/%Y')}"
-              %br
-              = event.event_details
-            %td
-              - if event.event_type == "note"
-                = link_to "clear note", "#"
-            %td
+.card
+  .table-responsive
+    %table.table.table-bordered.table-striped.table-sm.mb-0
+      %thead
+        %tr
+          %th{colspan: 4}= "#{@vehicle.make} #{@vehicle.model} History"
+          
+      %tbody
+        - @vehicle.tags.includes(events: :user).each do |tag|
+          - tag.events.each do |event|
+            %tr
+              %td= event.event_type.upcase
+              %td
+                = "Created By #{event.user.full_name} #{event.created_at.strftime('%m/%d/%Y')}"
+                %br
+                = event.event_details
+              %td
+                - if event.event_type == "note"
+                  = link_to "clear note", "#"
+    
+  .row.p-2
+    .col
+      %i.fa.fa-map-marker
+      Show Map
+    .col
+      %i.fa.fa-laptop
+      View Data Feed
+    .col

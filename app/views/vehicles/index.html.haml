@@ -35,7 +35,7 @@
                   = link_to edit_vehicle_path(vehicle) do
                     %i.fa.fa-pencil
 
-        = link_to "Add Vehicle", new_vehicle_path, class: 'btn btn-small btn-primary'
+        = link_to "Add New Vehicle", new_vehicle_path, class: 'btn btn-small btn-primary'
       %ul.list-group
         - @vehicles.each do |vehicle|
           %li.list-group-item.vehicle-list{id: dom_id(vehicle)}
