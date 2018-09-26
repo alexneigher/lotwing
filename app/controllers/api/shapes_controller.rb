@@ -34,7 +34,7 @@ module Api
       render json: {
                     new_vehicle_occupied_spaces: @new_vehicle_occupied_space,
                     used_vehicle_occupied_spaces: @used_vehicle_occupied_space,
-                    empty_parking_spaces: @empty_parking_space
+                    empty_parking_spaces: @empty_parking_space,
                    }
     end
 

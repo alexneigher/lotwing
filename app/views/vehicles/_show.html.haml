@@ -21,9 +21,34 @@
     
   .row.p-2
     .col
-      %i.fa.fa-map-marker
-      Show Map
+      / Button trigger modal
+      %a#showVehicleTrigger{"data-target" => "#mapModal", "data-toggle" => "modal", :type => "link", href: ''}
+        %i.fa.fa-map-marker
+        Show Map
+
     .col
       %i.fa.fa-laptop
       View Data Feed
     .col
+
+:javascript
+  $(function(){
+    console.log('FIX THIS');
+    //indow.map.removeLayer('singleVehicle');
+    window.map.addLayer({
+      'id': 'singleVehicle',
+      'type': 'fill',
+      'source': {
+          'type': 'geojson',
+          "data": {
+                    "type": "Feature",
+                    "features": #{raw(@vehicle.parking_space&.geo_info.to_json)}
+                  }
+      },
+      'layout': {},
+      'paint': {
+        'fill-color': '#000000',
+      }
+    });
+
+  })

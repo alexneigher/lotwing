@@ -36,31 +36,32 @@
                     %i.fa.fa-pencil
 
         = link_to "Add New Vehicle", new_vehicle_path, class: 'btn btn-small btn-primary'
-      %ul.list-group
-        - @vehicles.each do |vehicle|
-          %li.list-group-item.vehicle-list{id: dom_id(vehicle)}
-            .row
-              .col
-                %i.fa.fa-car{class: (vehicle.is_used? ? "text-green" : "text-blue").to_s}
-                = vehicle.vin
-              .col
-                - if vehicle.current_parking_tag.present?
-                  Parked
-                  = time_ago_in_words( vehicle.current_parking_tag.created_at) + " ago"
-
-                - else
-                  Not Parked
-              .col-1
-                - if vehicle.current_parking_tag.present?
-                  = link_to tag_deactivate_path(vehicle.current_parking_tag) do
-                    %i.fa.fa-refresh
+      
     .col-md-7
       #vehicleDetailContainer
-      #map{ :style => "width: 100%; height: 550px" }
-      
-      .d-none
-        //place all dom-dependent info here
-        %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
-        %input#dealership_map_zoom{value: current_user.dealership.map_zoom }              
 
-        =# paginate @vehicles     
+      / Modal
+      #mapModal.modal{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}
+        .modal-dialog.modal-lg{:role => "document"}
+          .modal-content
+            .modal-header
+              %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+                %span{"aria-hidden" => "true"} ×
+            .modal-body
+              .row
+                #map{ :style => "width: 100%; height: 400px" }        
+                .d-none
+                  //place all dom-dependent info here
+                  %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
+                  %input#dealership_map_zoom{value: current_user.dealership.map_zoom }          
+            .modal-footer
+              %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
+      
+:javascript
+  $(function(){
+    $('#mapModal').on('shown.bs.modal', function (event) {
+      //the map was just shown, here we can extract just the vehicle in question. and render it to the map
+      window.map.resize();
+    }); 
+  })
+           

@@ -22,70 +22,22 @@ $(function(){
 
   window.map.on('load', function () {
 
-    fetch_data_and_render('parking_lots');
-    fetch_data_and_render('buildings');
-    
     $.ajax({
-      url:"/api/shapes/parking_spaces",
+      url:"/api/shapes",
       dataType: "json",
       success: function(data){
-        add_shapes_to_map(data, window.map, 'used_vehicle_occupied_spaces');
-        add_shapes_to_map(data, window.map, 'new_vehicle_occupied_spaces');
-        add_shapes_to_map(data, window.map, 'empty_parking_spaces');
+        add_shapes_to_map(data, window.map, 'parking_lots');
+        add_shapes_to_map(data, window.map, 'parking_areas');
+        add_shapes_to_map(data, window.map, 'buildings');
+        add_shapes_to_map(data, window.map, 'parking_spaces');
 
+        center_map(data);
       },
       error: function (xhr) {
         alert(xhr.statusText)
       }
     });
   });
-
-  window.map.on('click', 'new_vehicle_occupied_spaces', function(e){
-    parking_space_click(e);
-  })
-
-  window.map.on('click', 'used_vehicle_occupied_spaces', function(e){
-    parking_space_click(e);
-  })
-
-  window.map.on('click', 'empty_parking_spaces', function(e){
-    parking_space_click(e);
-  })
-
-
-
 })//$(function)
-
-
-function parking_space_click(e){
-  //render info about this particular parking spot
-  id = e.features[0].properties.shape_id
-
-  $.ajax({
-    url:"/api/shapes/" + id,
-    dataType: "json",
-    success: function(data){
-      render_parking_space_data(data);
-    },
-    error: function (xhr) {
-      alert(xhr.statusText)
-    }
-  });
-}
-
-function render_parking_space_data(data){
-  if (data.vehicle){
-    $('#newTagForm').addClass('d-none');
-    $('#newTagForm #tag_shape_id').val(null);
-    $('.vehicle-list').removeClass('list-group-item-success');
-    $('#vehicle_'+data.vehicle.id).addClass('list-group-item-success');
-    
-  }else{
-    $('.vehicle-list').removeClass('list-group-item-success');
-    $('#newTagForm').removeClass('d-none');
-    $('#newTagForm #tag_shape_id').val(data.shape.id);
-  }
-       
-}
 
 
