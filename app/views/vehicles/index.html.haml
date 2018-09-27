@@ -14,8 +14,7 @@
               %th Make
               %th Model
               %th Age
-              %th.text-center 
-                %i.fa.fa-pencil
+              
           %tbody.small
             - @vehicles.each do |vehicle|
               %tr
@@ -30,11 +29,8 @@
                   = link_to vehicle_path(vehicle), remote: true do
                     = vehicle.model
                 %th
-                  = time_ago_in_words(vehicle.created_at)
-                %td.text-center
-                  = link_to edit_vehicle_path(vehicle) do
-                    %i.fa.fa-pencil
-
+                  = time_ago_in_words(vehicle.created_at).to_i
+               
         = link_to "Add New Vehicle", new_vehicle_path, class: 'btn btn-small btn-primary'
       
     .col-md-7
