@@ -34,8 +34,12 @@
 
 :javascript
   $(function(){
-    console.log('FIX THIS');
-    //indow.map.removeLayer('singleVehicle');
+    layer = window.map.getLayer('singleVehicle');
+    if (layer){
+      window.map.removeLayer('singleVehicle');
+      window.map.removeSource('singleVehicle');
+    }
+    
     window.map.addLayer({
       'id': 'singleVehicle',
       'type': 'fill',
@@ -43,12 +47,12 @@
           'type': 'geojson',
           "data": {
                     "type": "Feature",
-                    "features": #{raw(@vehicle.parking_space&.geo_info.to_json)}
+                    "geometry": #{raw(@vehicle.parking_space&.geo_info['geometry'].to_json)}
                   }
       },
       'layout': {},
       'paint': {
-        'fill-color': '#000000',
+        'fill-color': '#e67300',
       }
     });
 
