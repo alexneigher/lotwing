@@ -21,10 +21,11 @@
     
   .row.p-2
     .col
-      / Button trigger modal
-      %a#showVehicleTrigger{"data-target" => "#mapModal", "data-toggle" => "modal", :type => "link", href: ''}
-        %i.fa.fa-map-marker
-        Show Map
+      - if @vehicle.parking_space&.geo_info
+        / Button trigger modal
+        %a#showVehicleTrigger{"data-target" => "#mapModal", "data-toggle" => "modal", :type => "link", href: ''}
+          %i.fa.fa-map-marker
+          Show Map
 
     .col
       %i.fa.fa-laptop
@@ -32,28 +33,29 @@
       
     .col
 
-:javascript
-  $(function(){
-    layer = window.map.getLayer('singleVehicle');
-    if (layer){
-      window.map.removeLayer('singleVehicle');
-      window.map.removeSource('singleVehicle');
-    }
-    
-    window.map.addLayer({
-      'id': 'singleVehicle',
-      'type': 'fill',
-      'source': {
-          'type': 'geojson',
-          "data": {
-                    "type": "Feature",
-                    "geometry": #{raw(@vehicle.parking_space&.geo_info['geometry'].to_json)}
-                  }
-      },
-      'layout': {},
-      'paint': {
-        'fill-color': '#006699',
+- if @vehicle.parking_space&.geo_info
+  :javascript
+    $(function(){
+      layer = window.map.getLayer('singleVehicle');
+      if (layer){
+        window.map.removeLayer('singleVehicle');
+        window.map.removeSource('singleVehicle');
       }
-    });
+      
+      window.map.addLayer({
+        'id': 'singleVehicle',
+        'type': 'fill',
+        'source': {
+            'type': 'geojson',
+            "data": {
+                      "type": "Feature",
+                      "geometry": #{raw(@vehicle.parking_space&.geo_info['geometry'].to_json)}
+                    }
+        },
+        'layout': {},
+        'paint': {
+          'fill-color': '#006699',
+        }
+      });
 
-  })
+    })

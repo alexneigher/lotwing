@@ -5,7 +5,7 @@
   .row
     .col-lg-5
       = render partial: 'tags/new'
-      .table-responsive
+      .table-responsive.vehicle-table
         %table.table.table-bordered.table-striped.table-sm
           %thead
             %tr
@@ -17,9 +17,8 @@
               
           %tbody.small
             - @vehicles.each do |vehicle|
-              %tr
-                %td= vehicle.vin
-                  
+              %tr{id: dom_id(vehicle)}
+                %td= vehicle.vin 
                 %td
                   = vehicle.year
                 %td
@@ -29,7 +28,7 @@
                   = link_to vehicle_path(vehicle), remote: true do
                     = vehicle.model
                 %th
-                  = time_ago_in_words(vehicle.created_at).to_i
+                  = time_ago_in_words(vehicle.created_at)
                
         = link_to "Add New Vehicle", new_vehicle_path, class: 'btn btn-small btn-primary'
       
