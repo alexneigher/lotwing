@@ -14,13 +14,6 @@ class VehiclesController < ApplicationController
   def new
   end
 
-  def vin_search
-    @vehicles = Vehicle
-                  .where("vin ILIKE ?", "%#{params[:vin_search]}%")
-
-    @shape_id = params[:shape_id]
-  end
-
   def create
     Vehicle.create(vehicle_params)
     redirect_to vehicles_path

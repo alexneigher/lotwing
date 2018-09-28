@@ -8,9 +8,13 @@ class TagsController < ApplicationController
 
     @tag.shape.update(most_recently_tagged_at: DateTime.current)
 
-    @tag.events.create(user_id: current_user.id, event_type: "tag")
+    @tag.events.create(event_params.merge(user_id: current_user.id))
 
     redirect_to vehicles_path
+  end
+
+  #temp UI for development work
+  def new
   end
 
   def deactivate
@@ -23,5 +27,9 @@ class TagsController < ApplicationController
   private
     def tag_params
       params.require(:tag).permit(:vehicle_id, :shape_id)
+    end
+
+    def event_params
+      params.require(:event).permit(:event_type, :event_details)
     end
 end
