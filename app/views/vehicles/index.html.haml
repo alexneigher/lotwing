@@ -21,10 +21,10 @@
                 %td
                   = vehicle.year
                 %td
-                  = link_to vehicle_path(vehicle), remote: true do
+                  = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
                     = vehicle.make
                 %th
-                  = link_to vehicle_path(vehicle), remote: true do
+                  = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
                     = vehicle.model
                 %th
                   = time_ago_in_words(vehicle.created_at)
@@ -58,4 +58,8 @@
       window.map.resize();
     }); 
   })
+
+  function show_loading(){
+    $('#vehicleDetailContainer').html('Loading...')
+  }
            
