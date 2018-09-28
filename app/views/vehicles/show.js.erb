@@ -1,5 +1,5 @@
 $('#vehicleDetailContainer').html("<%= j(render partial: 'vehicles/show')%>");
 
 
-$('.vehicle-table tr').removeClass('table-active');
-$("#<%= dom_id(@vehicle) %>").addClass('table-active');
+$('.vehicle-table tr').removeClass('table-success');
+$("#<%= dom_id(@vehicle) %>").addClass('table-success');

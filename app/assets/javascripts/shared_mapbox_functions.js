@@ -82,7 +82,7 @@ function map_shape_type_to_color(shape_type) {
                 "new_vehicle_occupied_spaces": "#006699",
                 "used_vehicle_occupied_spaces": "#66CC00",
                 'empty_parking_spaces': '#FFFFFF',
-                'parking_spaces': '#cccccc',
+                'parking_spaces': '#FFFFFF',
                 "parking_lots": '#CCCCCC',
                 "buildings": '#FF9933',
               }
