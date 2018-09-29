@@ -1,13 +1,15 @@
 .mapboxgl-popup{
   font-size: 11px;
   line-height: 14px;
-  pointer-events: none;
+  pointer-events: none !important;
 }
 
 .mapboxgl-popup-content{
   background-color: #ffffc5 !important;
+  pointer-events: none !important;
 }
 
 .mapboxgl-popup-tip{
   border-top-color: #ffffc5 !important;
+  pointer-events: none !important;
 }
