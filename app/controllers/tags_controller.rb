@@ -6,6 +6,8 @@ class TagsController < ApplicationController
     
     @tag = Tag.create(tag_params)
 
+    @vehicle.events.where.not(event_type: "tag").update_all(tag_id: @tag.id)
+
     @tag.shape.update(most_recently_tagged_at: DateTime.current)
 
     @tag.events.create(event_params.merge(user_id: current_user.id))
