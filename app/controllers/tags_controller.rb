@@ -6,10 +6,13 @@ class TagsController < ApplicationController
     
     @tag = Tag.create(tag_params)
 
-    @vehicle.events.where.not(event_type: "tag").update_all(tag_id: @tag.id)
+    #move all of the note events to the new tag to persist them on map
+    @vehicle.events.where(event_type: "note").update_all(tag_id: @tag.id)
 
+    # track the recency of movement
     @tag.shape.update(most_recently_tagged_at: DateTime.current)
 
+    # create a new event
     @tag.events.create(event_params.merge(user_id: current_user.id))
 
     redirect_to vehicles_path

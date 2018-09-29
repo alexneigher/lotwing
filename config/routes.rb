@@ -20,7 +20,9 @@ Rails.application.routes.draw do
 
   resources :shapes
 
-  resources :events, only: [:show, :update]
+  resources :events, only: [:show, :update] do
+    resources :resolutions, controller: 'events/resolutions'
+  end
 
   resources :dealerships, only: [:update]
   

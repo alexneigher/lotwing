@@ -1,0 +1,17 @@
+.modal-content
+  
+  = form_for :resolution, url: event_resolutions_path(@event.id), method: :post do |f|
+    .modal-body.bg-light.p-4
+      .row
+        .col-md-6
+          %strong
+            = "#{@event.user.full_name}'s Note:"
+          %br
+          %em= @event.event_details
+        .col-md-6
+          %strong
+            = "#{current_user.full_name}'s Resolution:"
+          = f.text_area :details, class: 'form-control'
+    .modal-footer
+      = f.submit
+      %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close

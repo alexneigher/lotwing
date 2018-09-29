@@ -7,7 +7,7 @@
           %th{colspan: 4}= "#{@vehicle.make} #{@vehicle.model} History"
           
       %tbody
-        - @vehicle.tags.includes(events: :user).each do |tag|
+        - @vehicle.tags.includes(events: [:user, :resolutions]).each do |tag|
           - tag.events.each do |event|
             %tr
               %td= event.event_type.upcase
@@ -16,9 +16,13 @@
                 %br
                 = event.event_details
               %td
-                - if event.event_type == "note"
-                  = link_to "clear note", "#"
-    
+                - if event.event_type == "note" && !event.acknowledged?
+                  = link_to "clear note", new_event_resolution_path(event), remote: true
+              %td
+                - event.resolutions.each do |resolution|
+                  = "#{resolution.user.full_name}'s action #{resolution.created_at.strftime('%m/%d/%Y')}"
+                  %br
+                  = resolution.details
   .row.p-2
     .col
       - if @vehicle.parking_space&.geo_info
