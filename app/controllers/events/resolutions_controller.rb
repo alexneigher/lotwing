@@ -6,9 +6,14 @@ module Events
     end
 
     def create
+      
       @event = current_user.dealership.events.find(params[:event_id])
       @resolution = @event.resolutions.create(resolution_params.merge(user_id: current_user.id))
-      @event.update(acknowledged: true)
+      
+      if params[:commit] == 'Save & Resolve'
+        @event.update(acknowledged: true)
+      end
+
       redirect_to vehicles_path
     end
 

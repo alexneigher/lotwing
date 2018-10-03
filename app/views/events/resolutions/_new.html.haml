@@ -1,6 +1,6 @@
 .modal-content
   
-  = form_for :resolution, url: event_resolutions_path(@event.id), method: :post do |f|
+  = form_for @resolution, url: event_resolutions_path(@event.id), method: :post do |f|
     .modal-body.bg-light.p-4
       .row
         .col-md-6
@@ -13,5 +13,5 @@
             = "#{current_user.full_name}'s Resolution:"
           = f.text_area :details, class: 'form-control'
     .modal-footer
-      = f.submit
-      %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
+      = f.submit "Save", class: 'btn btn-secondary'
+      = f.submit "Save & Resolve", class: 'btn btn-primary'
