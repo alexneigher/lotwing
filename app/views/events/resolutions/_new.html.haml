@@ -1,6 +1,6 @@
 .modal-content
   
-  = form_for @resolution, url: event_resolutions_path(@event.id), method: :post do |f|
+  = form_for :resolution, url: event_resolutions_path(@event.id), method: :post do |f|
     .modal-body.bg-light.p-4
       .row
         .col-md-6
