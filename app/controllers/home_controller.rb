@@ -6,6 +6,6 @@ class HomeController < ApplicationController
   end
 
   def map_builder
-    @shapes = Shape.all
+    @shapes = current_user.dealership.shapes.order(:id).all
   end
 end

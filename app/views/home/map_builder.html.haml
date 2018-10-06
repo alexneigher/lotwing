@@ -40,7 +40,7 @@
       %ul.list-group
         - @shapes.each do |shape|
           %li.list-group-item{id: "#{shape.id}" }
-            %i.fa.fa-car
+            %i.fa{class: map_builder_icon_shape(shape)}
             = "#{shape.shape_type.titleize}: #{shape.id}"
             .pull-right
               =link_to shape_path(shape), method: :delete do
