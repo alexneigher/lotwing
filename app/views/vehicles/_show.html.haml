@@ -63,4 +63,6 @@
         }
       });
 
+      map.flyTo({center: #{raw(@vehicle.parking_space&.geo_info['geometry']['coordinates'][0][0].to_json)}});
+
     })
