@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :board_manager, path: '/board-manager'
+
   resources :tags do
     get :deactivate
   end
