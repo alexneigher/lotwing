@@ -1,4 +1,52 @@
 .container-fluid
+  .row.mb-1
+    .col-md-2
+    .col-md-10
+      = link_to 'New Entry', new_deal_path, class: 'btn btn-primary btn-sm'
   .row
-    .col-lg-12
-      table of "deals" here
+    .col-md-2
+    .col-md-10
+      .table-responsive.small
+        %table.table.table-bordered.table-striped.table-sm.mb-0
+          %thead
+            %tr
+              %th Last
+              %th Stock #
+              %th Source
+              %th New
+              %th Used
+              %th Trade
+              %th Sales Rep
+              %th Split
+              %th City
+              %th Result
+              %th RDR
+              
+          %tbody
+            - @deals.each do |deal|
+              %tr
+                %td= deal.client_last_name
+                
+                %td= deal.stock_number
+                
+                %td= deal.source
+                
+                - if deal.is_used
+                  %td
+                  %td
+                    = deal.make
+                    = deal.model
+                    = deal.year
+                - else
+                  %td
+                    = deal.make
+                    = deal.model
+                    = deal.year
+                  %td
+
+                %td= deal.trade
+                %td= deal.sales_rep
+                %td= deal.split_rep
+                %td= deal.city
+                %td= deal.result
+                %td RDR

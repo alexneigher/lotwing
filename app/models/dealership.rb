@@ -5,4 +5,6 @@ class Dealership < ApplicationRecord
 
   has_many :shapes
   has_many :vehicles
+
+  has_many :deals
 end

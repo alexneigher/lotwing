@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   end
 
   resource :board_manager, path: '/board-manager'
+  resources :deals, except: [:index]
 
   resources :tags do
     get :deactivate
