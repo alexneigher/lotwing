@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181024031002) do
+ActiveRecord::Schema.define(version: 20181024151100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20181024031002) do
     t.decimal "trade_acv"
     t.decimal "trade_payoff_amount"
     t.string "trade_bank_name"
-    t.date "good_through_date"
+    t.string "good_through_date"
     t.string "trade_account_number"
     t.text "send_payoff_address"
     t.string "time_agreed"

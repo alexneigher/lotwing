@@ -1,0 +1,62 @@
+.container-fluid
+  .row
+    .col-md-12
+      %h3 Board Manager - New Deal
+  = form_for @deal, url: deal_path(@deal), method: :put do |f|
+    .row.mt-4
+      .col-md-2
+        = f.text_field :client_last_name, placeholder: 'Client Last Name', class: 'form-control mb-1'
+        = f.text_field :source, placeholder: 'Source', class: 'form-control mb-1'
+        = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control mb-1'
+        = f.text_field :trade, placeholder: 'Trade', class: 'form-control mb-1'
+        = f.select :sales_rep, options_for_select(current_user.dealership.users.pluck(:full_name), @deal.sales_rep), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
+        = f.select :split_rep, options_for_select(current_user.dealership.users.pluck(:full_name), @deal.split_rep), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
+        = f.text_field :city, placeholder: 'City', class: 'form-control mb-1'
+      .col-md-2
+        = f.text_field :make, placeholder: 'Make', class: 'form-control mb-1'
+        = f.text_field :model, placeholder: 'Model', class: 'form-control mb-1'
+        = f.text_field :year, placeholder: 'Year', class: 'form-control mb-1'
+        %label
+          = f.check_box :is_used
+          Is Used
+      .col-md-2
+        = f.select :result, options_for_select(['Deposit', 'P-Trip', 'Trip', 'N/C'], @deal.result), {include_blank: 'Result'}, class: 'form-control mb-1'
+        = f.select :report_status, options_for_select(['New RDR Done', 'CPO RDR Done', 'Not RDR\'d', 'N/A (Used Car, non CPO)'], @deal.report_status), {include_blank: 'Report Status'}, class: 'form-control mb-1'
+        = f.text_field :deal_number, placeholder: 'Deal Number', class: 'form-control mb-1'
+        = f.text_field :pay_method, placeholder: 'Pay Method', class: 'form-control mb-1'
+        = f.select :deal_type, options_for_select(['Retail', 'One Pay', 'Lease', 'Cash', 'RB'], @deal.deal_type), {include_blank: 'Deal Type'}, class: 'form-control mb-1'
+        = f.number_field :selling_price, placeholder: 'Selling Price', class: 'form-control mb-1'
+        = f.number_field :down_payment, placeholder: 'Down Payment', class: 'form-control mb-1'
+        = f.text_field :term, placeholder: 'Term', class: 'form-control mb-1'
+      .col-md-2
+        = f.number_field :quoted_payment, placeholder: 'Quoted Payment', class: 'form-control mb-1'
+        = f.text_field :rate_apr, placeholder: 'Rate APR', class: 'form-control mb-1'
+        = f.text_field :miles_per_year, placeholder: 'Miles Per Year (LSE)', class: 'form-control mb-1'
+        = f.text_field :rebates, placeholder: 'Rebates', class: 'form-control mb-1'
+        = f.text_field :program_description, placeholder: 'Program Description', class: 'form-control mb-1'
+        = f.text_field :desk_manager, placeholder: 'Desk Manager', class: 'form-control mb-1'
+        = f.text_field :finance_manager, placeholder: 'Finance Manager', class: 'form-control mb-1'
+        %label
+          = f.check_box :dealer_demo
+          Dealer Demo
+        %label
+          = f.check_box :loaner_car
+          Loaner Car
+        = f.text_field :discloser, placeholder: 'Discloser', class: 'form-control mb-1'
+      .col-md-2
+        = f.number_field :trade_allowance, placeholder: 'Trade Allowance', class: 'form-control mb-1'
+        = f.number_field :trade_acv, placeholder: 'Trade ACV', class: 'form-control mb-1'
+        = f.number_field :trade_payoff_amount, placeholder: 'Trade Payoff Amount', class: 'form-control mb-1'
+        = f.text_field :trade_bank_name, placeholder: 'Trade Bank Name', class: 'form-control mb-1'
+        = f.text_field :good_through_date, placeholder: 'Good Through Date', class: 'form-control mb-1'
+        = f.text_field :trade_account_number, placeholder: 'Trade Account Number', class: 'form-control mb-1'
+        = f.text_area :send_payoff_address, placeholder: 'Send Payoff Address', rows: 3, class: 'form-control mb-1'
+        = f.text_field :time_agreed, placeholder: 'Time Agreed', class: 'form-control mb-1'
+        = f.text_field :time_in_finance, placeholder: 'Time In - Finance', class: 'form-control mb-1'
+        = f.text_field :time_out_finance, placeholder: 'Time Out - Finance', class: 'form-control mb-1'
+
+    .row.mb-5
+      .col-md-2
+      .col-md-6.text-center
+        = f.submit 'Board Today', class: 'btn btn-primary mx-2'
+        = f.submit 'Store Entry', class: 'btn btn-outline-secondary mx-2'
