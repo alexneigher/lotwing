@@ -1,0 +1,24 @@
+.board-manager-table{
+  border: 1px solid #e0e0e0 !important;
+  .edit-icon{
+    display: none;
+  }
+  tr:hover{
+    .edit-icon{
+      display: inline-block;
+    } 
+  }
+
+  
+  td, th{
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+  }
+
+  tr:last-of-type{
+    td{
+      border-bottom: 0;
+    }
+  }
+}
