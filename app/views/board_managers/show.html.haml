@@ -4,17 +4,16 @@
       %h3 Sales Board
     .col-md-10
       = link_to 'New Entry', new_deal_path, class: 'btn btn-primary btn-sm'
-      .row.pt-1
-        .col-md-1.pt-1
-          %label
-            = check_box_tag "filters[today]"
-            Today
-        .col-md-1.pt-1
-          %label
-            = check_box_tag "filters[mtd]"
-            MTD
-        .col-md-2
-          = text_field_tag "filters[query]", params.dig(:filters, :query), placeholder: 'Johnson', class: 'form-control form-control-sm'
+      = form_for :filters, url: board_manager_path, method: :get do
+        .row.pt-1
+          .col-md-1.pt-1 
+            %label
+              = check_box_tag "filters[mtd]", 1, params.dig(:filters, :mtd)&.present? ? true : false
+              MTD
+          .col-md-2
+            = text_field_tag "filters[query]", params.dig(:filters, :query), placeholder: 'Johnson', class: 'form-control form-control-sm'
+          .col-md-1
+            = submit_tag 'Filter', class: 'btn btn-sm btn-outline-secondary'
   .row
     .col-md-2
     .col-md-10
