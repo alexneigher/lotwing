@@ -12,6 +12,19 @@
         = f.select :sales_rep, options_for_select(current_user.dealership.users.pluck(:full_name), @deal.sales_rep), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
         = f.select :split_rep, options_for_select(current_user.dealership.users.pluck(:full_name), @deal.split_rep), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
         = f.text_field :city, placeholder: 'City', class: 'form-control mb-1'
+
+        - @deal.versions.each do |version|
+          %hr
+          %small
+            = version.created_at.strftime('%m/%d/%Y')
+            %strong= version.whodunnit
+            %br
+            - version.changeset.each do |key, value|
+              - next if key == "updated_at"
+              changed
+              %strong= key
+              to 
+              = value[1] 
       .col-md-2
         = f.text_field :make, placeholder: 'Make', class: 'form-control mb-1'
         = f.text_field :model, placeholder: 'Model', class: 'form-control mb-1'

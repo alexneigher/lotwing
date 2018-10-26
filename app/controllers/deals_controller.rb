@@ -1,11 +1,12 @@
 class DealsController < ApplicationController
+  before_action :set_paper_trail_whodunnit, only: [:update, :create]
 
   def new
     @deal = Deal.new
   end
 
   def edit
-    @deal = current_user.dealership.deals.find(params[:id])
+    @deal = current_user.dealership.deals.includes(:versions).find(params[:id])
   end
 
   def create
@@ -21,6 +22,10 @@ class DealsController < ApplicationController
 
 
   private
+    def user_for_paper_trail
+      current_user.full_name
+    end
+
     def deal_params
       params
         .require(:deal)

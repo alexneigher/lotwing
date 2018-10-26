@@ -22,6 +22,9 @@ gem 'sass-rails', '~> 5.0'
 # A lightning fast JSON:API serializer for Ruby Objects.
 gem 'fast_jsonapi'
 
+# Track changes to your models' data. Good for auditing or versioning.
+gem 'paper_trail'
+
 # A gem to automate using jQuery with Rails
 gem 'jquery-rails'
 
