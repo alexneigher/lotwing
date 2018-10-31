@@ -1,0 +1,7 @@
+%h1 Upload new data feed file
+
+= form_for :data_feed, url: data_feed_index_path, method: :post do |f|
+
+  = f.file_field :file
+
+  = f.submit

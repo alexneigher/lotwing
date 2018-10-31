@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181026012931) do
+ActiveRecord::Schema.define(version: 20181031231258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,32 @@ ActiveRecord::Schema.define(version: 20181026012931) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_used", default: false
+    t.string "stock_number"
+    t.string "trim_level"
+    t.string "doors"
+    t.string "body_style"
+    t.string "transmission"
+    t.string "engine"
+    t.string "engine_size"
+    t.string "model_code"
+    t.string "certified"
+    t.string "retail_value"
+    t.string "invoice_price"
+    t.string "asking_price"
+    t.string "wholesale_price"
+    t.string "msrp"
+    t.string "sale_price"
+    t.string "vehicle_type"
+    t.string "options"
+    t.string "options_codes"
+    t.string "comments"
+    t.string "photo_url_list"
+    t.string "package_code"
+    t.string "fuel"
+    t.string "drive_line"
+    t.string "rear_wheel"
+    t.string "status"
+    t.text "raw_data_feed_output"
     t.index ["dealership_id"], name: "index_vehicles_on_dealership_id"
   end
 
