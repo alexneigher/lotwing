@@ -4,7 +4,7 @@ class BoardManagersController < ApplicationController
     deals = current_user.dealership.deals
 
     if params.dig(:filters, :mtd).present?
-      deals = deals.where("created_at > ?", Date.today.beginning_of_month)
+      deals = deals.where("created_at > ?", current_user.dealership.custom_mtd_start_date)
     else
       deals = deals.where("created_at > ?", Date.today.beginning_of_day)
     end

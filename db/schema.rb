@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181031231258) do
+ActiveRecord::Schema.define(version: 20181101002556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20181031231258) do
     t.datetime "updated_at", null: false
     t.decimal "map_bearing"
     t.decimal "map_zoom"
+    t.date "custom_mtd_start_date"
   end
 
   create_table "deals", force: :cascade do |t|

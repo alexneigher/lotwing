@@ -6,10 +6,12 @@
       = link_to 'New Entry', new_deal_path, class: 'btn btn-primary btn-sm'
       = form_for :filters, url: board_manager_path, method: :get do
         .row.pt-1
-          .col-md-1.pt-1 
+          .col-md-3.pt-1 
             %label
               = check_box_tag "filters[mtd]", 1, params.dig(:filters, :mtd)&.present? ? true : false
               MTD
+              %small.text-muted
+                (since #{current_user.dealership.custom_mtd_start_date})
           .col-md-2
             = text_field_tag "filters[query]", params.dig(:filters, :query), placeholder: 'Johnson', class: 'form-control form-control-sm'
           .col-md-1

@@ -1,0 +1,25 @@
+%h3.text-center= @dealership.name
+
+
+.container
+  .row.justify-content-center
+    .col-md-9
+      .card
+        = form_for @dealership, url: dealership_path(@dealership), method: :put do |f|
+          .card-body
+            .form-group
+              %label Dealership Name
+              = f.text_field :name, class: 'form-control'
+            .form-group
+              .row
+                .col-6
+                  %label MTD Start Date
+                  = f.text_field :custom_mtd_start_date, class: 'form-control datepicker'
+            .form-group
+              = f.submit 'Update', class: 'btn btn-primary'
+:javascript 
+  $(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd'
+     });
+  });
