@@ -13,6 +13,12 @@ class BoardManagersController < ApplicationController
       deals = deals.where("client_last_name ILIKE ?", "%#{params.dig(:filters, :query)}%")
     end
 
+    if params.dig(:sortings).present?
+      params.dig(:sortings).each do |k,v|
+        deals = deals.order(k => v)
+      end
+    end
+
     @deals = deals
   end
 end

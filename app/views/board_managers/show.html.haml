@@ -25,8 +25,20 @@
             %tr
               %th
                 %i.fa.fa-pencil
-              %th Last
-              %th Stock #
+              %th
+                = link_to board_manager_path(sortings: {client_last_name: params.dig(:sortings, :client_last_name) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  Last
+                  - if params.dig(:sortings, :client_last_name) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to board_manager_path(sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  Stock #
+                  - if params.dig(:sortings, :stock_number) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
               %th Source
               %th New
               %th Used

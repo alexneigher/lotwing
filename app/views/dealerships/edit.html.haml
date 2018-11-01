@@ -2,7 +2,7 @@
 
 
 .container
-  .row.justify-content-center
+  .row
     .col-md-9
       .card
         = form_for @dealership, url: dealership_path(@dealership), method: :put do |f|
@@ -17,6 +17,24 @@
                   = f.text_field :custom_mtd_start_date, class: 'form-control datepicker'
             .form-group
               = f.submit 'Update', class: 'btn btn-primary'
+    .col-md-3
+      .card.bg-light
+        .card-body
+          PLACEHOLDER SETTINGS
+          %hr
+          CUSTOM FORMS
+          %hr
+          PERMISSIONS
+          %HR
+          etc
+  %hr
+  .row
+    .col-md-4
+      %h4 Team members
+      %ul.list-group
+        - @dealership.users.each do |user|
+          %li.list-group-item
+            = user.full_name
 :javascript 
   $(function() {
     $('.datepicker').datepicker({
