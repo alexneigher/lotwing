@@ -82,8 +82,8 @@
           %tbody
             - @grouped_deals.each do |date, deals|
               %tr
-                %td.bg-dark.text-white{colspan: 12}
-                  = date.strftime("%m/%d/%Y")
+                %td.bg-light{colspan: 12}
+                  %strong= date.strftime("%m/%d/%Y")
               - deals.each do |deal|
                 %tr
                   %td
