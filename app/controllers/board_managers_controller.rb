@@ -29,5 +29,6 @@ class BoardManagersController < ApplicationController
     end
 
     @deals = deals
+    @grouped_deals = deals.group_by(&:created_at)
   end
 end
