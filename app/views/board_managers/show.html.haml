@@ -122,7 +122,7 @@
             .card-header
               Sales Today
             .card-body
-              - grouped = current_user.dealership.deals.where("created_at >= ?", Date.today.beginning_of_month).group_by(&:is_used)
+              - grouped = @deals.where("created_at >= ?", Date.today.beginning_of_month).group_by(&:is_used)
               %span.p-3.my-2.bg-blue
                 = "New: #{grouped[false]&.length || 0}"
               %span.p-3.my-2.bg-green
@@ -132,7 +132,7 @@
             .card-header
               Sales MTD
             .card-body
-              - grouped = current_user.dealership.deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:is_used)
+              - grouped = @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:is_used)
               %span.p-3.my-2.bg-blue
                 = "New: #{grouped[false]&.length || 0}"
               %span.p-3.my-2.bg-green
