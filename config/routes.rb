@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   
   resources :vehicles do
     collection do
-      get :vin_search
+      get :search
     end
   end
 

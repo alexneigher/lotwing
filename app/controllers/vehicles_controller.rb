@@ -19,6 +19,10 @@ class VehiclesController < ApplicationController
     redirect_to vehicles_path
   end
 
+  def search
+    #TODO
+  end
+
 
   private
     def vehicle_params

@@ -25,29 +25,59 @@
             %tr
               %th
                 %i.fa.fa-pencil
+              %th Last
+              %th Stock #
               %th
-                = link_to board_manager_path(sortings: {client_last_name: params.dig(:sortings, :client_last_name) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
-                  Last
-                  - if params.dig(:sortings, :client_last_name) == "asc"
+                = link_to board_manager_path(sortings: {source: params.dig(:sortings, :source) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  Source
+                  - if params.dig(:sortings, :source) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to board_manager_path(sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
-                  Stock #
-                  - if params.dig(:sortings, :stock_number) == "asc"
+                = link_to board_manager_path(sortings: {is_used: params.dig(:sortings, :is_used) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  New
+                  - if params.dig(:sortings, :is_used) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
-              %th Source
-              %th New
               %th Used
               %th Trade
-              %th Sales Rep
-              %th Split
-              %th City
-              %th Result
-              %th RDR
+              %th
+                = link_to board_manager_path(sortings: {sales_rep: params.dig(:sortings, :sales_rep) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  Sales Rep
+                  - if params.dig(:sortings, :sales_rep) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to board_manager_path(sortings: {split_rep: params.dig(:sortings, :split_rep) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  Split
+                  - if params.dig(:sortings, :split_rep) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to board_manager_path(sortings: {city: params.dig(:sortings, :city) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  City
+                  - if params.dig(:sortings, :city) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to board_manager_path(sortings: {result: params.dig(:sortings, :result) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  Result
+                  - if params.dig(:sortings, :result) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to board_manager_path(sortings: {report_status: params.dig(:sortings, :report_status) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  RDR
+                  - if params.dig(:sortings, :report_status) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
               
           %tbody
             - @deals.each do |deal|

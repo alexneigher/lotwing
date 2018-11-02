@@ -8,7 +8,7 @@
         %table.table.table-bordered.table-striped.table-sm
           %thead
             %tr
-              %th VIN
+              %th Stock #
               %th Year
               %th Make
               %th Model
@@ -17,7 +17,7 @@
           %tbody.small
             - @vehicles.each do |vehicle|
               %tr{id: dom_id(vehicle)}
-                %td= vehicle.vin 
+                %td= vehicle.stock_number
                 %td
                   = vehicle.year
                 %td
