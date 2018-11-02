@@ -73,7 +73,7 @@
                     %i.fa.fa-sort-down
               %th
                 = link_to board_manager_path(sortings: {report_status: params.dig(:sortings, :report_status) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
-                  RDR
+                  Report
                   - if params.dig(:sortings, :report_status) == "asc"
                     %i.fa.fa-sort-up
                   - else
@@ -110,3 +110,31 @@
                 %td= deal.city
                 %td= deal.result
                 %td= deal.report_status
+
+
+
+  .row.mt-4
+    .col-md-2
+    .col-md-5
+      .row
+        .col-6
+          .card.text-center
+            .card-header
+              Sales Today
+            .card-body
+              - grouped = current_user.dealership.deals.where("created_at >= ?", Date.today.beginning_of_month).group_by(&:is_used)
+              %span.p-3.my-2.bg-blue
+                = "New: #{grouped[false]&.length || 0}"
+              %span.p-3.my-2.bg-green
+                = "Used: #{grouped[true]&.length || 0}"
+        .col-6
+          .card.text-center
+            .card-header
+              Sales MTD
+            .card-body
+              - grouped = current_user.dealership.deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:is_used)
+              %span.p-3.my-2.bg-blue
+                = "New: #{grouped[false]&.length || 0}"
+              %span.p-3.my-2.bg-green
+                = "Used: #{grouped[true]&.length || 0}"
+          
