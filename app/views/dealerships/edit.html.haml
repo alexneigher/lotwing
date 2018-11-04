@@ -2,10 +2,11 @@
 
 
 .container
-  .row
-    .col-md-9
-      .card
-        = form_for @dealership, url: dealership_path(@dealership), method: :put do |f|
+  = form_for @dealership, url: dealership_path(@dealership), method: :put do |f|
+    .row
+      .col-md-9
+        .card
+          
           .card-body
             .form-group
               %label Dealership Name
@@ -17,24 +18,26 @@
                   = f.text_field :custom_mtd_start_date, class: 'form-control datepicker'
             .form-group
               = f.submit 'Update', class: 'btn btn-primary'
-    .col-md-3
-      .card.bg-light
-        .card-body
-          PLACEHOLDER SETTINGS
-          %hr
-          CUSTOM FORMS
-          %hr
-          PERMISSIONS
-          %HR
-          etc
-  %hr
-  .row
-    .col-md-4
-      %h4 Team members
-      %ul.list-group
-        - @dealership.users.each do |user|
-          %li.list-group-item
-            = user.full_name
+      .col-md-3
+        .card.bg-light
+          .card-body
+            Data Sync
+            %hr
+            %label Provider Id
+            = f.fields_for :data_sync do |ff|
+              = ff.text_field :provider_id, class: 'form-control'
+            %hr
+            %small
+              %em Last sync:
+              = @dealership.data_sync.last_run_at&.strftime('%y-%m-%d') || "N/A"
+    %hr
+    .row
+      .col-md-4
+        %h4 Team members
+        %ul.list-group
+          - @dealership.users.each do |user|
+            %li.list-group-item
+              = user.full_name
 :javascript 
   $(function() {
     $('.datepicker').datepicker({

@@ -8,7 +8,7 @@ class DataFeedSyncService
   end
 
   def perform!
-    #check_for_data_sync_setup
+    check_for_data_sync_setup
 
     download_file
 
@@ -53,7 +53,7 @@ class DataFeedSyncService
         # each row = 1 vehicle
         row = rows[i]
         data = row.split("|")
-        
+
         next if dealership.vehicles.find_by_vin(data[1])
 
         dealership
