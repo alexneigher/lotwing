@@ -2,8 +2,6 @@ class VehiclesController < ApplicationController
   
   def index
     dealership = current_user.dealership
-
-    @grouped_shapes = dealership.shapes.group(:shape_type).count
     @vehicles = dealership.vehicles.includes(:current_parking_tag)
   end
 
@@ -20,7 +18,9 @@ class VehiclesController < ApplicationController
   end
 
   def search
-    #TODO
+    dealership = current_user.dealership
+    @vehicles = dealership.vehicles.includes(:current_parking_tag).where('stock_number ilike ?', "%#{params[:stock_number]}%")
+    render :index
   end
 
 
