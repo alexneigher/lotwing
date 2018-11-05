@@ -6,7 +6,7 @@
         = form_for :tag, url: tags_path, method: :post do |f|
           .form-group
             %label Vehicle
-            = f.select :vehicle_id, options_for_select(current_user.dealership.vehicles.map{|v| ["Vin: #{v.vin}", v.id]})
+            = f.select :vehicle_id, options_for_select(current_user.dealership.vehicles.map{|v| ["Stock #: #{v.stock_number}", v.id]})
 
           .form-group
             %label Parking Space

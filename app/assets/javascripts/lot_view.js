@@ -102,7 +102,7 @@ function handle_mouseover(e){
 }
 
 function tooltip_html(data){
-  str = render_vehicle_vin(data) +
+  str = render_vehicle_stock_number(data) +
         render_vehicle_year_make(data) + 
         render_vehicle_model_color(data) +
         "<div>"+days_ago(data.vehicle.created_at)+" days in stock</div>" +
@@ -119,9 +119,9 @@ function days_ago(created_at_date){
 }
 
 // Generate the hTML for the tooltip
-function render_vehicle_vin(data){
-  if (data.vehicle.vin){
-   return "<div>VIN: <strong>"+data.vehicle.vin+"</strong></div>"
+function render_vehicle_stock_number(data){
+  if (data.vehicle.stock_number){
+   return "<div>Stock #: <strong>"+data.vehicle.stock_number+"</strong></div>"
   }else{
     return ""
   }
