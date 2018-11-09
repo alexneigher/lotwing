@@ -13,18 +13,31 @@
         = f.select :split_rep, options_for_select(current_user.dealership.users.pluck(:full_name), @deal.split_rep), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
         = f.text_field :city, placeholder: 'City', class: 'form-control mb-1'
 
-        - @deal.versions.each do |version|
-          %hr
-          %small
-            = version.created_at.strftime('%m/%d/%Y')
-            %strong= version.whodunnit
-            %br
-            - version.changeset.each do |key, value|
-              - next if key == "updated_at"
-              changed
-              %strong= key
-              to 
-              = value[1] 
+        %a{"data-target" => "#historyModal", "data-toggle" => "modal", :href => "#"} Show History
+        / The Modal
+        #historyModal.modal
+          .modal-dialog.modal-lg
+            .modal-content
+              / Modal Header
+              .modal-header
+                %h4.modal-title Deal History - #{@deal.client_last_name}
+                %button.close{"data-dismiss" => "modal", :type => "button"} ×
+              / Modal body
+              .modal-body
+                - @deal.versions.each do |version|
+                  %small
+                    = version.created_at.strftime('%m/%d/%Y')
+                    %strong= version.whodunnit
+                    %br
+                    - version.changeset.each do |key, value|
+                      - next if key == "updated_at"
+                      changed
+                      %strong= key
+                      to 
+                      = value[1] 
+                  %hr
+              .modal-footer
+                %button.btn.btn-outline-secondary{"data-dismiss" => "modal", :type => "button"} Close
       .col-md-2
         = f.text_field :make, placeholder: 'Make', class: 'form-control mb-1'
         = f.text_field :model, placeholder: 'Model', class: 'form-control mb-1'
