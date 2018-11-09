@@ -71,7 +71,7 @@ class DealsController < ApplicationController
           :finance_manager,
           :dealer_demo,
           :loaner_car,
-          :discloser,
+          :disclosure,
           :trade_allowance,
           :trade_acv,
           :trade_payoff_amount,

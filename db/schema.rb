@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181104172553) do
+ActiveRecord::Schema.define(version: 20181109033352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20181104172553) do
     t.string "finance_manager"
     t.boolean "dealer_demo", default: false
     t.boolean "loaner_car", default: false
-    t.string "discloser"
+    t.string "disclosure"
     t.decimal "trade_allowance"
     t.decimal "trade_acv"
     t.decimal "trade_payoff_amount"
