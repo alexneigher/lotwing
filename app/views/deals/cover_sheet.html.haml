@@ -5,90 +5,90 @@
 
   .client-last-name= @deal.client_last_name
 
-  %div{style: 'margin-top: 30px;'}
+  %div{style: 'margin-top: 0px;'}
     = "#{@deal.year} #{@deal.make} #{@deal.model}"
   
-  %div{style: 'margin-top: 120px;'}
+  %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = @deal.deal_number
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Deal Number
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = @deal.stock_number
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Stock Number
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = Date.current.strftime("%m/%d/%Y")
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Date
 
-  %div{style: 'margin-top: 50px;'}
+  %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = @deal.deal_type
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Deal Type
 
-  %div{style: 'margin-top: 50px;'}
+  %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = number_to_currency(@deal.selling_price)
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Selling Price
 
-  %div{style: 'margin-top: 50px;'}
+  %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = number_to_currency(@deal.trade_allowance)
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Trade Allowance
 
-  %div{style: 'margin-top: 50px;'}
+  %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = number_to_currency(@deal.trade_acv)
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Trade ACV
 
-  %div{style: 'margin-top: 50px;'}
+  %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = @deal.trade_bank_name
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Trade Bank Name
 
-  %div{style: 'margin-top: 50px;'}
+  %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = number_to_currency(@deal.trade_payoff_amount)
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Trade Payoff Amount
 
-  %div{style: 'margin-top: 50px;'}
+  %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = @deal.trade_account_number
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Trade Account Number
 
-  %div{style: 'margin-top: 50px;'}
+  %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = @deal.send_payoff_address
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Send Payoff Address
 
-  %div{style: 'margin-top: 50px;'}
+  %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
         = @deal.good_through_date
-      %div{style: 'font-size: 50px;'}
+      %div{style: 'font-size: 12px;'}
         Good Through Date
 
-  %div{style: 'margin-top: 50px;'}
+  %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
       - if @deal.dealer_demo
         &#10004;
@@ -103,120 +103,120 @@
         &#10006;
       Loaner Car
       
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'font-size: 50px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'font-size: 12px;'}
       Disclosure
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.disclosure
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'font-size: 50px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'font-size: 12px;'}
       Deal Notes
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       =# @deal.deal_notes
 
 
 
 .right-col
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.time_agreed
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Time Agreed
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.time_in_finance
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Time In- Finance
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.time_out_finance
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Time Out- Finance
 
-  %div{style: 'height:130px;'}
+  %div{style: 'height:30px;'}
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = number_to_currency(@deal.down_payment)
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Down Payment
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.term
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Term
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = number_to_currency(@deal.quoted_payment)
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Quoted Payment
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.rate_apr
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Rate APR
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.miles_per_year
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Miles Per Year (LSE)
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.rebates
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Rebates
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.program_description
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Program Description
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.sales_rep
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Sales Rep
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.split_rep
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Split Rep
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.desk_manager
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Desk Manager
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       = @deal.finance_manager
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Finance Manager
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       =# @deal.finance_manager
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Missing Stips1
 
-  %div{style: 'margin-top: 50px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 20px 25px;'}
+  %div{style: 'margin-top: 10px;'}
+    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
       =# @deal.finance_manager
-    %div{style: 'font-size: 50px;'}
+    %div{style: 'font-size: 12px;'}
       Missing Stips2
 
 
 %div{style:'clear:both;'}
 #footer
-  = wicked_pdf_image_tag 'logo.png', style: 'margin:auto; display:block; width: 300px;'
+  = wicked_pdf_image_tag 'logo.png', style: 'margin:auto; display:block; width: 100px;'
