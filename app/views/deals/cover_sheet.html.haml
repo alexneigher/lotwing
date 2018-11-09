@@ -1,0 +1,115 @@
+#header
+  = wicked_pdf_image_tag 'dealer_logo.png'
+
+.left-col
+
+  .client-last-name= @deal.client_last_name
+
+  %div{style: 'margin-top: 30px;'}
+    = "#{@deal.year} #{@deal.make} #{@deal.model}"
+  
+  %div{style: 'margin-top: 120px;'}
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = @deal.deal_number
+      %div{style: 'font-size: 50px;'}
+        Deal Number
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = @deal.stock_number
+      %div{style: 'font-size: 50px;'}
+        Stock Number
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = Date.current.strftime("%m/%d/%Y")
+      %div{style: 'font-size: 50px;'}
+        Date
+
+  %div{style: 'margin-top: 50px;'}
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = @deal.deal_type
+      %div{style: 'font-size: 50px;'}
+        Deal Type
+
+  %div{style: 'margin-top: 50px;'}
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = number_to_currency(@deal.selling_price)
+      %div{style: 'font-size: 50px;'}
+        Selling Price
+
+  %div{style: 'margin-top: 50px;'}
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = number_to_currency(@deal.trade_allowance)
+      %div{style: 'font-size: 50px;'}
+        Trade Allowance
+
+  %div{style: 'margin-top: 50px;'}
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = number_to_currency(@deal.trade_acv)
+      %div{style: 'font-size: 50px;'}
+        Trade ACV
+
+  %div{style: 'margin-top: 50px;'}
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = @deal.trade_bank_name
+      %div{style: 'font-size: 50px;'}
+        Trade Bank Name
+
+  %div{style: 'margin-top: 50px;'}
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = number_to_currency(@deal.trade_payoff_amount)
+      %div{style: 'font-size: 50px;'}
+        Trade Payoff Amount
+
+  %div{style: 'margin-top: 50px;'}
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = @deal.trade_account_number
+      %div{style: 'font-size: 50px;'}
+        Trade Account Number
+
+  %div{style: 'margin-top: 50px;'}
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = @deal.send_payoff_address
+      %div{style: 'font-size: 50px;'}
+        Send Payoff Address
+
+  %div{style: 'margin-top: 50px;'}
+    %div{style: 'width:30%;display:inline-block;'}
+      %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+        = @deal.good_through_date
+      %div{style: 'font-size: 50px;'}
+        Good Through Date
+
+  %div{style: 'margin-top: 50px;'}
+    %div{style: 'width:30%;display:inline-block;'}
+      - if @deal.dealer_demo
+        &#10004;
+      - else
+        &#10006;
+      Dealer Demo
+
+    %div{style: 'width:30%;display:inline-block;'}
+      - if @deal.loaner_car
+        &#10004;
+      - else
+        &#10006;
+      Loaner Car
+      
+  %div{style: 'margin-top: 50px;'}
+    %div{style: 'font-size: 50px;'}
+      Disclosure
+    %div{style: 'border:1px solid #e0e0e0;padding: 10px;'}
+      = @deal.discloser
+
+
+
+.right-col
+  right xol

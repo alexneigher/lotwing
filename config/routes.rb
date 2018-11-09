@@ -36,7 +36,9 @@ Rails.application.routes.draw do
   end
 
   resource :board_manager, path: '/board-manager'
-  resources :deals, except: [:index]
+  resources :deals, except: [:index] do
+    get :cover_sheet
+  end
 
   resources :tags do
     get :deactivate

@@ -2,6 +2,7 @@
   .row
     .col-md-12
       %h3 Board Manager - New Deal
+      = link_to 'Generate Cover Sheet', deal_cover_sheet_path(@deal, format: :pdf)
   = form_for @deal, url: deal_path(@deal), method: :put do |f|
     .row.mt-4
       .col-md-2
@@ -80,7 +81,7 @@
         = f.text_field :time_agreed, placeholder: 'Time Agreed', class: 'form-control mb-1'
         = f.text_field :time_in_finance, placeholder: 'Time In - Finance', class: 'form-control mb-1'
         = f.text_field :time_out_finance, placeholder: 'Time Out - Finance', class: 'form-control mb-1'
-
+    
     .row.mb-5
       .col-md-2
       .col-md-6.text-center

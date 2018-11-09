@@ -20,6 +20,19 @@ class DealsController < ApplicationController
     redirect_to board_manager_path
   end
 
+  def cover_sheet
+    @deal = current_user.dealership.deals.find(params[:deal_id] )
+
+    respond_to do |format|
+     format.pdf do
+       render pdf: "Cover Sheet - #{@deal.client_last_name}",
+       template: "deals/cover_sheet.html.haml",
+       layout: 'pdf.html.erb'
+     end
+    end
+
+  end
+
 
   private
     def user_for_paper_trail
