@@ -20,6 +20,12 @@ class DealsController < ApplicationController
     redirect_to board_manager_path
   end
 
+  def destroy
+    @deal = current_user.dealership.deals.find(params[:id])
+    @deal.destroy
+    redirect_to board_manager_path
+  end
+
   def cover_sheet
     @deal = current_user.dealership.deals.find(params[:deal_id] )
 

@@ -3,6 +3,7 @@
     .col-md-12
       %h3 Board Manager - New Deal
       = link_to 'Generate Cover Sheet', deal_cover_sheet_path(@deal, format: :pdf)
+
   = form_for @deal, url: deal_path(@deal), method: :put do |f|
     .row.mt-4
       .col-md-2
@@ -15,6 +16,9 @@
         = f.text_field :city, placeholder: 'City', class: 'form-control mb-1'
 
         %a{"data-target" => "#historyModal", "data-toggle" => "modal", :href => "#"} Show History
+        %br
+        = link_to 'Delete deal', deal_path(@deal), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger'
+
         / The Modal
         #historyModal.modal
           .modal-dialog.modal-lg
