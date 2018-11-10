@@ -31,4 +31,9 @@ class BoardManagersController < ApplicationController
     @deals = deals
     @grouped_deals = deals.group_by{|d| d.created_at.beginning_of_day}
   end
+
+
+  def stored_deals
+    @deals = current_user.dealership.deals.where(stored: true)
+  end
 end

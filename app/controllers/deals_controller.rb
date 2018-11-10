@@ -86,6 +86,6 @@ class DealsController < ApplicationController
           :missing_stips_1,
           :missing_stips_2,
           :certified_pre_owned
-        )
+        ).merge({stored: (params[:commit] == 'Store Entry' ? true : false)})
     end
 end

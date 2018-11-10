@@ -16,6 +16,10 @@
             = text_field_tag "filters[query]", params.dig(:filters, :query), placeholder: 'Johnson', class: 'form-control form-control-sm'
           .col-md-1
             = submit_tag 'Filter', class: 'btn btn-sm btn-outline-secondary'
+
+          .col-md-1
+            = link_to 'stored deals', stored_deals_board_manager_path(), class: 'btn btn-sm btn-outline-secondary'
+            
   .row
     .col-md-2
     .col-md-10

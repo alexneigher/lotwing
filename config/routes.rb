@@ -37,7 +37,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :board_manager, path: '/board-manager'
+  resource :board_manager, path: '/board-manager' do
+    collection do
+      get :stored_deals
+    end
+  end
+
   resources :deals, except: [:index] do
     get :cover_sheet
   end

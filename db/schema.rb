@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181110133830) do
+ActiveRecord::Schema.define(version: 20181110153756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20181110133830) do
     t.string "missing_stips_1"
     t.string "missing_stips_2"
     t.boolean "certified_pre_owned", default: false
+    t.boolean "stored", default: false
     t.index ["dealership_id"], name: "index_deals_on_dealership_id"
   end
 
