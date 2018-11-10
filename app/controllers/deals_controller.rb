@@ -82,6 +82,10 @@ class DealsController < ApplicationController
           :time_agreed,
           :time_in_finance,
           :time_out_finance,
+          :deal_notes,
+          :missing_stips_1,
+          :missing_stips_2,
+          :certified_pre_owned
         )
     end
 end

@@ -19,6 +19,9 @@
         %label
           = f.check_box :is_used
           Is Used
+        %label
+          = f.check_box :certified_pre_owned
+          CPO
       .col-md-2
         = f.select :result, options_for_select(['Deposit', 'P-Trip', 'Trip', 'N/C']), {include_blank: 'Result'}, class: 'form-control mb-1'
         = f.select :report_status, options_for_select(['New RDR Done', 'CPO RDR Done', 'Not RDR\'d', 'N/A (Used Car, non CPO)']), {include_blank: 'Report Status'}, class: 'form-control mb-1'
@@ -28,6 +31,8 @@
         = f.number_field :selling_price, placeholder: 'Selling Price', class: 'form-control mb-1'
         = f.number_field :down_payment, placeholder: 'Down Payment', class: 'form-control mb-1'
         = f.text_field :term, placeholder: 'Term', class: 'form-control mb-1'
+        = f.text_area :deal_notes, placeholder: 'Deal Notes', class: 'form-control mb-1', rows: 3
+
       .col-md-2
         = f.number_field :quoted_payment, placeholder: 'Quoted Payment', class: 'form-control mb-1'
         = f.text_field :rate_apr, placeholder: 'Rate APR', class: 'form-control mb-1'
@@ -54,6 +59,9 @@
         = f.text_field :time_agreed, placeholder: 'Time Agreed', class: 'form-control mb-1'
         = f.text_field :time_in_finance, placeholder: 'Time In - Finance', class: 'form-control mb-1'
         = f.text_field :time_out_finance, placeholder: 'Time Out - Finance', class: 'form-control mb-1'
+
+        = f.text_field :missing_stips_1, placeholder: 'Missing Stips 1', class: 'form-control mb-1'
+        = f.text_field :missing_stips_2, placeholder: 'Missing Stips 2', class: 'form-control mb-1'
 
     .row.mb-5
       .col-md-2

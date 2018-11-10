@@ -46,6 +46,9 @@
         %label
           = f.check_box :is_used
           Is Used
+        %label
+          = f.check_box :certified_pre_owned
+          CPO
       .col-md-2
         = f.select :result, options_for_select(['Deposit', 'P-Trip', 'Trip', 'N/C'], @deal.result), {include_blank: 'Result'}, class: 'form-control mb-1'
         = f.select :report_status, options_for_select(['New RDR Done', 'CPO RDR Done', 'Not RDR\'d', 'N/A (Used Car, non CPO)'], @deal.report_status), {include_blank: 'Report Status'}, class: 'form-control mb-1'
@@ -81,7 +84,10 @@
         = f.text_field :time_agreed, placeholder: 'Time Agreed', class: 'form-control mb-1'
         = f.text_field :time_in_finance, placeholder: 'Time In - Finance', class: 'form-control mb-1'
         = f.text_field :time_out_finance, placeholder: 'Time Out - Finance', class: 'form-control mb-1'
-    
+        = f.text_field :missing_stips_1, placeholder: 'Missing Stips 1', class: 'form-control mb-1'
+        = f.text_field :missing_stips_2, placeholder: 'Missing Stips 2', class: 'form-control mb-1'
+        = f.text_area :deal_notes, placeholder: 'Deal Notes', class: 'form-control mb-1', rows: 3
+
     .row.mb-5
       .col-md-2
       .col-md-6.text-center

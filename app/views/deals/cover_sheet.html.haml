@@ -7,6 +7,12 @@
 
   %div{style: 'margin-top: 0px;'}
     = "#{@deal.year} #{@deal.make} #{@deal.model}"
+    &nbsp;
+    - if @deal.certified_pre_owned
+      &#10004;
+    - else
+      &#10006;
+    CPO
   
   %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
@@ -113,7 +119,7 @@
     %div{style: 'font-size: 12px;'}
       Deal Notes
     %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      =# @deal.deal_notes
+      = @deal.deal_notes
 
 
 .right-col
@@ -204,13 +210,13 @@
 
   %div{style: 'margin-top: 10px;'}
     %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      =# @deal.finance_manager
+      = @deal.missing_stips_1
     %div{style: 'font-size: 12px;'}
       Missing Stips1
 
   %div{style: 'margin-top: 10px;'}
     %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      =# @deal.finance_manager
+      = @deal.missing_stips_2
     %div{style: 'font-size: 12px;'}
       Missing Stips2
 
