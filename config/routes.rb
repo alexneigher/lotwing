@@ -27,7 +27,9 @@ Rails.application.routes.draw do
     resources :resolutions, controller: 'events/resolutions'
   end
 
-  resources :dealerships, only: [:edit, :update]
+  resources :dealerships, only: [:edit, :update] do
+    resources :users, only: [:new, :create], controller: 'dealerships/users'
+  end
   
   resources :vehicles do
     collection do

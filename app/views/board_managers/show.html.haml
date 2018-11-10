@@ -83,7 +83,9 @@
             - @grouped_deals.reverse_each do |date, deals|
               %tr
                 %td.bg-light{colspan: 12}
-                  %strong= date.strftime("%m/%d/%Y")
+                  %strong
+                    = date.strftime("%m/%d/%Y")
+                    = " (#{deals.count})"
               - deals.each do |deal|
                 %tr{class: (deal.is_used ? 'text-green' : 'text-blue').to_s}
                   %td
@@ -113,7 +115,8 @@
                   %td= deal.split_rep
                   %td= deal.city
                   %td= deal.result
-                  %td= deal.report_status
+                  %td{class: (deal.report_status == "Not RDR'd" ? 'text-danger' : '').to_s}
+                    = deal.report_status
 
 
   .row.mt-4
@@ -124,7 +127,7 @@
           .card.text-center
             .card-header
               Sales Today
-            .card-body
+            .card-body.text-white
               - grouped = @deals.where("created_at >= ?", Date.today.beginning_of_day).group_by(&:is_used)
               %span.p-3.my-2.bg-blue
                 = "New: #{grouped[false]&.length || 0}"
@@ -134,7 +137,7 @@
           .card.text-center
             .card-header
               Sales MTD
-            .card-body
+            .card-body.text-white
               - grouped = @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:is_used)
               %span.p-3.my-2.bg-blue
                 = "New: #{grouped[false]&.length || 0}"

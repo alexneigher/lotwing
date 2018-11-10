@@ -1,6 +1,5 @@
 %h3.text-center= @dealership.name
 
-
 .container
   = form_for @dealership, url: dealership_path(@dealership), method: :put do |f|
     .row
@@ -30,14 +29,21 @@
             %small
               %em Last sync:
               = @dealership.data_sync.last_run_at&.strftime('%y-%m-%d') || "N/A"
-    %hr
-    .row
-      .col-md-4
-        %h4 Team members
-        %ul.list-group
-          - @dealership.users.each do |user|
-            %li.list-group-item
-              = user.full_name
+  %hr
+  .row
+    .col-md-4
+      %h4 Team members
+      %ul.list-group
+        - @dealership.users.each do |user|
+          %li.list-group-item
+            - if user.reset_password_token.present?
+              %i.fa.fa-unlink
+            = user.full_name
+
+        #newUserForm
+        = link_to "Add new", new_dealership_user_path(@dealership), remote: true
+          
+
 :javascript 
   $(function() {
     $('.datepicker').datepicker({
