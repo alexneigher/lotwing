@@ -1,7 +1,7 @@
 .container-fluid
   .row
     .col-md-12
-      %h3 Board Manager - New Deal
+      %h3 Board Manager - Editing #{@deal.client_last_name}
       = link_to 'Generate Cover Sheet', deal_cover_sheet_path(@deal, format: :pdf)
 
   = form_for @deal, url: deal_path(@deal), method: :put do |f|
@@ -95,5 +95,5 @@
     .row.mb-5
       .col-md-2
       .col-md-6.text-center
-        = f.submit 'Board Today', class: 'btn btn-primary mx-2'
+        = f.submit 'Update', class: 'btn btn-primary mx-2'
         = f.submit 'Store Entry', class: 'btn btn-outline-secondary mx-2'

@@ -1,7 +1,7 @@
 class BoardManagersController < ApplicationController
 
   def show
-    deals = current_user.dealership.deals
+    deals = current_user.dealership.deals.where(stored: false)
 
     if params.dig(:filters, :mtd).present?
       sql = <<~SQL
@@ -29,7 +29,7 @@ class BoardManagersController < ApplicationController
     end
 
     @deals = deals
-    @grouped_deals = deals.group_by{|d| d.created_at.beginning_of_day}
+    @grouped_deals = deals.group_by{|d| d.created_at.beginning_of_day}.sort_by{|k, v| k}.to_h
   end
 
 

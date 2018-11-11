@@ -1,7 +1,7 @@
 .container-fluid
   .row
     .col-md-12
-      %h3 Board Manager - New Deal
+      %h3 Board Manager - Deal Entry
   = form_for @deal, url: deals_path, method: :post do |f|
     .row.mt-4
       .col-md-2
@@ -66,5 +66,5 @@
     .row.mb-5
       .col-md-2
       .col-md-6.text-center
-        = f.submit 'Board Today', class: 'btn btn-primary mx-2'
+        = f.submit 'Submit', class: 'btn btn-primary mx-2'
         = f.submit 'Store Entry', class: 'btn btn-outline-secondary mx-2'
