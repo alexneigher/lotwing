@@ -12,12 +12,12 @@
               MTD
               %small.text-muted
                 (since #{current_user.dealership.custom_mtd_start_date})
-          .col-md-3.form-inline
+          .col-md-3.form-inline{style: 'margin-top: -5px;'}
             = text_field_tag "filters[query]", params.dig(:filters, :query), placeholder: 'Last name OR Stock #', class: 'form-control form-control-sm pull-left'
             = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
 
           .col-md-2
-            = link_to 'stored deals', stored_deals_board_manager_path()
+            = link_to 'stored deals', stored_deals_board_manager_path(), class: 'btn btn-sm btn-outline-secondary'
             
   .row
     .col-md-2
