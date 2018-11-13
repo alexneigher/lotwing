@@ -38,11 +38,12 @@
           %li.list-group-item
             - if user.reset_password_token.present?
               %i.fa.fa-unlink
-            = user.full_name
+            = link_to user.full_name, dealership_user_path(current_user.dealership, user), remote: true
 
         #newUserForm
         = link_to "Add new", new_dealership_user_path(@dealership), remote: true
-          
+    .col-md-8
+      #userShow  
 
 :javascript 
   $(function() {
