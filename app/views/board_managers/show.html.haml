@@ -1,7 +1,26 @@
 .container-fluid
   .row.mb-1
     .col-md-2
-      %h3 Sales Board
+      %h3.mb-2.text-center Sales Board
+      %hr
+      .card.text-center.mb-3
+        .card-header
+          Sales Today
+        .card-body.text-white
+          - grouped = @deals.where("created_at >= ?", Date.today.beginning_of_day).group_by(&:is_used)
+          %span.p-3.my-2.bg-blue
+            = "New: #{grouped[false]&.length || 0}"
+          %span.p-3.my-2.bg-green
+            = "Used: #{grouped[true]&.length || 0}"
+      .card.text-center
+        .card-header
+          Sales MTD
+        .card-body.text-white
+          - grouped = @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:is_used)
+          %span.p-3.my-2.bg-blue
+            = "New: #{grouped[false]&.length || 0}"
+          %span.p-3.my-2.bg-green
+            = "Used: #{grouped[true]&.length || 0}"
     .col-md-10
       = link_to 'New Entry', new_deal_path, class: 'btn btn-primary btn-sm'
       = form_for :filters, url: board_manager_path, method: :get do
@@ -19,9 +38,6 @@
           .col-md-2
             = link_to 'stored deals', stored_deals_board_manager_path(), class: 'btn btn-sm btn-outline-secondary'
             
-  .row
-    .col-md-2
-    .col-md-10
       .table-responsive.small
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead
@@ -120,30 +136,3 @@
                   %td= deal.result
                   %td{class: (deal.report_status == "Not RDR'd" ? 'text-danger' : '').to_s}
                     = deal.report_status
-
-
-  .row.mt-4
-    .col-md-2
-    .col-md-5
-      .row
-        .col-6
-          .card.text-center
-            .card-header
-              Sales Today
-            .card-body.text-white
-              - grouped = @deals.where("created_at >= ?", Date.today.beginning_of_day).group_by(&:is_used)
-              %span.p-3.my-2.bg-blue
-                = "New: #{grouped[false]&.length || 0}"
-              %span.p-3.my-2.bg-green
-                = "Used: #{grouped[true]&.length || 0}"
-        .col-6
-          .card.text-center
-            .card-header
-              Sales MTD
-            .card-body.text-white
-              - grouped = @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:is_used)
-              %span.p-3.my-2.bg-blue
-                = "New: #{grouped[false]&.length || 0}"
-              %span.p-3.my-2.bg-green
-                = "Used: #{grouped[true]&.length || 0}"
-          
