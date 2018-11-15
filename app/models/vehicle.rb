@@ -1,8 +1,8 @@
 class Vehicle < ApplicationRecord
-  has_many :tags
+  has_many :tags, dependent: :destroy
   has_many :shapes, through: :tags
 
-  has_many :events, through: :tags
+  has_many :events, through: :tags, dependent: :destroy
   
   has_one :current_parking_tag, -> { where(active: true) }, class_name: 'Tag'
   

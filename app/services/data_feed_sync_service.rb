@@ -31,11 +31,8 @@ class DataFeedSyncService
 
     def download_file
       Net::FTP.open('ftp.upperpark.com', 'alexn2018', 'r7e@89uWb9q') do |ftp|    
-        ftp.chdir('/vauto_data')
-        puts ftp.list('*')
-        puts ftp.nlst()
-
-        datafile = 'sunnyvalevolkswagenvw_2018-08-21.txt'
+        ftp.chdir('/')
+        datafile = ftp.nlst().last
         ftp.getbinaryfile(datafile, datafile, 1024) do |c|
           @vehicle_data << c
         end
@@ -44,55 +41,51 @@ class DataFeedSyncService
 
     #this part should be its own class separate from the FTP connection parts
     def update_vehicles
+      vins = []
       #split file on new line, and do looping magic
       rows = @vehicle_data.split("\n")
       
       # #start at 1 because headers are first
       (1..rows.length - 1).each do |i|
-
         # each row = 1 vehicle
         row = rows[i]
         data = row.split("|")
+        vins << data[0] #so we know which vehicles to delete later
 
-        next if dealership.vehicles.find_by_vin(data[1])
-
-        dealership
-          .vehicles
-          .create(
-            vin: data[1],
-            stock_number: data[2],
-            year: data[3],
-            make: data[4],
-            model: data[5],
-            trim_level: data[6],
-            doors: data[7],
-            body_style: data[8],
-            transmission: data[9],
-            mileage: data[10],
-            engine: data[15],
-            engine_size: data[16],
-            model_code: data[17],
-            certified: data[18],
-            retail_value: data[19],
-            invoice_price: data[20],
-            asking_price: data[21],
-            wholesale_price: data[22],
-            msrp: data[23],
-            sale_price: data[24],
-            vehicle_type: data[25],
-            options: data[26],
-            options_codes: data[27],
-            comments: data[28],
-            photo_url_list: data[29],
-            package_code: data[30],
-            fuel: data[31],
-            drive_line: data[32],
-            rear_wheel: data[33],
-            status: data[34],
+        vehicle = dealership.vehicles.find_or_create_by(vin: data[0])
+        vehicle
+          .update(
+            stock_number: data[1],
+            year: data[2],
+            make: data[3],
+            model: data[4],
+            body_style: data[6],
+            transmission: data[7],
+            mileage: data[8],
+            engine: data[9],
+            engine_size: data[10],
+            model_code: data[11],
+            certified: data[12],
+            retail_value: data[13],
+            invoice_price: data[14],
+            asking_price: data[15],
+            wholesale_price: data[16],
+            msrp: data[17],
+            sale_price: data[18],
+            vehicle_type: data[19],
+            options: data[20],
+            options_codes: data[21],
+            comments: data[22],
+            photo_url_list: data[23],
+            package_code: data[24],
+            fuel: data[25],
+            drive_line: data[26],
+            status: data[28],
             raw_data_feed_output: data.join("|")
           )
-        puts data    
       end
+
+      dealership.vehicles.where.not(vin: vins).destroy_all #delete all inventory that does not show up
     end
 
 end
