@@ -86,7 +86,7 @@ class DataFeedSyncService
       end
 
       dealership.vehicles.where.not(vin: vins).destroy_all #delete all inventory that does not show up
-      dealership.data_sync.update(:last_run_at: DateTime.now)
+      dealership.data_sync.update(last_run_at: DateTime.now)
     end
 
 end
