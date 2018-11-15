@@ -8,7 +8,7 @@ class DataFeedSyncService
   end
 
   def perform!
-    check_for_data_sync_setup
+    return unless dealership.data_sync&.provider_id.present?
 
     download_file
 
@@ -16,10 +16,6 @@ class DataFeedSyncService
   end
 
   private
-
-    def check_for_data_sync_setup
-      raise "Dealership not setup for data sync" unless dealership.data_sync&.provider_id.present?
-    end
 
     def file_name
       "#{dealership.data_sync.provider_id}_#{Date.current.strftime('%Y-%m-%d')}.txt"
