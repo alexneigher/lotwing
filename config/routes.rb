@@ -20,9 +20,6 @@ Rails.application.routes.draw do
 
   resources :shapes
 
-  #some day there will be an endpoint to parse these files
-  resources :data_feed, only: [:new, :create]
-
   resources :events, only: [:show, :update] do
     resources :resolutions, controller: 'events/resolutions'
   end
