@@ -36,8 +36,13 @@
             = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
 
           .col-md-2
-            = link_to 'stored deals', stored_deals_board_manager_path(), class: 'btn btn-sm btn-outline-secondary'
-            
+            .dropdown.show
+              %a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle.btn-sm{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                All Reports
+              .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
+                = link_to 'MTD New Vehicle Report', new_vehicle_report_board_manager_path, class: 'dropdown-item'
+                = link_to 'Stored Deals', stored_deals_board_manager_path, class: 'dropdown-item'
+               
       .table-responsive.small
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead

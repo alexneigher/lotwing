@@ -36,4 +36,14 @@ class BoardManagersController < ApplicationController
   def stored_deals
     @deals = current_user.dealership.deals.where(stored: true)
   end
+
+  def new_vehicle_report
+    @deals = current_user
+              .dealership
+              .deals
+              .where(is_used: false)
+              .where("created_at > ?", current_user.dealership.custom_mtd_start_date)
+
+    @grouped_deals = @deals.group_by{|d| d.model}.sort_by{ |k, v| k }.to_h
+  end
 end

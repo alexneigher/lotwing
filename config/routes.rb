@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   resource :board_manager, path: '/board-manager' do
     collection do
       get :stored_deals
+      get :new_vehicle_report
     end
   end
 
