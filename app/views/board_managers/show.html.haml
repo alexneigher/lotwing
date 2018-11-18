@@ -21,6 +21,17 @@
             = "New: #{grouped[false]&.length || 0}"
           %span.p-3.my-2.bg-green
             = "Used: #{grouped[true]&.length || 0}"
+
+        .card-body.text-left
+          - @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:sales_rep).each do |rep, deals|
+            = "#{rep}"
+            %br
+            - grouped = deals.group_by(&:is_used)
+            = "New: #{grouped[false]&.length || 0}"
+            = "Used: #{grouped[true]&.length || 0}"
+            %hr
+
+
     .col-md-10
       = link_to 'New Entry', new_deal_path, class: 'btn btn-primary btn-sm'
       = form_for :filters, url: board_manager_path, method: :get do
