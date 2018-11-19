@@ -23,7 +23,7 @@
             = "Used: #{grouped[true]&.length || 0}"
 
         .card-body.text-left.small
-          - @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:sales_rep).each do |rep, deals|
+          - @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:sales_rep).reverse_each do |rep, deals|
             = "#{rep.presence || 'Unknown Rep'}"
             %br
             - grouped = deals.group_by(&:is_used)
