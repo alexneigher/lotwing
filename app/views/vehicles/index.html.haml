@@ -8,25 +8,56 @@
         .row
           .col-4
             .form-group
-              = text_field_tag "stock_number", nil, class: 'form-control-sm form-control', placeholder: 'Search Stock #'
+              = text_field_tag "stock_number", params[:stock_number], class: 'form-control-sm form-control', placeholder: 'Search Stock #'
           .col-2
             = submit_tag 'Search', class: 'btn btn-primary btn-sm'
           .col-6.text-white.text-right.pt-1
-            - grouped = @vehicles.group(:is_used).count
+            - grouped = @vehicles.group_by(&:is_used)
             %span.p-1.bg-blue.rounded
-              = "New: #{grouped[false]}"
+              = "New: #{grouped[false].count}"
             %span.p-1.bg-green.rounded.ml-1
-              = "Used: #{grouped[true]}"
+              = "Used: #{grouped[true].count}"
 
       .table-responsive.vehicle-table
         %table.table.table-bordered.table-striped.table-sm
           %thead
             %tr
-              %th Stock #
-              %th Year
-              %th Make
-              %th Model
-              %th Age
+              %th 
+                = link_to vehicles_path(sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}) do
+                  Stock #
+                  - if params.dig(:sortings, :stock_number) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to vehicles_path(sortings: {year: params.dig(:sortings, :year) == 'asc' ? "desc": "asc"}) do
+                  Year
+                  - if params.dig(:sortings, :year) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to vehicles_path(sortings: {make: params.dig(:sortings, :make) == 'asc' ? "desc": "asc"}) do
+                  Make
+                  - if params.dig(:sortings, :make) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to vehicles_path(sortings: {model: params.dig(:sortings, :model) == 'asc' ? "desc": "asc"}) do
+                  Model
+                  - if params.dig(:sortings, :model) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to vehicles_path(sortings: {age: params.dig(:sortings, :age) == 'asc' ? "desc": "asc"}) do
+                  Age
+                  - if params.dig(:sortings, :age) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+
               
           %tbody.small
             - @vehicles.each do |vehicle|
