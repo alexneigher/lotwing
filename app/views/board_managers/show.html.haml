@@ -22,7 +22,7 @@
           %span.p-3.my-2.bg-green
             = "Used: #{grouped[true]&.length || 0}"
 
-        .card-body.text-left.small
+        .card-body.text-left.small.pt-0
           - @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:sales_rep).reverse_each do |rep, deals|
             = "#{rep.presence || 'Unknown Rep'}"
             %br
@@ -30,7 +30,7 @@
             = "#{grouped[false]&.length || 0} New"
             = "#{grouped[true]&.length || 0} Used"
             = "(#{deals.count})"
-            %hr
+            %hr.my-0
 
 
     .col-md-10
