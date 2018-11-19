@@ -6,11 +6,17 @@
     .col-lg-5
       = form_tag search_vehicles_path, method: :get do
         .row
-          .col-6
+          .col-4
             .form-group
               = text_field_tag "stock_number", nil, class: 'form-control-sm form-control', placeholder: 'Search Stock #'
-          .col-4
+          .col-2
             = submit_tag 'Search', class: 'btn btn-primary btn-sm'
+          .col-6.text-white.text-right.pt-1
+            - grouped = @vehicles.group(:is_used).count
+            %span.p-1.bg-blue.rounded
+              = "New: #{grouped[false]}"
+            %span.p-1.bg-green.rounded.ml-1
+              = "Used: #{grouped[true]}"
 
       .table-responsive.vehicle-table
         %table.table.table-bordered.table-striped.table-sm
