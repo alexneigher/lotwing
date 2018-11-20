@@ -1,0 +1,9 @@
+$('.loading-spin').addClass('d-none');
+
+<%- if @vehicle %>
+  $('#deal_make').val("<%= @vehicle.make %>");
+  $('#deal_model').val("<%= @vehicle.model %>");
+  $('#deal_year').val("<%= @vehicle.year %>");
+
+  $('#deal_is_used').prop('checked', <%= @vehicle.is_used %>);
+<% end %>

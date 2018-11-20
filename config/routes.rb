@@ -43,6 +43,9 @@ Rails.application.routes.draw do
 
   resources :deals, except: [:index] do
     get :cover_sheet
+    collection do
+      put :stock_number_search
+   end
   end
 
   resources :tags do

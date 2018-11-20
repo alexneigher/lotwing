@@ -36,7 +36,10 @@ class DealsController < ApplicationController
        layout: 'pdf.html.erb'
      end
     end
+  end
 
+  def stock_number_search
+    @vehicle = current_user.dealership.vehicles.find_by_stock_number(params[:stock_number])
   end
 
 
