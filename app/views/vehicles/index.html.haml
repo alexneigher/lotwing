@@ -51,9 +51,9 @@
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to vehicles_path(sortings: {age: params.dig(:sortings, :age) == 'asc' ? "desc": "asc"}) do
+                = link_to vehicles_path(sortings: {created_at: params.dig(:sortings, :created_at) == 'asc' ? "desc": "asc"}) do
                   Age
-                  - if params.dig(:sortings, :age) == "asc"
+                  - if params.dig(:sortings, :created_at) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
