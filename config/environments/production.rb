@@ -23,6 +23,8 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
+  config.action_mailer.default_url_options = { host: "lotwing.herokuapp.com" }
+
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
@@ -49,7 +51,7 @@ Rails.application.configure do
 
   ActionMailer::Base.smtp_settings = {
     :user_name => 'lotwingalex',
-    :password => 'rtGTHTyg56%6tgt',
+    :password => "rtGTHTyg56%6tgt",
     :domain => 'lotwing.herokuapp.com',
     :address => 'smtp.sendgrid.net',
     :port => 587,

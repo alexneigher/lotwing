@@ -10,11 +10,12 @@ module Dealerships
       random_token = SecureRandom.urlsafe_base64
       random_password = SecureRandom.urlsafe_base64
 
-      @dealership
+      @user = @dealership
         .users
         .create!(user_params.merge({reset_password_token: random_token, password: random_password}))
 
-      #TODO send them an email with an invitation
+      UserMailer.send_signup_email(@user).deliver
+
       redirect_to edit_dealership_path(@dealership)
     end
 
@@ -31,7 +32,6 @@ module Dealerships
 
       redirect_to edit_dealership_path(@dealership)
     end
-
 
     private
       def user_params

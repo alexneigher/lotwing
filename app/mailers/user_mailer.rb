@@ -3,8 +3,7 @@ class UserMailer < ActionMailer::Base
 
   def send_signup_email(user)
     @user = user
-    mail( :to => @user.email,
-    :subject => "You've been invited to Lotwing!" )
+    mail( :to => @user.email, :subject => "You've been invited to join #{@user.dealership.name} on Lotwing!" )
   end
-  
+
 end

@@ -4,6 +4,8 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
   %body
     %h1
-      Thanks for signing up, #{@user.full_name}!
+      Welcome!
     %p
-      = @user.inspect
+      Please
+      = link_to " click_here " , invitations_view_invitation_url(@user.reset_password_token)
+      to accept your invitation, and set your password.

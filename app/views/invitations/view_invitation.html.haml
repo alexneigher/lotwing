@@ -1,0 +1,15 @@
+.container
+  .row.justify-content-center
+    .col-md-6.mt-5
+      .card.mt-5
+        .card-body
+          %h4= @user.full_name
+          %hr
+          Please create a password to finalize your set up.
+          
+          = form_for @user, url: invitations_accept_invitation_path(@user.reset_password_token), method: :put do |f|
+            .form-group
+              %label Password
+              = f.password_field :password, placeholder: '*******', class: 'form-control'
+
+            = f.submit 'Create Account & Sign In', class: 'btn btn-primary' 

@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   # UI for drawing shapes on the map and saving them
   get :map_builder, to: 'home#map_builder'
 
+  scope "/invitations/:reset_password_token/", as: :invitations, controller: :invitations do
+    get :view_invitation
+    put :accept_invitation
+  end
+
   resources :shapes
 
   resources :events, only: [:show, :update] do
