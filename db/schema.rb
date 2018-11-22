@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181110153756) do
+ActiveRecord::Schema.define(version: 20181122181740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(version: 20181110153756) do
     t.string "rear_wheel"
     t.string "status"
     t.text "raw_data_feed_output"
+    t.integer "age_in_days"
     t.index ["dealership_id"], name: "index_vehicles_on_dealership_id"
   end
 

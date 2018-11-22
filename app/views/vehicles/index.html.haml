@@ -51,9 +51,9 @@
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to vehicles_path(sortings: {created_at: params.dig(:sortings, :created_at) == 'asc' ? "desc": "asc"}) do
+                = link_to vehicles_path(sortings: {age_in_days: params.dig(:sortings, :age_in_days) == 'asc' ? "desc": "asc"}) do
                   Age
-                  - if params.dig(:sortings, :created_at) == "asc"
+                  - if params.dig(:sortings, :age_in_days) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
@@ -72,7 +72,8 @@
                   = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
                     = vehicle.model
                 %th
-                  = time_ago_in_words(vehicle.created_at)
+                  = vehicle.age_in_days
+                  days
                
         = link_to "Add New Vehicle", new_vehicle_path, class: 'btn btn-small btn-primary'
       
