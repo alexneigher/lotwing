@@ -16,6 +16,9 @@ gem 'pg', '~> 0.20'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 
+#A Ruby gem to load environment variables from `.env`.
+gem 'dotenv-rails'
+
 # Generate PDF's from html
 gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary', '0.12.3' #TODO this can be bumped once a fix is determined (AFTER 6/11/2018)
