@@ -47,6 +47,16 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
+  ActionMailer::Base.smtp_settings = {
+    :user_name => 'lotwingalex',
+    :password => 'rtGTHTyg56%6tgt',
+    :domain => 'lotwing.herokuapp.com',
+    :address => 'smtp.sendgrid.net',
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
+
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
   config.log_level = :debug

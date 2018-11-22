@@ -7,4 +7,6 @@ class User < ApplicationRecord
   belongs_to :dealership, optional: true
 
   has_many :events
+
+  enum permission_level: [:user, :manager, :admin]
 end

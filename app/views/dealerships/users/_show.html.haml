@@ -7,7 +7,7 @@
       %h6 Permissions
       .card-body.bg-light
         %small
-          will put user permissions and roles here
+          = @user.permission_level
   .card-footer
     - unless @user == current_user
       = link_to 'delete user', dealership_user_path(@dealership, @user), method: :delete, class: 'text-danger', data: {confirm: "are you sure you want to delete #{@user.full_name}"}

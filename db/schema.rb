@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181122181740) do
+ActiveRecord::Schema.define(version: 20181122223957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 20181122181740) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "dealership_id"
+    t.integer "permission_level", default: 0
     t.index ["dealership_id"], name: "index_users_on_dealership_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -35,7 +35,7 @@ module Dealerships
 
     private
       def user_params
-        params.require(:user).permit(:email, :full_name)
+        params.require(:user).permit(:email, :full_name, :permission_level)
       end
   end
 end
