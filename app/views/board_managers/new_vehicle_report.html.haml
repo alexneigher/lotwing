@@ -2,9 +2,22 @@
   .row.mb-1
     .col-md-2
       %h3 MTD New Vehicle Report
+      %small
+        .text-center
+          = "(since #{current_user.dealership.data_sync.last_run_at&.in_time_zone("Pacific Time (US & Canada)")&.strftime("%Y-%m-%e") || "N/A"})"
       = link_to '< Board Manager', board_manager_path()
+
+      .card.text-center.mt-5
+        .card-header
+          Sales MTD (#{@grouped_deals.values.map(&:count).sum})
+        .card-body.small
+          %small
+            - @grouped_deals.reverse_each do |model, deals|
+              = model
+              = " (#{deals.count})"
+              %hr.my-1
     .col-md-10   
-      .table-responsive.small
+      .table-responsive.small{style: 'max-height: 80vh;'}
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead
             %tr
@@ -60,3 +73,4 @@
                   %td= deal.result
                   %td{class: (deal.report_status == "Not RDR'd" ? 'text-danger' : '').to_s}
                     = deal.report_status
+      

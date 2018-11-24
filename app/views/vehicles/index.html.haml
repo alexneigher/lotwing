@@ -11,14 +11,14 @@
               = text_field_tag "stock_number", params[:stock_number], class: 'form-control-sm form-control', placeholder: 'Search Stock #'
           .col-2
             = submit_tag 'Search', class: 'btn btn-primary btn-sm'
-          .col-6.text-white.text-right.pt-1
+          .col-6.text-right.pt-1
             - grouped = @vehicles.group_by(&:is_used)
-            %span.p-1.bg-blue.rounded
+            %span.p-1.bg-blue.rounded.text-white
               = "New: #{grouped[false].count}"
             %span.p-1.bg-green.rounded.ml-1
               = "Used: #{grouped[true].count}"
 
-      .table-responsive.vehicle-table
+      .table-responsive.vehicle-table{style: 'max-height: 75vh;'}
         %table.table.table-bordered.table-striped.table-sm
           %thead
             %tr

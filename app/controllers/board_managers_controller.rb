@@ -15,7 +15,7 @@ class BoardManagersController < ApplicationController
       deals = deals.where(sql)
                     
     else
-      deals = deals.where("created_at > ?", Date.today.beginning_of_day)
+      deals = deals.where("created_at > ?", Date.today.beginning_of_day.in_time_zone("Pacific Time (US & Canada)"))
     end
 
     if params.dig(:filters, :query).present?

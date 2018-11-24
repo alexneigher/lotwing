@@ -1,14 +1,17 @@
-%h3.my-5.text-center LotWing branded slogan catch phrase!
-.row.mt-5
-  .col-md-6
-    .row.justify-content-center
-      .col-md-9
-        = image_tag "https://via.placeholder.com/500x400", class: 'w-100'
-  .col-md-6
-    .row.justify-content-center
-      .col-md-9
-        = image_tag "https://via.placeholder.com/500x400", class: 'w-100'
+:css
+  body{
+    background-color: #343a40;
+  }
+  .navbar-brand img {
+    display: none;
+  }
 
-.row.justify-content-center
-  .col-md-6
-    = render "devise/shared/links"
+.container
+  .row.mb-5.pb-5
+    .col-md-12.text-right
+      = render "devise/shared/links"
+  .row.text-center
+    .col-md-12.mb-5
+      = image_tag "logo_light.png", style: 'max-width: 200px;'
+    .col-md-12.text-white
+      Vehicle logistics solution coming Summer 2019

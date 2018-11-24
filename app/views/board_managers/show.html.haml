@@ -6,31 +6,32 @@
       .card.text-center.mb-3
         .card-header
           Sales Today
-        .card-body.text-white
+        .card-body.small
           - grouped = @deals.where("created_at >= ?", Date.today.beginning_of_day).group_by(&:is_used)
-          %span.p-3.my-2.bg-blue
+          %span.py-2.px-3.my-2.bg-blue.text-white.rounded
             = "New: #{grouped[false]&.length || 0}"
-          %span.p-3.my-2.bg-green
+          %span.py-2.px-3.my-2.bg-green.rounded.ml-1
             = "Used: #{grouped[true]&.length || 0}"
       .card.text-center
         .card-header
           Sales MTD
-        .card-body.text-white
+        .card-body.small
           - grouped = @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:is_used)
-          %span.p-3.my-2.bg-blue
+          %span.py-2.px-3.my-2.bg-blue.text-white.rounded
             = "New: #{grouped[false]&.length || 0}"
-          %span.p-3.my-2.bg-green
+          %span.py-2.px-3.my-2.bg-green.rounded.ml-1
             = "Used: #{grouped[true]&.length || 0}"
 
         .card-body.text-left.small.pt-0
-          - @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:sales_rep).reverse_each do |rep, deals|
-            = "#{rep.presence || 'Unknown Rep'}"
-            %br
-            - grouped = deals.group_by(&:is_used)
-            = "#{grouped[false]&.length || 0} New"
-            = "#{grouped[true]&.length || 0} Used"
-            = "(#{deals.count})"
-            %hr.my-1
+          %small
+            - @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:sales_rep).reverse_each do |rep, deals|
+              = "#{rep.presence || 'Unknown Rep'}"
+              %br
+              - grouped = deals.group_by(&:is_used)
+              = "#{grouped[false]&.length || 0} New"
+              = "#{grouped[true]&.length || 0} Used"
+              = "(#{deals.count})"
+              %hr.my-1
 
 
     .col-md-10
@@ -55,7 +56,7 @@
                 = link_to 'MTD New Vehicle Report', new_vehicle_report_board_manager_path, class: 'dropdown-item'
                 = link_to 'Stored Deals', stored_deals_board_manager_path, class: 'dropdown-item'
                
-      .table-responsive.small
+      .table-responsive.small{style:' max-height:70vh;overflow-y: scroll;'}
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead
             %tr
@@ -153,3 +154,4 @@
                   %td= deal.result
                   %td{class: (deal.report_status == "Not RDR'd" ? 'text-danger' : '').to_s}
                     = deal.report_status
+      
