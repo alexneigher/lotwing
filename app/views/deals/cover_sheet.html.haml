@@ -1,3 +1,8 @@
+:css
+  body, html{
+    height: 100%;
+    position: relative;
+  }
 #header
   = wicked_pdf_image_tag 'dealer_logo.png'
 
@@ -8,10 +13,11 @@
   %div{style: 'margin-top: 0px;'}
     = "#{@deal.year} #{@deal.make} #{@deal.model}"
     &nbsp;
-    - if @deal.certified_pre_owned
-      &#10004;
-    - else
-      &#10006;
+    %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;'}
+      - if @deal.certified_pre_owned
+        &#10006;
+      - else
+        &nbsp;&nbsp;&nbsp;
     CPO
   
   %div{style: 'margin-top: 10px;'}
@@ -96,17 +102,19 @@
 
   %div{style: 'margin-top: 10px;'}
     %div{style: 'width:30%;display:inline-block;'}
-      - if @deal.dealer_demo
-        &#10004;
-      - else
-        &#10006;
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;'}
+        - if @deal.dealer_demo
+          &#10006;
+        - else
+          &nbsp;&nbsp;&nbsp;
       Dealer Demo
 
     %div{style: 'width:30%;display:inline-block;'}
-      - if @deal.loaner_car
-        &#10004;
-      - else
-        &#10006;
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;'}
+        - if @deal.loaner_car
+          &#10006;
+        - else
+          &nbsp;&nbsp;&nbsp;
       Loaner Car
       
   %div{style: 'margin-top: 10px;'}
@@ -222,5 +230,5 @@
 
 
 %div{style:'clear:both;'}
-#footer
-  = wicked_pdf_image_tag 'logo_black_small.png', style: 'margin:auto; display:block; width: 100px;'
+#footer{style: 'position: absolute; bottom: 0px;left: 0; right: 0'}
+  = wicked_pdf_image_tag 'logo_black_small.png', style: 'margin:auto; display:block; width: 50px;'
