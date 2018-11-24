@@ -10,7 +10,7 @@
             %td{:style => "padding-top:50px;padding-bottom:20px;padding-right:50px;padding-left:50px;"}
               %h1{:style => "margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;"}
                 %a{:href => "https://lotwing.herokuapp.com"}
-                  = image_tag "logo.png", style: 'width: 250px; margin: auto; display: block;'
+                  = image_tag "logo.png", style: 'width: 150px; margin: auto; margin-bottom:20px; display: block;'
 
           %tr
             %td{:style => "padding-top:0;padding-bottom:0;padding-right:25px;padding-left:25px;"}
@@ -19,13 +19,15 @@
                   %td{:style => "padding-top:0;padding-bottom:0;padding-right:25px;padding-left:25px;font-size:14px;line-height:20px;letter-spacing:.3px;"}
                     %h2{style: 'font-size: 36px; font-weight: 300; font-family: Georgia; color: #48BA59;'}
                       #{@user.full_name},
-                    %p{style: 'font-size: 18px; color: #6B6A6A; font-family: Trebuchet MS;line-height: 28px;'}
+                    %p{style: 'font-size: 18px; color: #000; font-family: Trebuchet MS;line-height: 28px;'}
                       Please
                       = link_to "click here" , invitations_view_invitation_url(@user.reset_password_token)
-                      to accept your invitation, and set your password.
+                      to accept your invitation to join as a user of
+                      = "Lot<b>Wing,</b>".html_safe
+                      and set your password.
 
 
-                    %p{style: 'font-size: 18px; color: #6B6A6A; font-family: Trebuchet MS;line-height: 28px;'}
+                    %p{style: 'font-size: 18px; color: #000; font-family: Trebuchet MS;line-height: 28px;'}
                       Thanks,
                       %br
                       %i
