@@ -28,8 +28,9 @@
     / Navigation
     %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.mb-1.p-0
       .container
-        %a.navbar-brand
-          = image_tag "logo_light.png", style: 'max-width:150px;'
+        %a.navbar-brand{style: 'padding-top:10px;padding-bottom:10px;'}
+          = image_tag "logo_light.png", style: 'max-width:100px;'
+        
         %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
           %span.navbar-toggler-icon
         #navbarResponsive.collapse.navbar-collapse
