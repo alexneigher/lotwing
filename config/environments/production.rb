@@ -24,7 +24,7 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   config.action_mailer.default_url_options = { host: "lotwing.herokuapp.com" }
-  config.action_mailer.asset_host = 'http://lotwing.herokuapp.com'
+  config.action_mailer.asset_host = 'https://lotwing.herokuapp.com'
 
 
   # Compress JavaScripts and CSS.
