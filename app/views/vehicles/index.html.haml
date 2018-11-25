@@ -14,9 +14,9 @@
           .col-6.text-right.pt-1
             - grouped = @vehicles.group_by(&:is_used)
             %span.p-1.bg-blue.rounded.text-white
-              = "New: #{grouped[false].count}"
+              = "New: #{grouped[false]&.count || 0}"
             %span.p-1.bg-green.rounded.ml-1
-              = "Used: #{grouped[true].count}"
+              = "Used: #{grouped[true]&.count || 0}"
 
       .table-responsive.vehicle-table{style: 'max-height: 75vh;'}
         %table.table.table-bordered.table-striped.table-sm
