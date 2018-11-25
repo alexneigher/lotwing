@@ -16,10 +16,14 @@ Rails.application.routes.draw do
     post "auth/login", controller: :authentication, action: :login
     get "test", controller: :authentication, action: :test #for testing purposes
 
-    # vehicles
-    # shapes
-    # events
-
+    resources :vehicles
+    resources :shapes do
+      collection do
+        get :parking_lots
+        get :buildings
+        get :parking_spaces
+      end
+    end
   end
 
   devise_for :users

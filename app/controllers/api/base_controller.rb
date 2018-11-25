@@ -1,9 +1,10 @@
-class Api::BaseController < ActionController::Base
+class Api::BaseController < ActionController::API
   before_action :authenticate_request
   attr_reader :current_user
   
   include ExceptionHandler
-  
+  include Response
+
   private
 
     def authenticate_request
