@@ -23,7 +23,7 @@ $(function(){
   window.map.on('load', function () {
 
     $.ajax({
-      url:"/api/shapes",
+      url:"/web_api/shapes",
       dataType: "json",
       success: function(data){
         add_shapes_to_map(data, window.map, 'parking_lots');

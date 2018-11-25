@@ -1,6 +1,6 @@
 function fetch_data_and_render(shape_type){
   $.ajax({
-    url:"/api/shapes/"+shape_type,
+    url:"/web_api/shapes/"+shape_type,
     dataType: "json",
     success: function(data){
       add_shapes_to_map(data, window.map, shape_type);

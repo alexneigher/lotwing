@@ -26,7 +26,7 @@ $(function(){
   window.map.on('load', function () {
 
     $.ajax({
-      url:"/api/shapes",
+      url:"/web_api/shapes",
       dataType: "json",
       success: function(data){
         console.log(data);

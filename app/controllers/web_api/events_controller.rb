@@ -1,4 +1,4 @@
-module Api
+module WebApi
   class EventsController < ApplicationController
     def index
       @note_events = current_user.dealership.events.includes(tag: :shape).where(event_type: "note", acknowledged: :false).where(tags: {active: :true})

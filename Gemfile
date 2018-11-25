@@ -13,6 +13,11 @@ gem 'rails', '~> 5.1.6'
 # Use Postgres as the database for Active Record
 gem 'pg', '~> 0.20'
 
+
+gem 'rack-cors', :require => 'rack/cors'
+gem 'jwt'
+gem 'simple_command'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 

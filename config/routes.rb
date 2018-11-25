@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  namespace :api do
+  # for javascript clients
+  namespace :web_api do
     resources :events
     resources :shapes do
       collection do
@@ -8,6 +9,17 @@ Rails.application.routes.draw do
         get :parking_spaces
       end
     end
+  end
+
+  #for Mobile clients
+  namespace :api do
+    post "auth/login", controller: :authentication, action: :login
+    get "test", controller: :authentication, action: :test #for testing purposes
+
+    # vehicles
+    # shapes
+    # events
+
   end
 
   devise_for :users

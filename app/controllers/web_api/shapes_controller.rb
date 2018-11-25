@@ -1,4 +1,4 @@
-module Api
+module WebApi
   class ShapesController < ApplicationController
    
     def index

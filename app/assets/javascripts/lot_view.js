@@ -41,7 +41,7 @@ $(function(){
     
     // fetch parking spaces
     $.ajax({
-      url:"/api/shapes/parking_spaces",
+      url:"/web_api/shapes/parking_spaces",
       dataType: "json",
       success: function(data){
         add_shapes_to_map(data, window.map, 'used_vehicle_occupied_spaces');
@@ -62,7 +62,7 @@ $(function(){
 function fetch_events_and_render(){
   // fetch all events to render icons
   $.ajax({
-    url:"/api/events",
+    url:"/web_api/events",
     dataType: "json",
     success: function(data){
       add_events_to_map(data, window.map, "note_events");
@@ -89,7 +89,7 @@ function handle_mouseover(e){
     .addTo(map);
 
   $.ajax({
-    url:"/api/shapes/" + e.features[0].properties.shape_id,
+    url:"/web_api/shapes/" + e.features[0].properties.shape_id,
     dataType: "json",
     success: function(data){
       str = tooltip_html(data)
