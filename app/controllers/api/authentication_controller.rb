@@ -33,9 +33,3 @@ module Api
       end
   end
 end
-
-
-# {
-#   "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1NDMxMzQ1OTF9.XYiWluSEWc-QcFgAYXaw9eAOumtoh2TzzQxeyyll-uY",
-#   "message": "Login Successful"
-# }
