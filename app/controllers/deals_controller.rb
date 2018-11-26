@@ -17,7 +17,12 @@ class DealsController < ApplicationController
   def update
     @deal = current_user.dealership.deals.find(params[:id])
     @deal.update(deal_params)
-    redirect_to board_manager_path
+    
+    if params[:commit] == "Print Cover Sheet"
+      redirect_to deal_cover_sheet_path(@deal, format: :pdf) and return
+    else
+      redirect_to board_manager_path and return
+    end
   end
 
   def destroy

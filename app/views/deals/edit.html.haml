@@ -1,10 +1,11 @@
 .container-fluid
-  .row
-    .col-md-12
-      %h3 Board Manager - Editing #{@deal.client_last_name}
-      = link_to 'Generate Cover Sheet', deal_cover_sheet_path(@deal, format: :pdf)
-
   = form_for @deal, url: deal_path(@deal), method: :put do |f|
+
+    .row
+      .col-md-12
+        %h3 Board Manager - Editing #{@deal.client_last_name}
+        = f.submit 'Print Cover Sheet', class: 'btn btn-link p-0 m-0'
+
     .row.mt-4
       .col-md-2
         = f.text_field :client_last_name, placeholder: 'Client Last Name', class: 'form-control mb-1'
