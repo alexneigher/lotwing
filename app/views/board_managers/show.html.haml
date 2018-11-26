@@ -3,28 +3,19 @@
     .col-md-2
       %h3.mb-2.text-center Sales Board
       %hr
-      .card.text-center.mb-3
-        .card-header
-          Sales Today
-        .card-body.small
-          - grouped = @deals.where("created_at >= ?", Date.today.beginning_of_day).group_by(&:is_used)
-          %span.py-2.px-3.my-2.bg-blue.text-white.rounded
-            = "New: #{grouped[false]&.length || 0}"
-          %span.py-2.px-3.my-2.bg-green.rounded.ml-1
-            = "Used: #{grouped[true]&.length || 0}"
       .card.text-center
         .card-header
-          Sales MTD
+          Results
         .card-body.small
-          - grouped = @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:is_used)
+          - grouped = @deals.group_by(&:is_used)
           %span.py-2.px-3.my-2.bg-blue.text-white.rounded
             = "New: #{grouped[false]&.length || 0}"
           %span.py-2.px-3.my-2.bg-green.rounded.ml-1
             = "Used: #{grouped[true]&.length || 0}"
-
+      
         .card-body.text-left.small.pt-0
           %small
-            - @deals.where("created_at >= ?", current_user.dealership.custom_mtd_start_date).group_by(&:sales_rep).reverse_each do |rep, deals|
+            - @deals.group_by(&:sales_rep).reverse_each do |rep, deals|
               = "#{rep.presence || 'Unknown Rep'}"
               %br
               - grouped = deals.group_by(&:is_used)
@@ -38,18 +29,34 @@
       = link_to 'New Entry', new_deal_path, class: 'btn btn-primary btn-sm'
       = form_for :filters, url: board_manager_path, method: :get do
         .row.pt-1
-          .col-md-3.pt-1 
+          .col-md-2.pt-1 
             %label{onchange: "$(this).parents('form').submit();"}
               = check_box_tag "filters[mtd]", 1, params.dig(:filters, :mtd)&.present? ? true : false
               MTD
               %small.text-muted
                 (since #{current_user.dealership.custom_mtd_start_date})
-          .col-md-3.form-inline{style: 'margin-top: -5px;'}
-            = text_field_tag "filters[query]", params.dig(:filters, :query), placeholder: 'Last name OR Stock #', class: 'form-control form-control-sm pull-left'
+
+          .col-md-7.form-inline{style: 'margin-top: -5px;'}
+            .input-group
+              .input-group-prepend
+                %span.input-group-text{style:'padding: 0 5px;'}
+                  %i.fa.fa-calendar
+              = text_field_tag "filters[start_date]", params.dig(:filters, :start_date), placeholder: 'Custom Start Date', class: 'form-control form-control-sm mr-1 datepicker'
+            .input-group
+              .input-group-prepend
+                %span.input-group-text{style:'padding: 0 5px;'}
+                  %i.fa.fa-calendar
+              = text_field_tag "filters[end_date]", params.dig(:filters, :end_date), placeholder: 'Custom End Date', class: 'form-control form-control-sm mr-1 datepicker'
+            .input-group
+              .input-group-prepend
+                %span.input-group-text{style:'padding: 0 5px;'}
+                  %i.fa.fa-list
+              = text_field_tag "filters[query]", params.dig(:filters, :query), placeholder: 'Last name OR Stock #', class: 'form-control form-control-sm'
+
             = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
 
-          .col-md-2
-            .dropdown.show
+          .col-md-3
+            .dropdown.show.pull-right
               %a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle.btn-sm{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                 All Reports
               .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
@@ -154,4 +161,10 @@
                   %td= deal.result
                   %td{class: (deal.report_status == "Not RDR'd" ? 'text-danger' : '').to_s}
                     = deal.report_status
-      
+
+:javascript
+  $(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd'
+     });
+  });
