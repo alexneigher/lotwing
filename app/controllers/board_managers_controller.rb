@@ -15,11 +15,11 @@ class BoardManagersController < ApplicationController
       deals = deals.where(sql)
 
     elsif params.dig(:filters, :start_date).present?
-      start_date = DateTime.strptime(params.dig(:filters, :start_date), "%Y-%m-%d").beginning_of_day.in_time_zone("Pacific Time (US & Canada)")
-      end_date = DateTime.strptime(params.dig(:filters, :end_date).presence || Date.today, "%Y-%m-%d").end_of_day.in_time_zone("Pacific Time (US & Canada)")
+      start_date = DateTime.strptime(params.dig(:filters, :start_date), "%Y-%m-%d").in_time_zone("Pacific Time (US & Canada)").beginning_of_day
+      end_date = DateTime.strptime(params.dig(:filters, :end_date).presence || Date.today, "%Y-%m-%d").in_time_zone("Pacific Time (US & Canada)").end_of_day
       deals = deals.where("created_at >= ? AND created_at <= ?", start_date, end_date )
     else
-      deals = deals.where("created_at >= ?", Date.today.beginning_of_day.in_time_zone("Pacific Time (US & Canada)"))
+      deals = deals.where("created_at >= ?", Date.today.in_time_zone("Pacific Time (US & Canada)")).beginning_of_day
     end
 
     if params.dig(:filters, :query).present?
@@ -33,7 +33,7 @@ class BoardManagersController < ApplicationController
     end
 
     @deals = deals
-    @grouped_deals = deals.group_by{|d| d.created_at.beginning_of_day.in_time_zone("Pacific Time (US & Canada)")}.sort_by{|k, v| k}.to_h
+    @grouped_deals = deals.group_by{|d| d.created_at.in_time_zone("Pacific Time (US & Canada)").beginning_of_day}.sort_by{|k, v| k}.to_h
   end
 
 
