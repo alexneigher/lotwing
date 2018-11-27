@@ -20,7 +20,7 @@
       
         .card-body.text-left.small.pt-0
           %small
-            - @deals.group_by(&:sales_rep).reverse_each do |rep, deals|
+            - @deals.group_by(&:sales_rep).sort_by{ |k, v| v.count}.to_h.reverse_each do |rep, deals|
               = "#{rep.presence || 'Unknown Rep'}"
               %br
               - grouped = deals.group_by(&:is_used)
