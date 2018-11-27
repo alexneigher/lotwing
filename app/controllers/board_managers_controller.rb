@@ -33,7 +33,7 @@ class BoardManagersController < ApplicationController
     end
 
     @deals = deals
-    @grouped_deals = deals.group_by{|d| d.created_at.beginning_of_day}.sort_by{|k, v| k}.to_h
+    @grouped_deals = deals.group_by{|d| d.created_at.beginning_of_day.in_time_zone("Pacific Time (US & Canada)")}.sort_by{|k, v| k}.to_h
   end
 
 
