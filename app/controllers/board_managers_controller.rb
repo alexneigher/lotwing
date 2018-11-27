@@ -19,7 +19,7 @@ class BoardManagersController < ApplicationController
       end_date = DateTime.strptime(params.dig(:filters, :end_date).presence || Date.today, "%Y-%m-%d").in_time_zone("Pacific Time (US & Canada)").end_of_day
       deals = deals.where("created_at >= ? AND created_at <= ?", start_date, end_date )
     else
-      deals = deals.where("created_at >= ?", Date.today.in_time_zone("Pacific Time (US & Canada)")).beginning_of_day
+      deals = deals.where("created_at >= ?", Date.today.in_time_zone("Pacific Time (US & Canada)").beginning_of_day)
     end
 
     if params.dig(:filters, :query).present?
