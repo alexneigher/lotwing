@@ -3,15 +3,15 @@
 = javascript_include_tag('vehicle_manager')
 .container-fluid
   .row
-    .col-lg-5
+    .col-sm-6
       = form_tag search_vehicles_path, method: :get do
         .row
-          .col-4
+          .col-lg-4
             .form-group
               = text_field_tag "stock_number", params[:stock_number], class: 'form-control-sm form-control', placeholder: 'Search Stock #'
-          .col-2
+          .col-lg-2
             = submit_tag 'Search', class: 'btn btn-primary btn-sm'
-          .col-6.text-right.pt-1
+          .col-lg-6.text-right.pt-1
             - grouped = @vehicles.group_by(&:is_used)
             %span.p-1.bg-blue.rounded.text-white
               = "New: #{grouped[false]&.count || 0}"
@@ -77,7 +77,7 @@
                
         = link_to "Add New Vehicle", new_vehicle_path, class: 'btn btn-small btn-primary'
       
-    .col-md-7
+    .col-sm-6
       #vehicleDetailContainer
 
       / Modal

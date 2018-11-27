@@ -8,10 +8,15 @@
           Results
         .card-body.small
           - grouped = @deals.group_by(&:is_used)
-          %span.py-2.px-3.my-2.bg-blue.text-white.rounded
-            = "New: #{grouped[false]&.length || 0}"
-          %span.py-2.px-3.my-2.bg-green.rounded.ml-1
-            = "Used: #{grouped[true]&.length || 0}"
+          .row.no-gutters
+            .col-lg-6
+              .bg-blue.text-white.rounded
+                .py-2
+                  = "New: #{grouped[false]&.length || 0}"
+            .col-lg-6
+              .bg-green.rounded
+                .py-2
+                  = "Used: #{grouped[true]&.length || 0}"
       
         .card-body.text-left.small.pt-0
           %small
@@ -30,7 +35,7 @@
       = form_for :filters, url: board_manager_path, method: :get do
         .row.pt-1
           .col-md-2.pt-1 
-            %label{onchange: "$(this).parents('form').submit();"}
+            %label{onchange: "$('#filters_start_date').val(''); $('#filters_end_date').val(''); $(this).parents('form').submit();"}
               = check_box_tag "filters[mtd]", 1, params.dig(:filters, :mtd)&.present? ? true : false
               MTD
               %small.text-muted
@@ -56,7 +61,7 @@
             = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
 
           .col-md-3
-            .dropdown.show.pull-right
+            .dropdown.show
               %a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle.btn-sm{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                 All Reports
               .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}

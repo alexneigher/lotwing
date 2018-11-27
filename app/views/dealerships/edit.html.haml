@@ -7,9 +7,10 @@
         .card
           
           .card-body
-            .form-group
-              %label Dealership Name
-              = f.text_field :name, class: 'form-control'
+            - if current_user.permission_level == "admin"
+              .form-group
+                %label Dealership Name
+                = f.text_field :name, class: 'form-control'
             .form-group
               .row
                 .col-6
@@ -19,16 +20,17 @@
               = f.submit 'Update', class: 'btn btn-primary'
       .col-md-3
         .card.bg-light
-          .card-body
-            Data Sync
-            %hr
-            %label Provider Id
-            = f.fields_for :data_sync do |ff|
-              = ff.text_field :provider_id, class: 'form-control'
-            %hr
-            %small
-              %em Last sync:
-              = @dealership.data_sync.last_run_at&.in_time_zone("Pacific Time (US & Canada)")&.strftime("%b %e, %Y %l:%M %p") || "N/A"
+          - if current_user.permission_level == "admin"
+            .card-body
+              Data Sync
+              %hr
+              %label Provider Id
+              = f.fields_for :data_sync do |ff|
+                = ff.text_field :provider_id, class: 'form-control'
+              %hr
+              %small
+                %em Last sync:
+                = @dealership.data_sync.last_run_at&.in_time_zone("Pacific Time (US & Canada)")&.strftime("%b %e, %Y %l:%M %p") || "N/A"
   %hr
   .row
     .col-md-4

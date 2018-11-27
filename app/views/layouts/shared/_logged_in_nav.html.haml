@@ -4,6 +4,8 @@
   %a#navbarDropdownBlog.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#"}
     = current_user.full_name
   .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "navbarDropdownBlog"}
-    = link_to 'Dealership settings', edit_dealership_path(current_user.dealership), class: 'dropdown-item'
+    - if current_user.permission_level.in? ["admin", "manager"]
+      = link_to 'Dealership settings', edit_dealership_path(current_user.dealership), class: 'dropdown-item'
+      
     = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'dropdown-item'
 
