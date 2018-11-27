@@ -61,6 +61,8 @@ Rails.application.routes.draw do
     collection do
       get :stored_deals
       get :new_vehicle_report
+      get :used_vehicle_report
+
     end
   end
 
