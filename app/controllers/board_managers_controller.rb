@@ -15,9 +15,11 @@ class BoardManagersController < ApplicationController
       deals = deals.where(sql)
 
     elsif params.dig(:filters, :start_date).present?
-      deals = deals.where("created_at > ? AND created_at <= ?", params.dig(:filters, :start_date), params.dig(:filters, :end_date).presence || Date.today.end_of_day.in_time_zone("Pacific Time (US & Canada)") )
+      start_date = DateTime.strptime(params.dig(:filters, :start_date), "%Y-%m-%d").beginning_of_day.in_time_zone("Pacific Time (US & Canada)")
+      end_date = DateTime.strptime(params.dig(:filters, :end_date).presence || Date.today, "%Y-%m-%d").end_of_day.in_time_zone("Pacific Time (US & Canada)")
+      deals = deals.where("created_at >= ? AND created_at <= ?", start_date, end_date )
     else
-      deals = deals.where("created_at > ?", Date.today.beginning_of_day.in_time_zone("Pacific Time (US & Canada)"))
+      deals = deals.where("created_at >= ?", Date.today.beginning_of_day.in_time_zone("Pacific Time (US & Canada)"))
     end
 
     if params.dig(:filters, :query).present?
