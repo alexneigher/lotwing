@@ -18,7 +18,8 @@
 
         %a{"data-target" => "#historyModal", "data-toggle" => "modal", :href => "#"} Show History
         %br
-        = link_to 'Delete deal', deal_path(@deal), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger'
+        - unless current_user.permission_level == 'user'
+          = link_to 'Delete deal', deal_path(@deal), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger'
 
         / The Modal
         #historyModal.modal

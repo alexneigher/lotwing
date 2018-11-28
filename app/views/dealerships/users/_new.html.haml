@@ -6,6 +6,6 @@
     
     .form-group
       %label Permission Level
-      = f.select :permission_level, options_for_select([['User', "user"], ['Member', "member"], ['Admin', "admin"]]), {}, class: 'form-control'
+      = f.select :permission_level, options_for_select([['User', "user"], ['Manager', "manager"], ['Admin', "admin"]]), {}, class: 'form-control'
     
     = f.submit 'Add', class: 'btn btn-primary'
