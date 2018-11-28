@@ -40,7 +40,7 @@
               %tr
                 %td.bg-light{colspan: 12}
                   %strong
-                    = date.in_time_zone("Pacific Time (US & Canada)").strftime("%m/%d/%Y")
+                    = date.strftime("%m/%d/%Y")
                     = " (#{deals.count})"
               - deals.each do |deal|
                 %tr{class: (deal.is_used ? 'text-green' : 'text-blue').to_s}

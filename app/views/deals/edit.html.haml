@@ -8,6 +8,7 @@
 
     .row.mt-4
       .col-md-2
+        = f.date_field :deal_date, class: 'form-control'
         = f.text_field :client_last_name, placeholder: 'Client Last Name', class: 'form-control mb-1'
         = f.text_field :source, placeholder: 'Source', class: 'form-control mb-1'
         = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control mb-1'
