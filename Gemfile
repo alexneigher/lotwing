@@ -18,6 +18,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'jwt'
 gem 'simple_command'
 
+gem 'airbrake'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 
