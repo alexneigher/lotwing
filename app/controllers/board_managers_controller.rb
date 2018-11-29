@@ -25,7 +25,7 @@ class BoardManagersController < ApplicationController
     end
 
     if params.dig(:filters, :query).present?
-      deals = current_user.dealership.deals.where("client_last_name ILIKE ? OR stock_number ILIKE ?", "%#{params.dig(:filters, :query)}%", "%#{params.dig(:filters, :query)}%")
+      deals = current_user.dealership.deals.where(stored: false).where("client_last_name ILIKE ? OR stock_number ILIKE ?", "%#{params.dig(:filters, :query)}%", "%#{params.dig(:filters, :query)}%")
     end
 
     if params.dig(:sortings).present?
