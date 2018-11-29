@@ -27,7 +27,7 @@
           CPO
       .col-md-2
         = f.select :result, options_for_select(['Deposit', 'P-Trip', 'Trip', 'N/C']), {include_blank: 'Result'}, class: 'form-control mb-1'
-        = f.select :report_status, options_for_select(['New RDR Done', 'CPO RDR Done', 'Not RDR\'d', 'N/A (Used Car, non CPO)']), {include_blank: 'Report Status'}, class: 'form-control mb-1'
+        = f.select :report_status, options_for_select(['New RDR Done', "New RDR Done Supp/Part",'Not RDR\'d', 'Not RDR\'d Supp/Part', 'CPO RDR Done', 'N/A (Used Car, non CPO)']), {include_blank: 'Report Status'}, class: 'form-control mb-1'
         = f.text_field :deal_number, placeholder: 'Deal Number', class: 'form-control mb-1'
         = f.text_field :pay_method, placeholder: 'Pay Method', class: 'form-control mb-1'
         = f.select :deal_type, options_for_select(['Retail', 'One Pay', 'Lease', 'Cash', 'RB']), {include_blank: 'Deal Type'}, class: 'form-control mb-1'

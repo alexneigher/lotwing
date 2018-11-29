@@ -3,6 +3,11 @@
   .edit-icon{
     display: none;
   }
+  @media (max-width: 991px) {
+    .edit-icon{
+      display: block !important;
+    }
+  }
   tr:hover{
     .edit-icon{
       display: inline-block;

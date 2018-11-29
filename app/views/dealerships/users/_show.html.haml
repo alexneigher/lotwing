@@ -9,6 +9,6 @@
         %small
           = @user.permission_level
   .card-footer
-    - unless @user == current_user
+    - unless @user == current_user || @user.permission_level == "admin"
       = link_to 'delete user', dealership_user_path(@dealership, @user), method: :delete, class: 'text-danger', data: {confirm: "are you sure you want to delete #{@user.full_name}"}
     
