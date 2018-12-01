@@ -9,7 +9,7 @@ class InvitationsController < ApplicationController
   def accept_invitation
     @user = User.find_by_reset_password_token(params[:reset_password_token])
     
-    @user.update(password: params[:password])
+    @user.update(password: params[:user][:password], password_confirmation: params[:user][:password])
     
     sign_in(@user)
 
