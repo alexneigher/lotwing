@@ -32,26 +32,43 @@
 
     .col-md-10
       = link_to 'New Entry', new_deal_path, class: 'btn btn-primary btn-sm'
+
+      .dropdown.show.pull-right
+        %a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle.btn-sm{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+          All Reports
+        .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "dropdownMenuLink"}
+          = link_to 'MTD New Vehicle Report', new_vehicle_report_board_manager_path, class: 'dropdown-item'
+          = link_to 'MTD Used Vehicle Report', used_vehicle_report_board_manager_path, class: 'dropdown-item'
+          = link_to 'Running Total', running_total_board_manager_path, class: 'dropdown-item'
+
+          = link_to 'Stored Deals', stored_deals_board_manager_path, class: 'dropdown-item'
+           
       = form_for :filters, url: board_manager_path, method: :get, autocomplete: "off" do
         .row.pt-1
-          .col-md-2.pt-1 
-            %label{onchange: "$('#filters_start_date').val(''); $('#filters_end_date').val(''); $(this).parents('form').submit();"}
-              = check_box_tag "filters[mtd]", 1, params.dig(:filters, :mtd)&.present? ? true : false
-              MTD
-              %small.text-muted
-                (since #{current_user.dealership.custom_mtd_start_date})
+          .col-md-3.pt-1
+            .btn-group{"data-toggle" => "buttons"}
+              %label.btn.btn-sm{onchange: "$('#filters_start_date').val(''); $('#filters_end_date').val(''); $(this).parents('form').submit();", class: (params.dig(:filters, :mtd) == '0' || params.dig(:filters, :mtd).nil?) ? 'btn-success': 'btn-secondary'} 
+                %small
+                  Today
+                = radio_button_tag 'filters[mtd]', "0", params.dig(:filters, :mtd) == '0' || params.dig(:filters, :mtd).nil?, class: 'd-none'
 
-          .col-md-7.form-inline{style: 'margin-top: -5px;'}
+              %label.btn.btn-sm{onchange: "$('#filters_start_date').val(''); $('#filters_end_date').val(''); $(this).parents('form').submit();", class: (params.dig(:filters, :mtd) == '1') ? 'btn-success' : 'btn-secondary'}
+                %small
+                  MTD (since #{current_user.dealership.custom_mtd_start_date})
+                = radio_button_tag 'filters[mtd]', "1", params.dig(:filters, :mtd) == '1', class: 'd-none'
+
+
+          .col-md-9.form-inline{style: 'margin-top: -5px;'}
             .input-group
               .input-group-prepend
                 %span.input-group-text{style:'padding: 0 5px;'}
                   %i.fa.fa-calendar
-              = text_field_tag "filters[start_date]", params.dig(:filters, :start_date), autocomplete: "off", placeholder: 'Custom Start Date', class: 'form-control form-control-sm mr-1 datepicker'
+              = text_field_tag "filters[start_date]", params.dig(:filters, :start_date), autocomplete: "off", placeholder: 'Start Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
             .input-group
               .input-group-prepend
                 %span.input-group-text{style:'padding: 0 5px;'}
                   %i.fa.fa-calendar
-              = text_field_tag "filters[end_date]", params.dig(:filters, :end_date), autocomplete: "off", placeholder: 'Custom End Date', class: 'form-control form-control-sm mr-1 datepicker'
+              = text_field_tag "filters[end_date]", params.dig(:filters, :end_date), autocomplete: "off", placeholder: 'End Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
             .input-group
               .input-group-prepend
                 %span.input-group-text{style:'padding: 0 5px;'}
@@ -60,17 +77,6 @@
 
             = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
 
-          .col-md-3
-            .dropdown.show
-              %a#dropdownMenuLink.btn.btn-secondary.dropdown-toggle.btn-sm{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-                All Reports
-              .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
-                = link_to 'MTD New Vehicle Report', new_vehicle_report_board_manager_path, class: 'dropdown-item'
-                = link_to 'MTD Used Vehicle Report', used_vehicle_report_board_manager_path, class: 'dropdown-item'
-                = link_to 'Running Total', running_total_board_manager_path, class: 'dropdown-item'
-
-                = link_to 'Stored Deals', stored_deals_board_manager_path, class: 'dropdown-item'
-               
       .table-responsive.small{style:' max-height:70vh;overflow-y: scroll;'}
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead

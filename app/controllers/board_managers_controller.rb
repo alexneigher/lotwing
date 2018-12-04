@@ -3,7 +3,7 @@ class BoardManagersController < ApplicationController
   def show
     deals = current_user.dealership.deals.where(stored: false)
 
-    if params.dig(:filters, :mtd).present?
+    if params.dig(:filters, :mtd) == '1'
       sql = <<~SQL
               CASE 
                 WHEN is_used = true 
