@@ -54,7 +54,7 @@
 
               %label.btn.btn-sm{onchange: "$('#filters_start_date').val(''); $('#filters_end_date').val(''); $(this).parents('form').submit();", class: (params.dig(:filters, :mtd) == '1') ? 'btn-success' : 'btn-secondary'}
                 %small
-                  MTD (since #{current_user.dealership.custom_mtd_start_date})
+                  MTD (since #{current_user.dealership.custom_mtd_start_date.strftime("%m-%d-%y")})
                 = radio_button_tag 'filters[mtd]', "1", params.dig(:filters, :mtd) == '1', class: 'd-none'
 
 
