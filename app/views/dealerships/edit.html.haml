@@ -32,20 +32,21 @@
                 %em Last sync:
                 = @dealership.data_sync.last_run_at&.in_time_zone("Pacific Time (US & Canada)")&.strftime("%b %e, %Y %l:%M %p") || "N/A"
   %hr
-  .row
-    .col-md-4
-      %h4 Team members
-      %ul.list-group
-        - @dealership.users.each do |user|
-          %li.list-group-item
-            - if user.reset_password_token.present?
-              %i.fa.fa-unlink
-            = link_to "#{user.full_name} (#{user.permission_level.titleize})", dealership_user_path(current_user.dealership, user), remote: true
+  - unless current_user.permission_level == "user"
+    .row
+      .col-md-4
+        %h4 Team members
+        %ul.list-group
+          - @dealership.users.each do |user|
+            %li.list-group-item
+              - if user.reset_password_token.present?
+                %i.fa.fa-unlink
+              = link_to "#{user.full_name} (#{user.permission_level.titleize})", dealership_user_path(current_user.dealership, user), remote: true
 
-        #newUserForm
-        = link_to "Add new", new_dealership_user_path(@dealership), remote: true
-    .col-md-8
-      #userShow  
+          #newUserForm
+          = link_to "Add new", new_dealership_user_path(@dealership), remote: true
+      .col-md-8
+        #userShow  
 
 :javascript 
   $(function() {

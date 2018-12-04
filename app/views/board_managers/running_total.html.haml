@@ -1,15 +1,13 @@
 .container-fluid
   .row.mb-1
     .col-md-2
-      %h3 MTD New Vehicle Report
-      %small
-        .text-center
-          = "(since #{current_user.dealership.custom_mtd_start_date || "N/A"})"
+      %h3 Running Total
+      
       = link_to '< Board Manager', board_manager_path()
 
       .card.text-center.mt-5
         .card-header
-          Sales MTD (#{@grouped_deals.values.map(&:count).sum})
+          Sales All Time (#{@grouped_deals.values.map(&:count).sum})
         .card-body.small
           %small
             - @grouped_deals.reverse_each do |model, deals|

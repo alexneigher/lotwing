@@ -62,6 +62,7 @@ Rails.application.routes.draw do
       get :stored_deals
       get :new_vehicle_report
       get :used_vehicle_report
+      get :running_total
 
     end
   end
