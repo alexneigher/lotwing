@@ -1,7 +1,7 @@
 class DealershipsController < ApplicationController
   
   def edit
-    redirect_to root_path and return if current_user.permission_level == "user"
+    redirect_to root_path and return if current_user.permission_level == "sales_rep"
 
     @dealership = current_user.dealership
   end

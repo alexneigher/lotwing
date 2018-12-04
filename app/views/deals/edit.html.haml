@@ -3,7 +3,7 @@
 
     .row
       .col-md-12
-        - unless current_user.permission_level == 'user'
+        - unless current_user.permission_level == 'sales_rep'
           = link_to 'Delete deal', deal_path(@deal), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger pull-right'
           
         %h3 Board Manager - Editing #{@deal.client_last_name}
@@ -12,14 +12,14 @@
 
     .row.mt-4
       .col-md-2
-        - unless current_user.permission_level == "user"
+        - unless current_user.permission_level == "sales_rep"
           = f.date_field :deal_date, class: 'form-control'
         = f.text_field :client_last_name, placeholder: 'Client Last Name', class: 'form-control mb-1'
         = f.text_field :source, placeholder: 'Source', class: 'form-control mb-1'
         = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control mb-1'
         = f.text_field :trade, placeholder: 'Trade', class: 'form-control mb-1'
-        = f.select :sales_rep, options_for_select(current_user.dealership.users.pluck(:full_name), @deal.sales_rep), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
-        = f.select :split_rep, options_for_select(current_user.dealership.users.pluck(:full_name), @deal.split_rep), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
+        = f.select :sales_rep, options_for_select(current_user.dealership.users.sales_rep.pluck(:full_name), @deal.sales_rep), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
+        = f.select :split_rep, options_for_select(current_user.dealership.users.sales_rep.pluck(:full_name), @deal.split_rep), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
         = f.text_field :city, placeholder: 'City', class: 'form-control mb-1'
 
         %a{"data-target" => "#historyModal", "data-toggle" => "modal", :href => "#"} Show History
@@ -74,8 +74,8 @@
         = f.text_field :miles_per_year, placeholder: 'Miles Per Year (LSE)', class: 'form-control mb-1'
         = f.text_field :rebates, placeholder: 'Rebates', class: 'form-control mb-1'
         = f.text_field :program_description, placeholder: 'Program Description', class: 'form-control mb-1'
-        = f.text_field :desk_manager, placeholder: 'Desk Manager', class: 'form-control mb-1'
-        = f.text_field :finance_manager, placeholder: 'Finance Manager', class: 'form-control mb-1'
+        = f.select :desk_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name), @deal.desk_manager), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
+        = f.select :finance_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name), @deal.finance_manager), {include_blank: 'Finance Manager'}, class: 'form-control mb-1'
         %label
           = f.check_box :dealer_demo
           Dealer Demo
