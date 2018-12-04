@@ -44,12 +44,12 @@ class BoardManagersController < ApplicationController
   end
 
   def new_vehicle_report
-    @deals = current_user.dealership.deals.where(stored: false, is_used: false).where("deal_date > ?", current_user.dealership.custom_mtd_start_date)
+    @deals = current_user.dealership.deals.where(stored: false, is_used: false).where("deal_date >= ?", current_user.dealership.custom_mtd_start_date)
     @grouped_deals = @deals.group_by{|d| d.model}.sort_by{ |k, v| v.count }.to_h
   end
 
   def used_vehicle_report
-    @deals = current_user.dealership.deals.where(stored: false, is_used: true).where("deal_date > ?", Date.today.beginning_of_month)
+    @deals = current_user.dealership.deals.where(stored: false, is_used: true).where("deal_date >= ?", Date.today.beginning_of_month)
     @grouped_deals = @deals.group_by{|d| d.deal_date}.sort_by{|k, v| k}.to_h
   end
 
