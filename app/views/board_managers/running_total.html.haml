@@ -25,7 +25,7 @@
               %th Report
               
           %tbody
-            - @grouped_deals.reverse_each do |model, deals|
+            - @grouped_deals.reverse_each do |date, deals|
               %tr
                 %td.bg-light{colspan: 12}
                   %strong

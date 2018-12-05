@@ -8,5 +8,5 @@ class User < ApplicationRecord
 
   has_many :events
 
-  enum permission_level: [:sales_rep, :sales_manager, :admin]
+  enum permission_level: [:sales_rep, :sales_manager, :admin, :service_user]
 end
