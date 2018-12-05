@@ -29,7 +29,7 @@
               %tr
                 %td.bg-light{colspan: 12}
                   %strong
-                    = model
+                    = date.strftime("%m/%d/%Y")
                     = " (#{deals.count})"
               - deals.each do |deal|
                 = render partial: 'deals/shared/deal_row', locals: {deal: deal}
