@@ -5,15 +5,6 @@
       
       = link_to '< Board Manager', board_manager_path()
 
-      .card.text-center.mt-5
-        .card-header
-          Sales All Time (#{@grouped_deals.values.map(&:count).sum})
-        .card-body.small
-          %small
-            - @grouped_deals.reverse_each do |model, deals|
-              = model
-              = " (#{deals.count})"
-              %hr.my-1
     .col-md-10   
       .table-responsive.small{style: 'max-height: 80vh;'}
         %table.table.table-striped.table-sm.mb-0.board-manager-table

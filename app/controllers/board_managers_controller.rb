@@ -54,7 +54,7 @@ class BoardManagersController < ApplicationController
   end
 
   def running_total
-    @deals = current_user.dealership.deals.where(stored: false, is_used: false)
+    @deals = current_user.dealership.deals.where(stored: false)
     @grouped_deals = @deals.group_by{|d| d.model}.sort_by{ |k, v| v.count }.to_h
   end
 

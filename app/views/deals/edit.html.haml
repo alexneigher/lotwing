@@ -35,10 +35,11 @@
                 %button.close{"data-dismiss" => "modal", :type => "button"} ×
               / Modal body
               .modal-body
-                - @deal.versions.each do |version|
+                - @deal.versions.reverse_each do |version|
                   %small
-                    = version.created_at.strftime('%m/%d/%Y')
-                    %strong= version.whodunnit
+                    %strong
+                      = version.created_at.in_time_zone("Pacific Time (US & Canada)").strftime('%a, %d %b %Y %l:%M %p')
+                    = "(#{version.whodunnit})"
                     %br
                     - version.changeset.each do |key, value|
                       - next if key == "updated_at"
