@@ -21,7 +21,7 @@
         .card-body.text-left.small.pt-0
           %small
             - deal_rep_attribution_counts(@deals).sort_by{ |k, v| v[:new] + v[:used] }.reverse_each do |rep, deals|
-              = rep
+              = rep.presence || 'Unknown Rep'
               %br
               = "#{number_with_precision(deals[:new], significant: true, precision: 2, strip_insignificant_zeros: true)} New"
               = "#{number_with_precision(deals[:used], significant: true, precision: 2, strip_insignificant_zeros: true)} Used"
