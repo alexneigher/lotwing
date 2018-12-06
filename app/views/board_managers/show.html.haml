@@ -20,13 +20,12 @@
       
         .card-body.text-left.small.pt-0
           %small
-            - @deals.group_by(&:sales_rep).sort_by{ |k, v| v.count}.to_h.reverse_each do |rep, deals|
-              = "#{rep.presence || 'Unknown Rep'}"
+            - deal_rep_attribution_counts(@deals).each do |rep, deals|
+              = rep
               %br
-              - grouped = deals.group_by(&:is_used)
-              = "#{grouped[false]&.length || 0} New"
-              = "#{grouped[true]&.length || 0} Used"
-              = "(#{deals.count})"
+              = "#{number_with_precision(deals[:new], significant: true, precision: 2, strip_insignificant_zeros: true)} New"
+              = "#{number_with_precision(deals[:used], significant: true, precision: 2, strip_insignificant_zeros: true)} Used"
+              = "(#{number_with_precision(deals[:new] + deals[:used], significant: true, precision: 2, strip_insignificant_zeros: true)})"
               %hr.my-1
 
 
