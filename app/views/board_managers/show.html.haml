@@ -24,6 +24,7 @@
               = "<b>#{rep.presence || 'Unknown Rep'}</b> (#{number_with_precision(deals[:new] + deals[:used], significant: true, precision: 2, strip_insignificant_zeros: true)})".html_safe
               %br
               = "#{number_with_precision(deals[:new], significant: true, precision: 2, strip_insignificant_zeros: true)} New"
+              &#183;
               = "#{number_with_precision(deals[:used], significant: true, precision: 2, strip_insignificant_zeros: true)} Used"
               %hr.my-1
 
