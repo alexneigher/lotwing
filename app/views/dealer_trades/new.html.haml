@@ -57,11 +57,11 @@
                 .row
                   .col-12
                     %label Private Trade Notes
-                    = f.text_area :private_trade_notes, placeholder: '(These will not show up on the print out)', rows: 3, class: 'form-control'
+                    = f.text_area :private_trade_notes, placeholder: '(These will not show up on the print out)', rows: 2, class: 'form-control'
 
-              .col-md-3
+              .col-md-2
                 = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control'
-              .col-md-4
+              .col-md-5
                 .row.no-gutters
                   .col-6.text-right
                     %div.pt-2.pr-1 
@@ -74,7 +74,86 @@
                       %strong + Accessories
                   .col-6
                     = f.text_field :plus_deliver_acc, placeholder: 'Plus Deliver Acc', class: 'form-control'
+                .row.no-gutters.my-3
+                  .col-6.text-right
+                    %div.pt-2.pr-1 
+                      %strong - Dealer Rebate
+                  .col-6
+                    = f.text_field :less_rebate_1, placeholder: 'Less Rebate 1', class: 'form-control'
+                .row.no-gutters.my-3
+                  .col-6.text-right
+                    %div.pt-2.pr-1 
+                      %strong Vehicle Delivered Total
+                  .col-6
+                    = f.text_field :delivered_total, placeholder: 'Delivered Total', class: 'form-control'
       .col-12
         .card.border-dark
           .card-body.pt-1
             %h5.text-center Vehicle Received
+            .row
+              .col-md-5
+                .row
+                  .col-md-4
+                    = f.text_field :trade_model, placeholder: 'Trade Model', class: 'form-control'
+                  .col-md-4
+                    = f.text_field :trade_color, placeholder: 'Trade Color', class: 'form-control'
+                  .col-md-4
+                    = f.text_field :trade_year, placeholder: 'Trade Year', class: 'form-control'
+                .row.my-4
+                  .col-md-8
+                    = f.text_field :trade_vin, placeholder: 'Trade VIN', class: 'form-control'
+                .row
+                  .col-12
+                    %label Public Trade Notes
+                    = f.text_area :public_trade_notes, placeholder: '(Will be included on the print out)', rows: 2, class: 'form-control'
+
+              .col-md-2
+                = f.text_field :trade_stock_number, placeholder: 'Stock # Trade', class: 'form-control'
+              .col-md-5
+                .row.no-gutters
+                  .col-6.text-right
+                    %div.pt-2.pr-1 
+                      %strong Invoice
+                  .col-6
+                    = f.text_field :received_invlice, placeholder: 'Received Invoice', class: 'form-control'
+                .row.no-gutters.my-3
+                  .col-6.text-right
+                    %div.pt-2.pr-1 
+                      %strong + Accessories
+                  .col-6
+                    = f.text_field :received_acc, placeholder: 'Received Acc', class: 'form-control'
+                .row.no-gutters.my-3
+                  .col-6.text-right
+                    %div.pt-2.pr-1 
+                      %strong - Dealer Rebate
+                  .col-6
+                    = f.text_field :received_rebate, placeholder: 'Received Rebate', class: 'form-control'
+                .row.no-gutters.my-3
+                  .col-6.text-right
+                    %div.pt-2.pr-1 
+                      %strong Vehicle Delivered Total
+                  .col-6
+                    = f.text_field :received_sum, placeholder: 'Received (Sum)', class: 'form-control'
+    .row.mt-2
+      .col-4
+        History 
+        %strong X
+        Trades
+      .col-4
+        .row.no-gutters
+          .col-6.text-right
+            %div.pt-2.pr-1 
+              %strong Payment
+          .col-6
+            = f.text_field :trade_payment_type, placeholder: 'Trade Payment Type', class: 'form-control'
+      .col-4
+        .row.no-gutters
+          .col-4.text-right
+            %div.pt-2.pr-1 
+              %strong Difference
+          .col-8
+            = f.text_field :trade_difference, placeholder: 'Trade Difference', class: 'form-control'
+
+    .row.my-5
+      .col-12
+        = f.submit "Create Dealer Trade", class: 'btn btn-primary pull-right'
