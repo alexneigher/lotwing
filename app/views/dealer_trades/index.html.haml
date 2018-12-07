@@ -1,0 +1,49 @@
+.container-fluid
+  .row.mb-1
+    .col-md-2
+      %h3.text-center Dealer Trades
+
+      .card.text-center.mt-1
+        .card-header
+          %small
+            Total Trades MTD: 12
+      .card.text-center.mt-1
+        .card-header
+          %small
+            Total Trades All Time: 111
+        
+    .col-md-10   
+      = link_to 'New Trade', new_dealer_trade_path, class: 'btn btn-primary btn-sm mb-1'
+      .table-responsive.small{style: 'max-height: 80vh;'}
+        %table.table.table-striped.table-sm.mb-0.board-manager-table
+          %thead
+            %tr
+              %th
+                %i.fa.fa-pencil
+              %th Dealer Name
+              %th Date
+              %th Delivered Yr
+              %th Model
+              %th Received Yr
+              %th Model
+              %th Contact
+              %th Trade By
+              %th Difference
+              %th Payment
+              %th Trade
+              
+          %tbody
+            - @dealer_trades.each do |dealer_trade|
+              %tr
+                %td 1
+                %td 1
+                %td 1
+                %td 1
+                %td 1
+                %td 1
+                %td 1
+                %td 1
+                %td 1
+                %td 1
+                %td 1
+            

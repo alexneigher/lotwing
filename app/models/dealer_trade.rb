@@ -1,0 +1,2 @@
+class DealerTrade < ApplicationRecord
+end

@@ -1,0 +1,80 @@
+.container
+  = form_for :dealer_trade, url: dealer_trades_path, method: :post do |f|
+    .row
+      .col-md-5
+        .form-group
+          = f.text_field :trade_dealer_name, placeholder: 'Trade Dealer Name', class: 'form-control'
+        .form-group
+          = f.text_area :trade_dealer_address, placeholder: 'Trade Dealer Address', class: 'form-control', rows: 3
+        .form-group
+          .row
+            .col-md-6
+              = f.text_field :trade_dealer_contact, placeholder: 'Trade Dealer Contact', class: 'form-control'
+            .col-md-6
+              = f.text_field :trade_dealer_phone, placeholder: 'Trade Dealer Phone', class: 'form-control'
+      .col-md-4
+        .row.mt-4
+          .col-md-6
+            %label
+              = f.check_box :your_trade
+              Your Trade
+            %br
+            %label
+              = f.check_box :your_purchase
+              Your Purchase
+          .col-md-6
+            %label
+              = f.check_box :our_trade
+              Our Trade
+            %br
+            %label
+              = f.check_box :our_purchase
+              Our Purchase
+      .col-md-3
+        .row.mb-3.no-gutters
+          .col-md-6
+            = f.text_field :date_created, value: DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date, class: 'form-control'
+          .col-md-6
+            = f.text_field :time_created, value: Time.now.strftime("%I:%M %p"), class: 'form-control' 
+        = f.select :desk_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name)), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
+    .row
+      .col-12.mb-4
+        .card.border-dark
+          .card-body.pt-1
+            %h5.text-center Vehicle Delivered
+            .row
+              .col-md-5
+                .row
+                  .col-md-4
+                    = f.text_field :model, placeholder: 'Model', class: 'form-control'
+                  .col-md-4
+                    = f.text_field :color, placeholder: 'Color', class: 'form-control'
+                  .col-md-4
+                    = f.text_field :year, placeholder: 'Year', class: 'form-control'
+                .row.my-4
+                  .col-md-8
+                    = f.text_field :vin, placeholder: 'VIN', class: 'form-control'
+                .row
+                  .col-12
+                    %label Private Trade Notes
+                    = f.text_area :private_trade_notes, placeholder: '(These will not show up on the print out)', rows: 3, class: 'form-control'
+
+              .col-md-3
+                = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control'
+              .col-md-4
+                .row.no-gutters
+                  .col-6.text-right
+                    %div.pt-2.pr-1 
+                      %strong Invoice
+                  .col-6
+                    = f.text_field :delivered_invlice, placeholder: 'Delivered Invoice', class: 'form-control'
+                .row.no-gutters.my-3
+                  .col-6.text-right
+                    %div.pt-2.pr-1 
+                      %strong + Accessories
+                  .col-6
+                    = f.text_field :plus_deliver_acc, placeholder: 'Plus Deliver Acc', class: 'form-control'
+      .col-12
+        .card.border-dark
+          .card-body.pt-1
+            %h5.text-center Vehicle Received
