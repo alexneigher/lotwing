@@ -6,11 +6,11 @@
       .card.text-center.mt-1
         .card-header
           %small
-            Total Trades MTD: 12
+            Total Trades MTD: #{@dealer_trades.count}
       .card.text-center.mt-1
         .card-header
           %small
-            Total Trades All Time: 111
+            Total Trades All Time: #{@dealer_trades.count}
         
     .col-md-10   
       = link_to 'New Trade', new_dealer_trade_path, class: 'btn btn-primary btn-sm mb-1'
@@ -35,15 +35,27 @@
           %tbody
             - @dealer_trades.each do |dealer_trade|
               %tr
-                %td 1
-                %td 1
-                %td 1
-                %td 1
-                %td 1
-                %td 1
-                %td 1
-                %td 1
-                %td 1
-                %td 1
-                %td 1
+                %td
+                  = link_to edit_dealer_trade_path(dealer_trade) do
+                    %i.fa.fa-pencil.edit-icon
+                %td= dealer_trade.trade_dealer_name
+                %td= dealer_trade.date_created
+                %td= dealer_trade.year
+                %td= dealer_trade.model
+                %td.text-green= dealer_trade.trade_year
+                %td.text-green= dealer_trade.trade_model
+                %td= dealer_trade.trade_dealer_contact
+                %td ?
+                %td= dealer_trade.trade_difference
+                %td= dealer_trade.trade_payment_type
+                %td
+                  - if dealer_trade.your_trade
+                    Your Trade
+                  - elsif dealer_trade.our_trade
+                    Our Trade
+                  - elsif dealer_trade.your_purchase
+                    Your Purchase
+                  - elsif dealer_trade.our_purchase
+                    Our Purchase
+
             
