@@ -1,5 +1,5 @@
 .container
-  = form_for :dealer_trade, url: dealer_trades_path, method: :post do |f|
+  = form_for @dealer_trade, url: dealer_trade_path(@dealer_trade), method: :put do |f|
     .row
       .col-md-5
         .form-group
@@ -13,6 +13,7 @@
             .col-md-6
               = f.text_field :trade_contact_phone, placeholder: 'Trade Dealer Phone', class: 'form-control'
       .col-md-4
+        .row.mt-5.pt-5
         .row.mt-4
           .col-md-6
             %label
@@ -31,12 +32,15 @@
               = f.check_box :our_purchase
               Our Purchase
       .col-md-3
-        .row.mb-3.no-gutters
+        .row.pb-5
+          .col-12.text-right
+            = link_to "Print Trade Sheet", dealer_trade_trade_sheet_path(@dealer_trade, format: :pdf), target: "_blank", class: 'btn btn-sm btn-secondary'
+        .row.mb-4.no-gutters
           .col-md-6
-            = f.text_field :date_created, value: DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date, class: 'form-control'
+            = f.text_field :date_created, class: 'form-control'
           .col-md-6
             = f.text_field :time_created, value: Time.now.strftime("%I:%M %p"), class: 'form-control' 
-        = f.select :desk_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name)), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
+        = f.select :desk_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name), @dealer_trade.desk_manager), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
     .row
       .col-12.mb-4
         .card.border-dark
@@ -156,4 +160,4 @@
 
     .row.my-5
       .col-12
-        = f.submit "Create Dealer Trade", class: 'btn btn-primary pull-right'
+        = f.submit "Update Dealer Trade", class: 'btn btn-primary pull-right'

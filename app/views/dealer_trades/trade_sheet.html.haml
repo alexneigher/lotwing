@@ -1,0 +1,53 @@
+:css
+  body, html{
+    height: 100%;
+    position: relative;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+#header
+  = wicked_pdf_image_tag 'dealer_logo.png'
+
+%h3{style:'margin-top:30px;margin-bottom: 40px;'} DEALER TRADE SHEET
+
+%div
+  %div{style:'width:45%;float:left;'}
+    = @dealer_trade.trade_dealer_name
+    = simple_format(@dealer_trade.trade_dealer_address)
+    %h4{style:'margin-top:5px;', wrapper_tag:"span"}
+      = @dealer_trade.trade_dealer_contact
+      = @dealer_trade.trade_contact_phone
+  %div{style:'width:25%;float:left;'}
+    %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;'}
+      - if @dealer_trade.your_trade
+        &#10006;
+      - else
+        &nbsp;&nbsp;&nbsp;
+    Your Trade
+    %br
+    %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;'}
+      - if @dealer_trade.our_trade
+        &#10006;
+      - else
+        &nbsp;&nbsp;&nbsp;
+    Our Trade
+    %br
+    %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;'}
+      - if @dealer_trade.your_purchase
+        &#10006;
+      - else
+        &nbsp;&nbsp;&nbsp;
+    Your Purchase
+    %br
+    %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;'}
+      - if @dealer_trade.our_purchase
+        &#10006;
+      - else
+        &nbsp;&nbsp;&nbsp;
+    Our Purchase
+  %div{style:'width:30%;float:left;'}
+    %div{style: 'text-align:right;'}
+      %b= @dealer_trade.date_created
+    %div{style: 'margin-top:45px;text-align:right'}
+      %b This Trade By
+      %div= @dealer_trade.desk_manager

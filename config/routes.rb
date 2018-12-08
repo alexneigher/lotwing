@@ -30,7 +30,9 @@ Rails.application.routes.draw do
 
   root "board_managers#show"
 
-  resources :dealer_trades
+  resources :dealer_trades do
+    get :trade_sheet
+  end
 
   # UI for drawing shapes on the map and saving them
   get :map_builder, to: 'home#map_builder'

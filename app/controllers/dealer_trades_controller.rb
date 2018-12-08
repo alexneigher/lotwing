@@ -13,6 +13,28 @@ class DealerTradesController < ApplicationController
     redirect_to dealer_trades_path 
   end
 
+  def edit
+    @dealer_trade = current_user.dealership.dealer_trades.find(params[:id])
+  end
+
+  def update
+    @dealer_trade = current_user.dealership.dealer_trades.find(params[:id])
+    @dealer_trade.update(dealer_trade_params)
+    redirect_to dealer_trades_path
+  end
+
+  def trade_sheet
+    @dealer_trade = current_user.dealership.dealer_trades.find(params[:dealer_trade_id] )
+
+    respond_to do |format|
+     format.pdf do
+       render pdf: "Trade Sheet - #{@dealer_trade.trade_dealer_name}",
+       template: "dealer_trades/trade_sheet.html.haml",
+       layout: 'pdf.html.erb'
+     end
+    end
+  end
+
 
 
   private
