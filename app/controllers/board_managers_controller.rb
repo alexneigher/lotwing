@@ -21,7 +21,7 @@ class BoardManagersController < ApplicationController
       
       deals = deals.where("deal_date >= ? AND deal_date <= ?", start_date, end_date)
     else
-      deals = Deal.where("deal_date >= ?", DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date)
+      deals = deals.where("deal_date >= ?", DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date)
     end
 
     if params.dig(:filters, :query).present?
