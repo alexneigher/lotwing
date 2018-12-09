@@ -6,15 +6,16 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   }
 #header
-  = wicked_pdf_image_tag 'dealer_logo.png'
+  = wicked_pdf_image_tag 'dealer_logo.png', style: 'width: 200px;'
 
-%h3{style:'margin-top:30px;margin-bottom: 40px;'} DEALER TRADE SHEET
+%h4{style:'margin-top:25px;margin-bottom: 40px;'} 
+  %strong DEALER TRADE SHEET
 
 %div
   %div{style:'width:45%;float:left;'}
     = @dealer_trade.trade_dealer_name
-    = simple_format(@dealer_trade.trade_dealer_address)
-    %h4{style:'margin-top:5px;', wrapper_tag:"span"}
+    = simple_format(@dealer_trade.trade_dealer_address, wrapper_tag:"span")
+    %strong{style:'margin-top:5px;'}
       = @dealer_trade.trade_dealer_contact
       = @dealer_trade.trade_contact_phone
   %div{style:'width:25%;float:left;'}
@@ -51,3 +52,95 @@
     %div{style: 'margin-top:45px;text-align:right'}
       %b This Trade By
       %div= @dealer_trade.desk_manager
+
+%div{style:'clear:both'}
+
+%div.mt-3{style: 'border: 1px solid #000;clear:both;padding:5px 10px;'}
+  %h6.text-center 
+    %strong VEHICLE DELIVERED
+  
+  %div{style:'width:32%;float:left;'}
+    = @dealer_trade.model
+    = @dealer_trade.color
+    = @dealer_trade.year
+    %br
+    = @dealer_trade.vin
+
+  %div.text-center{style:'width:22%;float:left;'}
+    = @dealer_trade.stock_number
+
+  %div{style:'width:46%;float:left;text-align:right'}
+    %div{style:'width:80%;float:left'}
+      %strong.pr-1 INVOICE
+    %div{style:'width:20%;float:left'}
+      = @dealer_trade.delivered_invoice
+    
+    %div{style:'clear:both'}
+
+    %div{style:'width:80%;float:left'}
+      %strong.pr-1 + ACCESSORIES
+    %div{style:'width:20%;float:left'}
+      = @dealer_trade.plus_deliver_acc
+    %div{style:'clear:both'}
+
+    %div{style:'width:80%;float:left'}
+      %strong.pr-1 - DEALER REBATE
+    %div{style:'width:20%;float:left'}
+      = @dealer_trade.less_rebate_1
+    %div{style:'clear:both'}
+    %div{style:'width:80%;float:left'}
+      %strong.pr-1 VEHICLE DELIVERED TOTAL
+    %div{style:'width:20%;float:left'}
+      = @dealer_trade.delivered_total
+    %div{style:'clear:both'}
+
+  %div{style:'clear:both'}
+
+%div.mt-3{style: 'border: 1px solid #000;margin-top: 20px;padding:5px 10px;'}
+  %h6.text-center 
+    %strong VEHICLE RECEIVED
+
+  %div{style:'width:32%;float:left;'}
+    = @dealer_trade.trade_model
+    = @dealer_trade.trade_color
+    = @dealer_trade.trade_year
+    %br
+    = @dealer_trade.trade_vin
+
+  %div.text-center{style:'width:22%;float:left;'}
+    = @dealer_trade.trade_stock_number
+
+  %div{style:'width:46%;float:left;text-align:right'}
+    %div{style:'width:80%;float:left'}
+      %strong.pr-1 INVOICE
+    %div{style:'width:20%;float:left'}
+      = @dealer_trade.received_invoice
+    
+    %div{style:'clear:both'}
+
+    %div{style:'width:80%;float:left'}
+      %strong.pr-1 + ACCESSORIES
+    %div{style:'width:20%;float:left'}
+      = @dealer_trade.received_acc
+    %div{style:'clear:both'}
+
+    %div{style:'width:80%;float:left'}
+      %strong.pr-1 - DEALER REBATE
+    %div{style:'width:20%;float:left'}
+      = @dealer_trade.received_rebate
+    %div{style:'clear:both'}
+    %div{style:'width:80%;float:left'}
+      %strong.pr-1 VEHICLE DELIVERED TOTAL
+    %div{style:'width:20%;float:left'}
+      = @dealer_trade.received_sum
+    %div{style:'clear:both'}
+
+  %div{style:'clear:both'}
+
+%div{style:'clear:both;'}
+  %div{style: 'width:33%;float:left'}
+    &nbsp;
+  %div.text-center{style: 'width:33%;float:left'}
+    = "PAYMENT #{@dealer_trade.trade_payment_type.upcase}"
+  %div{style: 'width:33%;float:left'}
+  %div{style:'clear:both'}
