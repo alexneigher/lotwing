@@ -66,7 +66,7 @@ Rails.application.routes.draw do
       get :new_vehicle_report
       get :used_vehicle_report
       get :running_total
-
+      get :cpo_report
     end
   end
 

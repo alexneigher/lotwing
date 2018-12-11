@@ -1,0 +1,47 @@
+.container-fluid
+  .row.mb-1
+    .col-md-2
+      %h3 MTD CPO Report
+      %small
+        .text-center
+          = "(since #{current_user.dealership.custom_mtd_start_date || "N/A"})"
+      = link_to '< Board Manager', board_manager_path()
+
+      .card.text-center.mt-5
+        .card-header
+          Sales MTD (#{@grouped_deals.values.map(&:count).sum})
+        .card-body.small
+          %small
+            - @grouped_deals.reverse_each do |model, deals|
+              = model
+              = " (#{deals.count})"
+              %hr.my-1
+    .col-md-10   
+      .table-responsive.small{style: 'max-height: 80vh;'}
+        %table.table.table-striped.table-sm.mb-0.board-manager-table
+          %thead
+            %tr
+              %th
+                %i.fa.fa-pencil
+              %th Last
+              %th Stock #
+              %th Source
+              %th New
+              %th Used
+              %th Trade
+              %th Sales Rep
+              %th Split
+              %th City
+              %th Result
+              %th Report
+              
+          %tbody
+            - @grouped_deals.reverse_each do |model, deals|
+              %tr
+                %td.bg-light{colspan: 12}
+                  %strong
+                    = model
+                    = " (#{deals.count})"
+              - deals.each do |deal|
+                = render partial: 'deals/shared/deal_row', locals: {deal: deal}
+      
