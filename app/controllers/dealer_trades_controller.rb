@@ -1,4 +1,5 @@
 class DealerTradesController < ApplicationController
+  before_action :set_paper_trail_whodunnit, only: [:update, :create]
 
   def index
     @dealer_trades = current_user.dealership.dealer_trades
@@ -23,6 +24,12 @@ class DealerTradesController < ApplicationController
     redirect_to dealer_trades_path
   end
 
+  def destroy
+    @dealer_trade = current_user.dealership.dealer_trades.find(params[:id])
+    @dealer_trade.destroy
+    redirect_to dealer_trades_path
+  end
+
   def trade_sheet
     @dealer_trade = current_user.dealership.dealer_trades.find(params[:dealer_trade_id] )
 
@@ -38,6 +45,10 @@ class DealerTradesController < ApplicationController
 
 
   private
+    def user_for_paper_trail
+      current_user.full_name
+    end
+
     def dealer_trade_params
       params.require(:dealer_trade).permit(
         :trade_dealer_name,

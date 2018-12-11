@@ -159,5 +159,37 @@
             = f.text_field :trade_difference, placeholder: 'Trade Difference', class: 'form-control'
 
     .row.my-5
-      .col-12
+      .col-4
+        %a{"data-target" => "#historyModal", "data-toggle" => "modal", :href => "#"} Show History
+        
+
+        / The Modal
+        #historyModal.modal
+          .modal-dialog.modal-lg
+            .modal-content
+              / Modal Header
+              .modal-header
+                %h4.modal-title Trade History
+                %button.close{"data-dismiss" => "modal", :type => "button"} ×
+              / Modal body
+              .modal-body
+                - @dealer_trade.versions.reverse_each do |version|
+                  %small
+                    %strong
+                      = version.created_at.in_time_zone("Pacific Time (US & Canada)").strftime('%a, %d %b %Y %l:%M %p')
+                    = "(#{version.whodunnit})"
+                    %br
+                    - version.changeset.each do |key, value|
+                      - next if key == "updated_at"
+                      changed
+                      %strong= key
+                      to 
+                      = value[1] 
+                  %hr
+              .modal-footer
+                %button.btn.btn-outline-secondary{"data-dismiss" => "modal", :type => "button"} Close
+      .col-4
+        - unless current_user.permission_level == 'sales_rep'
+          = link_to 'Delete Trade', dealer_trade_path(@dealer_trade), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger'
+      .col-4
         = f.submit "Update Dealer Trade", class: 'btn btn-primary pull-right'
