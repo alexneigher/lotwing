@@ -9,3 +9,8 @@ $('.loading-spin').addClass('d-none');
   $('#deal_certified_pre_owned').prop('checked', <%= @vehicle.certified == "Yes" %>);
 
 <% end %>
+
+<%- if @existing_stock_number_deals %>
+  alert('Deal already exists for this stock number');
+  $('#deal_stock_number').addClass("is-invalid");
+<% end %>

@@ -45,6 +45,7 @@ class DealsController < ApplicationController
 
   def stock_number_search
     @vehicle = current_user.dealership.vehicles.where("stock_number ILIKE ?", "#{params[:stock_number]}").last
+    @existing_stock_number_deals = current_user.dealership.deals.where("stock_number ILIKE ?", "#{params[:stock_number]}").any?
   end
 
 
