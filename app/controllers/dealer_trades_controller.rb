@@ -56,6 +56,7 @@ class DealerTradesController < ApplicationController
         :trade_dealer_contact,
         :trade_contact_phone,
         :your_trade,
+        :our_trade,
         :your_purchase,
         :our_purchase,
         :date_created,

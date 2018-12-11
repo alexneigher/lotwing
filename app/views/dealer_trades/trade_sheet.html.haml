@@ -8,7 +8,7 @@
 #header
   = wicked_pdf_image_tag 'dealer_logo.png', style: 'width: 200px;'
 
-%h4{style:'margin-top:25px;margin-bottom: 40px;'} 
+%h4{style:'margin-top:20px;margin-bottom: 35px;'} 
   %strong DEALER TRADE SHEET
 
 %div
@@ -55,8 +55,8 @@
 
 %div{style:'clear:both'}
 
-%div.mt-3{style: 'border: 1px solid #000;clear:both;padding:5px 10px;'}
-  %h6.text-center 
+%div{style: 'border: 1px solid #000;margin-top: 20px;padding:0 10px 10px;'}
+  %h3{style:'text-align:center;margin:0;padding:0;'} 
     %strong VEHICLE DELIVERED
   
   %div{style:'width:32%;float:left;'}
@@ -71,33 +71,33 @@
 
   %div{style:'width:46%;float:left;text-align:right'}
     %div{style:'width:80%;float:left'}
-      %strong.pr-1 INVOICE
+      %strong{style:'padding-right: 10px;'} INVOICE
     %div{style:'width:20%;float:left'}
       = @dealer_trade.delivered_invoice
     
     %div{style:'clear:both'}
 
     %div{style:'width:80%;float:left'}
-      %strong.pr-1 + ACCESSORIES
+      %strong{style:'padding-right: 10px;'} + ACCESSORIES
     %div{style:'width:20%;float:left'}
       = @dealer_trade.plus_deliver_acc
     %div{style:'clear:both'}
 
     %div{style:'width:80%;float:left'}
-      %strong.pr-1 - DEALER REBATE
+      %strong{style:'padding-right: 10px;'} - DEALER REBATE
     %div{style:'width:20%;float:left'}
       = @dealer_trade.less_rebate_1
     %div{style:'clear:both'}
     %div{style:'width:80%;float:left'}
-      %strong.pr-1 VEHICLE DELIVERED TOTAL
+      %strong{style:'padding-right: 10px;'} VEHICLE DELIVERED TOTAL
     %div{style:'width:20%;float:left'}
       = @dealer_trade.delivered_total
     %div{style:'clear:both'}
 
   %div{style:'clear:both'}
 
-%div.mt-3{style: 'border: 1px solid #000;margin-top: 20px;padding:5px 10px;'}
-  %h6.text-center 
+%div{style: 'border: 1px solid #000;margin-top: 20px;padding:0 10px 10px;'}
+  %h3{style:'text-align:center;margin:0;padding:0;'}
     %strong VEHICLE RECEIVED
 
   %div{style:'width:32%;float:left;'}
@@ -112,35 +112,74 @@
 
   %div{style:'width:46%;float:left;text-align:right'}
     %div{style:'width:80%;float:left'}
-      %strong.pr-1 INVOICE
+      %strong{style:'padding-right: 10px;'} INVOICE
     %div{style:'width:20%;float:left'}
       = @dealer_trade.received_invoice
     
     %div{style:'clear:both'}
 
     %div{style:'width:80%;float:left'}
-      %strong.pr-1 + ACCESSORIES
+      %strong{style:'padding-right: 10px;'} + ACCESSORIES
     %div{style:'width:20%;float:left'}
       = @dealer_trade.received_acc
     %div{style:'clear:both'}
 
     %div{style:'width:80%;float:left'}
-      %strong.pr-1 - DEALER REBATE
+      %strong{style:'padding-right: 10px;'} - DEALER REBATE
     %div{style:'width:20%;float:left'}
       = @dealer_trade.received_rebate
     %div{style:'clear:both'}
     %div{style:'width:80%;float:left'}
-      %strong.pr-1 VEHICLE DELIVERED TOTAL
+      %strong{style:'padding-right: 10px;'} VEHICLE DELIVERED TOTAL
     %div{style:'width:20%;float:left'}
       = @dealer_trade.received_sum
     %div{style:'clear:both'}
 
   %div{style:'clear:both'}
 
-%div{style:'clear:both;'}
+%div{style:'clear:both;margin-top:15px;'}
   %div{style: 'width:33%;float:left'}
     &nbsp;
-  %div.text-center{style: 'width:33%;float:left'}
+  %div{style: 'width:33%;float:left;text-align:center;'}
     = "PAYMENT #{@dealer_trade.trade_payment_type.upcase}"
-  %div{style: 'width:33%;float:left'}
+  %div{style: 'width:33%;float:left;'}
+    %div{style:'width:70%;float:left;text-align:right;'}
+      %strong{style:'padding-right: 9px;'} DIFFERENCE
+    %div{style:'width:30%;float:left;text-align:right;'}
+      %span{style:'padding-right: 5px;'}
+        = @dealer_trade.trade_difference
   %div{style:'clear:both'}
+
+%div{style:'font-size:10px;'}
+  %strong
+    TRADE NOTES:
+%div{style:'min-height:50px;'}
+  = @dealer_trade.public_trade_notes
+
+%hr
+
+%div{style:'clear:both;margin-top:15px;'}
+  %div{style: 'width:30%;float:left'}
+    %strong DELIVERED VEHICLE
+    %br
+    %strong KEYS
+    %br
+    %strong BOOKS
+  %div{style: 'width:70%;float:left'}
+    = wicked_pdf_image_tag 'car_icon.png', style: 'width: 70%;float:right;'
+
+%hr
+
+%div{style:'clear:both;margin-top:15px;'}
+  %div{style: 'width:30%;float:left'}
+    %strong DELIVERED VEHICLE
+    %br
+    %strong KEYS
+    %br
+    %strong BOOKS
+  %div{style: 'width:70%;float:left'}
+    = wicked_pdf_image_tag 'car_icon.png', style: 'width: 70%;float:right;'
+
+%div{style:'clear:both;'}
+#footer{style: 'position: absolute; bottom: -0px;left: 0; right: 0'}
+  = wicked_pdf_image_tag 'logo_black_small.png', style: 'margin:auto; display:block; width: 100px;'
