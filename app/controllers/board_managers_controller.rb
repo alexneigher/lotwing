@@ -52,7 +52,7 @@ class BoardManagersController < ApplicationController
     @deals = current_user
               .dealership
               .deals
-              .where(stored: false, is_used: false, certified_pre_owned: true)
+              .where(stored: false, certified_pre_owned: true)
               .where("deal_date >= ?", current_user.dealership.custom_mtd_start_date)
               .where("make ILIKE ? OR make ILIKE ?", "Volkswagen", "VW")
 
