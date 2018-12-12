@@ -32,6 +32,9 @@ Rails.application.routes.draw do
 
   resources :dealer_trades do
     get :trade_sheet
+    collection do
+      put :stock_number_search
+    end
   end
 
   # UI for drawing shapes on the map and saving them
@@ -74,7 +77,7 @@ Rails.application.routes.draw do
     get :cover_sheet
     collection do
       put :stock_number_search
-   end
+    end
   end
 
   resources :tags do

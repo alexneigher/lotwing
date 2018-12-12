@@ -42,6 +42,10 @@ class DealerTradesController < ApplicationController
     end
   end
 
+  def stock_number_search
+    @vehicle = current_user.dealership.vehicles.where("stock_number ILIKE ?", "#{params[:stock_number]}").last
+  end
+
 
 
   private

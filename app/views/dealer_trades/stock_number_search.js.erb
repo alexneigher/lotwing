@@ -1,0 +1,8 @@
+$('.loading-spin').addClass('d-none');
+
+<%- if @vehicle %>
+  $('#dealer_trade_model').val("<%= @vehicle.model %>");
+  $('#dealer_trade_color').val("<%= @vehicle.color %>");
+  $('#dealer_trade_year').val("<%= @vehicle.year %>");
+  $('#dealer_trade_vin').val("<%= @vehicle.vin %>");
+<% end %>

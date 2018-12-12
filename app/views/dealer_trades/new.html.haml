@@ -1,3 +1,4 @@
+= javascript_include_tag('dealer-trade-math.js')
 .container
   = form_for :dealer_trade, url: dealer_trades_path, method: :post do |f|
     .row
@@ -60,26 +61,28 @@
                     = f.text_area :private_trade_notes, placeholder: '(These will not show up on the print out)', rows: 2, class: 'form-control'
 
               .col-md-2
+                %div{style: 'position:relative'}
+                  %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin{style:'position:absolute;right:10px;top:11px;'}
                 = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control'
-              .col-md-5
+              .col-md-5.delivered-invoice-inputs
                 .row.no-gutters
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong Invoice
                   .col-6
-                    = f.text_field :delivered_invoice, placeholder: 'Delivered Invoice', class: 'form-control'
+                    = f.text_field :delivered_invoice, placeholder: 'Delivered Invoice', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong + Accessories
                   .col-6
-                    = f.text_field :plus_deliver_acc, placeholder: 'Plus Deliver Acc', class: 'form-control'
+                    = f.text_field :plus_deliver_acc, placeholder: 'Plus Deliver Acc', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong - Dealer Rebate
                   .col-6
-                    = f.text_field :less_rebate_1, placeholder: 'Less Rebate 1', class: 'form-control'
+                    = f.text_field :less_rebate_1, placeholder: 'Less Rebate 1', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
@@ -109,25 +112,25 @@
 
               .col-md-2
                 = f.text_field :trade_stock_number, placeholder: 'Stock # Trade', class: 'form-control'
-              .col-md-5
+              .col-md-5.received-invoice-inputs
                 .row.no-gutters
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong Invoice
                   .col-6
-                    = f.text_field :received_invoice, placeholder: 'Received Invoice', class: 'form-control'
+                    = f.text_field :received_invoice, placeholder: 'Received Invoice', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong + Accessories
                   .col-6
-                    = f.text_field :received_acc, placeholder: 'Received Acc', class: 'form-control'
+                    = f.text_field :received_acc, placeholder: 'Received Acc', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong - Dealer Rebate
                   .col-6
-                    = f.text_field :received_rebate, placeholder: 'Received Rebate', class: 'form-control'
+                    = f.text_field :received_rebate, placeholder: 'Received Rebate', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
@@ -157,3 +160,33 @@
     .row.my-5
       .col-12
         = f.submit "Create Dealer Trade", class: 'btn btn-primary pull-right'
+
+
+
+:javascript
+  $(function(){
+    //setup before functions
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 500;  //time in ms
+    var $input = $('#dealer_trade_stock_number');
+
+    //on keyup, start the countdown
+    $input.on('input', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    });
+
+    //user is "finished typing," populate the hidden form, and submit that one
+    function doneTyping () {
+      if ($input.val()){
+        $('.loading-spin').removeClass('d-none');
+        
+        $.ajax({
+          url:"/dealer_trades/stock_number_search",
+          method: 'PUT',
+          data: { stock_number: $input.val() }
+        });
+      }
+    }
+
+  })

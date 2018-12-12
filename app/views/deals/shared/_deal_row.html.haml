@@ -26,6 +26,6 @@
   %td= deal.split_rep
   %td= deal.city
   %td= deal.result
-  - klass = (deal.report_status.in?(["Not RDR'd", "Not RDR'd Supp/Part"]) ? 'text-danger' : '')
+  - klass = (deal.report_status.in?(["Not RDR'd", "Not RDR'd Supp/Part", "Need to X"]) ? 'text-danger' : '')
   %td{class: klass}
     = deal.report_status
