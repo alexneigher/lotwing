@@ -46,7 +46,9 @@ class DealerTradesController < ApplicationController
     @vehicle = current_user.dealership.vehicles.where("stock_number ILIKE ?", "#{params[:stock_number]}").last
   end
 
-
+  def previous_trade_search
+    @dealer_trades = current_user.dealership.dealer_trades.where("trade_dealer_name ILIKE ?", "%#{params[:previous_trade_search]}%")
+  end
 
   private
     def user_for_paper_trail

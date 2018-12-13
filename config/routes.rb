@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     get :trade_sheet
     collection do
       put :stock_number_search
+      put :previous_trade_search
     end
   end
 
