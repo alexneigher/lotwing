@@ -1,4 +1,6 @@
-= form_for(resource, as: resource_name, url: session_path(resource_name), html:{class: 'form-inline my-2 my-lg-0'}) do |f|
-  = f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'Email', class: 'form-control mr-sm-2'
-  = f.password_field :password, autocomplete: "current-password", placeholder: '********', class: 'form-control mr-2'
-  = f.submit "Log in", class: 'btn btn-outline-success my-2'
+%li.nav-item
+  %a.nav-link{:href => "about.html"} About
+%li.nav-item
+  %a.nav-link{:href => "services.html"} Services
+%li.nav-item
+  = link_to 'Log in', new_user_session_path, class: 'nav-link'

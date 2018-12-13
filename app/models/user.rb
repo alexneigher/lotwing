@@ -5,8 +5,4 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :dealership, optional: true
-
-  has_many :events
-
-  enum permission_level: [:sales_rep, :sales_manager, :admin, :service_user]
 end

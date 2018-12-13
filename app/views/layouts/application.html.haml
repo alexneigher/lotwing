@@ -7,30 +7,13 @@
     
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
-    %link{:href => "/apple-icon-57x57.png", :rel => "apple-touch-icon", :sizes => "57x57"}/
-    %link{:href => "/apple-icon-60x60.png", :rel => "apple-touch-icon", :sizes => "60x60"}/
-    %link{:href => "/apple-icon-72x72.png", :rel => "apple-touch-icon", :sizes => "72x72"}/
-    %link{:href => "/apple-icon-76x76.png", :rel => "apple-touch-icon", :sizes => "76x76"}/
-    %link{:href => "/apple-icon-114x114.png", :rel => "apple-touch-icon", :sizes => "114x114"}/
-    %link{:href => "/apple-icon-120x120.png", :rel => "apple-touch-icon", :sizes => "120x120"}/
-    %link{:href => "/apple-icon-144x144.png", :rel => "apple-touch-icon", :sizes => "144x144"}/
-    %link{:href => "/apple-icon-152x152.png", :rel => "apple-touch-icon", :sizes => "152x152"}/
-    %link{:href => "/apple-icon-180x180.png", :rel => "apple-touch-icon", :sizes => "180x180"}/
-    %link{:href => "/android-icon-192x192.png", :rel => "icon", :sizes => "192x192", :type => "image/png"}/
-    %link{:href => "/favicon-32x32.png", :rel => "icon", :sizes => "32x32", :type => "image/png"}/
-    %link{:href => "/favicon-96x96.png", :rel => "icon", :sizes => "96x96", :type => "image/png"}/
-    %link{:href => "/favicon-16x16.png", :rel => "icon", :sizes => "16x16", :type => "image/png"}/
-    %link{:href => "/manifest.json", :rel => "manifest"}/
-    %meta{:content => "#ffffff", :name => "msapplication-TileColor"}/
-    %meta{:content => "/ms-icon-144x144.png", :name => "msapplication-TileImage"}/
-    %meta{:content => "#ffffff", :name => "theme-color"}/
+    
   %body
     / Navigation
     %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.mb-1.p-0
       .container
-        %a.navbar-brand{style: 'padding-top:10px;padding-bottom:10px;'}
-          = image_tag "logo_light.png", style: 'max-width:100px;'
-        
+        %a.navbar-brand
+          = image_tag "logo_light.png", style: 'max-width:150px;'
         %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
           %span.navbar-toggler-icon
         #navbarResponsive.collapse.navbar-collapse
@@ -38,34 +21,18 @@
             = render partial: 'layouts/shared/logged_in_nav' if user_signed_in?
             = render partial: 'layouts/shared/logged_out_nav' unless user_signed_in?
        
-    .container-fluid  
+    .container   
       - if user_signed_in?  
         %ul.nav.nav-tabs.nav-justified.mb-2
-          - if current_user.permission_level == 'admin'
-            %li.nav-item
-              = link_to lot_view_path, class: 'nav-link' + (' active' if params[:controller] == 'home' && params[:action] == 'show').to_s do
-                Lot View
+          %li.nav-item
+            = link_to root_path, class: 'nav-link' + (' active' if params[:controller] == 'home' && params[:action] == 'show').to_s do
+              Lot View
+          %li.nav-item
+            = link_to map_builder_path, class: 'nav-link' + (' active' if params[:action] == 'map_builder').to_s do
+              Map Builder
           %li.nav-item
             = link_to vehicles_path, class: 'nav-link' + (' active' if params[:controller] == 'vehicles' && params[:action] == 'index').to_s do
-              Vehicle Manager
-          - if current_user.permission_level == 'admin'
-            %li.nav-item
-              = link_to map_builder_path, class: 'nav-link' + (' active' if params[:action] == 'map_builder').to_s do
-                Map Builder
-          %li.nav-item
-            = link_to board_manager_path, class: 'nav-link' + (' active' if params[:controller] == 'board_managers' && params[:action] == 'show').to_s do
-              Board Manager
-          - if current_user.permission_level == 'admin'
-            %li.nav-item
-              = link_to dealer_trades_path, class: 'nav-link' + (' active' if params[:controller] == 'dealer_trades').to_s do
-                Dealer Trades
-
-          - if current_user.permission_level == 'admin'
-            %li.nav-item
-              = link_to new_tag_path, class: 'nav-link' do
-                Tag Manager
+              Vehicles
+          %li.nav-item.disabled
+            %a.nav-link.disabled{:href => "#"} Report
     = yield
-
-
-#genericModal.modal{"aria-hidden" => "true", "aria-labelledby" => "genericModalLabel", :role => "dialog", :tabindex => "-1"}
-  .modal-dialog.modal-lg{:role => "document"}

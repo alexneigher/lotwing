@@ -1,31 +1,25 @@
+/ Page Content
 = render partial: 'shared/maxbox_dependencies'
-= javascript_include_tag('lot_view')
+= javascript_include_tag('map_builder')
+= javascript_include_tag('map_interactor')
 .container-fluid
   .row
     .col-lg-4
-      .bg-light.p-3
-        
-        = form_tag root_path(params["sort_filters"]) do
-          .row
-            .col-md-6
-              %small.small New or Used
-              = select_tag 'sort_filters[new_or_used]', options_for_select(['All','New', 'Used'], nil), class: 'form-control'
-            .col-md-6
-              %small.small Make
-              = select_tag 'sort_filters[make]', options_for_select(['All','Jeep', 'Volvo'], nil), class: 'form-control'
+      %h2.m-0.mt-3 Lot View
+      %small.small.text-muted
+        (click on a parking space to see status)
+      #parkingSpaceInfoContainer.pt-3
+      
+      = render partial: 'tags/new'
 
-      .mt-5
-        - @users_with_events.each do |user|
-          %strong
-            = user.full_name
-          = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
-        
-          %hr.my-2
-      
     .col-lg-8
-      #map{ :style => "width: 100%; height: 550px" }
-      
-      .d-none
-        //place all dom-dependent info here
-        %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
-        %input#dealership_map_zoom{value: current_user.dealership.map_zoom }  
+      #map{:style => "width: 100%; height: 550px;border: 1px solid #dee2e6;"}
+  %h2.text-center.pt-3 Notices
+  .row
+    - (0..3).each do |i|
+      .col-md-3
+        .card.my-4
+          %img.card-img-top{:alt => "Card image cap", :src => "https://via.placeholder.com/150x150"}/
+          .card-body
+            %p.card-text Some quick example 
+            %a.btn.btn-primary.btn-sm{:href => "#"} Go somewhere

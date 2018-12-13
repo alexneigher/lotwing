@@ -7,35 +7,48 @@ $(function(){
     style: 'mapbox://styles/mapbox/satellite-v9'
   });
 
-  window.draw = new MapboxDraw();
-  window.map.addControl(window.draw, 'top-left');
+  var draw = new MapboxDraw({
+    displayControlsDefault: false,
+    controls: {
+      polygon: true,
+    }  
+  });
 
-  // investigate line slice
-  // https://github.com/BrunoSalerno/mapbox-gl-draw-cut-line-mode
-
-  window.geocoder = new MapboxGeocoder({
+  window.map.addControl(new MapboxGeocoder({
       accessToken: mapboxgl.accessToken
-  })
-  window.map.addControl(geocoder);
+  }));
 
+
+  window.map.addControl(draw, 'top-left');
 
   window.map.on('draw.create', function (e) {
-    $('#exportSave').removeClass('d-none');
+    //save to server?
+    $('#shape-form').removeClass('d-none');
+    $("#shape-form #shape_geo_info").val(JSON.stringify(e.features[0]));
   });
 
   window.map.on('load', function () {
 
     $.ajax({
-      url:"/web_api/shapes",
+      url:"/api/shapes",
       dataType: "json",
       success: function(data){
         console.log(data);
-        add_shapes_to_map(data, window.map, 'parking_lots');
-        add_shapes_to_map(data, window.map, 'parking_areas');
-        add_shapes_to_map(data, window.map, 'buildings');
-        add_shapes_to_map(data, window.map, 'parking_spaces');
+        add_shapes_to_map(data, window.map, 'parking_lot');
+        add_shapes_to_map(data, window.map, 'parking_area');
+        add_shapes_to_map(data, window.map, 'building');
+        add_shapes_to_map(data, window.map, 'empty_parking_space');
+        add_shapes_to_map(data, window.map, 'full_parking_space');
 
-        center_map(data);
+
+        if (data['parking_lot'].length > 0) {
+          //recenter the map
+          var bbox = turf.extent(data['parking_lot'][0].geo_info.geometry);
+          window.map.fitBounds(bbox, {
+            padding: 50,
+            duration: 0
+          });
+        }
       },
       error: function (xhr) {
         alert(xhr.statusText)
@@ -43,7 +56,14 @@ $(function(){
     });
   });
 
-  window.map.on('click', 'parking_spaces', function(e){
+  window.map.on('click', 'empty_parking_space', function(e){
+    //find the element on the left side, highlight it
+
+    id = e.features[0].properties.shape_id
+    $('#'+id).addClass('list-group-item-success').siblings().removeClass('list-group-item-success');
+  })
+
+  window.map.on('click', 'full_parking_space', function(e){
     //find the element on the left side, highlight it
 
     id = e.features[0].properties.shape_id
@@ -51,24 +71,47 @@ $(function(){
   })
 
 
-  // when ready to save, toggle the actual form visitibility
-  $('#exportSave').click(function(){
-    $(this).addClass('d-none');
-
-    shapes = window.draw.getAll().features;
-    $("#shape-form #shape_geo_info").val( JSON.stringify(shapes) );
-    $('#shape-form').removeClass('d-none');
-  })
-
-  //bind listener to map rotate inout
-  $("#dealership_map_bearing").on('keyup',function(){
-    window.map.setBearing(this.value);
-  })
-
-  // //bind listener to map zoom inout
-  $("#dealership_map_zoom").on('keyup',function(){
-    window.map.setZoom(this.value);
-  })
-
-
 })//$(function)
+
+
+function add_shapes_to_map(data, map, shape_type){
+  features = data[shape_type]
+  if (!features){
+    return false;
+  };
+  geo_info = []
+  for(var i=0, size=features.length; i<size; i++){
+    features[i].geo_info.properties.shape_id = features[i].id
+    
+    geo_info.push(features[i].geo_info)
+  }
+  map.addLayer({
+    'id': shape_type,
+    'type': 'fill',
+    'source': {
+        'type': 'geojson',
+        "data": {
+                  "type": "FeatureCollection",
+                  "features": geo_info
+                }
+    },
+    'layout': {},
+    'paint': {
+        'fill-color': map_shape_type_to_color(shape_type),
+        'fill-opacity': 0.5
+    }
+  });
+}
+
+
+
+function map_shape_type_to_color(shape_type) {
+  var hash  = {
+                "full_parking_space": "yellow",
+                "empty_parking_space": "red",
+                "parking_area": 'green',
+                "parking_lot": 'blue',
+                "building": 'white',
+              }
+  return hash[shape_type]
+}
