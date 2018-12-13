@@ -40,11 +40,11 @@ class BoardManagersController < ApplicationController
 
 
   def stored_deals
-    @deals = current_user.dealership.deals.where(stored: true)
+    @deals = current_user.dealership.deals.included_in_counts.where(stored: true)
   end
 
   def new_vehicle_report
-    @deals = current_user.dealership.deals.where(stored: false, is_used: false).where("deal_date >= ?", current_user.dealership.custom_mtd_start_date)
+    @deals = current_user.dealership.deals.included_in_counts.where(stored: false, is_used: false).where("deal_date >= ?", current_user.dealership.custom_mtd_start_date)
     @grouped_deals = @deals.group_by{|d| d.model}.sort_by{ |k, v| v.count }.to_h
   end
 
@@ -52,6 +52,7 @@ class BoardManagersController < ApplicationController
     @deals = current_user
               .dealership
               .deals
+              .included_in_counts
               .where(stored: false, certified_pre_owned: true)
               .where("deal_date >= ?", current_user.dealership.custom_mtd_start_date)
               .where("make ILIKE ? OR make ILIKE ?", "Volkswagen", "VW")
@@ -60,7 +61,7 @@ class BoardManagersController < ApplicationController
   end
 
   def used_vehicle_report
-    @deals = current_user.dealership.deals.where(stored: false, is_used: true).where("deal_date >= ?", Date.today.beginning_of_month)
+    @deals = current_user.dealership.deals.included_in_counts.where(stored: false, is_used: true).where("deal_date >= ?", Date.today.beginning_of_month)
     @grouped_deals = @deals.group_by{|d| d.deal_date}.sort_by{|k, v| k}.to_h
   end
 
