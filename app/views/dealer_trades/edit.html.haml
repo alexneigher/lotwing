@@ -50,7 +50,7 @@
               .col-md-5
                 .row
                   .col-md-4
-                    = f.text_field :model, placeholder: 'Model', class: 'form-control'
+                    = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control'
                   .col-md-4
                     = f.text_field :color, placeholder: 'Color', class: 'form-control'
                   .col-md-4
@@ -64,7 +64,7 @@
                     = f.text_area :private_trade_notes, placeholder: '(These will not show up on the print out)', rows: 2, class: 'form-control'
 
               .col-md-2
-                = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control'
+                = f.text_field :model, placeholder: 'Model', class: 'form-control'
               .col-md-5
                 .row.no-gutters
                   .col-6.text-right
@@ -98,7 +98,8 @@
               .col-md-5
                 .row
                   .col-md-4
-                    = f.text_field :trade_model, placeholder: 'Trade Model', class: 'form-control'
+                    = f.text_field :trade_stock_number, placeholder: 'Stock # Trade', class: 'form-control'
+
                   .col-md-4
                     = f.text_field :trade_color, placeholder: 'Trade Color', class: 'form-control'
                   .col-md-4
@@ -112,7 +113,8 @@
                     = f.text_area :public_trade_notes, placeholder: '(Will be included on the print out)', rows: 2, class: 'form-control'
 
               .col-md-2
-                = f.text_field :trade_stock_number, placeholder: 'Stock # Trade', class: 'form-control'
+                = f.text_field :trade_model, placeholder: 'Trade Model', class: 'form-control'
+
               .col-md-5
                 .row.no-gutters
                   .col-6.text-right
