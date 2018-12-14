@@ -52,7 +52,9 @@
               .col-md-5
                 .row
                   .col-md-4
-                    = f.text_field :model, placeholder: 'Model', class: 'form-control'
+                    %div{style: 'position:relative'}
+                      %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin{style:'position:absolute;right:10px;top:11px;'}
+                    = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control'
                   .col-md-4
                     = f.text_field :color, placeholder: 'Color', class: 'form-control'
                   .col-md-4
@@ -66,9 +68,8 @@
                     = f.text_area :private_trade_notes, placeholder: '(These will not show up on the print out)', rows: 2, class: 'form-control'
 
               .col-md-2
-                %div{style: 'position:relative'}
-                  %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin{style:'position:absolute;right:10px;top:11px;'}
-                = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control'
+                = f.text_field :model, placeholder: 'Model', class: 'form-control'
+                
               .col-md-5.delivered-invoice-inputs
                 .row.no-gutters
                   .col-6.text-right
@@ -102,7 +103,7 @@
               .col-md-5
                 .row
                   .col-md-4
-                    = f.text_field :trade_model, placeholder: 'Trade Model', class: 'form-control'
+                    = f.text_field :trade_stock_number, placeholder: 'Stock # Trade', class: 'form-control'
                   .col-md-4
                     = f.text_field :trade_color, placeholder: 'Trade Color', class: 'form-control'
                   .col-md-4
@@ -116,7 +117,7 @@
                     = f.text_area :public_trade_notes, placeholder: '(Will be included on the print out)', rows: 2, class: 'form-control'
 
               .col-md-2
-                = f.text_field :trade_stock_number, placeholder: 'Stock # Trade', class: 'form-control'
+                = f.text_field :trade_model, placeholder: 'Trade Model', class: 'form-control'
               .col-md-5.received-invoice-inputs
                 .row.no-gutters
                   .col-6.text-right
