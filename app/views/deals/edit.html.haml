@@ -74,7 +74,7 @@
         = f.text_field :rate_apr, placeholder: 'Rate APR', class: 'form-control mb-1'
         = f.text_field :miles_per_year, placeholder: 'Miles Per Year (LSE)', class: 'form-control mb-1'
         = f.text_field :rebates, placeholder: 'Rebates', class: 'form-control mb-1'
-        = f.text_field :program_description, placeholder: 'Program Description', class: 'form-control mb-1'
+        = f.text_field :bulletin_number, placeholder: 'Bulletin Number', class: 'form-control mb-1'
         = f.select :desk_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name), @deal.desk_manager), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
         = f.select :finance_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name), @deal.finance_manager), {include_blank: 'Finance Manager'}, class: 'form-control mb-1'
         %label
@@ -95,8 +95,7 @@
         = f.text_field :time_agreed, placeholder: 'Time Agreed', class: 'form-control mb-1'
         = f.text_field :time_in_finance, placeholder: 'Time In - Finance', class: 'form-control mb-1'
         = f.text_field :time_out_finance, placeholder: 'Time Out - Finance', class: 'form-control mb-1'
-        = f.text_field :missing_stips_1, placeholder: 'Missing Stips 1', class: 'form-control mb-1'
-        = f.text_field :missing_stips_2, placeholder: 'Missing Stips 2', class: 'form-control mb-1'
+        
         = f.text_area :deal_notes, placeholder: 'Deal Notes', class: 'form-control mb-1', rows: 3
 
     .row.mb-5

@@ -81,7 +81,7 @@ class DealsController < ApplicationController
           :rate_apr,
           :miles_per_year,
           :rebates,
-          :program_description,
+          :bulletin_number,
           :desk_manager,
           :finance_manager,
           :dealer_demo,

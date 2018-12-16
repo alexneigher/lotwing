@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181207014724) do
+ActiveRecord::Schema.define(version: 20181216000838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20181207014724) do
     t.string "rate_apr"
     t.string "miles_per_year"
     t.string "rebates"
-    t.string "program_description"
+    t.string "bulletin_number"
     t.string "desk_manager"
     t.string "finance_manager"
     t.boolean "dealer_demo", default: false
@@ -117,8 +117,6 @@ ActiveRecord::Schema.define(version: 20181207014724) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "deal_notes"
-    t.string "missing_stips_1"
-    t.string "missing_stips_2"
     t.boolean "certified_pre_owned", default: false
     t.boolean "stored", default: false
     t.date "deal_date"
