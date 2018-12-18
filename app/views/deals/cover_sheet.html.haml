@@ -2,222 +2,351 @@
   body, html{
     height: 100%;
     position: relative;
+    font-size: 12px;
   }
+
+  .border{
+    border: 1px solid #dcdada;
+    padding: 5px 10px;
+  }
+
+  .label{
+    height: 14px;
+    font-size: 11px;
+  }
+
+  .rotate {
+
+    /* Safari */
+    -webkit-transform: rotate(-90deg);
+
+    /* Firefox */
+    -moz-transform: rotate(-90deg);
+
+    /* IE */
+    -ms-transform: rotate(-90deg);
+
+    /* Opera */
+    -o-transform: rotate(-90deg);
+
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
+  }
+
 #header
-  = wicked_pdf_image_tag 'dealer_logo.png', style: 'width: 200px;'
+  %div{style: 'width: 30%;float:left;'}
+    = params.key?('debug') ? image_tag('dealer_logo.png', style: 'width: 200px;') : wicked_pdf_image_tag('dealer_logo.png', style: 'width: 200px;')
+    
+  %div{style: 'width: 30%;float:left;margin-left:10px;'}
+    %h1.border{style: 'margin: 0;'}
+      = @deal.client_last_name
+      
+%div{style:'clear:both;padding-top:15px;'}
 
-.left-col
+  %div{style: 'width: 60px;float:left;margin: 5px 5px 5px 0;' }
+    .label
+    .border
+      = @deal.year
+  %div{style: 'width: 100px;float:left;margin: 5px' }
+    .label
+    .border
+      = @deal.make
+  %div{style: 'width: 160px;float:left;margin: 5px' }
+    .label
+    .border
+      = @deal.model
+  %div{style: 'width: 105px;float:left;margin: 5px' }
+    .label Time Agreed
+    .border
+      = @deal.time_agreed
+  %div{style: 'width: 103px;float:left;margin: 5px' }
+    .label Time In- Finance
+    .border
+      = @deal.time_in_finance
+  %div{style: 'width: 105px;float:left;margin: 5px 0 5px 5px' }
+    .label Time Out- Finance
+    .border
+      = @deal.time_out_finance
 
-  .client-last-name= @deal.client_last_name
+%div{style:'clear:both;'}
 
-  %div{style: 'margin-top: 0px;'}
-    = "#{@deal.year} #{@deal.make} #{@deal.model}"
-    &nbsp;
-    %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;'}
+
+%div{style:'width: 70%; float:left;'}
+  // first row of 3 (plus CPO)
+  %div{style: 'width: 110px;float:left;margin: 5px 5px 5px 0;' }
+    .label
+      Deal Number
+    .border
+      = @deal.deal_number
+  %div{style: 'width: 110px;float:left;margin: 5px 5px 5px 0;' }
+    .label
+      Stock Number
+    .border
+      = @deal.stock_number
+  %div{style: 'width: 110px;float:left;margin: 5px 5px 5px 0;' }
+    .label
+      Date
+    .border
+      = @deal.deal_date
+  %div{style: 'width: 90px;float:left;margin: 5px 5px 5px 0;padding-left: 20px;' }
+    .label
+    %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 22px;'}
       - if @deal.certified_pre_owned
         &#10006;
       - else
         &nbsp;&nbsp;&nbsp;
     CPO
-  
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong
-          = @deal.deal_number
-      %div{style: 'font-size: 12px;'}
-        Deal Number
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong= @deal.stock_number
-      %div{style: 'font-size: 12px;'}
-        Stock Number
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong= Date.current.strftime("%m/%d/%Y")
-      %div{style: 'font-size: 12px;'}
-        Date
 
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong= @deal.deal_type
-      %div{style: 'font-size: 12px;'}
-        Deal Type
+  %div{style:'clear:both;'}
 
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong= number_to_currency(@deal.selling_price)
-      %div{style: 'font-size: 12px;'}
-        Selling Price
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong= number_to_currency(@deal.trade_allowance)
-      %div{style: 'font-size: 12px;'}
-        Trade Allowance
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong= number_to_currency(@deal.trade_acv)
-      %div{style: 'font-size: 12px;'}
-        Trade ACV
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong= @deal.trade_bank_name
-      %div{style: 'font-size: 12px;'}
-        Trade Bank Name
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong= number_to_currency(@deal.trade_payoff_amount)
-      %div{style: 'font-size: 12px;'}
-        Trade Payoff Amount
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong= @deal.trade_account_number
-      %div{style: 'font-size: 12px;'}
-        Trade Account Number
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong= @deal.send_payoff_address
-      %div{style: 'font-size: 12px;'}
-        Send Payoff Address
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'width:30%;display:inline-block;'}
-      %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-        %strong= @deal.good_through_date
-      %div{style: 'font-size: 12px;'}
-        Good Through Date
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'width:30%;display:inline-block;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;'}
-        - if @deal.dealer_demo
-          &#10006;
-        - else
-          &nbsp;&nbsp;&nbsp;
-      Dealer Demo
-
-    %div{style: 'width:30%;display:inline-block;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;'}
-        - if @deal.loaner_car
-          &#10006;
-        - else
-          &nbsp;&nbsp;&nbsp;
-      Loaner Car
-      
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'font-size: 12px;'}
-      Disclosure
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.disclosure
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'font-size: 12px;'}
-      Deal Notes
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.deal_notes
-
-
-.right-col
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.time_agreed
-    %div{style: 'font-size: 12px;'}
-      Time Agreed
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.time_in_finance
-    %div{style: 'font-size: 12px;'}
-      Time In- Finance
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.time_out_finance
-    %div{style: 'font-size: 12px;'}
-      Time Out- Finance
-
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= number_to_currency(@deal.down_payment)
-    %div{style: 'font-size: 12px;'}
-      Down Payment
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.term
-    %div{style: 'font-size: 12px;'}
-      Term
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= number_to_currency(@deal.quoted_payment)
-    %div{style: 'font-size: 12px;'}
-      Quoted Payment
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.rate_apr
-    %div{style: 'font-size: 12px;'}
-      Rate APR
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.miles_per_year
-    %div{style: 'font-size: 12px;'}
-      Miles Per Year (LSE)
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.rebates
-    %div{style: 'font-size: 12px;'}
-      Rebates
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.bulletin_number
-    %div{style: 'font-size: 12px;'}
-      Bulletin Number
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.sales_rep
-    %div{style: 'font-size: 12px;'}
+  // second row of 3
+  %div{style: 'width: 110px;float:left;margin: 5px 5px 5px 0;' }
+    .label
+      Deal Type
+    .border
+      = @deal.deal_type
+  %div{style: 'width: 110px;float:left;margin: 5px 5px 5px 0;' }
+    .label
       Sales Rep
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.split_rep
-    %div{style: 'font-size: 12px;'}
+    .border
+      = @deal.sales_rep
+  %div{style: 'width: 110px;float:left;margin: 5px 5px 5px 0;' }
+    .label
       Split Rep
+    .border
+      = @deal.split_rep
 
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.desk_manager
-    %div{style: 'font-size: 12px;'}
+  %div{style:'clear:both;'}
+
+  // third row of 3
+  %div{style: 'width: 110px;float:left;margin: 5px 5px 5px 0;' }
+    .label
       Desk Manager
-
-  %div{style: 'margin-top: 10px;'}
-    %div{style: 'border:1px solid #e0e0e0;padding: 5px;'}
-      %strong= @deal.finance_manager
-    %div{style: 'font-size: 12px;'}
+    .border
+      = @deal.desk_manager
+  %div{style: 'width: 110px;float:left;margin: 5px 5px 5px 0;' }
+    .label
       Finance Manager
+    .border
+      = @deal.finance_manager
+  %div{style: 'width: 110px;float:left;margin: 5px 5px 5px 0;' }
+    .label
+      Selling Price
+    .border
+      = number_to_currency @deal.selling_price
+  
+
+  %div{style:'clear:both;'}
+
+  // rounded box
+  %div.border{style: 'border-radius: 10px;margin-right: 10px;'}
+    %div{style: 'width: 32%;float:left;margin: 5px 5px 5px 0;' }
+      .label
+        Trade Allowance
+      .border
+        = number_to_currency @deal.trade_allowance
+    %div{style: 'width: 32%;float:left;margin: 5px 5px 5px 0;' }
+      .label
+        Trade Payoff Amount
+      .border
+        = number_to_currency @deal.trade_payoff_amount
+
+    %div{style: 'width: 32%;float:left;margin: 5px 5px 5px 0;' }
+      .label
+        Trade ACV
+      .border
+        = number_to_currency @deal.trade_acv
+
+    %div{style:'clear:both;'}
+
+    %div{style: 'width: 32%;float:left;margin: 5px 5px 5px 0;' }
+      .label
+        Trade Bank Name
+      .border
+        = @deal.trade_bank_name
+    %div{style: 'width: 32%;float:left;margin: 5px 5px 5px 0;' }
+      .label
+        Send Payoff Address
+      .border{style: 'min-height: 68px;'}
+        = simple_format @deal.send_payoff_address, {}, wrapper_tag: 'span'
+
+    %div{style: 'width: 32%;float:left;margin: 5px 5px 5px 0;' }
+      .label
+        Good Through Date
+      .border
+        = @deal.good_through_date
+      %br
+      .label
+        Trade Account Number
+      .border
+        = @deal.trade_account_number
+
+    %div{style:'clear:both;'}
+
+  %div{style:'clear:both;'}
+  %div{style:'width: 49%;float:left;margin: 5px 5px 5px 0;'}
+    .label
+      Deal Notes
+    .border{style: 'min-height: 75px;'}
+      = simple_format @deal.deal_notes, {}, wrapper_tag: 'span'
+  %div{style:'width: 49%;float:left;margin: 5px 5px 5px 0;'}
+    .label
+      Disclosure
+    .border{style: 'min-height: 75px;'}
+      = simple_format @deal.disclosure, {}, wrapper_tag: 'span'
+
+  %div{style:'clear:both;'}
+
+%div{style:'width: 30%; float:left;'}
+
+  %div{style:'width: 60%;float:left;margin: 5px 5px 5px 0;'}
+    .label
+      Down Payment
+    .border
+      = @deal.down_payment
+
+  %div{style:'width: 38%;float:left;margin: 5px 0px 5px 0;'}
+    .label
+      Term
+    .border
+      = @deal.term
+
+  %div{style:'clear:both;'}
+  %div{style:'width: 100%;margin: 5px 0'}
+    .label
+      Quoted Payment
+    .border
+      = @deal.quoted_payment
+  
+  %div{style:'clear:both;'}
+  %div{style:'width: 100%;margin: 5px 0'}
+    .label
+      Rate APR
+    .border
+      = @deal.rate_apr
+
+  %div{style:'clear:both;'}
+  %div{style:'width: 100%;margin: 5px 0'}
+    .label
+      Miles Per Year (LSE)
+    .border
+      = @deal.miles_per_year
+
+
+  %div{style:'clear:both;'}
+  %div{style:'width: 100%;margin: 5px 0'}
+    .label
+      Rebates
+    .border{style: 'min-height: 50px;'}
+      = simple_format @deal.rebates, {}, wrapper_tag: 'span'
+
+
+  %div{style:'clear:both;'}
+  %div{style:'width: 100%;margin: 5px 0'}
+    .label
+      Bulletin Number
+    .border{style: 'min-height: 50px;'}
+      = simple_format @deal.bulletin_number, {}, wrapper_tag: 'span'
+    
+
+%div{style:'clear:both;'}
+
+
+%div.border{style: 'border-radius: 10px;margin-top: 15px;'}
+  %div{style:'width: 15px;float:left; margin-right: 10px'}
+    = params.key?('debug') ? image_tag('desk.png', style: 'width:100%;') : wicked_pdf_image_tag('desk.png', style: 'width:100%;')
+ 
+  %div{style:'width: 22%;float:left;margin: 5px 5px 5px 0;'}
+    %div{style: 'font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Privacy Notice
+    
+    %div{style: 'margin-top: 10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Copy DL
+
+    %div{style: 'margin-top: 10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Credit App w/email
+
+    %div{style: 'margin-top: 10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Insurance
+
+    %div{style: 'margin-top: 10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Identity Theft
+
+  %div{style:'width: 22%;float:left;margin: 5px 5px 5px 0;'}
+
+    %div{style: 'font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Invoice
+
+    %div{style: 'margin-top: 10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      In/Out Sheet
+
+    %div{style: 'margin-top: 10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Credit Disclosure
+
+    %div{style: 'margin-top: 10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Credit Report
+
+    %div{style: 'margin-top: 10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Bulletin
+    
+  %div{style:'width: 22%;float:left;margin: 5px 5px 5px 0;'}
+
+    %div{style: 'font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Supplier Form
+
+    %div{style: 'margin-top:10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Rebate Form
+  %div{style:'width: 25%;float:left;margin: 5px 5px 5px 0;'}
+    = params.key?('debug') ? image_tag('trade.png', style: 'margin:auto; display:block; width: 50px;') : wicked_pdf_image_tag('trade.png', style: 'margin:auto; display:block; width: 50px;')
+
+    %div{style: 'margin-top:10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Appraisal Package
+
+    %div{style: 'margin-top:10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Registration
+
+    %div{style: 'margin-top:10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Title
+
+    %div{style: 'margin-top:10px;font-size: 14px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      DMV Clear Title Check
+
+  %div{style:'clear:both;'}
 
 
 %div{style:'clear:both;'}
 #footer{style: 'position: absolute; bottom: 0px;left: 0; right: 0'}
-  = wicked_pdf_image_tag 'logo_black_small.png', style: 'margin:auto; display:block; width: 100px;'
+  = params.key?('debug') ? image_tag('logo_black_small.png', style: 'margin:auto; display:block; width: 100px;') : wicked_pdf_image_tag('logo_black_small.png', style: 'margin:auto; display:block; width: 100px;')

@@ -38,7 +38,8 @@ class DealsController < ApplicationController
      format.pdf do
        render pdf: "Cover Sheet - #{@deal.client_last_name}",
        template: "deals/cover_sheet.html.haml",
-       layout: 'pdf.html.erb'
+       layout: 'pdf.html.erb',
+       show_as_html: params.key?('debug')
      end
     end
   end
