@@ -447,7 +447,7 @@
     %div{style: 'margin-top:5px;font-size: 10px;'}
       %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
-      %span{class: (@deal.disclosure.present? && !@deal.is_used)? "inverse": ''}
+      %span{class: (@deal.disclosure.present? && !@deal.is_used && @deal.deal_type != "Lease")? "inverse": ''}
         Prior History
         
 
@@ -588,7 +588,7 @@
     %div{style: 'margin-top:5px;font-size: 10px;'}
       %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
-      %span{class: (@deal.disclosure.present? && !@deal.is_used)? "inverse": ''}
+      %span{class: (@deal.disclosure.present? && !@deal.is_used && @deal.deal_type == "Lease")? "inverse": ''}
         Prior History
       
 
