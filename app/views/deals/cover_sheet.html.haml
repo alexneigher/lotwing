@@ -15,23 +15,10 @@
     font-size: 11px;
   }
 
-  .rotate {
-
-    /* Safari */
-    -webkit-transform: rotate(-90deg);
-
-    /* Firefox */
-    -moz-transform: rotate(-90deg);
-
-    /* IE */
-    -ms-transform: rotate(-90deg);
-
-    /* Opera */
-    -o-transform: rotate(-90deg);
-
-    /* Internet Explorer */
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-
+  .inverse{
+    padding: 2px 5px;
+    background-color: #3a3a3a;
+    color: #fff;
   }
 
 #header
@@ -42,7 +29,7 @@
     %h1.border{style: 'margin: 0;'}
       = @deal.client_last_name
       
-%div{style:'clear:both;padding-top:15px;'}
+%div{style:'clear:both;padding-top:5px;'}
 
   %div{style: 'width: 60px;float:left;margin: 5px 5px 5px 0;' }
     .label
@@ -168,7 +155,7 @@
     %div{style: 'width: 32%;float:left;margin: 5px 5px 5px 0;' }
       .label
         Send Payoff Address
-      .border{style: 'min-height: 68px;'}
+      .border
         = simple_format @deal.send_payoff_address, {}, wrapper_tag: 'span'
 
     %div{style: 'width: 32%;float:left;margin: 5px 5px 5px 0;' }
@@ -188,12 +175,12 @@
   %div{style:'width: 49%;float:left;margin: 5px 5px 5px 0;'}
     .label
       Deal Notes
-    .border{style: 'min-height: 75px;'}
+    .border
       = simple_format @deal.deal_notes, {}, wrapper_tag: 'span'
   %div{style:'width: 49%;float:left;margin: 5px 5px 5px 0;'}
     .label
       Disclosure
-    .border{style: 'min-height: 75px;'}
+    .border
       = simple_format @deal.disclosure, {}, wrapper_tag: 'span'
 
   %div{style:'clear:both;'}
@@ -254,98 +241,361 @@
 
 
 %div.border{style: 'border-radius: 10px;margin-top: 15px;'}
-  %div{style:'width: 15px;float:left; margin-right: 10px'}
+  %div{style:'width: 15px;float:left; margin-right: 10px;margin-top:35px;'}
     = params.key?('debug') ? image_tag('desk.png', style: 'width:100%;') : wicked_pdf_image_tag('desk.png', style: 'width:100%;')
  
   %div{style:'width: 22%;float:left;margin: 5px 5px 5px 0;'}
-    %div{style: 'font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Privacy Notice
     
-    %div{style: 'margin-top: 10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top: 5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Copy DL
 
-    %div{style: 'margin-top: 10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top: 5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Credit App w/email
 
-    %div{style: 'margin-top: 10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top: 5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Insurance
 
-    %div{style: 'margin-top: 10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top: 5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Identity Theft
 
   %div{style:'width: 22%;float:left;margin: 5px 5px 5px 0;'}
 
-    %div{style: 'font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Invoice
 
-    %div{style: 'margin-top: 10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top: 5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       In/Out Sheet
 
-    %div{style: 'margin-top: 10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top: 5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Credit Disclosure
 
-    %div{style: 'margin-top: 10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top: 5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Credit Report
 
-    %div{style: 'margin-top: 10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top: 5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Bulletin
     
   %div{style:'width: 22%;float:left;margin: 5px 5px 5px 0;'}
 
-    %div{style: 'font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Supplier Form
 
-    %div{style: 'margin-top:10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Rebate Form
   %div{style:'width: 25%;float:left;margin: 5px 5px 5px 0;'}
-    = params.key?('debug') ? image_tag('trade.png', style: 'margin:auto; display:block; width: 50px;') : wicked_pdf_image_tag('trade.png', style: 'margin:auto; display:block; width: 50px;')
+    = params.key?('debug') ? image_tag('trade.png', style: 'margin:auto; display:block; width: 40px;') : wicked_pdf_image_tag('trade.png', style: 'margin:auto; display:block; width: 40px;')
 
-    %div{style: 'margin-top:10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Appraisal Package
 
-    %div{style: 'margin-top:10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Registration
 
-    %div{style: 'margin-top:10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       Title
 
-    %div{style: 'margin-top:10px;font-size: 14px;'}
-      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 20px;border-radius: 5px'}
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       DMV Clear Title Check
 
   %div{style:'clear:both;'}
 
+%div.border{style: 'border-radius: 10px;margin-top: 15px;'}
+  %div{style:'width: 15px;float:left; margin-right: 10px;margin-top: 105px;'}
+    = params.key?('debug') ? image_tag('finance.png', style: 'width:100%;') : wicked_pdf_image_tag('finance.png', style: 'width:100%;')
+
+  %div{style:'width: 19%;float:left;margin: 5px 5px 5px 0;'}
+    = params.key?('debug') ? image_tag('adds.png', style: 'margin:auto; display:block; width: 35px;') : wicked_pdf_image_tag('adds.png', style: 'margin:auto; display:block; width: 35px;')
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      GAPS
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Excess Wear & Tear
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Service Contract
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Select Protection
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Zurich Shield
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      VW Maintenance
+
+
+    = params.key?('debug') ? image_tag('credit_stips.png', style: 'margin:10px auto; display:block; width: 75px;') : wicked_pdf_image_tag('credit_stips.png', style: 'margin:10px auto; display:block; width: 75px;')
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      POR
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      POI
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Reference
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Visa
+
+
+  %div{style:'width: 18%;float:left;margin: 5px 5px 5px 0;'}
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Emp. Ack
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      SS#
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Job Letter
+
+
+    = params.key?('debug') ? image_tag('new.png', style: 'margin:10px auto; display:block; width: 35px;') : wicked_pdf_image_tag('new.png', style: 'margin:10px auto; display:block; width: 35px;')
+
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Contract
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Pre Contract Disc
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      ROS New
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      262
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      VCI Insurance/Generic
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      VCI Credit App
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      %span{class: (@deal.disclosure.present? && !@deal.is_used)? "inverse": ''}
+        Prior History
+        
+
+  %div{style:'width: 18%;float:left;margin: 5px 5px 5px 0;'}
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Tire Chain Disc
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Notice to Co-Sign
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      CarNet
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Rebate Forms
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Due Bill
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Menu
+
+    = params.key?('debug') ? image_tag('pre_owned.png', style: 'margin:10px auto; display:block; width: 75px;') : wicked_pdf_image_tag('pre_owned.png', style: 'margin:10px auto; display:block; width: 75px;')
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Copy of App or Reg
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Book Sheet
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Menu
+
+  %div{style:'width: 18%;float:left;margin: 5px 5px 5px 0;'}
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Contract Cancellation
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      %span{class: (@deal.disclosure.present? && @deal.is_used)? "inverse": ''}
+        Prior History
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Buyers Guide
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      ROS Used
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      262
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      VCI Insurance/Generic
+
+    = params.key?('debug') ? image_tag('trade.png', style: 'margin:10px auto; display:block; width: 40px;') : wicked_pdf_image_tag('trade.png', style: 'margin:10px auto; display:block; width: 40px;')
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      10 Pack
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Payoff Quote
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      262 Trade
+  %div{style:'width: 18%;float:left;margin: 5px 5px 5px 0;'}
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Prior History
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Trade Disclosure
+
+    = params.key?('debug') ? image_tag('lease.png', style: 'margin:10px auto; display:block; width: 40px;') : wicked_pdf_image_tag('lease.png', style: 'margin:10px auto; display:block; width: 40px;')
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Lease Contract
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Lease Worksheet
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Lease Ins Form
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Car Net
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      Rebate Forms
+
+    %div{style: 'margin-top:5px;font-size: 10px;'}
+      %span{style: 'border:1px solid #e0e0e0;margin-right: 5px;font-size: 15px;border-radius: 5px'}
+        &nbsp;&nbsp;&nbsp;
+      %span{class: (@deal.disclosure.present? && !@deal.is_used)? "inverse": ''}
+        Prior History
+      
+
+    %hr{style:'margin-top: 40px;margin-bottom:0px;'}
+    %strong Printer's Initials
+
+  %div{style:'clear:both;'}
 
 %div{style:'clear:both;'}
 #footer{style: 'position: absolute; bottom: 0px;left: 0; right: 0'}
