@@ -5,8 +5,8 @@
     %ul.list-group
       - @suggested_trade_dealerships.each do |d|
         %li.list-group-item.py-1{id: dom_id(d)}
-          .text-success{ style:'cursor:pointer;', data: { trade_dealer_name: d.name, trade_dealer_address: d.address, trade_dealer_contact: d.contact, trade_contact_phone:  d.phone } }
-            %span.suggested-dealership
+          .text-success
+            %span.suggested-dealership{ style:'cursor:pointer;', data: { trade_dealer_name: d.name, trade_dealer_address: d.address, trade_dealer_contact: d.contact, trade_contact_phone:  d.phone } }
               = d.name
               %br
               = "#{d.contact} - #{d.phone}"
