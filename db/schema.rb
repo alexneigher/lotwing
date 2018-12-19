@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181216000838) do
+ActiveRecord::Schema.define(version: 20181219033450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,6 +153,17 @@ ActiveRecord::Schema.define(version: 20181216000838) do
     t.bigint "dealership_id"
     t.datetime "most_recently_tagged_at"
     t.index ["dealership_id"], name: "index_shapes_on_dealership_id"
+  end
+
+  create_table "suggested_trade_dealerships", force: :cascade do |t|
+    t.string "name"
+    t.text "address"
+    t.string "contact"
+    t.string "phone"
+    t.bigint "dealership_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dealership_id"], name: "index_suggested_trade_dealerships_on_dealership_id"
   end
 
   create_table "tags", force: :cascade do |t|

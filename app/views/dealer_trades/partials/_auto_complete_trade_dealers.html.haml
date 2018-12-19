@@ -3,11 +3,18 @@
     .text-center.mb-1
       %strong Suggested Trade Dealerships
     %ul.list-group
-      - @dealer_trades.each do |d|
-        %li.list-group-item.py-1
-          .text-success.suggested-dealership{ style:'cursor:pointer;', data: { trade_dealer_name: d.trade_dealer_name, trade_dealer_address: d.trade_dealer_address, trade_dealer_contact: d.trade_dealer_contact, trade_contact_phone:  d.trade_contact_phone } }
-            = d.trade_dealer_name
-            = " | #{d.trade_dealer_contact} (#{d.trade_contact_phone})"
+      - @suggested_trade_dealerships.each do |d|
+        %li.list-group-item.py-1{id: dom_id(d)}
+          .text-success{ style:'cursor:pointer;', data: { trade_dealer_name: d.name, trade_dealer_address: d.address, trade_dealer_contact: d.contact, trade_contact_phone:  d.phone } }
+            %span.suggested-dealership
+              = d.name
+              %br
+              = "#{d.contact} - #{d.phone}"
+            .pull-right
+              
+              %small
+                = link_to 'delete', suggested_trade_dealership_path(d), method: :delete, remote: true, class: 'text-danger'
+                  
 
 
 

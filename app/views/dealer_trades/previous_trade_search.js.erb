@@ -1,5 +1,5 @@
 $('.loading-spin-trade-dealer').addClass('d-none');
 
-<%- if @dealer_trades.any? %>
+<%- if @suggested_trade_dealerships.any? %>
   $('#autoCompleteDealerTrades').html("<%= j(render partial: 'dealer_trades/partials/auto_complete_trade_dealers') %>")
 <%- end %>

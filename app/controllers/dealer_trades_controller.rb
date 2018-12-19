@@ -11,6 +11,17 @@ class DealerTradesController < ApplicationController
   def create
     @dealer_trade = current_user.dealership.dealer_trades.create(dealer_trade_params)
 
+    suggested_trade_dealership = current_user
+                                  .dealership
+                                  .suggested_trade_dealerships
+                                  .find_or_create_by(
+                                      name: params[:dealer_trade][:trade_dealer_name],
+                                      address: params[:dealer_trade][:trade_dealer_address],
+                                      phone: params[:dealer_trade][:trade_contact_phone],
+                                      contact: params[:dealer_trade][:trade_dealer_contact],
+                                    )
+
+      
     redirect_to dealer_trades_path 
   end
 
@@ -47,7 +58,7 @@ class DealerTradesController < ApplicationController
   end
 
   def previous_trade_search
-    @dealer_trades = current_user.dealership.dealer_trades.where("trade_dealer_name ILIKE ?", "%#{params[:previous_trade_search]}%")
+    @suggested_trade_dealerships = current_user.dealership.suggested_trade_dealerships.where("name ILIKE ?", "%#{params[:previous_trade_search]}%")
   end
 
   private

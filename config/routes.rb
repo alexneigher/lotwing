@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :suggested_trade_dealerships, only: :destroy
+  
   # UI for drawing shapes on the map and saving them
   get :map_builder, to: 'home#map_builder'
 
