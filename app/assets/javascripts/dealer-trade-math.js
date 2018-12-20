@@ -1,5 +1,6 @@
 $(function(){
   $('.delivered-invoice-inputs input.dynamic').keyup(function(){
+
       var invoice_value_str = $('#dealer_trade_delivered_invoice').val();
       var invoice_value = Number(invoice_value_str.replace(/[^0-9.-]+/g,""));
 

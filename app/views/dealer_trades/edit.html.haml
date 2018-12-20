@@ -1,3 +1,5 @@
+= javascript_include_tag('dealer-trade-math.js')
+
 .container
   = form_for @dealer_trade, url: dealer_trade_path(@dealer_trade), method: :put do |f|
     .row
@@ -67,25 +69,25 @@
 
               .col-md-2
                 = f.text_field :model, placeholder: 'Model', class: 'form-control'
-              .col-md-5
+              .col-md-5.delivered-invoice-inputs
                 .row.no-gutters
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong Invoice
                   .col-6
-                    = f.text_field :delivered_invoice, placeholder: 'Delivered Invoice', class: 'form-control'
+                    = f.text_field :delivered_invoice, placeholder: 'Delivered Invoice', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong + Accessories
                   .col-6
-                    = f.text_field :plus_deliver_acc, placeholder: 'Plus Deliver Acc', class: 'form-control'
+                    = f.text_field :plus_deliver_acc, placeholder: 'Plus Deliver Acc', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong - Dealer Rebate
                   .col-6
-                    = f.text_field :less_rebate_1, placeholder: 'Less Rebate 1', class: 'form-control'
+                    = f.text_field :less_rebate_1, placeholder: 'Less Rebate 1', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
@@ -117,25 +119,25 @@
               .col-md-2
                 = f.text_field :trade_model, placeholder: 'Trade Model', class: 'form-control'
 
-              .col-md-5
+              .col-md-5.received-invoice-inputs
                 .row.no-gutters
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong Invoice
                   .col-6
-                    = f.text_field :received_invoice, placeholder: 'Received Invoice', class: 'form-control'
+                    = f.text_field :received_invoice, placeholder: 'Received Invoice', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong + Accessories
                   .col-6
-                    = f.text_field :received_acc, placeholder: 'Received Acc', class: 'form-control'
+                    = f.text_field :received_acc, placeholder: 'Received Acc', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
                       %strong - Dealer Rebate
                   .col-6
-                    = f.text_field :received_rebate, placeholder: 'Received Rebate', class: 'form-control'
+                    = f.text_field :received_rebate, placeholder: 'Received Rebate', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1 
