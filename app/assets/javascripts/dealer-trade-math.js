@@ -51,6 +51,7 @@ function calculate_trade_difference(){
 
   
   result = delivered - received
+
   var num = '$' + result.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
   
   $("#dealer_trade_trade_difference").val(num);
