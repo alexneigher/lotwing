@@ -78,8 +78,8 @@ class DataFeedSyncService
             drive_line: data[26],
             status: data[28],
             is_used: data[29].chomp == 'U' ? true : false,
-            age_in_days: data[30].chomp,
-            color: data[31],
+            age_in_days: data[30],
+            color: data[31].chomp,
             raw_data_feed_output: data.join("|")
           )
       end
