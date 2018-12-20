@@ -3,13 +3,11 @@
 
     .row
       .col-md-12
-        - unless current_user.permission_level == 'sales_rep'
-          = link_to 'Delete deal', deal_path(@deal), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger pull-right'
-          
-        %h3 Board Manager - Editing #{@deal.client_last_name}
         %span{ onclick: 'setTimeout(function(){document.location.href = "/board-manager"}, 0)' }
-          = f.submit 'Print Cover Sheet', class: 'btn btn-link p-0 m-0', :formtarget => "_blank"
+          = f.submit 'Print Cover Sheet', class: 'btn btn-sm btn-secondary pull-right mt-2', :formtarget => "_blank"
 
+        %h3 Board Manager - Editing #{@deal.client_last_name}
+        
     .row.mt-4
       .col-md-2
         - unless current_user.permission_level == "sales_rep"
@@ -99,7 +97,10 @@
         = f.text_area :deal_notes, placeholder: 'Deal Notes', class: 'form-control mb-1', rows: 3
 
     .row.mb-5
-      .col-md-2
+      .col-md-4
+        - unless current_user.permission_level == 'sales_rep'
+          = link_to 'Delete deal', deal_path(@deal), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger'
+          
       .col-md-6.text-center
         = f.submit 'Update', class: 'btn btn-primary mx-2'
         = f.submit 'Store Entry', class: 'btn btn-outline-secondary mx-2'
