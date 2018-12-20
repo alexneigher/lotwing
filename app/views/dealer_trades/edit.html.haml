@@ -144,7 +144,7 @@
     .row.mt-2
       .col-4
         History 
-        %strong X
+        %strong= current_user.dealership.dealer_trades.where(trade_dealer_name: @dealer_trade.trade_dealer_name)&.count || 0
         Trades
       .col-4
         .row.no-gutters
