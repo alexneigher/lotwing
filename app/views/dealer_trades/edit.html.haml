@@ -34,7 +34,8 @@
       .col-md-3
         .row.pb-5
           .col-12.text-right
-            = link_to "Print Trade Sheet", dealer_trade_trade_sheet_path(@dealer_trade, format: :pdf), target: "_blank", class: 'btn btn-sm btn-secondary'
+            = f.submit 'Print Trade Sheet', formtarget: "_blank", class: 'btn btn-sm btn-secondary'
+
         .row.mb-4.no-gutters
           .col-md-6
             = f.text_field :date_created, class: 'form-control'

@@ -22,7 +22,7 @@ class DealerTradesController < ApplicationController
                                     )
 
       
-    redirect_to dealer_trades_path 
+    redirect_to edit_dealer_trade_path(@dealer_trade) 
   end
 
   def edit
@@ -32,7 +32,12 @@ class DealerTradesController < ApplicationController
   def update
     @dealer_trade = current_user.dealership.dealer_trades.find(params[:id])
     @dealer_trade.update(dealer_trade_params)
-    redirect_to dealer_trades_path
+    
+    if params[:commit] == "Print Trade Sheet"
+      redirect_to dealer_trade_trade_sheet_path(@dealer_trade, format: :pdf) and return
+    else
+      redirect_to dealer_trade_path(@dealer_trade) and return
+    end
   end
 
   def destroy
