@@ -33,8 +33,9 @@
               Our Purchase
       .col-md-3
         .row.pb-5
-          .col-12.text-right
+          .col-12.text-right{ onclick: 'setTimeout(function(){document.location.href = "/dealer_trades"}, 0)' }
             = f.submit 'Print Trade Sheet', formtarget: "_blank", class: 'btn btn-sm btn-secondary'
+
 
         .row.mb-4.no-gutters
           .col-md-6
