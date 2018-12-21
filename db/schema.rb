@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181219033450) do
+ActiveRecord::Schema.define(version: 20181221005401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20181219033450) do
     t.string "trade_payment_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "dealer_code"
     t.index ["dealership_id"], name: "index_dealer_trades_on_dealership_id"
   end
 
@@ -163,6 +164,7 @@ ActiveRecord::Schema.define(version: 20181219033450) do
     t.bigint "dealership_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "dealer_code"
     t.index ["dealership_id"], name: "index_suggested_trade_dealerships_on_dealership_id"
   end
 

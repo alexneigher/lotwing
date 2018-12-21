@@ -7,7 +7,11 @@
         .form-group
           %div{style: 'position:relative'}
             %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin-trade-dealer{style:'position:absolute;right:10px;top:11px;'}
-            = f.text_field :trade_dealer_name, placeholder: 'Trade Dealer Name', class: 'form-control'
+            = f.text_field :trade_dealer_name, placeholder: 'Trade Dealer Name', class: 'form-control lookup-input'
+        .form-group
+          %div{style: 'position:relative'}
+            %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin-trade-dealer{style:'position:absolute;right:10px;top:11px;'}
+            = f.text_field :dealer_code, placeholder: 'Dealer Code', class: 'form-control lookup-input'
         .form-group
           = f.text_area :trade_dealer_address, placeholder: 'Trade Dealer Address', class: 'form-control', rows: 3
         .form-group
@@ -179,20 +183,13 @@
     var typingTimer;                //timer identifier
     var doneTypingInterval = 500;  //time in ms
     var $stock_number_input = $('#dealer_trade_stock_number');
-    var $trade_dealer_name_input = $('#dealer_trade_trade_dealer_name');
+    var $trade_dealer_name_input = $('.lookup-input');
 
     //on keyup, start the countdown
     $stock_number_input.on('input', function () {
       clearTimeout(typingTimer);
       typingTimer = setTimeout(doneTypingStockNumber, doneTypingInterval);
     });
-
-    //on keyup, start the countdown
-    $trade_dealer_name_input.on('input', function () {
-      clearTimeout(typingTimer);
-      typingTimer = setTimeout(doneTypingTradeDealer, doneTypingInterval);
-    });
-
     //user is "finished typing," populate the hidden form, and submit that one
     function doneTypingStockNumber () {
       if ($stock_number_input.val()){
@@ -206,15 +203,21 @@
       }
     }
 
+    //on keyup, start the countdown
+    $trade_dealer_name_input.on('input', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(doneTypingTradeDealer($(this)), doneTypingInterval);
+    });
+
     //user is "finished typing," populate the hidden form, and submit that one
-    function doneTypingTradeDealer () {
-      if ($trade_dealer_name_input.val()){
+    function doneTypingTradeDealer(el) {
+      if (el.val()){
         $('.loading-spin-trade-dealer').removeClass('d-none');
         
         $.ajax({
           url:"/dealer_trades/previous_trade_search",
           method: 'PUT',
-          data: { previous_trade_search: $trade_dealer_name_input.val() }
+          data: { previous_trade_search: el.val() }
         });
       }
     }

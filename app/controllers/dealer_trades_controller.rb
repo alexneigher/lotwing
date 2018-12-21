@@ -3,6 +3,12 @@ class DealerTradesController < ApplicationController
 
   def index
     @dealer_trades = current_user.dealership.dealer_trades
+
+    if params.dig(:sort).present?
+      params.dig(:sort).each do |k,v|
+        @dealer_trades = @dealer_trades.order(k => v)
+      end
+    end
   end
 
   def new
@@ -19,6 +25,7 @@ class DealerTradesController < ApplicationController
                                       address: params[:dealer_trade][:trade_dealer_address],
                                       phone: params[:dealer_trade][:trade_contact_phone],
                                       contact: params[:dealer_trade][:trade_dealer_contact],
+                                      dealer_code: params[:dealer_trade][:dealer_code]
                                     )
 
     if params[:commit] == "Create And Print Trade Sheet"
@@ -66,7 +73,7 @@ class DealerTradesController < ApplicationController
   end
 
   def previous_trade_search
-    @suggested_trade_dealerships = current_user.dealership.suggested_trade_dealerships.where("name ILIKE ?", "%#{params[:previous_trade_search]}%")
+    @suggested_trade_dealerships = current_user.dealership.suggested_trade_dealerships.where("name ILIKE ? OR dealer_code ILIKE ?", "%#{params[:previous_trade_search]}%", "%#{params[:previous_trade_search]}%")
   end
 
   private
@@ -77,6 +84,7 @@ class DealerTradesController < ApplicationController
     def dealer_trade_params
       params.require(:dealer_trade).permit(
         :trade_dealer_name,
+        :dealer_code,
         :trade_dealer_address,
         :trade_dealer_contact,
         :trade_contact_phone,

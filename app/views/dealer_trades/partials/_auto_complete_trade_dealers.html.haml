@@ -6,10 +6,14 @@
       - @suggested_trade_dealerships.each do |d|
         %li.list-group-item.py-1{id: dom_id(d)}
           .text-success
-            %span.suggested-dealership{ style:'cursor:pointer;', data: { trade_dealer_name: d.name, trade_dealer_address: d.address, trade_dealer_contact: d.contact, trade_contact_phone:  d.phone } }
+            %span.suggested-dealership{ style:'cursor:pointer;', data: { trade_dealer_name: d.name, trade_dealer_address: d.address, trade_dealer_contact: d.contact, trade_contact_phone:  d.phone, dealer_code: d.dealer_code } }
               = d.name
               %br
               = "#{d.contact} - #{d.phone}"
+              %br
+              %span{style: "color:#5cb85c"}
+                = d.dealer_code
+              
             .pull-right
               
               %small
@@ -25,12 +29,14 @@
      var trade_dealer_address = $(this).data('trade-dealer-address');
      var trade_dealer_contact = $(this).data('trade-dealer-contact');
      var trade_contact_phone = $(this).data('trade-contact-phone');
+     var dealer_code = $(this).data('dealer-code');
 
 
      $("#dealer_trade_trade_dealer_name").val(trade_dealer_name);
      $("#dealer_trade_trade_dealer_address").val(trade_dealer_address);
      $("#dealer_trade_trade_dealer_contact").val(trade_dealer_contact);
      $("#dealer_trade_trade_contact_phone").val(trade_contact_phone);
+     $("#dealer_trade_dealer_code").val(dealer_code);
 
 
      $('#autoCompleteDealerTrades').html('');

@@ -21,6 +21,13 @@
               %th
                 %i.fa.fa-pencil
               %th Dealer Name
+              %th
+                = link_to dealer_trades_path(sort: {dealer_code: params.dig(:sort, :dealer_code) == 'asc' ? "desc": "asc"}) do
+                  Dealer Code
+                  - if params.dig(:sort, :dealer_code) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
               %th Date
               %th Delivered Yr
               %th Model
@@ -39,6 +46,7 @@
                   = link_to edit_dealer_trade_path(dealer_trade) do
                     %i.fa.fa-pencil.edit-icon
                 %td= dealer_trade.trade_dealer_name
+                %td= dealer_trade.dealer_code
                 %td= dealer_trade.date_created
                 %td= dealer_trade.year
                 %td= dealer_trade.model
