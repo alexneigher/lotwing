@@ -38,7 +38,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :check_requests
+  resources :check_requests do
+    collection do
+      put :stock_number_search
+      get :search
+    end
+  end
 
   resources :suggested_trade_dealerships, only: :destroy
   

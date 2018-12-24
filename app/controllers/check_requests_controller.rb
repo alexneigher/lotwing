@@ -1,7 +1,11 @@
 class CheckRequestsController < ApplicationController
 
   def index
-    @check_requests = current_user.dealership.check_requests
+    service = CheckRequestSearchService.new(params, current_user.dealership)
+
+    @check_requests = service.perform
+
+    @filters_applied = service.filters_applied
   end
 
   def new
@@ -26,6 +30,10 @@ class CheckRequestsController < ApplicationController
     else
       redirect_to check_requests_path and return
     end
+  end
+
+  def search
+    
   end
 
   def edit

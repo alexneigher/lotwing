@@ -1,29 +1,20 @@
 .container
-  = form_for @check_request, url: check_request_path(@check_request), method: :put do |f|
+  = form_tag check_requests_path, method: :get do
+    .row
+      .col-md-12
+        %h3.mb-4 Search Check Request
     .row
       .col-md-2
-        %h3 Edit Check Request
       .col-md-10
-        .form-group.mt-2
-          .row
-            .col-6
-              .form-inline
-                %label
-                  %strong.mr-3 Request By 
-                  #{@check_request.request_by}
-                
-            .col-6
-              = f.submit "Print", class: 'btn btn-secondary mr-5'
-
         .form-group
           .row
             .col-6
               .form-inline
                 %label.form-label
                   %strong.mr-3 Date 
-                = f.text_field :request_date, placeholder: 'mm/dd/yyyy'
+                  #{DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date.strftime("%m/%d/%Y")}
+                
             
-        
     .row
       .col-12
         .form-group
@@ -32,20 +23,20 @@
               %label.form-label
                 %strong Check
             .col-10
-              = f.check_box :is_check
+              = check_box_tag :is_check
 
               %label.form-label.ml-3
                 %strong Cash
               %span
                 = check_box_tag :is_cash
-                
+
         .form-group
           .row.no-gutters
             .col-2.text-right.pr-2
               %label.pt-2
                 %strong Department
             .col-4
-              = f.select :department, options_for_select(['New Sales', 'Used Sales', 'Service', 'Parts', 'Collision', 'Accounting']), {}, class: 'form-control'
+              = select_tag :department, options_for_select(['', 'New Sales', 'Used Sales', 'Service', 'Parts', 'Collision', 'Accounting']), class: 'form-control'
 
         .form-group
           .row.no-gutters
@@ -53,7 +44,7 @@
               %label.pt-2
                 %strong Amount Requested
             .col-4
-              = f.text_field :amount_requested, placeholder: '$xx,xxxx', class: 'form-control'
+              = text_field_tag :amount_requested, nil, placeholder: '$xx,xxxx', class: 'form-control'
 
         .form-group
           .row.no-gutters
@@ -61,11 +52,11 @@
               %label.pt-2
                 %strong For Stock Number
             .col-3.pl-0.pr-2
-              = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control'
+              = text_field_tag :stock_number, nil, placeholder: 'Stock #', class: 'form-control'
             .col-3.px-2
-              = f.text_field :make, placeholder: 'Make', class: 'form-control'
+              = text_field_tag :make, nil, placeholder: 'Make', class: 'form-control'
             .col-3.px-2
-              = f.text_field :model, placeholder: 'Model', class: 'form-control'
+              = text_field_tag :model, nil, placeholder: 'Model', class: 'form-control'
 
 
         .form-group
@@ -74,7 +65,7 @@
               %label.pt-2
                 %strong Payable To
             .col-6
-              = f.text_area :payable_to, placeholder: 'Payable To:', class: 'form-control', rows: 4
+              = text_area_tag :payable_to, nil, placeholder: 'Payable To:', class: 'form-control', rows: 4
 
         .form-group
           .row.no-gutters
@@ -82,11 +73,7 @@
               %label.pt-2
                 %strong Description
             .col-6
-              = f.text_area :description, placeholder: 'Description:', class: 'form-control', rows: 4
+              = text_area_tag :description, nil, placeholder: 'Description:', class: 'form-control', rows: 4
 
             .col-4.text-center
-              = f.submit 'Save', class: 'btn btn-primary btn-lg mt-5'
-
-
-
-
+              = submit_tag 'Search', class: 'btn btn-primary btn-lg mt-5'

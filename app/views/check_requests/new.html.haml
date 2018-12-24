@@ -14,7 +14,7 @@
                 = f.hidden_field :request_by, value: current_user.full_name
             .col-6
               = f.submit "Print", class: 'btn btn-secondary mr-5'
-              = link_to 'Search', "#", class: 'btn btn-outline-secondary'
+              = link_to 'Search', search_check_requests_path, class: 'btn btn-outline-secondary'
 
         .form-group
           .row
@@ -36,13 +36,10 @@
             .col-10
               = f.check_box :is_check
 
-        .form-group
-          .row.no-gutters
-            .col-2.text-right.pr-2
-              %label.form-label
+              %label.form-label.ml-3
                 %strong Cash
-            .col-10
-              = f.check_box :is_cash
+              %span
+                = check_box_tag :is_cash
 
         .form-group
           .row.no-gutters
