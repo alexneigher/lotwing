@@ -18,21 +18,21 @@
                 %i.fa.fa-pencil
               
               %th
-                = link_to dealer_trades_path(sort: {date: params.dig(:sort, :date) == 'asc' ? "desc": "asc"}) do
+                = link_to check_requests_path(sort: {date: params.dig(:sort, :date) == 'asc' ? "desc": "asc"}) do
                   Date
                   - if params.dig(:sort, :date) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to dealer_trades_path(sort: {date: params.dig(:sort, :user) == 'asc' ? "desc": "asc"}) do
+                = link_to check_requests_path(sort: {date: params.dig(:sort, :user) == 'asc' ? "desc": "asc"}) do
                   User
                   - if params.dig(:sort, :user) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to dealer_trades_path(sort: {department: params.dig(:sort, :department) == 'asc' ? "desc": "asc"}) do
+                = link_to check_requests_path(sort: {department: params.dig(:sort, :department) == 'asc' ? "desc": "asc"}) do
                   Department
                   - if params.dig(:sort, :department) == "asc"
                     %i.fa.fa-sort-up
@@ -40,30 +40,13 @@
                     %i.fa.fa-sort-down
              
           %tbody
-            - @check_requests.each do |dealer_trade|
+            - @check_requests.each do |check_request|
               %tr
                 %td
-                  = link_to edit_dealer_trade_path(dealer_trade) do
+                  = link_to edit_check_request_path(check_request) do
                     %i.fa.fa-pencil.edit-icon
-                %td= dealer_trade.trade_dealer_name
-                %td= dealer_trade.dealer_code
-                %td= dealer_trade.date_created
-                %td= dealer_trade.year
-                %td= dealer_trade.model
-                %td.text-green= dealer_trade.trade_year
-                %td.text-green= dealer_trade.trade_model
-                %td= dealer_trade.trade_dealer_contact
-                %td= dealer_trade.desk_manager
-                %td= dealer_trade.trade_difference
-                %td= dealer_trade.trade_payment_type
-                %td
-                  - if dealer_trade.your_trade
-                    Your Trade
-                  - elsif dealer_trade.our_trade
-                    Our Trade
-                  - elsif dealer_trade.your_purchase
-                    Your Purchase
-                  - elsif dealer_trade.our_purchase
-                    Our Purchase
-
+                %td= check_request.request_date
+                %td= check_request.request_by
+                %td= check_request.department
+                
             

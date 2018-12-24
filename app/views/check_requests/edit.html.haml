@@ -1,8 +1,8 @@
 .container
-  = form_for @check_request, url: check_requests_path, method: :post do |f|
+  = form_for @check_request, url: check_request_path(@check_request), method: :put do |f|
     .row
       .col-md-2
-        %h3 Check Request
+        %h3 Edit Check Request
       .col-md-10
         .form-group.mt-2
           .row
@@ -10,11 +10,10 @@
               .form-inline
                 %label
                   %strong.mr-3 Request By 
-                  #{current_user.full_name}
-                = f.hidden_field :request_by, value: current_user.full_name
+                  #{@check_request.request_by}
+                
             .col-6
               = f.submit "Print", class: 'btn btn-secondary mr-5'
-              = link_to 'Search', "#", class: 'btn btn-outline-secondary'
 
         .form-group
           .row
@@ -22,8 +21,7 @@
               .form-inline
                 %label.form-label
                   %strong.mr-3 Date 
-                  #{DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date.strftime("%m/%d/%Y")}
-                = f.hidden_field :request_date, value: DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date.strftime("%m/%d/%Y")
+                = f.text_field :request_date, placeholder: 'mm/dd/yyyy'
             
         
     .row
