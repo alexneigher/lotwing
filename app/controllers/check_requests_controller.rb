@@ -40,6 +40,21 @@ class CheckRequestsController < ApplicationController
     @check_request = current_user.dealership.check_requests.find(params[:id])
   end
 
+  def stock_number_search
+
+  end
+
+  def printout
+    @check_request = current_user.dealership.check_requests.find(params[:check_request_id])
+    
+    respond_to do |format|
+     format.pdf do
+       render pdf: "Check Request Printout",
+       template: "check_requests/printout.html.haml",
+       layout: 'pdf.html.erb'
+     end
+    end
+  end
 
   private
     def check_request_params

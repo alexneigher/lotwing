@@ -13,7 +13,8 @@
                   #{current_user.full_name}
                 = f.hidden_field :request_by, value: current_user.full_name
             .col-6
-              = f.submit "Print", class: 'btn btn-secondary mr-5'
+              %span{ onclick: 'setTimeout(function(){document.location.href = "/check_requests"}, 0)' }
+                = f.submit "Print", formtarget: '_blank', class: 'btn btn-secondary mr-5'
               = link_to 'Search', search_check_requests_path, class: 'btn btn-outline-secondary'
 
         .form-group

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   end
 
   resources :check_requests do
+    get :printout
     collection do
       put :stock_number_search
       get :search

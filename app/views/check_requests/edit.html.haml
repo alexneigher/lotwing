@@ -12,8 +12,8 @@
                   %strong.mr-3 Request By 
                   #{@check_request.request_by}
                 
-            .col-6
-              = f.submit "Print", class: 'btn btn-secondary mr-5'
+            .col-6{ onclick: 'setTimeout(function(){document.location.href = "/check_requests"}, 0)' }
+              = f.submit "Print", formtarget: '_blank', class: 'btn btn-secondary mr-5'
 
         .form-group
           .row
