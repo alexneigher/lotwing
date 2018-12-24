@@ -1,0 +1,97 @@
+.container
+  = form_for @check_request, url: check_requests_path, method: :post do |f|
+    .row
+      .col-md-2
+        %h3 Check Request
+      .col-md-10
+        .form-group.mt-2
+          .row
+            .col-6
+              .form-inline
+                %label.form-label
+                  %strong.mr-3 Request By 
+                  #{current_user.full_name}
+                = f.hidden_field :request_by, value: current_user.full_name
+            .col-6
+              = f.submit "Print", class: 'btn btn-secondary mr-5'
+              = link_to 'Search', "#", class: 'btn btn-outline-secondary'
+
+        .form-group
+          .row
+            .col-6
+              .form-inline
+                %label.form-label
+                  %strong.mr-3 Date 
+                  #{DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date.strftime("%m/%d/%Y")}
+                = f.hidden_field :request_date, value: DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date.strftime("%m/%d/%Y")
+            
+        
+    .row
+      .col-12
+        .form-group
+          .row.no-gutters
+            .col-2.text-right.pr-2
+              %label.form-label
+                %strong Check
+            .col-10
+              = f.check_box :is_check
+
+        .form-group
+          .row.no-gutters
+            .col-2.text-right.pr-2
+              %label.form-label
+                %strong Cash
+            .col-10
+              = f.check_box :is_cash
+
+        .form-group
+          .row.no-gutters
+            .col-2.text-right.pr-2
+              %label.pt-2
+                %strong Department
+            .col-4
+              = f.select :department, options_for_select(['New Sales', 'Used Sales', 'Service', 'Parts', 'Collision', 'Accounting']), {}, class: 'form-control'
+
+        .form-group
+          .row.no-gutters
+            .col-2.text-right.pr-2
+              %label.pt-2
+                %strong Amount Requested
+            .col-4
+              = f.text_field :amount_requested, placeholder: '$xx,xxxx', class: 'form-control'
+
+        .form-group
+          .row.no-gutters
+            .col-2.text-right.pr-2
+              %label.pt-2
+                %strong For Stock Number
+            .col-3.pl-0.pr-2
+              = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control'
+            .col-3.px-2
+              = f.text_field :make, placeholder: 'Make', class: 'form-control'
+            .col-3.px-2
+              = f.text_field :model, placeholder: 'Model', class: 'form-control'
+
+
+        .form-group
+          .row.no-gutters
+            .col-2.text-right.pr-2
+              %label.pt-2
+                %strong Payable To
+            .col-6
+              = f.text_area :payable_to, placeholder: 'Payable To:', class: 'form-control', rows: 4
+
+        .form-group
+          .row.no-gutters
+            .col-2.text-right.pr-2
+              %label.pt-2
+                %strong Description
+            .col-6
+              = f.text_area :description, placeholder: 'Description:', class: 'form-control', rows: 4
+
+            .col-4.text-center
+              = f.submit 'Save', class: 'btn btn-primary btn-lg mt-5'
+
+
+
+

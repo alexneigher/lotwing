@@ -10,10 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181221005401) do
+ActiveRecord::Schema.define(version: 20181224170523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "check_requests", force: :cascade do |t|
+    t.boolean "is_check"
+    t.boolean "is_cash"
+    t.string "request_by"
+    t.string "department"
+    t.string "amount_requested"
+    t.string "stock_number"
+    t.string "make"
+    t.string "model"
+    t.text "payable_to"
+    t.text "description"
+    t.bigint "dealership_id"
+    t.string "request_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dealership_id"], name: "index_check_requests_on_dealership_id"
+  end
 
   create_table "data_syncs", force: :cascade do |t|
     t.bigint "dealership_id"
