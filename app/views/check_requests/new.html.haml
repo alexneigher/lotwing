@@ -64,7 +64,9 @@
               %label.pt-2
                 %strong For Stock Number
             .col-3.pl-0.pr-2
-              = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control'
+              %div{style: 'position:relative'}
+                %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin{style:'position:absolute;right:10px;top:11px;'}
+                = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control lookup-input'
             .col-3.px-2
               = f.text_field :make, placeholder: 'Make', class: 'form-control'
             .col-3.px-2
@@ -91,5 +93,28 @@
               = f.submit 'Save', class: 'btn btn-primary btn-lg mt-5'
 
 
+:javascript
+  $(function(){
+    //setup before functions
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 500;  //time in ms
+    var $check_request_input = $('#check_request_stock_number');
 
-
+    //on keyup, start the countdown
+    $check_request_input.on('input', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    });
+    //user is "finished typing," populate the hidden form, and submit that one
+    function doneTyping () {
+      if ($check_request_input.val()){
+        $('.loading-spin').removeClass('d-none');
+        
+        $.ajax({
+          url:"/check_requests/stock_number_search",
+          method: 'PUT',
+          data: { stock_number: $check_request_input.val() }
+        });
+      }
+    }
+  });

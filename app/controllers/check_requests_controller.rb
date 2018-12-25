@@ -41,12 +41,12 @@ class CheckRequestsController < ApplicationController
   end
 
   def stock_number_search
-
+    @vehicle = current_user.dealership.vehicles.where("stock_number ILIKE ?", "#{params[:stock_number]}").last
   end
 
   def printout
     @check_request = current_user.dealership.check_requests.find(params[:check_request_id])
-    
+
     respond_to do |format|
      format.pdf do
        render pdf: "Check Request Printout",

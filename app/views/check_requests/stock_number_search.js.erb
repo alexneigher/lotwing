@@ -1,0 +1,6 @@
+$('.loading-spin').addClass('d-none');
+
+<%- if @vehicle %>
+  $('#check_request_model').val("<%= @vehicle.model %>");
+  $('#check_request_make').val("<%= @vehicle.make %>");
+<% end %>
