@@ -12,9 +12,37 @@
                   %strong.mr-3 Request By 
                   #{@check_request.request_by}
                 
-            .col-6{ onclick: 'setTimeout(function(){document.location.href = "/check_requests"}, 0)' }
-              = f.submit "Print", formtarget: '_blank', class: 'btn btn-secondary mr-5'
+            .col-6
+              %span{ onclick: 'setTimeout(function(){document.location.href = "/check_requests"}, 0)' }
+                = f.submit "Print", formtarget: '_blank', class: 'btn btn-secondary mr-5'
+              %a{"data-target" => "#historyModal", "data-toggle" => "modal", :href => "#"} Show History
+              
 
+              / The Modal
+              #historyModal.modal
+                .modal-dialog.modal-lg
+                  .modal-content
+                    / Modal Header
+                    .modal-header
+                      %h4.modal-title Check Request History
+                      %button.close{"data-dismiss" => "modal", :type => "button"} ×
+                    / Modal body
+                    .modal-body
+                      - @check_request.versions.reverse_each do |version|
+                        %small
+                          %strong
+                            = version.created_at.in_time_zone("Pacific Time (US & Canada)").strftime('%a, %d %b %Y %l:%M %p')
+                          = "(#{version.whodunnit})"
+                          %br
+                          - version.changeset.each do |key, value|
+                            - next if key == "updated_at"
+                            changed
+                            %strong= key
+                            to 
+                            = value[1] 
+                        %hr
+                    .modal-footer
+                      %button.btn.btn-outline-secondary{"data-dismiss" => "modal", :type => "button"} Close
         .form-group
           .row
             .col-6

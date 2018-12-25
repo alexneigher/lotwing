@@ -5,8 +5,87 @@
     font-size: 14px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   }
+
+  .border{
+    border: 1px solid #737373;
+  }
 #header
   = wicked_pdf_image_tag 'dealer_logo.png', style: 'width: 200px;'
 
-%h4{style:'margin-top:20px;margin-bottom: 35px;'} 
+%h4{style:'margin-top:20px;margin-bottom: 20px;'} 
   %strong CHECK REQUEST
+
+%h4{style: 'margin: 0;'}
+  Request By #{@check_request.request_by}
+  %br
+  Date #{@check_request.request_date&.strftime("%m/%d/%Y")}
+
+.border{style:'padding: 10px 0;font-size: 18px;'}
+  %div{style:'width: 25%;float:left;text-align: right;padding-right:10px;padding-top:5px;'}
+    Check
+  %div{style:'width: 70%;float:left;'}
+    %span{style: 'border:1px solid #737373;margin-right: 15px;font-size: 22px;'}
+      - if @check_request.is_check
+        &#10006;
+      - else
+        &nbsp;&nbsp;&nbsp;
+    Cash
+    %span{style: 'border:1px solid #737373;margin-right: 5px;font-size: 22px;'}
+      - if @check_request.is_cash
+        &#10006;
+      - else
+        &nbsp;&nbsp;&nbsp;
+  %div{style:'clear:both;padding-bottom: 20px;'}
+
+
+  %div{style:'width: 25%;float:left;text-align: right;padding-right:10px;padding-top:10px;'}
+    Department
+  %div{style:'width: 40%;float:left;'}
+    .border{style:'padding:10px'}
+      = @check_request.department
+  %div{style:'clear:both;padding-bottom: 20px;'}
+
+  %div{style:'width: 25%;float:left;text-align: right;padding-right:10px;padding-top:10px;'}
+    Amount Requested
+  %div{style:'width: 40%;float:left;'}
+    .border{style:'padding:10px'}
+      = @check_request.amount_requested
+  %div{style:'clear:both;padding-bottom: 20px;'}
+
+
+  %div{style:'width: 25%;float:left;text-align: right;padding-right:10px;padding-top:10px;'}
+    For Stock Number
+  %div{style:'width: 20%;float:left;'}
+    .border{style:'padding:10px'}
+      = @check_request.stock_number
+  %div{style:'width: 35%;float:left;margin-left:20px;'}
+    .border{style:'padding:10px'}
+      = @check_request.make
+  %div{style:'clear:both;padding-bottom: 20px;'}
+
+
+  %div{style:'width: 25%;float:left;text-align: right;padding-right:10px;padding-top:10px;'}
+    Payable To
+  %div{style:'width: 60%;float:left;'}
+    .border{style:'padding:10px;min-height:70px;'}
+      = simple_format @check_request.payable_to, {}, wrapper_tag: 'span'
+  %div{style:'clear:both;padding-bottom: 20px;'}
+
+  %div{style:'width: 25%;float:left;text-align: right;padding-right:10px;padding-top:10px;'}
+    Description
+  %div{style:'width: 60%;float:left;'}
+    .border{style:'padding:10px;min-height:70px;'}
+      = simple_format @check_request.description, {}, wrapper_tag: 'span'
+  %div{style:'clear:both;padding-bottom: 40px;'}
+
+
+  %div{style:'width: 25%;float:left;text-align: right;padding-right:10px;padding-top:10px;'}
+  %div{style:'width: 60%;float:left;'}
+    %div{style:'border-bottom: 2px solid #737373;padding: 5px;width: 280px'}
+      %strong x
+
+  %div{style:'clear:both;'}
+
+%div{style:'clear:both;'}
+#footer{style: 'position: absolute; bottom: 0px;left: 0; right: 0'}
+  = params.key?('debug') ? image_tag('logo_black_small.png', style: 'margin:auto; display:block; width: 100px;') : wicked_pdf_image_tag('logo_black_small.png', style: 'margin:auto; display:block; width: 100px;')

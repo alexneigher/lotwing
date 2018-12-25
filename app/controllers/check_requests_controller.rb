@@ -1,4 +1,5 @@
 class CheckRequestsController < ApplicationController
+  before_action :set_paper_trail_whodunnit, only: [:update, :create]
 
   def index
     service = CheckRequestSearchService.new(params, current_user.dealership)
@@ -57,6 +58,10 @@ class CheckRequestsController < ApplicationController
   end
 
   private
+    def user_for_paper_trail
+      current_user.full_name
+    end
+
     def check_request_params
       params.require(:check_request).permit(
         :is_check,
