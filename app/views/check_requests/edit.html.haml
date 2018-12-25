@@ -110,7 +110,8 @@
                 %strong Description
             .col-6
               = f.text_area :description, placeholder: 'Description:', class: 'form-control', rows: 4
-
+              .pt-3
+                = link_to 'Delete Check Request', check_request_path(@check_request), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger'
             .col-4.text-center
               = f.submit 'Save', class: 'btn btn-primary btn-lg mt-5'
 

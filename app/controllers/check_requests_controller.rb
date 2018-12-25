@@ -34,7 +34,12 @@ class CheckRequestsController < ApplicationController
   end
 
   def search
-    
+  end
+
+  def destroy
+    @check_request = current_user.dealership.check_requests.find(params[:id])
+    @check_request.destroy
+    redirect_to check_requests_path
   end
 
   def edit
