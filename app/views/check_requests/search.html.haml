@@ -9,10 +9,15 @@
         .form-group
           .row
             .col-6
-              .form-inline
-                %label.form-label
-                  %strong.mr-3 Date 
-                  #{DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date.strftime("%m/%d/%Y")}
+              .input-group
+                .input-group-prepend
+                  %span.input-group-text{style:'padding: 0 5px;'}
+                    %i.fa.fa-calendar
+                = text_field_tag :start_date, nil, autocomplete: "off", placeholder: 'Start Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
+                .input-group-prepend
+                  %span.input-group-text{style:'padding: 0 5px;'}
+                    %i.fa.fa-calendar
+                = text_field_tag :end_date, nil, autocomplete: "off", placeholder: 'End Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
                 
             
     .row
@@ -77,3 +82,11 @@
 
             .col-4.text-center
               = submit_tag 'Search', class: 'btn btn-primary btn-lg mt-5'
+
+
+:javascript
+  $(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd'
+     });
+  });

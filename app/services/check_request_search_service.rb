@@ -12,7 +12,8 @@ class CheckRequestSearchService
     @stock_number = params[:stock_number].presence
     @make = params[:make].presence
     @model = params[:model].presence
-
+    @start_date = params[:start_date].presence
+    @end_date = params[:end_date].presence
   end
 
 
@@ -29,12 +30,23 @@ class CheckRequestSearchService
     check_requests = filter_by_payable_to(check_requests) if @payable_to
     check_requests = filter_by_description(check_requests) if @description
 
+    check_requests = filter_by_date_range(check_requests) if @start_date || @end_date
+
     return check_requests
   end
 
 
 
   private
+    def filter_by_date_range(check_requests)
+      @filters_applied = true
+      start_date = DateTime.strptime(@start_date, "%Y-%m-%d").beginning_of_day
+      
+      end_date = DateTime.strptime(@end_date || Date.today, "%Y-%m-%d").end_of_day
+      
+      check_requests.where("request_date >= ? AND request_date <= ?", start_date, end_date)
+    end
+
     def filter_by_description(check_requests)
       @filters_applied=true
       check_requests.where("description ILIKE ?", "%#{@description}%")

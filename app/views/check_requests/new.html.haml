@@ -24,7 +24,7 @@
                 %label.form-label
                   %strong.mr-3 Date 
                   #{DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date.strftime("%m/%d/%Y")}
-                = f.hidden_field :request_date, value: DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date.strftime("%m/%d/%Y")
+                = f.hidden_field :request_date, value: DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date
             
         
     .row

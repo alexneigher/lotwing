@@ -49,7 +49,7 @@
                 %td
                   = link_to edit_check_request_path(check_request) do
                     %i.fa.fa-pencil.edit-icon
-                %td= check_request.request_date
+                %td= check_request.request_date&.strftime("%m/%d/%Y")
                 %td= check_request.request_by
                 %td= check_request.department
                 
