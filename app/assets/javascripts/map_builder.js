@@ -20,7 +20,12 @@ $(function(){
 
 
   window.map.on('draw.create', function (e) {
-    $('#exportSave').removeClass('d-none');
+    $('#shape-form').removeClass('d-none');
+
+    shapes = window.draw.getAll().features;
+      
+    $("#shape-form #shape_geo_info").val( JSON.stringify(shapes) );
+
   });
 
   window.map.on('load', function () {
@@ -48,16 +53,6 @@ $(function(){
 
     id = e.features[0].properties.shape_id
     $('#'+id).addClass('list-group-item-success').siblings().removeClass('list-group-item-success');
-  })
-
-
-  // when ready to save, toggle the actual form visitibility
-  $('#exportSave').click(function(){
-    $(this).addClass('d-none');
-
-    shapes = window.draw.getAll().features;
-    $("#shape-form #shape_geo_info").val( JSON.stringify(shapes) );
-    $('#shape-form').removeClass('d-none');
   })
 
   //bind listener to map rotate inout
