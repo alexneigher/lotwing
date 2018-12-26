@@ -56,6 +56,7 @@ $(function(){
     $(this).addClass('d-none');
 
     shapes = window.draw.getAll().features;
+    
     $("#shape-form #shape_geo_info").val( JSON.stringify(shapes) );
     $('#shape-form').removeClass('d-none');
   })

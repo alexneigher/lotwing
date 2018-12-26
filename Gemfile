@@ -22,6 +22,9 @@ gem 'airbrake'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 
+# Official Geokit Gem. Geokit gem provides geocoding and distance/heading calculations. Pair with the geokit-rails plugin for full-fledged location-based app functionality.
+gem 'geokit'
+
 #A Ruby gem to load environment variables from `.env`.
 gem 'dotenv-rails'
 
