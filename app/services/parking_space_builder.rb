@@ -2,6 +2,7 @@ class ParkingSpaceBuilder
 
   def initialize(params, dealership_id)
     @geo_info = JSON.parse(params[:shape][:geo_info])
+    @horizontal_splits = params[:shape][:horizontal_splits].to_i
     @dealership_id = dealership_id
   end
 
@@ -19,74 +20,58 @@ class ParkingSpaceBuilder
     c = Geokit::LatLng.new(third_point[1], third_point[0])
     d = Geokit::LatLng.new(fourth_point[1], fourth_point[0])
     
-    ab_midpoint = a.midpoint_to(b)
-    cd_midpoint = c.midpoint_to(d)
+    corners = [a, b, c, d]
 
-    ad_midpoint = a.midpoint_to(d)
-    bc_midpoint = b.midpoint_to(c)
+    if @horizontal_splits == 0
+      corners = [a, b, c, d]
+    elsif @horizontal_splits == 1
 
-    ab_cd_midpoint = ab_midpoint.midpoint_to(cd_midpoint)
-
-    new_geo_info_1 = {"id"=> SecureRandom.hex(15),
-                       "type"=>"Feature",
-                       "properties"=>{},
-                       "geometry"=>
-                        {"coordinates"=>
-                          [[[a.lng, a.lat],
-                            [ab_midpoint.lng, ab_midpoint.lat],
-                            [ab_cd_midpoint.lng, ab_cd_midpoint.lat],
-                            [ad_midpoint.lng, ad_midpoint.lat],
-                            [a.lng, a.lat]]],
-                         "type"=>"Polygon"}
-                      }
-
-    new_geo_info_2 = {"id"=> SecureRandom.hex(15),
-                       "type"=>"Feature",
-                       "properties"=>{},
-                       "geometry"=>
-                        {"coordinates"=>
-                          [[[ab_midpoint.lng, ab_midpoint.lat],
-                            [b.lng, b.lat],
-                            [bc_midpoint.lng, bc_midpoint.lat],
-                            [ab_cd_midpoint.lng, ab_cd_midpoint.lat],
-                            [ab_midpoint.lng, ab_midpoint.lat]]],
-                         "type"=>"Polygon"}
-                      }
-
-    new_geo_info_3 = {"id"=> SecureRandom.hex(15),
-                       "type"=>"Feature",
-                       "properties"=>{},
-                       "geometry"=>
-                        {"coordinates"=>
-                          [[[bc_midpoint.lng, bc_midpoint.lat],
-                            [c.lng, c.lat],
-                            [cd_midpoint.lng, cd_midpoint.lat],
-                            [ab_cd_midpoint.lng, ab_cd_midpoint.lat],
-                            [bc_midpoint.lng, bc_midpoint.lat]]],
-                         "type"=>"Polygon"}
-                      }
-
-    new_geo_info_4 = {"id"=> SecureRandom.hex(15),
-                       "type"=>"Feature",
-                       "properties"=>{},
-                       "geometry"=>
-                        {"coordinates"=>
-                          [[[cd_midpoint.lng, cd_midpoint.lat],
-                            [d.lng, d.lat],
-                            [ad_midpoint.lng, ad_midpoint.lat],
-                            [ab_cd_midpoint.lng, ab_cd_midpoint.lat],
-                            [cd_midpoint.lng, cd_midpoint.lat]]],
-                         "type"=>"Polygon"}
-                      }
-
-
-    [new_geo_info_1, new_geo_info_2, new_geo_info_3, new_geo_info_4].each do |geo|
-
-      Shape.create!( 
-        dealership_id: @dealership_id,
-        geo_info: geo, 
-        shape_type: 0
-      )
+      corners = [a, corners[0].midpoint_to(corners[1]), b, c, corners[2].midpoint_to(corners[3]), d]
+    
+    elsif @horizontal_splits == 3
+      ab = a.midpoint_to(b)
+      see_dee = c.midpoint_to(d)
+      aab = a.midpoint_to(ab)
+      abb = ab.midpoint_to(b)
+      ccd = c.midpoint_to(see_dee)
+      cdd = see_dee.midpoint_to(d)
+      corners = [ a, aab, ab, abb, b, c, ccd, see_dee, cdd, d ]
     end
+
+    new_shapes = []
+
+    (@horizontal_splits + 1).times do |i|
+      new_shapes << [
+                    corners[i],
+                    corners[i + 1],
+                    corners[corners.length - (i + 2)],
+                    corners[corners.length - (i + 1)],
+                    corners[i],
+                  ]
+      
+    end  
+
+    new_shapes.each do |shape|
+      geo = {"id"=> SecureRandom.hex(15),
+        "type"=>"Feature",
+        "properties"=>{},
+        "geometry"=>
+         {"coordinates"=>
+           [[[shape[0].lng, shape[0].lat],
+             [shape[1].lng, shape[1].lat],
+             [shape[2].lng, shape[2].lat],
+             [shape[3].lng, shape[3].lat],
+             [shape[0].lng, shape[0].lat]]],
+          "type"=>"Polygon"}
+       }
+
+       Shape.create!( 
+         dealership_id: @dealership_id,
+         geo_info: geo, 
+         shape_type: 0
+       )
+
+    end
+    
   end
 end
