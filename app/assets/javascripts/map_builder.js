@@ -63,6 +63,19 @@ $(function(){
         'fast');
   })
 
+   window.map.on('click', 'buildings', function(e){
+    //find the element on the left side, highlight it
+
+    id = e.features[0].properties.shape_id
+    $('#'+id).addClass('list-group-item-success').siblings().removeClass('list-group-item-success');
+
+    $('#shapeList').animate(
+        {
+          scrollTop: $('#'+id).position().top - $('#shapeList').position().top + $('#shapeList').scrollTop(),
+        },
+        'fast');
+  })
+
   //bind listener to map rotate inout
   $("#dealership_map_bearing").on('keyup',function(){
     window.map.setBearing(this.value);
