@@ -21,11 +21,13 @@ $(function(){
 
   window.map.on('draw.create', function (e) {
     $('#shape-form').removeClass('d-none');
-
     shapes = window.draw.getAll().features;
-      
     $("#shape-form #shape_geo_info").val( JSON.stringify(shapes) );
-
+  });
+  window.map.on('draw.update', function (e) {
+    $('#shape-form').removeClass('d-none');
+    shapes = window.draw.getAll().features;
+    $("#shape-form #shape_geo_info").val( JSON.stringify(shapes) );
   });
 
   window.map.on('load', function () {

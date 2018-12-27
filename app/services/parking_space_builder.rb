@@ -7,9 +7,13 @@ class ParkingSpaceBuilder
   end
 
   def perform
-    #find the mid point on one side
-    shape = @geo_info.first
-    
+    #sometimes multiple are passed in
+    @geo_info.each do |shape|
+      save_shape(shape)
+    end
+  end
+
+  def save_shape(shape)    
     first_point = shape['geometry']['coordinates'].first.first
     second_point = shape['geometry']['coordinates'].first.second
     third_point = shape['geometry']['coordinates'].first.third
