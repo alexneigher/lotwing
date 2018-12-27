@@ -36,6 +36,24 @@ class ParkingSpaceBuilder
       ccd = c.midpoint_to(see_dee)
       cdd = see_dee.midpoint_to(d)
       corners = [ a, aab, ab, abb, b, c, ccd, see_dee, cdd, d ]
+
+    elsif @horizontal_splits == 7
+      ab = a.midpoint_to(b)
+      see_dee = c.midpoint_to(d)
+      aab = a.midpoint_to(ab)
+      abb = ab.midpoint_to(b)
+      aaab = a.midpoint_to(aab)
+      aaabb = aab.midpoint_to(ab)
+      aabbb = ab.midpoint_to(abb)
+      abbb = b.midpoint_to(abb)
+      ccd = c.midpoint_to(see_dee)
+      cccd = c.midpoint_to(ccd)
+      cccdd = ccd.midpoint_to(see_dee)
+      cdd = see_dee.midpoint_to(d)
+      ccddd = see_dee.midpoint_to(cdd)
+      cddd = d.midpoint_to(cdd)
+
+      corners = [ a, aaab, aab, aaabb, ab, aabbb, abb, abbb, b, c, cccd, ccd, cccdd, see_dee, ccddd, cdd, cddd, d ]
     end
 
     new_shapes = []
