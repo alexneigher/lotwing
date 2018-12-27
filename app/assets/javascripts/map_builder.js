@@ -52,28 +52,12 @@ $(function(){
 
   window.map.on('click', 'parking_spaces', function(e){
     //find the element on the left side, highlight it
-
-    id = e.features[0].properties.shape_id
-    $('#'+id).addClass('list-group-item-success').siblings().removeClass('list-group-item-success');
-
-    $('#shapeList').animate(
-        {
-          scrollTop: $('#'+id).position().top - $('#shapeList').position().top + $('#shapeList').scrollTop(),
-        },
-        'fast');
+    animate_scroll_to(e);
   })
 
    window.map.on('click', 'buildings', function(e){
     //find the element on the left side, highlight it
-
-    id = e.features[0].properties.shape_id
-    $('#'+id).addClass('list-group-item-success').siblings().removeClass('list-group-item-success');
-
-    $('#shapeList').animate(
-        {
-          scrollTop: $('#'+id).position().top - $('#shapeList').position().top + $('#shapeList').scrollTop(),
-        },
-        'fast');
+    animate_scroll_to(e);
   })
 
   //bind listener to map rotate inout
@@ -88,3 +72,15 @@ $(function(){
 
 
 })//$(function)
+
+
+function animate_scroll_to(e){
+  id = e.features[0].properties.shape_id
+  $('#'+id).addClass('list-group-item-success').siblings().removeClass('list-group-item-success');
+
+  $('#shapeList').animate(
+      {
+        scrollTop: $('#'+id).position().top - $('#shapeList').position().top + $('#shapeList').scrollTop(),
+      },
+      'fast');
+}
