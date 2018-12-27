@@ -43,13 +43,15 @@
     
 
       %hr
-      %ul.list-group
-        - @shapes.each do |shape|
-          %li.list-group-item{id: "#{shape.id}" }
-            %i.fa{class: map_builder_icon_shape(shape)}
-            = "#{shape.shape_type.titleize}: #{shape.id}"
-            .pull-right
-              =link_to shape_path(shape), method: :delete do
-                %i.fa.fa-trash
+      #shapeList{style:'max-height: 400px;overflow:scroll;position:relative;'}
+        %ul.list-group
+          - @shapes.each do |shape|
+            %li.list-group-item{id: "#{shape.id}", style:'padding-top:5px;padding-bottom: 5px;'}
+              %i.fa{class: map_builder_icon_shape(shape)}
+              = "#{shape.shape_type.titleize}: #{shape.id}"
+              .pull-right
+                =link_to shape_path(shape), method: :delete do
+                  %i.fa.fa-trash
+      
     .col-md-8
       #map{:style => "width: 100%; height: 550px;"}
