@@ -596,14 +596,16 @@
       %span{class: (@deal.disclosure.present? && !@deal.is_used && @deal.deal_type == "Lease")? "inverse": ''}
         Prior History
     
-    %div{style:'width: 59%;float:left;margin-right:5px;'}
+    %div{style:'width: 58%;float:left;'}
       .label
-        Menu Number
+        %small
+          Menu Number
       .border
         = @deal.menu_number
-    %div{style: 'width: 35%;float:left;'}
+    %div{style: 'width: 38%;float:left;margin-left: 5px;'}
       .label
-        F Status
+        %small
+          F Status
       .border
         &nbsp;
 
