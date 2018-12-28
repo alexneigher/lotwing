@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181225012915) do
+ActiveRecord::Schema.define(version: 20181227235140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,8 @@ ActiveRecord::Schema.define(version: 20181225012915) do
     t.boolean "certified_pre_owned", default: false
     t.boolean "stored", default: false
     t.date "deal_date"
+    t.string "bank_name"
+    t.string "menu_number"
     t.index ["dealership_id"], name: "index_deals_on_dealership_id"
   end
 

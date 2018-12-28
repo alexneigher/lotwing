@@ -83,6 +83,8 @@ class DealsController < ApplicationController
           :miles_per_year,
           :rebates,
           :bulletin_number,
+          :bank_name,
+          :menu_number,
           :desk_manager,
           :finance_manager,
           :dealer_demo,

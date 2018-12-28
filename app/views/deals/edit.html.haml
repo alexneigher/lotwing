@@ -68,6 +68,7 @@
         = f.number_field :down_payment, placeholder: 'Down Payment', class: 'form-control mb-1'
         = f.text_field :term, placeholder: 'Term', class: 'form-control mb-1'
       .col-md-2
+        = f.text_field :bank_name, placeholder: 'Bank Name', class: 'form-control mb-1'
         = f.number_field :quoted_payment, placeholder: 'Quoted Payment', class: 'form-control mb-1'
         = f.text_field :rate_apr, placeholder: 'Rate APR', class: 'form-control mb-1'
         = f.text_field :miles_per_year, placeholder: 'Miles Per Year (LSE)', class: 'form-control mb-1'
@@ -93,7 +94,8 @@
         = f.text_field :time_agreed, placeholder: 'Time Agreed', class: 'form-control mb-1'
         = f.text_field :time_in_finance, placeholder: 'Time In - Finance', class: 'form-control mb-1'
         = f.text_field :time_out_finance, placeholder: 'Time Out - Finance', class: 'form-control mb-1'
-        
+        = f.text_field :menu_number, placeholder: 'Menu Number', class: 'form-control mb-1'
+
         = f.text_area :deal_notes, placeholder: 'Deal Notes', class: 'form-control mb-1', rows: 3
 
     .row.mb-5

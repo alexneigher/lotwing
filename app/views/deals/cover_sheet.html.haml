@@ -186,6 +186,11 @@
   %div{style:'clear:both;'}
 
 %div{style:'width: 30%; float:left;'}
+  %div{style:'width: 100%;margin: 5px 0'}
+    .label
+      Bank Name
+    .border
+      = @deal.bank_name
 
   %div{style:'width: 60%;float:left;margin: 5px 5px 5px 0;'}
     .label
@@ -585,12 +590,25 @@
         &nbsp;&nbsp;&nbsp;
       Rebate Forms
 
-    %div{style: 'margin-top:5px;font-size: 10px;'}
+    %div{style: 'margin-top:5px;margin-bottom:10px;font-size: 10px;'}
       %span{style: 'border:1px solid #737373;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       %span{class: (@deal.disclosure.present? && !@deal.is_used && @deal.deal_type == "Lease")? "inverse": ''}
         Prior History
-      
+    
+    %div{style:'width: 55%;float:left;margin-right:5px;'}
+      .label
+        Menu Number
+      .border
+        = @deal.menu_number
+    %div{style: 'width: 38%;float:left;'}
+      .label
+        F Status
+      .border
+        &nbsp;
+
+
+    %div{style:'clear:both;'}
 
     %hr{style:'margin-top: 40px;margin-bottom:0px;'}
     %strong Printer's Initials
