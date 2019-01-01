@@ -552,6 +552,13 @@
       %span{style: 'border:1px solid #737373;margin-right: 5px;font-size: 15px;border-radius: 5px'}
         &nbsp;&nbsp;&nbsp;
       262 Trade
+
+    %div{style: 'margin-top:10px;font-size: 10px;'}
+      .label
+        %small
+          Menu Number
+      .border
+        = @deal.menu_number
   %div{style:'width: 18%;float:left;margin: 5px 5px 5px 0;'}
     %div{style: 'margin-top:5px;font-size: 10px;'}
       %span{style: 'border:1px solid #737373;margin-right: 5px;font-size: 15px;border-radius: 5px'}
@@ -599,9 +606,9 @@
     %div{style:'width: 58%;float:left;'}
       .label
         %small
-          Menu Number
+          Deal Status
       .border
-        = @deal.menu_number
+        = @deal.deal_status
     %div{style: 'width: 38%;float:left;margin-left: 5px;'}
       .label
         %small

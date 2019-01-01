@@ -61,7 +61,7 @@ class BoardManagersController < ApplicationController
   end
 
   def used_vehicle_report
-    @deals = current_user.dealership.deals.included_in_counts.where(stored: false, is_used: true).where("deal_date >= ?", Date.today.beginning_of_month)
+    @deals = current_user.dealership.deals.included_in_counts.where(stored: false, is_used: true).where("deal_date >= ?", DateTime.now.in_time_zone("Pacific Time (US & Canada)").beginning_of_month)
     @grouped_deals = @deals.group_by{|d| d.deal_date}.sort_by{|k, v| k}.to_h
   end
 

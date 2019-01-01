@@ -73,6 +73,7 @@ class DealsController < ApplicationController
           :result,
           :report_status,
           :deal_number,
+          :deal_status,
           :pay_method,
           :deal_type,
           :selling_price,

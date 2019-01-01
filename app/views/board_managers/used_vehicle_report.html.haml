@@ -4,7 +4,7 @@
       %h3 MTD Used Vehicle Report
       %small
         .text-center
-          = "(since #{Date.today.beginning_of_month&.strftime("%Y-%m-%e")})"
+          = "(since #{DateTime.now.in_time_zone("Pacific Time (US & Canada)").beginning_of_month.strftime("%Y-%m-%e")})"
       = link_to '< Board Manager', board_manager_path()
 
       .card.text-center.mt-5
