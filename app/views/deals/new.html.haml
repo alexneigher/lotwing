@@ -19,6 +19,8 @@
         = f.text_field :make, placeholder: 'Make', class: 'form-control mb-1'
         = f.text_field :model, placeholder: 'Model', class: 'form-control mb-1'
         = f.text_field :year, placeholder: 'Year', class: 'form-control mb-1'
+        = f.hidden_field :model_code
+
         %label
           = f.check_box :is_used
           Is Used

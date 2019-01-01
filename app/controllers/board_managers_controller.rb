@@ -49,7 +49,7 @@ class BoardManagersController < ApplicationController
   end
 
   def rdr_report
-    @deals = current_user.dealership.deals.includes(:vehicle).included_in_counts.where(stored: false, is_used: false).where("deal_date >= ?", current_user.dealership.custom_mtd_start_date)
+    @deals = current_user.dealership.deals.included_in_counts.where(stored: false, is_used: false).where("deal_date >= ?", current_user.dealership.custom_mtd_start_date)
     @grouped_deals = @deals.group_by{|d| d.model}.sort_by{ |k, v| v.count }.to_h
   end
 

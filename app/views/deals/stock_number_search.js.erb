@@ -4,6 +4,7 @@ $('.loading-spin').addClass('d-none');
   $('#deal_make').val("<%= @vehicle.make %>");
   $('#deal_model').val("<%= @vehicle.model %>");
   $('#deal_year').val("<%= @vehicle.year %>");
+  $('#deal_model_code').val("<%= @vehicle.model_code %>");
 
   $('#deal_is_used').prop('checked', <%= @vehicle.is_used %>);
   $('#deal_certified_pre_owned').prop('checked', <%= @vehicle.certified == "Yes" %>);

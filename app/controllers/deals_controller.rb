@@ -68,6 +68,7 @@ class DealsController < ApplicationController
           :city,
           :model,
           :make,
+          :model_code,
           :is_used,
           :year,
           :result,
