@@ -33,7 +33,7 @@
                 %button.close{"data-dismiss" => "modal", :type => "button"} ×
               / Modal body
               .modal-body
-                - @deal.versions.reverse_each do |version|
+                - @deal.versions.includes(:item).reverse_each do |version|
                   %small
                     %strong
                       = version.created_at.in_time_zone("Pacific Time (US & Canada)").strftime('%a, %d %b %Y %l:%M %p')

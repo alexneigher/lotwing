@@ -78,6 +78,7 @@ Rails.application.routes.draw do
     collection do
       get :stored_deals
       get :new_vehicle_report
+      get :rdr_report
       get :used_vehicle_report
       get :running_total
       get :cpo_report
