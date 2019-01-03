@@ -28,11 +28,26 @@ class BoardManagersController < ApplicationController
       deals = current_user.dealership.deals.where(stored: false).where("client_last_name ILIKE ? OR stock_number ILIKE ?", "%#{params.dig(:filters, :query)}%", "%#{params.dig(:filters, :query)}%")
     end
 
+    if params.dig(:filters, :new_vehicles).present? || params.dig(:filters, :used).present?
+      if params.dig(:filters, :new_vehicles) == '0' && params.dig(:filters, :used) == "1"
+        deals = deals.where(is_used: true)
+      elsif params.dig(:filters, :new_vehicles) == '1' && params.dig(:filters, :used) == "0"
+        deals = deals.where(is_used: false)
+      elsif params.dig(:filters, :new_vehicles) == '1' && params.dig(:filters, :used) == "1"
+        deals = deals
+      else #both are 0?
+        deals = deals.none
+      end
+    end
+    
     if params.dig(:sortings).present?
       params.dig(:sortings).each do |k,v|
         deals = deals.order(k => v)
       end
     end
+
+    
+
 
     @deals = deals
     @grouped_deals = deals.group_by{|d| d.deal_date}.sort_by{|k, v| k}.to_h
