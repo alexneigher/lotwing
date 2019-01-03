@@ -37,10 +37,35 @@
             %tr
               %th
                 %i.fa.fa-pencil
-              %th Last Name
-              %th Date
-              %th Model Code
-              %th Deal Status
+              %th
+                = link_to rdr_report_board_manager_path(sortings: {client_last_name: params.dig(:sortings, :client_last_name) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  Last Name
+                  - if params.dig(:sortings, :client_last_name) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to rdr_report_board_manager_path(sortings: {deal_date: params.dig(:sortings, :deal_date) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  Date
+                  - if params.dig(:sortings, :deal_date) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+
+              %th
+                = link_to rdr_report_board_manager_path(sortings: {model_code: params.dig(:sortings, :model_code) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  Model Code
+                  - if params.dig(:sortings, :model_code) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to rdr_report_board_manager_path(sortings: {deal_status: params.dig(:sortings, :deal_status) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  Deal Status
+                  - if params.dig(:sortings, :deal_status) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
               
           %tbody
             - @deals.each do |deal|

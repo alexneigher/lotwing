@@ -46,9 +46,6 @@ class BoardManagersController < ApplicationController
       end
     end
 
-    
-
-
     @deals = deals
     @grouped_deals = deals.group_by{|d| d.deal_date}.sort_by{|k, v| k}.to_h
   end
@@ -72,6 +69,12 @@ class BoardManagersController < ApplicationController
       end_date = DateTime.strptime(params.dig(:filters, :end_date).presence || Date.today, "%Y-%m-%d").end_of_day
       
       @deals = @deals.where("deal_date >= ? AND deal_date <= ?", start_date, end_date)
+    end
+
+    if params.dig(:sortings).present?
+      params.dig(:sortings).each do |k,v|
+        @deals = @deals.order(k => v)
+      end
     end
 
     @grouped_deals = @deals.group_by{|d| d.model}.sort_by{ |k, v| v.count }.to_h
