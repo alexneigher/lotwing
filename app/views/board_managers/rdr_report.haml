@@ -29,8 +29,8 @@
             = text_field_tag "filters[end_date]", params.dig(:filters, :end_date), autocomplete: "off", placeholder: 'End Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
           = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
 
-          
-          = link_to 'Print Report', "#", class: 'btn btn-secondary btn-sm ml-auto'
+
+          = link_to 'Print Report', rdr_report_board_manager_path(request.parameters.merge(format: :pdf)), class: 'btn btn-secondary btn-sm ml-auto'
       .table-responsive.small{style: 'max-height: 80vh;'}
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead

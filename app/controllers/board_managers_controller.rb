@@ -78,6 +78,16 @@ class BoardManagersController < ApplicationController
     end
 
     @grouped_deals = @deals.group_by{|d| d.model}.sort_by{ |k, v| v.count }.to_h
+
+    respond_to do |format|
+      format.pdf do
+         render pdf: "RDR Report",
+         template: "board_managers/printed_rdr_report.html.haml",
+         layout: 'pdf.html.erb'
+       end
+
+      format.html
+    end
   end
 
   def cpo_report
