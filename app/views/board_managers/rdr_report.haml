@@ -1,13 +1,11 @@
 .container-fluid
   .row.mb-1
     .col-md-2
-      %h3 MTD New Vehicle RDR Report
-      %small
-        .text-center
-          = "(since #{current_user.dealership.custom_mtd_start_date || "N/A"})"
+      %h3 New Vehicle RDR Report
+      
       = link_to '< Board Manager', board_manager_path()
 
-      .card.text-center.mt-5
+      .card.text-center.mt-4
         .card-header
           Sales MTD (#{@grouped_deals.values.map(&:count).sum})
         .card-body.small
@@ -17,31 +15,49 @@
               = " (#{deals.count})"
               %hr.my-1
     .col-md-10   
+      = form_for :filters, url: rdr_report_board_manager_path, method: :get, autocomplete: "off" do
+        .form-inline.my-2.mt-2
+          .input-group
+            .input-group-prepend
+              %span.input-group-text{style:'padding: 0 5px;'}
+                %i.fa.fa-calendar
+            = text_field_tag "filters[start_date]", params.dig(:filters, :start_date), autocomplete: "off", placeholder: 'Start Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
+          .input-group
+            .input-group-prepend
+              %span.input-group-text{style:'padding: 0 5px;'}
+                %i.fa.fa-calendar
+            = text_field_tag "filters[end_date]", params.dig(:filters, :end_date), autocomplete: "off", placeholder: 'End Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
+          = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
+
+          
+          = link_to 'Print Report', "#", class: 'btn btn-secondary btn-sm ml-auto'
       .table-responsive.small{style: 'max-height: 80vh;'}
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead
             %tr
               %th
                 %i.fa.fa-pencil
+              %th Last Name
               %th Date
               %th Model Code
               %th Deal Status
               
-              
           %tbody
-            - @grouped_deals.reverse_each do |model, deals|
-              %tr
-                %td.bg-light{colspan: 4}
-                  %strong
-                    = model
-                    = " (#{deals.count})"
-              - deals.each do |deal|
-                %tr.text-blue
-                  %td
-                    - unless current_user.permission_level == "service_user"
-                      = link_to edit_deal_path(deal) do
-                        %i.fa.fa-pencil.edit-icon
-                  %td= deal.deal_date
-                  %td= deal.model_code
-                  %td= deal.deal_status
+            - @deals.each do |deal|
+              %tr.text-blue
+                %td
+                  - unless current_user.permission_level == "service_user"
+                    = link_to edit_deal_path(deal) do
+                      %i.fa.fa-pencil.edit-icon
+                %td= deal.client_last_name
+                %td= deal.deal_date
+                %td= deal.model_code
+                %td= deal.deal_status
         
+
+:javascript
+  $(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd'
+     });
+  });
