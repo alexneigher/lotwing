@@ -6,7 +6,7 @@
       .card.text-center.mt-1
         .card-header
           %small
-            Total Trades MTD: #{@dealer_trades.count}
+            Total Trades MTD: #{@dealer_trades.where("DATE(date_created) >= ?", DateTime.now.in_time_zone("Pacific Time (US & Canada)").beginning_of_month).count}
       .card.text-center.mt-1
         .card-header
           %small
