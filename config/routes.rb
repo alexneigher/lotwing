@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   #for Mobile clients
   namespace :api do
     post "auth/login", controller: :authentication, action: :login
-    get "test", controller: :authentication, action: :test #for testing purposes
+    get "auth/test", controller: :authentication, action: :test #for testing purposes
 
     resources :vehicles
     resources :shapes do
