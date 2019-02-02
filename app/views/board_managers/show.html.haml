@@ -21,7 +21,13 @@
               .text-center
                 Sales Reps
               %small
-                
+                - deal_rep_attribution_counts(@deals.included_in_counts).sort_by{ |k, v| v[:new] + v[:used] }.reverse_each do |rep, deals|
+                  = "<b>#{rep.presence || 'Unknown Rep'}</b> (#{number_with_precision(deals[:new] + deals[:used], significant: true, precision: 2, strip_insignificant_zeros: true)})".html_safe
+                  %br
+                  = "#{number_with_precision(deals[:new], significant: true, precision: 2, strip_insignificant_zeros: true)} New"
+                  &#183;
+                  = "#{number_with_precision(deals[:used], significant: true, precision: 2, strip_insignificant_zeros: true)} Used"
+                  %hr.my-1
             - if params.dig(:filters, :mtd) == '1'
               .col{style:'font-size:11px;padding-left:4px;'}
                 .text-center
