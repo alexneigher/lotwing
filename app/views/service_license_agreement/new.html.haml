@@ -1,0 +1,18 @@
+.container
+  %h2 Service License Agreement
+  .row
+    .col-12
+      %p 
+        Please read through these terms before using LotWing.
+        %strong (Scroll to the bottom to accept)
+
+  %hr
+
+  %iframe{src:'/lotwing_sass_agreement.pdf', width: '100%', height: '1200px', style:"border: none;"}
+
+
+  %hr 
+  .mb-5.text-right
+    %p
+      %em By clicking "I Accept" you agree to this end user agreement.
+    = link_to 'I Accept', service_license_agreement_index_path, method: :post, class: 'btn btn-primary btn-lg'
