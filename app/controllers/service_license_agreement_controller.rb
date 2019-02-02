@@ -1,5 +1,5 @@
 class ServiceLicenseAgreementController < ApplicationController
-  skip_before_action :check_for_terms_acceptance
+  #skip_before_action :check_for_terms_acceptance
 
   def new
 
