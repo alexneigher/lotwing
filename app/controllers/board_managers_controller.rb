@@ -17,7 +17,7 @@ class BoardManagersController < ApplicationController
     elsif params.dig(:filters, :start_date).present?
       start_date = DateTime.strptime(params.dig(:filters, :start_date), "%Y-%m-%d").beginning_of_day
       
-      end_date = DateTime.strptime(params.dig(:filters, :end_date).presence || Date.today, "%Y-%m-%d").end_of_day
+      end_date = DateTime.strptime(params.dig(:filters, :end_date).presence || Date.today.strftime("%Y-%m-%d"), "%Y-%m-%d").end_of_day
       
       deals = deals.where("deal_date >= ? AND deal_date <= ?", start_date, end_date)
     else
@@ -59,7 +59,14 @@ class BoardManagersController < ApplicationController
   end
 
   def new_vehicle_report
-    @deals = current_user.dealership.deals.included_in_counts.where(stored: false, is_used: false).where("deal_date >= ?", current_user.dealership.custom_mtd_start_date)
+    if params.dig(:filters, :start_date).present?
+      start_date = DateTime.strptime(params.dig(:filters, :start_date), "%Y-%m-%d").beginning_of_day
+      end_date = DateTime.strptime(params.dig(:filters, :end_date).presence || Date.today.strftime("%Y-%m-%d"), "%Y-%m-%d").end_of_day
+      @deals = current_user.dealership.deals.included_in_counts.where(stored: false, is_used: false).where("deal_date >= ? AND deal_date <= ?", start_date, end_date)
+    else
+      @deals = current_user.dealership.deals.included_in_counts.where(stored: false, is_used: false).where("deal_date >= ?", current_user.dealership.custom_mtd_start_date)
+    end
+    
     @grouped_deals = @deals.group_by{|d| d.model}.sort_by{ |k, v| v.count }.to_h
   end
 
