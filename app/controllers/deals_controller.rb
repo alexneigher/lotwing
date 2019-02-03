@@ -10,8 +10,14 @@ class DealsController < ApplicationController
   end
 
   def create
-    current_user.dealership.deals.create(deal_params)
-    redirect_to board_manager_path
+    @deal = current_user.dealership.deals.create(deal_params)
+    if @deal.valid?
+      flash[:error] = nil
+      redirect_to board_manager_path
+    else
+      flash[:error] = @deal.errors.full_messages.join(', ')
+      render :new
+    end
   end
 
   def update

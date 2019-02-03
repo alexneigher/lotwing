@@ -1,5 +1,10 @@
 .container-fluid
   .row
+    .col-12
+      - if flash[:error].present?
+        .alert.alert-danger
+          = flash[:error]
+  .row
     .col-md-12
       %h3 Board Manager - Deal Entry
   = form_for @deal, url: deals_path, method: :post do |f|
