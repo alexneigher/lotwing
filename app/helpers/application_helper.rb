@@ -14,12 +14,13 @@ module ApplicationHelper
     end
 
     deals.where.not(split_rep:'').each do |d|
-
       rep_hash[d.sales_rep][d.is_used? ? :used : :new] += 0.5
       rep_hash[d.split_rep][d.is_used? ? :used : :new] += 0.5
     end
 
-    return rep_hash.delete_if{|k,v | k.blank?}
+    rep_hash = rep_hash.delete_if{|k,v | k.blank?}
+    
+    return rep_hash
 
     #looks like = [{name: {new: count, used: count} }, {name: {new: count, used: count} }]
   end
