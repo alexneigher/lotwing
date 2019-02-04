@@ -9,7 +9,9 @@ class ApplicationController < ActionController::Base
   protected
 
     def check_for_terms_acceptance
-      redirect_to new_service_license_agreement_path and return unless current_user.accepted_service_license_agreement?
+      if current_user
+        redirect_to new_service_license_agreement_path and return unless current_user.accepted_service_license_agreement?
+      end
     end
 
     def configure_permitted_parameters
