@@ -50,7 +50,7 @@ class BoardManagersController < ApplicationController
 
     @grouped_deals = deals.group_by{|d| d.deal_date}.sort_by{|k, v| k}.to_h
 
-    @grouped_by_vehicle = deals.where(is_used: false).group_by{|d| d.model}.sort_by{ |k, v| v.count }.to_h
+    @grouped_by_vehicle = deals.where(is_used: false, stored: false).group_by{|d| d.model}.sort_by{ |k, v| v.count }.to_h
   end
 
 
