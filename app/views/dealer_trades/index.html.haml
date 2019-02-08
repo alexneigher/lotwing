@@ -36,7 +36,7 @@
               %th Contact
               %th Trade By
               %th Difference
-              %th Payment
+              %th Stock Number
               %th Trade
               
           %tbody
@@ -55,7 +55,7 @@
                 %td= dealer_trade.trade_dealer_contact
                 %td= dealer_trade.desk_manager
                 %td= dealer_trade.trade_difference
-                %td= dealer_trade.trade_payment_type
+                %td= dealer_trade.trade_stock_number
                 %td
                   - if dealer_trade.your_trade
                     Your Trade
