@@ -1,7 +1,7 @@
 class BoardManagersController < ApplicationController
 
   def show
-    deals = current_user.dealership.deals.where(stored: false)
+    deals = current_user.dealership.deals
 
     if params.dig(:filters, :mtd) == '1'
       sql = <<~SQL
