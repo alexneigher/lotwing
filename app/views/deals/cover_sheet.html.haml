@@ -104,6 +104,15 @@
     .border
       = @deal.split_rep
 
+  %div{style: 'width: 90px;float:left;margin: 5px 5px 5px 0;padding-left: 20px;' }
+    .label
+    %span{style: 'border:1px solid #737373;margin-right: 5px;font-size: 22px;'}
+      - if @deal.f_i_pre_sell
+        &#10006;
+      - else
+        &nbsp;&nbsp;&nbsp;
+    F&I Pre-sell
+
   %div{style:'clear:both;'}
 
   // third row of 3

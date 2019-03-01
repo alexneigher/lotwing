@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190202221659) do
+ActiveRecord::Schema.define(version: 20190301010452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,8 @@ ActiveRecord::Schema.define(version: 20190202221659) do
     t.string "menu_number"
     t.string "deal_status"
     t.string "model_code"
+    t.boolean "f_i_pre_sell", default: false
+    t.text "f_i_pre_sell_product_list"
     t.index ["dealership_id"], name: "index_deals_on_dealership_id"
   end
 

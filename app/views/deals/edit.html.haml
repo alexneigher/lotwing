@@ -58,6 +58,11 @@
         %label
           = f.check_box :certified_pre_owned
           CPO
+        %hr
+        %label
+          = f.check_box :f_i_pre_sell
+          F&I Pre-sell
+        = f.text_area :f_i_pre_sell_product_list, placeholder: 'F&I Pre-sell products', class: 'form-control', rows: 3
       .col-md-2
         = f.select :result, options_for_select(['Deposit', 'P-Trip', 'Trip', 'N/C'], @deal.result), {include_blank: 'Result'}, class: 'form-control mb-1'
         = f.select :report_status, options_for_select(['New RDR Done', "Need to X",'Not RDR\'d', 'Not RDR\'d Supp/Part', 'CPO RDR Done', 'N/A (Used Car, non CPO)'], @deal.report_status), {include_blank: 'Report Status'}, class: 'form-control mb-1'

@@ -5,7 +5,22 @@
       
       = link_to '< Board Manager', board_manager_path()
 
-    .col-md-10   
+    .col-md-10  
+      = form_for :filters, url: running_total_board_manager_path, method: :get, autocomplete: "off" do
+        .row.my-2
+          .col-md-9.form-inline{style: 'margin-top: -5px;'}
+            .input-group
+              .input-group-prepend
+                %span.input-group-text{style:'padding: 0 5px;'}
+                  %i.fa.fa-calendar
+              = text_field_tag "filters[start_date]", params.dig(:filters, :start_date), autocomplete: "off", placeholder: 'Start Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
+            .input-group
+              .input-group-prepend
+                %span.input-group-text{style:'padding: 0 5px;'}
+                  %i.fa.fa-calendar
+              = text_field_tag "filters[end_date]", params.dig(:filters, :end_date), autocomplete: "off", placeholder: 'End Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
+            
+              = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary' 
       .table-responsive.small{style: 'max-height: 80vh;'}
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead
@@ -23,14 +38,24 @@
               %th City
               %th Result
               %th Report
+              %th Pre-sell
               
           %tbody
             - @grouped_deals.reverse_each do |date, deals|
               %tr
-                %td.bg-light{colspan: 12}
+                %td.bg-light{colspan: 13}
                   %strong
                     = date.strftime("%m/%d/%Y")
                     = " (#{deals.count})"
               - deals.each do |deal|
-                = render partial: 'deals/shared/deal_row', locals: {deal: deal}
-      
+                = render partial: 'deals/shared/deal_row', locals: {deal: deal, include_presell: true}
+
+                 
+ 
+:javascript
+  $(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd'
+     });
+  });
+               

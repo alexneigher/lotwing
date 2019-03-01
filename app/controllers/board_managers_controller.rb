@@ -118,7 +118,14 @@ class BoardManagersController < ApplicationController
   end
 
   def running_total
-    @deals = current_user.dealership.deals.where(stored: false)
+    if params.dig(:filters, :start_date).present?
+      start_date = DateTime.strptime(params.dig(:filters, :start_date), "%Y-%m-%d").beginning_of_day
+      end_date = DateTime.strptime(params.dig(:filters, :end_date).presence || Date.today.strftime("%Y-%m-%d"), "%Y-%m-%d").end_of_day
+      @deals = current_user.dealership.deals.where(stored: false).where("deal_date >= ? AND deal_date <= ?", start_date, end_date)
+    else
+      @deals = current_user.dealership.deals.where(stored: false)
+    end
+    
     @grouped_deals = @deals.group_by{|d| d.deal_date}.sort_by{ |k, v| k}.to_h
   end
 

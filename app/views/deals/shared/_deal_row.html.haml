@@ -1,3 +1,5 @@
+- include_presell = include_presell || false
+
 - if deal.stored?
   - css_class = 'text-warning'
 - elsif deal.is_used?
@@ -37,3 +39,6 @@
   - klass = (deal.report_status.in?(["Not RDR'd", "Not RDR'd Supp/Part", "Need to X"]) ? 'text-danger' : '')
   %td{class: klass}
     = deal.report_status
+
+  - if include_presell
+    %td= deal.f_i_pre_sell? ? "Yes" : "No"
