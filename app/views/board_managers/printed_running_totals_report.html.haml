@@ -1,0 +1,96 @@
+:css
+  body, html{
+    height: 100%;
+    position: relative;
+    font-size: 12px;
+  }
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #efefef;
+  }
+
+#header
+  
+  = params.key?('debug') ? image_tag('dealer_logo.png', style: 'width: 200px;') : wicked_pdf_image_tag('dealer_logo.png', style: 'width: 200px;')
+
+%h4{style:'margin-top:20px;margin-bottom: 35px;'} 
+  %strong Running Totals
+
+  %table{style:'margin-top: 30px;font-size: 10px;'}
+    %tr
+      %th Last
+      %th Stock #
+      %th Source
+      %th New
+      %th Used
+      %th Trade
+      %th Sales Rep
+      %th Split
+      %th City
+      %th Result
+      %th Report
+      %th Pre-sell
+      
+    %tbody{style:'font-size: 10px;'}
+      - @grouped_deals.reverse_each do |date, deals|
+        %tr
+          %td{colspan: 12}
+            %strong
+              = date.strftime("%m/%d/%Y")
+              = " (#{deals.count})"
+        - deals.each do |deal|
+          - if deal.stored?
+            - css_class = 'text-warning'
+          - elsif deal.is_used?
+            - css_class = 'text-green'
+          - else
+            - css_class = "text-blue"
+
+          %tr{class: css_class.to_s}
+            %td= deal.client_last_name
+            
+            %td= deal.stock_number
+            
+            %td= deal.source
+            
+            - if deal.is_used
+              %td
+              %td
+                = deal.make
+                = deal.model
+                = deal.year
+            - else
+              %td
+                = deal.make
+                = deal.model
+                = deal.year
+              %td
+
+            %td= deal.trade
+            %td= deal.sales_rep
+            %td= deal.split_rep
+            %td= deal.city
+            %td= deal.result
+            - klass = (deal.report_status.in?(["Not RDR'd", "Not RDR'd Supp/Part", "Need to X"]) ? 'text-danger' : '')
+            %td{class: klass}
+              = deal.report_status
+            %td= deal.f_i_pre_sell? ? "Yes" : "No"
+
+
+
+
+%div{style:'clear:both;'}
+#footer{style: 'position: absolute; bottom: -0px;left: 0; right: 0'}
+  = wicked_pdf_image_tag 'logo_black_small.png', style: 'margin:auto; display:block; width: 100px;'

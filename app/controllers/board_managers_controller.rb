@@ -125,8 +125,18 @@ class BoardManagersController < ApplicationController
     else
       @deals = current_user.dealership.deals.where(stored: false)
     end
-    
+
     @grouped_deals = @deals.group_by{|d| d.deal_date}.sort_by{ |k, v| k}.to_h
+
+    respond_to do |format|
+      format.pdf do
+         render pdf: "Running Total Report",
+         template: "board_managers/printed_running_totals_report.html.haml",
+         layout: 'pdf.html.erb'
+       end
+
+      format.html
+    end
   end
 
 end
