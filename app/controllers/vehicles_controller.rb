@@ -15,6 +15,16 @@ class VehiclesController < ApplicationController
 
   def show
     @vehicle = Vehicle.find(params[:id])
+    dealership = current_user.dealership
+    vehicles = dealership.vehicles.includes(:current_parking_tag)
+    
+    if params.dig(:sortings).present?
+      params.dig(:sortings).each do |k,v|
+        vehicles = vehicles.order(k => v)
+      end
+    end
+
+    @vehicles = vehicles
   end
 
   def new

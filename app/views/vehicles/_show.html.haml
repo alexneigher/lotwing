@@ -54,28 +54,32 @@
 - if @vehicle.parking_space&.geo_info
   :javascript
     $(function(){
-      layer = window.map.getLayer('singleVehicle');
-      if (layer){
-        window.map.removeLayer('singleVehicle');
-        window.map.removeSource('singleVehicle');
-      }
-      
-      window.map.addLayer({
-        'id': 'singleVehicle',
-        'type': 'fill',
-        'source': {
-            'type': 'geojson',
-            "data": {
-                      "type": "Feature",
-                      "geometry": #{raw(@vehicle.parking_space&.geo_info['geometry'].to_json)}
-                    }
-        },
-        'layout': {},
-        'paint': {
-          'fill-color': "#{@vehicle.is_used? ? '#66CC00' : '#006699'}",
+      setTimeout(function(){
+
+
+        console.log('now');
+        layer = window.map.getLayer('singleVehicle');
+        if (layer){
+          window.map.removeLayer('singleVehicle');
+          window.map.removeSource('singleVehicle');
         }
-      });
+        window.map.addLayer({
+          'id': 'singleVehicle',
+          'type': 'fill',
+          'source': {
+              'type': 'geojson',
+              "data": {
+                        "type": "Feature",
+                        "geometry": #{raw(@vehicle.parking_space&.geo_info['geometry'].to_json)}
+                      }
+          },
+          'layout': {},
+          'paint': {
+            'fill-color': "#{@vehicle.is_used? ? '#66CC00' : '#006699'}",
+          }
+        });
 
-      map.flyTo({center: #{raw(@vehicle.parking_space&.geo_info['geometry']['coordinates'][0][0].to_json)}});
+        map.flyTo({center: #{raw(@vehicle.parking_space&.geo_info['geometry']['coordinates'][0][0].to_json)}});
 
+      }, 500);
     })

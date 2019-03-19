@@ -1,0 +1,111 @@
+/ Page Content
+= render partial: 'shared/maxbox_dependencies'
+= javascript_include_tag('vehicle_manager')
+.container-fluid
+  .row
+    .col-sm-6
+      = form_tag search_vehicles_path, method: :get do
+        .row
+          .col-lg-4
+            .form-group
+              = text_field_tag "stock_number", params[:stock_number], class: 'form-control-sm form-control', placeholder: 'Search Stock #'
+          .col-lg-2
+            = submit_tag 'Search', class: 'btn btn-primary btn-sm'
+          .col-lg-6.text-right.pt-1
+            - grouped = @vehicles.group_by(&:is_used)
+            %span.p-1.bg-blue.rounded.text-white
+              = "New: #{grouped[false]&.count || 0}"
+            %span.p-1.bg-green.rounded.ml-1
+              = "Used: #{grouped[true]&.count || 0}"
+
+      .table-responsive.vehicle-table{style: 'max-height: 75vh;'}
+        %table.table.table-bordered.table-striped.table-sm
+          %thead
+            %tr
+              %th 
+                = link_to vehicles_path(sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}) do
+                  Stock #
+                  - if params.dig(:sortings, :stock_number) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to vehicles_path(sortings: {year: params.dig(:sortings, :year) == 'asc' ? "desc": "asc"}) do
+                  Year
+                  - if params.dig(:sortings, :year) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to vehicles_path(sortings: {make: params.dig(:sortings, :make) == 'asc' ? "desc": "asc"}) do
+                  Make
+                  - if params.dig(:sortings, :make) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to vehicles_path(sortings: {model: params.dig(:sortings, :model) == 'asc' ? "desc": "asc"}) do
+                  Model
+                  - if params.dig(:sortings, :model) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+              %th
+                = link_to vehicles_path(sortings: {age_in_days: params.dig(:sortings, :age_in_days) == 'asc' ? "desc": "asc"}) do
+                  Age
+                  - if params.dig(:sortings, :age_in_days) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
+
+              
+          %tbody.small
+            - @vehicles.each do |vehicle|
+              %tr{id: dom_id(vehicle)}
+                %td= vehicle.stock_number
+                %td
+                  = vehicle.year
+                %td
+                  = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
+                    = vehicle.make
+                %th
+                  = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
+                    = vehicle.model
+                %th
+                  = vehicle.age_in_days
+                  days
+               
+        = link_to "Add New Vehicle", new_vehicle_path, class: 'btn btn-small btn-primary'
+      
+    .col-sm-6
+      #vehicleDetailContainer
+        = render partial: 'vehicles/show'
+      / Modal
+      #mapModal.modal{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}
+        .modal-dialog.modal-lg{:role => "document"}
+          .modal-content
+            .modal-header
+              %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+                %span{"aria-hidden" => "true"} ×
+            .modal-body
+              .row
+                #map{ :style => "width: 100%; height: 400px" }        
+                .d-none
+                  //place all dom-dependent info here
+                  %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
+                  %input#dealership_map_zoom{value: current_user.dealership.map_zoom }          
+            .modal-footer
+              %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
+      
+:javascript
+  $(function(){
+    $('#mapModal').on('shown.bs.modal', function (event) {
+      //the map was just shown, here we can extract just the vehicle in question. and render it to the map
+      window.map.resize();
+    }); 
+  })
+
+  function show_loading(){
+    $('#vehicleDetailContainer').html('Loading...')
+  }
+           

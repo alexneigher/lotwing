@@ -25,15 +25,9 @@ $(function(){
       closeOnClick: false
   });
 
-  map.on('mouseenter', 'new_vehicle_occupied_spaces', handle_mouseover);
-  map.on('mouseenter', 'used_vehicle_occupied_spaces', handle_mouseover);
+  map.on('click', 'new_vehicle_occupied_spaces', open_popup);
+  map.on('click', 'used_vehicle_occupied_spaces', open_popup);
 
-  map.on('mouseleave', 'new_vehicle_occupied_spaces', function() {
-      popup.remove();
-  });
-  map.on('mouseleave', 'used_vehicle_occupied_spaces', function() {
-      popup.remove();
-  });
 
   window.map.on('load', function () {
     fetch_data_and_render('parking_lots');
@@ -74,26 +68,15 @@ function fetch_events_and_render(){
   });
 }
 
-function handle_mouseover(e){
-  var coordinates = e.features[0].geometry.coordinates;
-
-  // Ensure that if the map is zoomed out such that multiple
-  // copies of the feature are visible, the popup appears
-  // over the copy being pointed to.
-  while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-      coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-  }
-
-  popup.setLngLat(coordinates[0][0])
-    .setHTML("Loading...")
-    .addTo(map);
+function open_popup(e){
+  show_vehicle_data("Loading...");
 
   $.ajax({
     url:"/web_api/shapes/" + e.features[0].properties.shape_id,
     dataType: "json",
     success: function(data){
       str = tooltip_html(data)
-      popup.setHTML(str)
+      show_vehicle_data("<div style='padding: 10px;'>" + str + "</div>");
     },
     error: function (xhr) {
       alert(xhr.statusText)
@@ -101,9 +84,19 @@ function handle_mouseover(e){
   });
 }
 
+
+function show_vehicle_data(str){
+  $('#vehicle_data_container').html(str);
+}
+
+function hide_vehicle_data(str){
+  $('#vehicle_data_container').html('');
+}
+
 function tooltip_html(data){
-  str = render_vehicle_stock_number(data) +
-        render_vehicle_year_make(data) + 
+  console.log(data)
+  str = render_vehicle_year_make(data) + 
+        render_vehicle_stock_number(data) +
         render_vehicle_model_color(data) +
         "<div>"+days_ago(data.vehicle.created_at)+" days in stock</div>" +
         render_event(data)
@@ -129,7 +122,7 @@ function render_vehicle_stock_number(data){
 
 function render_vehicle_year_make(data){
   if (data.vehicle.year && data.vehicle.make){
-    return "<div>"+data.vehicle.year+" "+data.vehicle.make+"</div>"
+    return "<h3><a target='_blank' href='/vehicles/" + data.vehicle.id + "'>"+data.vehicle.year+" "+data.vehicle.make+"</a></h3>"
   }else{
     return ""
   }
@@ -140,13 +133,11 @@ function render_event(data){
   str = ""
   if (data.events){
     for(var i = 0; i < data.events.length; i++){
-      str += "<div>"+data.events[i].data.attributes.summary+"</div>"
+      str += "<hr><div>"+data.events[i].data.attributes.summary+"</div>"
     }
-    
   }
 
   return str
-  
 }
 
 function render_vehicle_model_color(data){
