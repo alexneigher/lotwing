@@ -51,6 +51,10 @@ $(function(){
 
   });
 
+  $(document).on('click', '.close', function(){
+    hide_vehicle_data();
+  })
+
 })//$(function)
 
 function fetch_events_and_render(){
@@ -76,7 +80,7 @@ function open_popup(e){
     dataType: "json",
     success: function(data){
       str = tooltip_html(data)
-      show_vehicle_data("<div style='padding: 10px;'>" + str + "</div>");
+      show_vehicle_data("<div style='padding: 10px;'><div class='close'>&times;</div>" + str + "</div>");
     },
     error: function (xhr) {
       alert(xhr.statusText)
@@ -89,7 +93,7 @@ function show_vehicle_data(str){
   $('#vehicle_data_container').html(str);
 }
 
-function hide_vehicle_data(str){
+function hide_vehicle_data(){
   $('#vehicle_data_container').html('');
 }
 
