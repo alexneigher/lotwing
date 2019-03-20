@@ -101,8 +101,8 @@ function tooltip_html(data){
   console.log(data)
   str = render_vehicle_year_make(data) + 
         render_vehicle_stock_number(data) +
-        render_vehicle_model_color(data) +
-        "<div>"+days_ago(data.vehicle.created_at)+" days in stock</div>" +
+        render_vehicle_color(data) +
+        "<div style='float:left;margin-top:6px;'>"+days_ago(data.vehicle.created_at)+" days in stock</div><div style='clear:both;'></div>" +
         render_event(data)
 
   return str
@@ -118,7 +118,7 @@ function days_ago(created_at_date){
 // Generate the hTML for the tooltip
 function render_vehicle_stock_number(data){
   if (data.vehicle.stock_number){
-   return "<div>Stock #: <strong>"+data.vehicle.stock_number+"</strong></div>"
+   return "<div style='padding-right:10px;float:left;margin-top:6px;'>Stock #: <strong>"+data.vehicle.stock_number+"</strong></div>"
   }else{
     return ""
   }
@@ -126,7 +126,7 @@ function render_vehicle_stock_number(data){
 
 function render_vehicle_year_make(data){
   if (data.vehicle.year && data.vehicle.make){
-    return "<h3><a target='_blank' href='/vehicles/" + data.vehicle.id + "'>"+data.vehicle.year+" "+data.vehicle.make+"</a></h3>"
+    return "<h3 style='float:left;margin-right: 10px;'><a target='_blank' href='/vehicles/" + data.vehicle.id + "'>"+data.vehicle.year+" "+data.vehicle.make+" "+data.vehicle.model+"</a></h3>"
   }else{
     return ""
   }
@@ -137,16 +137,16 @@ function render_event(data){
   str = ""
   if (data.events){
     for(var i = 0; i < data.events.length; i++){
-      str += "<hr><div>"+data.events[i].data.attributes.summary+"</div>"
+      str += "<hr style='margin:2px;'><div>"+data.events[i].data.attributes.summary+"</div>"
     }
   }
 
   return str
 }
 
-function render_vehicle_model_color(data){
+function render_vehicle_color(data){
   if (data.vehicle.model && data.vehicle.color){
-    return "<div>"+data.vehicle.model+" "+data.vehicle.color+"</div>"
+    return "<div style='padding-right:10px;float:left;margin-top:6px;'>"+data.vehicle.color+"</div>"
   }else{
     return ""
   }
