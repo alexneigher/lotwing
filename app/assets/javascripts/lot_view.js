@@ -126,7 +126,7 @@ function render_vehicle_stock_number(data){
 
 function render_vehicle_year_make(data){
   if (data.vehicle.year && data.vehicle.make){
-    return "<h3 style='float:left;margin-right: 10px;'><a target='_blank' href='/vehicles/" + data.vehicle.id + "'>"+data.vehicle.year+" "+data.vehicle.make+" "+data.vehicle.model+"</a></h3>"
+    return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + data.vehicle.id + "'>"+data.vehicle.year+" "+data.vehicle.make+" "+data.vehicle.model+"</a></h3>"
   }else{
     return ""
   }
