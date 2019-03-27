@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     get "auth/test", controller: :authentication, action: :test #for testing purposes
 
     resources :vehicles
+    resources :events
+
     resources :shapes do
       collection do
         get :parking_lots
