@@ -44,17 +44,17 @@
         = f.text_field :pay_method, placeholder: 'Pay Method', class: 'form-control mb-1'
         = f.select :deal_type, options_for_select(['Retail', 'One Pay', 'Lease', 'Cash', 'RB']), {include_blank: 'Deal Type'}, class: 'form-control mb-1'
         = f.number_field :selling_price, placeholder: 'Selling Price', class: 'form-control mb-1'
-        = f.number_field :down_payment, placeholder: 'Down Payment', class: 'form-control mb-1'
+        = f.number_field :down_payment, placeholder: 'Down Payment', step: 0.01, class: 'form-control mb-1'
         = f.text_field :term, placeholder: 'Term', class: 'form-control mb-1'
         = f.text_area :deal_notes, placeholder: 'Deal Notes', class: 'form-control mb-1', rows: 3
 
       .col-md-2
         = f.text_field :bank_name, placeholder: 'Bank Name', class: 'form-control mb-1'
-        = f.number_field :quoted_payment, placeholder: 'Quoted Payment', class: 'form-control mb-1'
+        = f.number_field :quoted_payment, placeholder: 'Quoted Payment', step: 0.01, class: 'form-control mb-1'
         = f.text_field :rate_apr, placeholder: 'Rate APR', class: 'form-control mb-1'
         = f.text_field :miles_per_year, placeholder: 'Miles Per Year (LSE)', class: 'form-control mb-1'
-        = f.text_field :rebates, placeholder: 'Rebates', class: 'form-control mb-1'
-        = f.text_field :bulletin_number, placeholder: 'Bulletin Number', class: 'form-control mb-1'
+        = f.text_area :rebates, placeholder: 'Rebates', class: 'form-control mb-1', rows: 3
+        = f.text_area :bulletin_number, placeholder: 'Bulletin Number', class: 'form-control mb-1', rows: 3
         = f.select :desk_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name)), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
         = f.select :finance_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name)), {include_blank: 'Finance Manager'}, class: 'form-control mb-1'
         %label

@@ -28,15 +28,15 @@
                   &#183;
                   = "#{number_with_precision(deals[:used], significant: true, precision: 2, strip_insignificant_zeros: true)} Used"
                   %hr.my-1
-            - if params.dig(:filters, :mtd) == '1'
-              .col{style:'font-size:11px;padding-left:4px;'}
-                .text-center
-                  New By Model
-                %small
-                  - @grouped_by_vehicle.reverse_each do |model, deals|
-                    = model
-                    = " (#{deals.count})"
-                    %hr.my-1
+            
+            .col{style:'font-size:11px;padding-left:4px;'}
+              .text-center
+                New By Model
+              %small
+                - @grouped_by_vehicle.reverse_each do |model, deals|
+                  = model
+                  = " (#{deals.count})"
+                  %hr.my-1
 
 
     .col-md-10

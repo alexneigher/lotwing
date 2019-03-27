@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190301010452) do
+ActiveRecord::Schema.define(version: 20190327044413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,8 +115,8 @@ ActiveRecord::Schema.define(version: 20190301010452) do
     t.decimal "quoted_payment"
     t.string "rate_apr"
     t.string "miles_per_year"
-    t.string "rebates"
-    t.string "bulletin_number"
+    t.text "rebates"
+    t.text "bulletin_number"
     t.string "desk_manager"
     t.string "finance_manager"
     t.boolean "dealer_demo", default: false
