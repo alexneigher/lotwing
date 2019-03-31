@@ -1,5 +1,5 @@
 class EventMailer < ActionMailer::Base
-  default :from => 'admin@lotwing.herokuapp.com'
+  default :from => "Lotwing Admin <admin@lotwing.herokuapp.com>"
 
   def self.notify_about_note_created(event)
     @event = event
