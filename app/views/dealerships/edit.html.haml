@@ -16,8 +16,13 @@
                 .col-6
                   %label MTD Start Date
                   = f.text_field :custom_mtd_start_date, class: 'form-control datepicker'
-            .form-group
-              = f.submit 'Update', class: 'btn btn-primary'
+
+        .card.mt-2
+          .card-body
+            %label  New Note Email Notifications
+            = f.text_field :new_note_notification_addresses, placeholder: 'ex: email@gmail.com, email1@gmail.com', class: 'form-control'
+            .text-muted.small
+              (separate by commas)
       .col-md-3
         .card.bg-light
           - if current_user.permission_level == "admin"
@@ -31,6 +36,9 @@
               %small
                 %em Last sync:
                 = @dealership.data_sync.last_run_at&.in_time_zone("Pacific Time (US & Canada)")&.strftime("%b %e, %Y %l:%M %p") || "N/A"
+        .mt-4
+          = f.submit 'Update settings', class: 'btn btn-primary btn-block'
+
   %hr
   - unless current_user.permission_level == "sales_rep"
     .row

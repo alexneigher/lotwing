@@ -14,6 +14,6 @@ class DealershipsController < ApplicationController
 
   private
     def dealership_params
-      params.require(:dealership).permit(:map_bearing, :map_zoom, :custom_mtd_start_date, :name, data_sync_attributes: [ :id, :provider_id ])
+      params.require(:dealership).permit(:map_bearing, :map_zoom, :custom_mtd_start_date, :new_note_notification_addresses, :name, data_sync_attributes: [ :id, :provider_id ])
     end
 end
