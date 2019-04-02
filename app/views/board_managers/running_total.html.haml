@@ -33,7 +33,13 @@
               %th Last
               %th Stock #
               %th Source
-              %th New
+              %th
+                = link_to running_total_board_manager_path(sortings: {is_used: params.dig(:sortings, :is_used) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  New
+                  - if params.dig(:sortings, :is_used) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
               %th Used
               %th Trade
               %th Sales Rep
@@ -41,7 +47,13 @@
               %th City
               %th Result
               %th Report
-              %th Pre-sell
+              %th
+                = link_to running_total_board_manager_path(sortings: {f_i_pre_sell: params.dig(:sortings, :f_i_pre_sell) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                  Pre-sell
+                  - if params.dig(:sortings, :f_i_pre_sell) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
               
           %tbody
             - @grouped_deals.reverse_each do |date, deals|

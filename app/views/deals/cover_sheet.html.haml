@@ -131,6 +131,9 @@
       Selling Price
     .border
       = number_to_currency @deal.selling_price
+
+  %div{style: 'width: 110px;float:left;margin: 5px 5px 5px 15px;' }
+    = @deal.f_i_pre_sell_product_list
   
 
   %div{style:'clear:both;'}

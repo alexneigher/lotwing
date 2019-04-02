@@ -126,6 +126,12 @@ class BoardManagersController < ApplicationController
       @deals = current_user.dealership.deals.where(stored: false)
     end
 
+    if params.dig(:sortings).present?
+      params.dig(:sortings).each do |k,v|
+        @deals = @deals.order(k => v)
+      end
+    end
+
     @grouped_deals = @deals.group_by{|d| d.deal_date}.sort_by{ |k, v| k}.to_h
 
     respond_to do |format|
