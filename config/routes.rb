@@ -16,6 +16,10 @@ Rails.application.routes.draw do
     post "auth/login", controller: :authentication, action: :login
     get "auth/test", controller: :authentication, action: :test #for testing purposes
 
+    namespace :vehicles do
+      resources :stock_numbers, param: :stock_number, only: [:index, :show]
+    end
+    
     resources :vehicles
     resources :events
 
