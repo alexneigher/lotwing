@@ -143,7 +143,7 @@ function map_image_url_to_event_type(event_type){
 function map_event_type_to_size(event_type){
   var hash  = {
                 "note_events": 0.007,
-                "test_drive_events": 0.07,
+                "test_drive_events": 0.01,
               }
 
   return hash[event_type]
