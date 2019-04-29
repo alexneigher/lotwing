@@ -84,6 +84,22 @@
       
     .col-sm-6
       #vehicleDetailContainer
+      .row
+        - @vehicles.where(is_used: false).group_by(&:model).each do |model, vehicles|
+          .col-6.mt-3.small
+            %strong.text-orange #{model}
+            %br
+            - vehicles.group_by(&:trim_level).each do |trim_level, vehicles|
+              .mt-2
+                %strong #{trim_level} (#{vehicles.count})
+                %br
+                - vehicles.each do |vehicle|
+                  %span.text-blue= vehicle.stock_number
+                  = vehicle.color
+                  = number_to_currency vehicle.sale_price
+                  %br
+
+
 
       / Modal
       #mapModal.modal{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}

@@ -55,6 +55,7 @@ class DataFeedSyncService
             year: data[2],
             make: data[3],
             model: data[4],
+            trim_level: data[5],
             body_style: data[6],
             transmission: data[7],
             mileage: data[8],
