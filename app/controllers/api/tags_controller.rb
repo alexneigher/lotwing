@@ -13,9 +13,9 @@ module Api
       @tag.shape.update(most_recently_tagged_at: DateTime.current)
 
       # create a new event
-      @tag.events.create(event_params.merge(user_id: current_user.id))
+      event = @tag.events.create(event_params.merge(user_id: current_user.id))
 
-      render json: {status: 200, parking_space: @tag.shape, vehicle: @vehicle}
+      render json: {status: 200, parking_space: @tag.shape, vehicle: @vehicle, event: @event}
     end
 
 
