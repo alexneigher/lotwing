@@ -3,6 +3,7 @@ class VehiclesController < ApplicationController
   def index
     dealership = current_user.dealership
     all_vehicles = dealership.vehicles.includes(:current_parking_tag)
+    filtered_vehicles = all_vehicles
 
     if params.dig(:filter).present?
       filtered_vehicles = all_vehicles.where(model: params[:filter][:model])

@@ -23,35 +23,35 @@
           %thead
             %tr
               %th 
-                = link_to vehicles_path(sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}) do
+                = link_to vehicles_path(filter:{model: params.dig(:filter,:model)}, sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}) do
                   Stock #
                   - if params.dig(:sortings, :stock_number) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to vehicles_path(sortings: {year: params.dig(:sortings, :year) == 'asc' ? "desc": "asc"}) do
+                = link_to vehicles_path(filter:{model: params.dig(:filter,:model)}, sortings: {year: params.dig(:sortings, :year) == 'asc' ? "desc": "asc"}) do
                   Year
                   - if params.dig(:sortings, :year) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to vehicles_path(sortings: {make: params.dig(:sortings, :make) == 'asc' ? "desc": "asc"}) do
+                = link_to vehicles_path(filter:{model: params.dig(:filter,:model)}, sortings: {make: params.dig(:sortings, :make) == 'asc' ? "desc": "asc"}) do
                   Make
                   - if params.dig(:sortings, :make) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to vehicles_path(sortings: {model: params.dig(:sortings, :model) == 'asc' ? "desc": "asc"}) do
+                = link_to vehicles_path(filter:{model: params.dig(:filter,:model)}, sortings: {model: params.dig(:sortings, :model) == 'asc' ? "desc": "asc"}) do
                   Model
                   - if params.dig(:sortings, :model) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to vehicles_path(sortings: {age_in_days: params.dig(:sortings, :age_in_days) == 'asc' ? "desc": "asc"}) do
+                = link_to vehicles_path(filter:{model: params.dig(:filter,:model)}, sortings: {age_in_days: params.dig(:sortings, :age_in_days) == 'asc' ? "desc": "asc"}) do
                   Age
                   - if params.dig(:sortings, :age_in_days) == "asc"
                     %i.fa.fa-sort-up
