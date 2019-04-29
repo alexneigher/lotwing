@@ -85,7 +85,7 @@
     .col-sm-6
       #vehicleDetailContainer
       .row
-        - @vehicles.where(is_used: false).group_by(&:model).each do |model, vehicles|
+        - @vehicles.where(is_used: false).group_by(&:model).sort_by{ |key| key }.to_h.each do |model, vehicles|
           .col-6.mt-3.small
             %strong.text-orange #{model}
             %br
