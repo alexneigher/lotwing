@@ -62,7 +62,12 @@
           %tbody.small
             - @vehicles.each do |vehicle|
               %tr{id: dom_id(vehicle)}
-                %td= vehicle.stock_number
+                - if vehicle.current_parking_tag.present?
+                  %td{class: vehicle.is_used? ? 'bg-green' : 'bg-blue'}
+                    = vehicle.stock_number
+                - else
+                  %td
+                    = vehicle.stock_number
                 %td
                   = vehicle.year
                 %td
