@@ -2,15 +2,20 @@ class VehiclesController < ApplicationController
   
   def index
     dealership = current_user.dealership
-    vehicles = dealership.vehicles.includes(:current_parking_tag)
+    all_vehicles = dealership.vehicles.includes(:current_parking_tag)
     
+    if params.dig(:filter).present?
+      filtered_vehicles = all_vehicles.where(model: params[:filter][:model])
+    end
+
     if params.dig(:sortings).present?
       params.dig(:sortings).each do |k,v|
-        vehicles = vehicles.order(k => v)
+        filtered_vehicles = filtered_vehicles.order(k => v)
       end
     end
 
-    @vehicles = vehicles
+    @filtered_vehicles = filtered_vehicles || all_vehicles
+    @all_vehicles = all_vehicles
   end
 
   def show

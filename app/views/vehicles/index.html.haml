@@ -12,7 +12,7 @@
           .col-lg-2
             = submit_tag 'Search', class: 'btn btn-primary btn-sm'
           .col-lg-6.text-right.pt-1
-            - grouped = @vehicles.group_by(&:is_used)
+            - grouped = @filtered_vehicles.group_by(&:is_used)
             %span.p-1.bg-blue.rounded.text-white
               = "New: #{grouped[false]&.count || 0}"
             %span.p-1.bg-green.rounded.ml-1
@@ -60,7 +60,7 @@
 
               
           %tbody.small
-            - @vehicles.each do |vehicle|
+            - @filtered_vehicles.each do |vehicle|
               %tr{id: dom_id(vehicle)}
                 - if vehicle.current_parking_tag.present?
                   %td{class: vehicle.is_used? ? 'bg-green' : 'bg-blue'}
@@ -84,22 +84,22 @@
       
     .col-sm-6
       #vehicleDetailContainer
-      .row
-        - @vehicles.where(is_used: false).group_by(&:model).sort_by{ |key| key }.to_h.each do |model, vehicles|
-          .col-6.mt-3.small
-            %strong.text-orange #{model}
-            %br
-            - vehicles.group_by(&:trim_level).each do |trim_level, vehicles|
-              .mt-2
-                %strong #{trim_level} (#{vehicles.count})
-                %br
-                - vehicles.each do |vehicle|
-                  %span.text-blue= vehicle.stock_number
-                  = vehicle.color
-                  = number_to_currency vehicle.sale_price
-                  %br
-
-
+      .row.no-gutters
+        - @all_vehicles.where(is_used: false).group_by(&:model).sort_by{ |key| key }.to_h.each do |model, vehicles|
+          .col-4.mt-3.small
+            = link_to vehicles_path(filter: {model: model}) do
+              %strong #{model} (#{vehicles.count})
+            
+            - if params.dig(:filter, :model) == model
+              - vehicles.group_by(&:trim_level).each do |trim_level, vehicles|
+                .mt-2
+                  %strong.text-default #{trim_level} (#{vehicles.count})
+                  %div
+                    - vehicles.each do |vehicle|
+                      %span.text-blue= vehicle.stock_number
+                      = vehicle.color
+                      = number_to_currency vehicle.sale_price
+                      %br
 
       / Modal
       #mapModal.modal{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}
