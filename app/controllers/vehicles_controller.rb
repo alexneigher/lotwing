@@ -6,7 +6,7 @@ class VehiclesController < ApplicationController
     filtered_vehicles = all_vehicles
 
     if params.dig(:filter).present?
-      filtered_vehicles = all_vehicles.where(model: params[:filter][:model])
+      filtered_vehicles = all_vehicles.where(is_used: false).where(model: params[:filter][:model])
     end
 
     if params.dig(:sortings).present?
