@@ -7,7 +7,7 @@ class BoardManagersController < ApplicationController
       sql = <<~SQL
               CASE 
                 WHEN is_used = true 
-                  THEN deal_date >= '"#{Date.today.beginning_of_month}"' 
+                  THEN deal_date >= '"#{DateTime.current.in_time_zone("Pacific Time (US & Canada)").beginning_of_month}"' 
                 ELSE deal_date >= '"#{current_user.dealership.custom_mtd_start_date}"'
               END    
             SQL
