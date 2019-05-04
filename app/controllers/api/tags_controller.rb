@@ -15,7 +15,7 @@ module Api
       # create a new event
       event = @tag.events.create(event_params.merge(user_id: current_user.id))
 
-      render json: {status: 200, parking_space: @tag.shape, vehicle: @vehicle, event: @event}
+      render json: {status: 200, parking_space: @tag.shape, vehicle: @vehicle, event: event}
     end
 
 
