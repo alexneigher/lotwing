@@ -49,7 +49,7 @@ module WebApi
                               &.map{|e| EventSerializer.new(e, includes:[:user]) }
       end
       
-      render json: { shape: @shape, events: serialized_events, vehicles: @shape.vehicles.includes(:tags).where(tags: {active: true} }
+      render json: { shape: @shape, events: serialized_events, vehicles: @shape.vehicles.includes(:tags).where(tags: {active: true}) }
     end
   end
 end
