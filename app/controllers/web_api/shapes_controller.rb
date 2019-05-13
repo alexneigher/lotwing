@@ -45,7 +45,7 @@ module WebApi
         serialized_events << vehicle
                               &.events
                               &.includes(tag: :shape)
-                              &.where(acknowledged: false)
+                              &.where(acknowledged: false, tags: {active: true})
                               &.map{|e| EventSerializer.new(e, includes:[:user]) }
       end
       
