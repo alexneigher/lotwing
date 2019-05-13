@@ -14,7 +14,7 @@ class TagsController < ApplicationController
 
     # create a new event
     @tag.events.create(event_params.merge(user_id: current_user.id))
-
+     
     redirect_to vehicles_path
   end
 

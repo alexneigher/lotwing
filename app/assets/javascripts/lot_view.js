@@ -38,6 +38,7 @@ $(function(){
       url:"/web_api/shapes/parking_spaces",
       dataType: "json",
       success: function(data){
+        console.log(data);
         add_shapes_to_map(data, window.map, 'used_vehicle_occupied_spaces');
         add_shapes_to_map(data, window.map, 'new_vehicle_occupied_spaces');
         add_shapes_to_map(data, window.map, 'empty_parking_spaces');
@@ -98,13 +99,17 @@ function hide_vehicle_data(){
 }
 
 function tooltip_html(data){
-  console.log(data)
-  str = render_vehicle_year_make(data) + 
-        render_vehicle_stock_number(data) +
-        render_vehicle_color(data) +
-        "<div style='float:left;margin-top:6px;'>"+days_ago(data.vehicle.created_at)+" days in stock</div><div style='clear:both;'></div>" +
-        render_event(data)
+  str = ''
 
+  for (i = 0; i < data.vehicles.length; i++) { 
+
+    str += render_vehicle_year_make(data.vehicles[i]) + 
+            render_vehicle_stock_number(data.vehicles[i]) +
+            render_vehicle_color(data.vehicles[i]) +
+            "<div style='float:left;margin-top:6px;'>"+days_ago(data.vehicles[i].created_at)+" days in stock</div><div style='clear:both;'></div>" +
+            render_event(data.events[i])
+  }
+  
   return str
 }
 
@@ -116,37 +121,36 @@ function days_ago(created_at_date){
 }
 
 // Generate the hTML for the tooltip
-function render_vehicle_stock_number(data){
-  if (data.vehicle.stock_number){
-   return "<div style='padding-right:10px;float:left;margin-top:6px;'>Stock #: <strong>"+data.vehicle.stock_number+"</strong></div>"
+function render_vehicle_stock_number(vehicle){
+  if (vehicle.stock_number){
+   return "<div style='padding-right:10px;float:left;margin-top:6px;'>Stock #: <strong>"+vehicle.stock_number+"</strong></div>"
   }else{
     return ""
   }
 }
 
-function render_vehicle_year_make(data){
-  if (data.vehicle.year && data.vehicle.make){
-    return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + data.vehicle.id + "'>"+data.vehicle.year+" "+data.vehicle.make+" "+data.vehicle.model+"</a></h3>"
+function render_vehicle_year_make(vehicle){
+  if (vehicle.year && vehicle.make){
+    return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + vehicle.id + "'>"+vehicle.year+" "+ vehicle.make+" "+ vehicle.model+"</a></h3>"
   }else{
     return ""
   }
   
 }
 
-function render_event(data){
+function render_event(events){
   str = ""
-  if (data.events){
-    for(var i = 0; i < data.events.length; i++){
-      str += "<hr style='margin:2px;'><div>"+data.events[i].data.attributes.summary+"</div>"
+  if (events){
+    for(var i = 0; i < events.length; i++){
+      str += "<hr style='margin:2px;'><div>"+events[i].data.attributes.summary+"</div>"
     }
   }
-
   return str
 }
 
-function render_vehicle_color(data){
-  if (data.vehicle.model && data.vehicle.color){
-    return "<div style='padding-right:10px;float:left;margin-top:6px;'>"+data.vehicle.color+"</div>"
+function render_vehicle_color(vehicle){
+  if (vehicle.model && vehicle.color){
+    return "<div style='padding-right:10px;float:left;margin-top:6px;'>"+vehicle.color+"</div>"
   }else{
     return ""
   }
