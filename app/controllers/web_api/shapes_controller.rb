@@ -41,11 +41,11 @@ module WebApi
     def show
       @shape = current_user.dealership.shapes.find(params[:id])
       serialized_events = []
-      @shape.vehicles.each do |vehicle|
+      @shape.vehicles.includes(:tags).where(tags: {active: true}).each do |vehicle|
         serialized_events << vehicle
                               &.events
                               &.includes(tag: :shape)
-                              &.where(acknowledged: false, tags: {active: true})
+                              &.where(acknowledged: false)
                               &.map{|e| EventSerializer.new(e, includes:[:user]) }
       end
       
