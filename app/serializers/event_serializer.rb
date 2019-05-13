@@ -7,7 +7,7 @@ class EventSerializer
   belongs_to :tag
 
   attribute :parking_space do |event|
-    event.tag.shape.geo_info
+    event&.tag&.shape&.geo_info
   end
 
   attribute :summary do |event|
