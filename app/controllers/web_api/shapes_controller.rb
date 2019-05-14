@@ -29,12 +29,16 @@ module WebApi
 
       @used_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {is_used: true})
       
+      new_vehicle_space_ids = @new_vehicle_occupied_space.pluck(:id).detect{ |e| @new_vehicle_occupied_space.pluck(:id).count(e) > 1 }
+      used_vehicle_space_ids = @used_vehicle_occupied_space.pluck(:id).detect{ |e| @used_vehicle_occupied_space.pluck(:id).count(e) > 1 }
+
       @empty_parking_space = @parking_spaces - [@new_vehicle_occupied_space + @used_vehicle_occupied_space].flatten
 
       render json: {
                     new_vehicle_occupied_spaces: @new_vehicle_occupied_space,
                     used_vehicle_occupied_spaces: @used_vehicle_occupied_space,
                     empty_parking_spaces: @empty_parking_space,
+                    duplicate_parked_spaces: Shape.where(id: [new_vehicle_space_ids , used_vehicle_space_ids].flatten)
                    }
     end
 

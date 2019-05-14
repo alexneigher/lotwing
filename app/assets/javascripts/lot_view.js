@@ -42,6 +42,7 @@ $(function(){
         add_shapes_to_map(data, window.map, 'used_vehicle_occupied_spaces');
         add_shapes_to_map(data, window.map, 'new_vehicle_occupied_spaces');
         add_shapes_to_map(data, window.map, 'empty_parking_spaces');
+        add_shapes_to_map(data, window.map, 'duplicate_parked_spaces');
 
         fetch_events_and_render();
       },
