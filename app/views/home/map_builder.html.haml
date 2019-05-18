@@ -54,4 +54,12 @@
                   %i.fa.fa-trash
       
     .col-md-8
+      .my-1
+        %btn.btn.btn-primary.btn-sm{onclick: "window.draw.changeMode('simple_select');"}
+          Select
+        %btn.btn.btn-primary.btn-sm{onclick: "window.draw.changeMode('draw_rectangle');"}
+          Add Rectangle
+        %btn.btn.btn-primary.btn-sm{onclick: "window.draw.changeMode('rotate');"}
+          Rotate
       #map{:style => "width: 100%; height: 550px;"}
+      

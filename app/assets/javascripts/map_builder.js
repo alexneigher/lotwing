@@ -7,17 +7,30 @@ $(function(){
     style: 'mapbox://styles/mapbox/satellite-v9'
   });
 
-  window.draw = new MapboxDraw();
+  window.modes = MapboxDraw.modes;
+  modes.draw_rectangle = DrawRectangle.default;
+  modes.rotate = RotateMode;
+  
+  window.draw = new MapboxDraw({
+      modes: window.modes,
+      displayControlsDefault: false,
+      controls: {
+        trash: true
+      }
+  });
   window.map.addControl(window.draw, 'top-left');
 
-  // investigate line slice
-  // https://github.com/BrunoSalerno/mapbox-gl-draw-cut-line-mode
-
+  window.draw.changeMode('simple_select');
+  
   window.geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken
   })
   window.map.addControl(geocoder);
 
+  RotateMode.rotateend = function(selectedFeature) {
+    console.log('ROTATEEND');
+    console.log('feature: ',selectedFeature);
+  }
 
   window.map.on('draw.create', function (e) {
     $('#shape-form').removeClass('d-none');
