@@ -71,7 +71,7 @@ function add_shapes_to_map(data, map, shape_type){
     'layout': {},
     'paint': {
         'fill-color': map_shape_type_to_color(shape_type),
-        'fill-outline-color': "#CCCCCC",
+        'fill-outline-color': "#6b6d6f",
         'fill-opacity': ['get', 'fill_opacity']
     }
   });
