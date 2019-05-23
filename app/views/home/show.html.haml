@@ -3,24 +3,15 @@
 .container-fluid
   .row
     .col-lg-4
-      .bg-light.p-3
-        
-        = form_tag root_path(params["sort_filters"]) do
-          .row
-            .col-md-6
-              %small.small New or Used
-              = select_tag 'sort_filters[new_or_used]', options_for_select(['All','New', 'Used'], nil), class: 'form-control'
-            .col-md-6
-              %small.small Make
-              = select_tag 'sort_filters[make]', options_for_select(['All','Jeep', 'Volvo'], nil), class: 'form-control'
-
-      .mt-5
-        - @users_with_events.each do |user|
-          %strong
-            = user.full_name
-          = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
-        
-          %hr.my-2
+      %h2.mt-3 Lot View
+      %hr
+      %h5 Recent Activity (24 hours)
+      - @users_with_events.each do |user|
+        %strong
+          = user.full_name
+        = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
+      
+        %hr.my-2
       
     .col-lg-8{style: 'position: relative;'}
       #vehicle_data_container
