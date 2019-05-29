@@ -11,6 +11,8 @@ module EventsHelper
         "Vehicle: #{vehicle.stock_number} (#{vehicle.full_description}) moved to a new parking spot."
       when "odometer_update"
         "The odometer on vehicle: #{vehicle.vin} (#{vehicle.full_description}) has a new reading."
+      when "fuel_vehicle"
+        "The vehicle: #{vehicle.vin} was taken for fuel."
     end
   end
 end

@@ -67,6 +67,7 @@ function fetch_events_and_render(){
     success: function(data){
       add_events_to_map(data, window.map, "note_events");
       add_events_to_map(data, window.map, "test_drive_events");
+      add_events_to_map(data, window.map, "fuel_vehicle_events");
     },
     error: function (xhr) {
       alert(xhr.statusText)
