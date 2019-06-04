@@ -1,14 +1,19 @@
 .container-fluid
   .row.mb-1
-    .col-md-2
+    .col-md-1
       %h3 Running Total
       
       = link_to '< Board Manager', board_manager_path()
 
-    .col-md-10  
+    .col-md-11  
       = form_for :filters, url: running_total_board_manager_path, method: :get, autocomplete: "off" do
         .row.my-2
           .col-md-9.form-inline{style: 'margin-top: -5px;'}
+            .input-group
+              %label.mr-2{onclick: "$(this).parents('form').submit();"}
+                = hidden_field_tag "filters[f_i_pre_sell]", 0
+                = check_box_tag 'filters[f_i_pre_sell]', 1, params.dig(:filters, :f_i_pre_sell).to_i == 1, class: 'mr-1'
+                Pre-sell Only 
             .input-group
               .input-group-prepend
                 %span.input-group-text{style:'padding: 0 5px;'}
@@ -63,7 +68,7 @@
                     = date.strftime("%m/%d/%Y")
                     = " (#{deals.count})"
               - deals.each do |deal|
-                = render partial: 'deals/shared/deal_row', locals: {deal: deal, include_presell: true}
+                = render partial: 'deals/shared/deal_row', locals: {deal: deal, include_presell: true, new_tab: true}
 
                  
  

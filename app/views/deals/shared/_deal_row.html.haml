@@ -1,4 +1,5 @@
 - include_presell = include_presell || false
+- new_tab = new_tab || false
 
 - if deal.stored?
   - css_class = 'text-warning'
@@ -10,7 +11,7 @@
 %tr{class: css_class.to_s}
   %td
     - unless current_user.permission_level == "service_user"
-      = link_to edit_deal_path(deal) do
+      = link_to edit_deal_path(deal), target: (new_tab ? "_blank": "").to_s do
         %i.fa.fa-pencil.edit-icon
   %td= deal.client_last_name
   

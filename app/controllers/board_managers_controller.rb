@@ -132,6 +132,10 @@ class BoardManagersController < ApplicationController
       end
     end
 
+    if params.dig(:filters, :f_i_pre_sell) == '1'
+      @deals = @deals.where(f_i_pre_sell: true)
+    end
+
     @grouped_deals = @deals.group_by{|d| d.deal_date}.sort_by{ |k, v| k}.to_h
 
     respond_to do |format|
