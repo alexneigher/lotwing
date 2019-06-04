@@ -42,4 +42,4 @@
     = deal.report_status
 
   - if include_presell
-    %td= deal.f_i_pre_sell? ? "Yes" : "No"
+    %td{title: deal.f_i_pre_sell_product_list.presence || "N/A", data: {toggle: "tooltip",placement: "right"}}= deal.f_i_pre_sell? ? "Yes" : "No"
