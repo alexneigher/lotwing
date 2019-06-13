@@ -29,12 +29,15 @@ module Api
 
       @used_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {is_used: true})
       
+      @duplicate_shape_ids = @parking_spaces.includes(:tags).where(tags: {active: true}).select{|p| p.tags.length > 1}
+
       @empty_parking_space = @parking_spaces - [@new_vehicle_occupied_space + @used_vehicle_occupied_space].flatten
 
       render json: {
                     new_vehicle_occupied_spaces: @new_vehicle_occupied_space,
                     used_vehicle_occupied_spaces: @used_vehicle_occupied_space,
                     empty_parking_spaces: @empty_parking_space,
+                    duplicate_parked_spaces: @duplicate_shape_ids
                    }
     end
 
