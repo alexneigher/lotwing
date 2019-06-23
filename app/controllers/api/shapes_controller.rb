@@ -49,6 +49,7 @@ module Api
                               &.events
                               &.includes(tag: :shape)
                               &.where(acknowledged: false)
+                              &.where(tags: {active: true})
                               &.map{|e| EventSerializer.new(e, includes:[:user]) }
       end
       
