@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190625151809) do
+ActiveRecord::Schema.define(version: 20190625153943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -270,6 +270,7 @@ ActiveRecord::Schema.define(version: 20190625151809) do
     t.string "odometer"
     t.bigint "key_board_location_id"
     t.integer "creation_source", default: 0
+    t.integer "usage_type"
     t.index ["dealership_id"], name: "index_vehicles_on_dealership_id"
     t.index ["key_board_location_id"], name: "index_vehicles_on_key_board_location_id"
   end

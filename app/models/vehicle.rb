@@ -11,6 +11,8 @@ class Vehicle < ApplicationRecord
   belongs_to :key_board_location, optional: true
   
   enum creation_source: [:data_feed_created, :user_created]
+  
+  enum usage_type: [:is_new, :is_used, :loaner, :lease_return, :wholesale_unit]
 
   def full_description
     "#{year} #{make} #{model}"
