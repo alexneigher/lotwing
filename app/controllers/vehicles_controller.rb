@@ -6,7 +6,7 @@ class VehiclesController < ApplicationController
     filtered_vehicles = all_vehicles
 
     if params.dig(:filter).present?
-      filtered_vehicles = all_vehicles.where(is_used: false).where(model: params[:filter][:model])
+      filtered_vehicles = all_vehicles.where(usage_type: "is_new").where(model: params[:filter][:model])
     end
 
     if params.dig(:sortings).present?
@@ -54,6 +54,6 @@ class VehiclesController < ApplicationController
 
   private
     def vehicle_params
-      params.require(:vehicle).permit(:make, :model, :year, :vin, :dealership_id, :is_used )
+      params.require(:vehicle).permit(:make, :model, :year, :vin, :dealership_id, :usage_type )
     end
 end

@@ -12,11 +12,11 @@
           .col-lg-2
             = submit_tag 'Search', class: 'btn btn-primary btn-sm'
           .col-lg-6.text-right.pt-1
-            - grouped = @vehicles.group_by(&:is_used)
+            - grouped = @vehicles.group_by(&:usage_type)
             %span.p-1.bg-blue.rounded.text-white
-              = "New: #{grouped[false]&.count || 0}"
+              = "New: #{grouped['is_new']&.count || 0}"
             %span.p-1.bg-green.rounded.ml-1
-              = "Used: #{grouped[true]&.count || 0}"
+              = "Used: #{grouped['is_used']&.count || 0}"
 
       .table-responsive.vehicle-table{style: 'max-height: 75vh;'}
         %table.table.table-bordered.table-striped.table-sm
@@ -63,7 +63,7 @@
             - @vehicles.each do |vehicle|
               %tr{id: dom_id(vehicle)}
                 - if vehicle.current_parking_tag.present?
-                  %td{class: vehicle.is_used? ? 'bg-green' : 'bg-blue'}
+                  %td{class: vehicle.usage_type == "is_used" ? 'bg-green' : 'bg-blue'}
                     = vehicle.stock_number
                 - else
                   %td

@@ -25,9 +25,9 @@ module Api
     def parking_spaces
       @parking_spaces = current_user.dealership.shapes.where(shape_type: 'parking_space')
 
-      @new_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {is_used: false})
+      @new_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "is_new"})
 
-      @used_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {is_used: true})
+      @used_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "is_used"})
       
       @duplicate_shape_ids = @parking_spaces.includes(:tags).where(tags: {active: true}).select{|p| p.tags.length > 1}
 

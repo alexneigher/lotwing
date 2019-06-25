@@ -78,7 +78,7 @@ class DataFeedSyncService
             fuel: data[25],
             drive_line: data[26],
             status: data[28],
-            is_used: data[29].chomp == 'U' ? true : false,
+            usage_type: data[29].chomp == 'U' ? "is_used" : "is_new",
             age_in_days: data[30],
             color: data[31].chomp,
             creation_source: "data_feed_created",
