@@ -47,9 +47,9 @@ module Api
       @shape.vehicles.includes(:tags).where(tags: {active: true}).each do |vehicle|
         serialized_events << vehicle
                               &.events
+                              &.order(created_at: :desc)
                               &.includes(tag: :shape)
                               &.where(acknowledged: false)
-                              &.where(tags: {active: true})
                               &.map{|e| EventSerializer.new(e, includes:[:user]) }
       end
       
