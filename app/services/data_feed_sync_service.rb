@@ -81,11 +81,12 @@ class DataFeedSyncService
             is_used: data[29].chomp == 'U' ? true : false,
             age_in_days: data[30],
             color: data[31].chomp,
+            creation_source: "data_feed_created",
             raw_data_feed_output: data.join("|")
           )
       end
 
-      dealership.vehicles.where.not(stock_number: stock_numbers).destroy_all #delete all inventory that does not show up
+      dealership.vehicles.data_feed_created.where.not(stock_number: stock_numbers).destroy_all #delete all data feed inventory that does not show up
       dealership.data_sync.update(last_run_at: DateTime.now)
     end
 

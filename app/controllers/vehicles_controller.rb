@@ -37,7 +37,7 @@ class VehiclesController < ApplicationController
   end
 
   def create
-    Vehicle.create(vehicle_params)
+    Vehicle.user_created.create(vehicle_params)
     redirect_to vehicles_path
   end
 

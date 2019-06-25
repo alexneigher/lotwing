@@ -10,7 +10,7 @@ module Api
 
     # POST /api/vehicles
     def create
-      @vehicle = current_user.dealership.vehicles.create!(vehicle_params)
+      @vehicle = current_user.dealership.vehicles.user_created.create!(vehicle_params)
       json_response(@vehicle, :created)
     end
 
@@ -35,7 +35,7 @@ module Api
 
     def vehicle_params
       # whitelist params
-      params.permit(:title, :created_by)
+      params.permit(:title, :created_by, :stock_number, :odometer, :creation_source)
     end
 
     def set_vehicle
