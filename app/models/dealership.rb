@@ -6,6 +6,7 @@ class Dealership < ApplicationRecord
   has_many :shapes
   has_many :vehicles
 
+  has_many :key_board_locations
 
   has_many :deals
   has_many :dealer_trades

@@ -8,7 +8,8 @@ class Vehicle < ApplicationRecord
   
   has_one :parking_space, through: :current_parking_tag, source: :shape
 
-
+  belongs_to :key_board_location
+  
   def full_description
     "#{year} #{make} #{model}"
   end

@@ -37,7 +37,7 @@ class DataFeedSyncService
 
     #this part should be its own class separate from the FTP connection parts
     def update_vehicles
-      vins = []
+      stock_numbers = []
       #split file on new line, and do looping magic
       rows = @vehicle_data.split("\n")
       
@@ -46,12 +46,12 @@ class DataFeedSyncService
         # each row = 1 vehicle
         row = rows[i]
         data = row.split("|")
-        vins << data[0] #so we know which vehicles to delete later
+        stock_numbers << data[0] #so we know which vehicles to delete later
 
-        vehicle = dealership.vehicles.find_or_create_by(vin: data[0])
+        vehicle = dealership.vehicles.find_or_create_by(stock_number: data[1])
         vehicle
           .update(
-            stock_number: data[1],
+            vin: data[0],
             year: data[2],
             make: data[3],
             model: data[4],
@@ -85,7 +85,7 @@ class DataFeedSyncService
           )
       end
 
-      dealership.vehicles.where.not(vin: vins).destroy_all #delete all inventory that does not show up
+      dealership.vehicles.where.not(stock_number: stock_numbers).destroy_all #delete all inventory that does not show up
       dealership.data_sync.update(last_run_at: DateTime.now)
     end
 

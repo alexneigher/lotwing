@@ -1,68 +1,23 @@
 %h3.text-center= @dealership.name
 
 .container
-  = form_for @dealership, url: dealership_path(@dealership), method: :put do |f|
-    .row
-      .col-md-9
-        .card
-          
-          .card-body
-            - if current_user.permission_level == "admin"
-              .form-group
-                %label Dealership Name
-                = f.text_field :name, class: 'form-control'
-            .form-group
-              .row
-                .col-6
-                  %label MTD Start Date
-                  = f.text_field :custom_mtd_start_date, class: 'form-control datepicker'
+  %ul.nav.nav-tabs
+    %li
+      %a.nav-link.active{"data-toggle" => "tab", :href => "#dealership_info"} Dealership Info
+    - unless current_user.permission_level == "sales_rep"
+      %li
+        %a.nav-link{"data-toggle" => "tab", :href => "#team_members"} Team Members
+    %li
+      %a.nav-link{"data-toggle" => "tab", :href => "#custom_fields"} Custom Fields
+  .tab-content.pt-3
+    #dealership_info.tab-pane.active
+      = render partial: 'dealerships/partials/dealership_info'
+    #team_members.tab-pane
+      = render partial: 'dealerships/partials/team_members'
 
-        .card.mt-2
-          .card-body
-            %label  New Note Email Notifications
-            = f.text_field :new_note_notification_addresses, placeholder: 'ex: email@gmail.com, email1@gmail.com', class: 'form-control'
-            .text-muted.small
-              (separate by commas)
-      .col-md-3
-        .card.bg-light
-          - if current_user.permission_level == "admin"
-            .card-body
-              Data Sync
-              %hr
-              %label Provider Id
-              = f.fields_for :data_sync do |ff|
-                = ff.text_field :provider_id, class: 'form-control'
-              %hr
-              %small
-                %em Last sync:
-                = @dealership.data_sync.last_run_at&.in_time_zone("Pacific Time (US & Canada)")&.strftime("%b %e, %Y %l:%M %p") || "N/A"
-        .mt-4
-          = f.submit 'Update settings', class: 'btn btn-primary btn-block'
-
-  %hr
-  - unless current_user.permission_level == "sales_rep"
-    .row
-      .col-md-4
-        %h4 
-          Team members
-          %small
-            .small
-              = link_to "Add new", new_dealership_user_path(@dealership), remote: true
-        %ul.list-group
-          - @dealership.users.each do |user|
-            %li.list-group-item
-              - if user.reset_password_token.present?
-                %i.fa.fa-unlink
-              = link_to "#{user.full_name} (#{user.permission_level.titleize})", dealership_user_path(current_user.dealership, user), remote: true
-              %br
-              - if user.accepted_service_license_agreement
-                %small.text-muted
-                  Terms accepted #{user.accepted_service_license_agreement_datetime&.in_time_zone("Pacific Time (US & Canada)")&.strftime("%b %e, %Y")}
-      .col-md-8
-        #userShow  
-
-        #newUserForm
-
+    #custom_fields.tab-pane
+      = render partial: 'dealerships/partials/custom_fields'
+      
 :javascript 
   $(function() {
     $('.datepicker').datepicker({

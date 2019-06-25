@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190331173143) do
+ActiveRecord::Schema.define(version: 20190625143027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,6 +161,14 @@ ActiveRecord::Schema.define(version: 20190331173143) do
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
+  create_table "key_board_locations", force: :cascade do |t|
+    t.string "name"
+    t.bigint "dealership_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dealership_id"], name: "index_key_board_locations_on_dealership_id"
+  end
+
   create_table "resolutions", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "user_id"
@@ -259,7 +267,10 @@ ActiveRecord::Schema.define(version: 20190331173143) do
     t.string "status"
     t.text "raw_data_feed_output"
     t.integer "age_in_days"
+    t.string "odometer"
+    t.bigint "key_board_location_id"
     t.index ["dealership_id"], name: "index_vehicles_on_dealership_id"
+    t.index ["key_board_location_id"], name: "index_vehicles_on_key_board_location_id"
   end
 
   create_table "versions", force: :cascade do |t|

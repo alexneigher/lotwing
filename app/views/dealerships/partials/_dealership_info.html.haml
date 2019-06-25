@@ -1,0 +1,36 @@
+= form_for @dealership, url: dealership_path(@dealership), method: :put do |f|
+  .row
+    .col-md-9
+      .card
+        .card-body
+          - if current_user.permission_level == "admin"
+            .form-group
+              %label Dealership Name
+              = f.text_field :name, class: 'form-control'
+          .form-group
+            .row
+              .col-6
+                %label MTD Start Date
+                = f.text_field :custom_mtd_start_date, class: 'form-control datepicker'
+
+      .card.mt-2
+        .card-body
+          %label  New Note Email Notifications
+          = f.text_field :new_note_notification_addresses, placeholder: 'ex: email@gmail.com, email1@gmail.com', class: 'form-control'
+          .text-muted.small
+            (separate by commas)
+    .col-md-3
+      .card.bg-light
+        - if current_user.permission_level == "admin"
+          .card-body
+            Data Sync
+            %hr
+            %label Provider Id
+            = f.fields_for :data_sync do |ff|
+              = ff.text_field :provider_id, class: 'form-control'
+            %hr
+            %small
+              %em Last sync:
+              = @dealership.data_sync.last_run_at&.in_time_zone("Pacific Time (US & Canada)")&.strftime("%b %e, %Y %l:%M %p") || "N/A"
+      .mt-4
+        = f.submit 'Update settings', class: 'btn btn-primary btn-block'

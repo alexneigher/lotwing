@@ -57,6 +57,8 @@ Rails.application.routes.draw do
   
   resources :service_license_agreement, only: [:new, :create]
   
+  resources :key_board_locations, only: [:create]
+
   # UI for drawing shapes on the map and saving them
   get :map_builder, to: 'home#map_builder'
 

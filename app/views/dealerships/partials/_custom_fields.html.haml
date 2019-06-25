@@ -1,0 +1,15 @@
+.row
+  .col-md-4
+    .card
+      .card-header
+        Key Board Locations
+      %ul.list-group.list-group-flush
+        - @dealership.key_board_locations.each do |k|
+          %li.list-group-item= k.name
+      .card-body
+        = form_for :key_board_location, url: key_board_locations_path(), method: :post do |f|
+          = f.text_field :name, class: 'form-control form-control-sm', placeholder: 'Name'
+          = f.submit 'Save', class: 'btn btn-sm btn-primary mt-2 pull-right'
+
+          
+        
