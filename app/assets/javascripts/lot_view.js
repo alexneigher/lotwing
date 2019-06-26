@@ -27,8 +27,10 @@ $(function(){
 
   map.on('click', 'new_vehicle_occupied_spaces', open_popup);
   map.on('click', 'used_vehicle_occupied_spaces', open_popup);
-
-
+  map.on('click', 'loaner_occupied_spaces', open_popup);
+  map.on('click', 'lease_return_occupied_spaces', open_popup);
+  map.on('click', 'wholesale_unit_occupied_spaces', open_popup);
+  
   window.map.on('load', function () {
     fetch_data_and_render('parking_lots');
     fetch_data_and_render('buildings');
@@ -41,6 +43,9 @@ $(function(){
         console.log(data);
         add_shapes_to_map(data, window.map, 'used_vehicle_occupied_spaces');
         add_shapes_to_map(data, window.map, 'new_vehicle_occupied_spaces');
+        add_shapes_to_map(data, window.map, 'loaner_occupied_spaces');
+        add_shapes_to_map(data, window.map, 'lease_return_occupied_spaces');
+        add_shapes_to_map(data, window.map, 'wholesale_unit_occupied_spaces');
         add_shapes_to_map(data, window.map, 'empty_parking_spaces');
         add_shapes_to_map(data, window.map, 'duplicate_parked_spaces');
 

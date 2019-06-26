@@ -83,6 +83,9 @@ function map_shape_type_to_color(shape_type) {
                 "used_vehicle_occupied_spaces": "#66CC00",
                 'empty_parking_spaces': '#FFFFFF',
                 "duplicate_parked_spaces": "#ff0000",
+                "loaner_occupied_spaces": "#E8F051",
+                "lease_return_occupied_spaces": "#D13CEA",
+                "wholesale_unit_occupied_spaces": "#8D8C88",
                 'parking_spaces': '#FFFFFF',
                 "parking_lots": '#CCCCCC',
                 "buildings": '#FF9933',
@@ -153,9 +156,11 @@ function map_event_type_to_size(event_type){
 }
 
 function shape_opacity(most_recently_tagged_at, shape_type){
+  vehicle_shapes = ["used_vehicle_occupied_spaces", "new_vehicle_occupied_spaces", "loaner_occupied_spaces", "lease_return_occupied_spaces", "wholesale_unit_occupied_spaces"]
+  
   if (shape_type == 'parking_lots'){
     return 0.4
-  }else if(shape_type == "used_vehicle_occupied_spaces" || shape_type == "new_vehicle_occupied_spaces"){
+  }else if(vehicle_shapes.includes(shape_type)){
     
     // for parking spaces that are more than 12 hours old, make them transparent
     hours_old = Math.abs(new Date() - new Date(most_recently_tagged_at)) / 36e5
