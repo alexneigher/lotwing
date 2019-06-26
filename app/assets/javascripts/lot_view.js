@@ -113,7 +113,7 @@ function tooltip_html(data){
     str += render_vehicle_year_make(data.vehicles[i]) + 
             render_vehicle_stock_number(data.vehicles[i]) +
             render_vehicle_color(data.vehicles[i]) +
-            "<div style='float:left;margin-top:6px;'>"+days_ago(data.vehicles[i].created_at)+" days in stock</div><div style='clear:both;'></div>" +
+            "<div style='float:left;margin-top:6px;'>"+ data.vehicles[i].age_in_days +" days in stock</div><div style='clear:both;'></div>" +
             render_event(data.events[i])
   }
   
