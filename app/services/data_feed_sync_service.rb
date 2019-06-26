@@ -46,7 +46,7 @@ class DataFeedSyncService
         # each row = 1 vehicle
         row = rows[i]
         data = row.split("|")
-        stock_numbers << data[0] #so we know which vehicles to delete later
+        stock_numbers << data[1] #so we know which vehicles to delete later
 
         vehicle = dealership.vehicles.find_or_create_by(stock_number: data[1])
         vehicle
