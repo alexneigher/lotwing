@@ -29,7 +29,8 @@ $(function(){
 
   RotateMode.rotateend = function(selectedFeature) {
     console.log('ROTATEEND');
-    console.log('feature: ',selectedFeature);
+
+    console.log('feature: ', selectedFeature);
   }
 
   window.map.on('draw.create', function (e) {
@@ -51,7 +52,6 @@ $(function(){
       success: function(data){
         console.log(data);
         add_shapes_to_map(data, window.map, 'parking_lots');
-        add_shapes_to_map(data, window.map, 'parking_areas');
         add_shapes_to_map(data, window.map, 'buildings');
         add_shapes_to_map(data, window.map, 'parking_spaces');
 
