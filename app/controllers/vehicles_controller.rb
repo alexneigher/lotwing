@@ -33,6 +33,12 @@ class VehiclesController < ApplicationController
     @vehicles = vehicles
   end
 
+  #used to toggle the map modal only
+  def show_map
+    @vehicle = Vehicle.find(params[:vehicle_id])
+    dealership = current_user.dealership
+  end
+
   def new
   end
 

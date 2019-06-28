@@ -80,6 +80,7 @@ Rails.application.routes.draw do
   end
   
   resources :vehicles do
+    get :show_map
     collection do
       get :search
     end

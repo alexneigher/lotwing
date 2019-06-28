@@ -64,7 +64,8 @@
               %tr{id: dom_id(vehicle)}
                 - if vehicle.current_parking_tag.present?
                   %td{class: vehicle.usage_type == "is_used" ? 'bg-green' : 'bg-blue'}
-                    = vehicle.stock_number
+                    = link_to vehicle_show_map_path(vehicle), remote: true do
+                      = vehicle.stock_number
                 - else
                   %td
                     = vehicle.stock_number
