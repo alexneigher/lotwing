@@ -27,7 +27,6 @@ $(function(){
       dataType: "json",
       success: function(data){
         add_shapes_to_map(data, window.map, 'parking_lots');
-        add_shapes_to_map(data, window.map, 'parking_areas');
         add_shapes_to_map(data, window.map, 'buildings');
         add_shapes_to_map(data, window.map, 'parking_spaces');
 
