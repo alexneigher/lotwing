@@ -1,5 +1,5 @@
 module Api
-  class KeyboardLocationsController < Api::BaseController
+  class KeyBoardLocationsController < Api::BaseController
 
     # GET /api/key_board_locations
     def index
