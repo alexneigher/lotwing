@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190629034953) do
+ActiveRecord::Schema.define(version: 20190629035445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -266,7 +266,6 @@ ActiveRecord::Schema.define(version: 20190629034953) do
     t.string "status"
     t.text "raw_data_feed_output"
     t.integer "age_in_days"
-    t.string "odometer"
     t.integer "creation_source", default: 0
     t.integer "usage_type"
     t.string "key_board_location_name"
