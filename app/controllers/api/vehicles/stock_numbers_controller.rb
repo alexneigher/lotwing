@@ -14,7 +14,8 @@ module Api
 
       def show
         @vehicle = current_user.dealership.vehicles.find_by_stock_number(params[:stock_number])
-        json_response(@vehicle)
+        render json: { vehicle: @vehicle, current_parking_space: @vehicle.parking_space}
+
       end
 
     end
