@@ -1,0 +1,7 @@
+.card
+  .card-header
+    Edit
+  .card-body
+    = form_for :key_board_location, url: key_board_location_path(@key_board_location), method: :put do |f|
+      = f.text_field :name, class: 'form-control mb-2'
+      = f.submit 'Update', class: 'btn btn-sm btn-secondary pull-right'
