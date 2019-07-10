@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190629035445) do
+ActiveRecord::Schema.define(version: 20190710051700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -235,7 +235,7 @@ ActiveRecord::Schema.define(version: 20190629035445) do
     t.string "model"
     t.string "year"
     t.string "color"
-    t.integer "mileage"
+    t.integer "mileage", default: 0
     t.bigint "dealership_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -265,7 +265,7 @@ ActiveRecord::Schema.define(version: 20190629035445) do
     t.string "rear_wheel"
     t.string "status"
     t.text "raw_data_feed_output"
-    t.integer "age_in_days"
+    t.integer "age_in_days", default: 0
     t.integer "creation_source", default: 0
     t.integer "usage_type"
     t.string "key_board_location_name"
