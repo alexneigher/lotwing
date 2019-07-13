@@ -57,6 +57,14 @@ class VehiclesController < ApplicationController
     render :index
   end
 
+  def destroy
+    dealership = current_user.dealership
+    vehicle = dealership.vehicles.find(params[:id])
+    vehicle.destroy
+
+    redirect_to vehicles_path
+  end
+
 
   private
     def vehicle_params

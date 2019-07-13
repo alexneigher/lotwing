@@ -36,7 +36,10 @@
       %a#showVehicleDataFeed{"data-target" => "#vehicleDataFeed", "data-toggle" => "modal", :type => "link", href: ''}
         %i.fa.fa-laptop
         View Data Feed
-    .col
+    .col.text-right
+      = link_to vehicle_path(@vehicle), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure?'} do
+        %i.fa.fa-trash
+        Delete
 
 / Data Feed Modal
 #vehicleDataFeed.modal{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}
