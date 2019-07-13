@@ -37,9 +37,10 @@
         %i.fa.fa-laptop
         View Data Feed
     .col.text-right
-      = link_to vehicle_path(@vehicle), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure?'} do
-        %i.fa.fa-trash
-        Delete
+      - if current_user.permission_level == "admin" || current_user.permission_level == "sales_manager"
+        = link_to vehicle_path(@vehicle), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure?'} do
+          %i.fa.fa-trash
+          Delete
 
 / Data Feed Modal
 #vehicleDataFeed.modal{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}
