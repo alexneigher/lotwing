@@ -58,7 +58,7 @@ class DataFeedSyncService
             trim_level: data[5],
             body_style: data[6],
             transmission: data[7],
-            mileage: data[8],
+            mileage: data[8].presence || 0,
             engine: data[9],
             engine_size: data[10],
             model_code: data[11],
@@ -79,7 +79,7 @@ class DataFeedSyncService
             drive_line: data[26],
             status: data[28],
             usage_type: data[29].chomp == 'U' ? "is_used" : "is_new",
-            age_in_days: data[30],
+            age_in_days: data[30].presence || 0,
             color: data[31].chomp,
             creation_source: "data_feed_created",
             raw_data_feed_output: data.join("|")
