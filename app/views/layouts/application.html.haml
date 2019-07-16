@@ -67,6 +67,10 @@
               = link_to dealer_trades_path, class: 'nav-link' + (' active' if params[:controller] == 'dealer_trades').to_s do
                 Dealer Trades
 
+            %li.nav-item
+              = link_to service_tickets_path, class: 'nav-link' + (' active' if params[:controller] == 'service_tickets').to_s do
+                Service Tickets
+
           - if current_user.permission_level == 'admin'
             %li.nav-item
               = link_to new_tag_path, class: 'nav-link' do

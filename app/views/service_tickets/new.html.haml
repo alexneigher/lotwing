@@ -1,0 +1,50 @@
+
+.container
+  = form_for :service_ticket, url: service_tickets_path, method: :post do |f|
+    .row.mt-4
+      .col-md-2
+        =# f.date_field :deal_date, value: DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date, class: 'form-control'
+        =# f.text_field :client_last_name, placeholder: 'Client Last Name', class: 'form-control mb-1'
+        =# f.text_field :source, placeholder: 'Source', class: 'form-control mb-1'
+        %div{style: 'position:relative'}
+          %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin{style:'position:absolute;right:10px;top:11px;'}
+          = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control mb-1'
+        =# f.text_field :trade, placeholder: 'Trade', class: 'form-control mb-1'
+        =# f.select :sales_rep, options_for_select(current_user.dealership.users.sales_rep.pluck(:full_name)), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
+        =# f.select :split_rep, options_for_select(current_user.dealership.users.sales_rep.pluck(:full_name)), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
+        =# f.text_field :city, placeholder: 'City', class: 'form-control mb-1'
+      .col-md-2
+        = f.text_field :vin, placeholder: 'vin', class: 'form-control mb-1'
+        = f.text_field :mileage, placeholder: 'mileage', class: 'form-control mb-1'
+        = f.text_field :make, placeholder: 'Make', class: 'form-control mb-1'
+        = f.text_field :model, placeholder: 'Model', class: 'form-control mb-1'
+        = f.text_field :year, placeholder: 'Year', class: 'form-control mb-1'
+        = f.text_field :color, placeholder: 'Color'
+
+:javascript
+  $(function(){
+    //setup before functions
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 500;  //time in ms
+    var $input = $('#service_ticket_stock_number');
+
+    //on keyup, start the countdown
+    $input.on('input', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    });
+
+    //user is "finished typing," populate the hidden form, and submit that one
+    function doneTyping () {
+      if ($input.val()){
+        $('.loading-spin').removeClass('d-none');
+        
+        $.ajax({
+          url:"/service_tickets/stock_number_search",
+          method: 'PUT',
+          data: { stock_number: $input.val() }
+        });
+      }
+    }
+
+  })

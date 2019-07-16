@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190713023402) do
+ActiveRecord::Schema.define(version: 20190716033355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,6 +177,26 @@ ActiveRecord::Schema.define(version: 20190713023402) do
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_resolutions_on_event_id"
     t.index ["user_id"], name: "index_resolutions_on_user_id"
+  end
+
+  create_table "service_tickets", force: :cascade do |t|
+    t.bigint "dealership_id"
+    t.bigint "created_by_user_id"
+    t.bigint "completed_by_user_id"
+    t.string "stock_number"
+    t.string "vin"
+    t.string "mileage"
+    t.string "year"
+    t.string "make"
+    t.string "model"
+    t.string "color"
+    t.string "status"
+    t.datetime "complete_by_datetime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["completed_by_user_id"], name: "index_service_tickets_on_completed_by_user_id"
+    t.index ["created_by_user_id"], name: "index_service_tickets_on_created_by_user_id"
+    t.index ["dealership_id"], name: "index_service_tickets_on_dealership_id"
   end
 
   create_table "shapes", force: :cascade do |t|

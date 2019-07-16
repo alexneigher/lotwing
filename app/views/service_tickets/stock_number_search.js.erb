@@ -1,0 +1,10 @@
+$('.loading-spin').addClass('d-none');
+
+<%- if @vehicle %>
+  $('#service_ticket_vin').val("<%= @vehicle.vin %>");
+  $('#service_ticket_make').val("<%= @vehicle.make %>");
+  $('#service_ticket_mileage').val("<%= @vehicle.mileage %>");
+  $('#service_ticket_model').val("<%= @vehicle.model %>");
+  $('#service_ticket_color').val("<%= @vehicle.color %>");
+  $('#service_ticket_year').val("<%= @vehicle.year %>");
+<% end %>

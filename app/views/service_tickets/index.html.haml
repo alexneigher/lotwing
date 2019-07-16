@@ -1,0 +1,39 @@
+.container-fluid
+  .row.mb-1
+    .col-md-2
+      %h3.text-center Service Tickets
+      
+    .col-md-10   
+
+      .table-responsive.small{style: 'max-height: 80vh;'}
+        %table.table.table-striped.table-sm.mb-0.board-manager-table
+          %thead
+            %tr
+              %th
+                %i.fa.fa-pencil
+              %th Date
+              %th Time
+              %th Stock #
+              %th VIN
+              %th Year
+              %th Written By
+              %th Status
+              
+              
+          %tbody
+            - @service_tickets.each do |service_ticket|
+              %tr
+                %td
+                  = link_to edit_service_ticket_path(service_ticket) do
+                    %i.fa.fa-pencil.edit-icon
+                %td= service_ticket.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%Y-%m-%d")
+                %td= service_ticket.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%l:%M %p")
+                %td= service_ticket.stock_number
+                %td= service_ticket.vin
+                %td= service_ticket.year
+                %td= service_ticket.created_by_user.full_name
+                %td.text-danger= service_ticket.status
+   
+                
+
+            

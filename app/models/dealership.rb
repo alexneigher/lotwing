@@ -12,6 +12,7 @@ class Dealership < ApplicationRecord
   has_many :dealer_trades
   has_many :suggested_trade_dealerships
   has_many :check_requests
+  has_many :service_tickets
 
   has_one :data_sync
   accepts_nested_attributes_for :data_sync

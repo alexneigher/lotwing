@@ -54,6 +54,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :service_tickets do
+    collection do
+      put :stock_number_search
+    end
+  end
+
   resources :suggested_trade_dealerships, only: :destroy
   
   resources :service_license_agreement, only: [:new, :create]
