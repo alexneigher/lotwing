@@ -1,14 +1,13 @@
 .container
-  %h4 New Service Ticket
-  %hr
-  = form_for :service_ticket, url: service_tickets_path, method: :post do |f|
-    = render partial: 'service_tickets/partials/form', locals: {f: f}
+  %h4 Edit Service Ticket
 
-    = f.submit "Create Service Ticket", class: 'btn btn-primary mb-3'
-    %br
-    %small.text-muted
-      ( You must create the ticket 
-      before you can add jobs to it.)
+  = link_to "Manage this ticket", service_ticket_path(@service_ticket)
+  %hr
+  = form_for :service_ticket, url: service_ticket_path(@service_ticket), method: :put do |f|
+    = render partial: 'service_tickets/partials/form', locals: {f: f}
+    
+    
+    = f.submit "Update Service Ticket", class: 'btn btn-primary mb-3'
       
 :javascript
   $(function(){

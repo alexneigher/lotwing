@@ -1,0 +1,43 @@
+.row.mt-4
+  .col-md-4
+    %label Ticket Status
+    = f.select :status, options_for_select(['New', 'In Progress', 'Complete'], @service_ticket&.status), {}, class: 'form-control'
+
+  .col-md-4
+    = hidden_field_tag 'service_ticket[created_by_user_id]', current_user.id
+    %label Stock Number
+    .form-group
+      %div{style: 'position:relative'}
+        %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin{style:'position:absolute;right:10px;top:11px;'}
+        = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control'
+      
+    .row
+      .col-6
+        .form-group
+          %label Vin
+          = f.text_field :vin, placeholder: 'VIN', class: 'form-control mb-1'
+        .form-group
+          %label Mileage
+          = f.text_field :mileage, placeholder: 'Mileage', class: 'form-control mb-1'
+        .form-group
+          %label Make
+          = f.text_field :make, placeholder: 'Make', class: 'form-control mb-1'
+      .col-6
+        .form-group
+          %label Model
+          = f.text_field :model, placeholder: 'Model', class: 'form-control mb-1'
+        .form-group
+          %label Year
+          = f.text_field :year, placeholder: 'Year', class: 'form-control mb-1'
+        .form-group
+          %label Color
+          = f.text_field :color, placeholder: 'Color', class: 'form-control'
+
+  .col-md-4
+    .form-group
+      %label Complete By
+      = f.text_field :complete_by_datetime, value: (@service_ticket&.complete_by_datetime || DateTime.now).in_time_zone("Pacific Time (US & Canada)").strftime("%d %B %Y %l:%M %p"), class: 'form-control'
+
+      %small.text-muted
+        (Pacific Time)
+  

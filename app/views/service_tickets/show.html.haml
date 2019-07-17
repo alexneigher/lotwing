@@ -1,0 +1,62 @@
+.container
+  .row.mt-3
+    .col-md-4
+      %h4 
+        Service Ticket For: 
+        %span.text-orange= @service_ticket.stock_number
+    .col-md-5
+      %h4 
+        Complete By: 
+        %span.text-orange= @service_ticket.complete_by_datetime.in_time_zone("Pacific Time (US & Canada)").strftime("%d %B %Y %l:%M %p")
+    .col-md-3
+      %h4 
+        Status: 
+        %span.text-orange= @service_ticket.status
+
+  %hr
+
+  .row
+    .col-8
+      .table-responsive.small
+        %table.table.table-borderless
+          %thead
+            %tr
+              %th.pb-0.text-orange Date
+              %th.pb-0.text-orange Time
+              %th.pb-0.text-orange VIN
+              %th.pb-0.text-orange Miles
+              %th.pb-0.text-orange Year
+              %th.pb-0
+
+          %tbody
+            %tr
+              %td.py-1
+                = @service_ticket.created_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%Y')
+              %td.py-1
+                = @service_ticket.created_at.in_time_zone("Pacific Time (US & Canada)").strftime('%l:%M %p')
+              %td.py-1
+                = @service_ticket.vin
+              %td.py-1
+                = @service_ticket.mileage
+              %td.py-1
+                = @service_ticket.year
+              %td.py-1 
+                = link_to "#" do
+                  %i.fa.fa-map-marker 
+                  show on map
+            %tr
+              %td{colspan: 6}
+                = @service_ticket.color
+    .col-4
+      .card
+        .card-body
+          %h6.text-center For service department
+
+          .row
+            .col-md-6
+              = link_to service_ticket_path(@service_ticket, service_ticket: {status: 'In Progress'}), method: :put do
+                %btn.btn.btn-primary.btn-block.btn-sm Mark in progress 
+            .col-md-6
+              = link_to service_ticket_path(@service_ticket, service_ticket: {status: 'Complete'}), method: :put do
+                %btn.btn.btn-success.btn-block.btn-sm Mark complete 
+  .row

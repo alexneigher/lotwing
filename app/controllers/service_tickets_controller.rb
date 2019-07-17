@@ -5,14 +5,43 @@ class ServiceTicketsController < ApplicationController
   end
 
   def new
+
   end
 
-  def create
+  def show
+    @service_ticket = current_user.dealership.service_tickets.find(params[:id])
+  end
 
+  def create   
+    if service_ticket_params[:complete_by_datetime].present?
+      datetime = DateTime.strptime("#{service_ticket_params[:complete_by_datetime]} PST", "%d %B %Y %l:%M %p %Z")
+      formatted_complete_by_datetime = {complete_by_datetime: datetime}
+    end
+    
+    @service_ticket = current_user.dealership.service_tickets.create(service_ticket_params.merge(formatted_complete_by_datetime))
+    
+    if @service_ticket.valid?
+      redirect_to service_ticket_path(@service_ticket)
+    else
+      raise @service_ticket.errors.full_messages.to_s
+    end
   end
 
   def edit
+    @service_ticket = current_user.dealership.service_tickets.find(params[:id])
+  end
 
+  def update
+    @service_ticket = current_user.dealership.service_tickets.find(params[:id])
+
+    if service_ticket_params[:complete_by_datetime].present?
+      datetime = DateTime.strptime("#{service_ticket_params[:complete_by_datetime]} PST", "%d %B %Y %l:%M %p %Z")
+      formatted_complete_by_datetime = {complete_by_datetime: datetime}
+    end
+    
+    @service_ticket.update(service_ticket_params.merge(formatted_complete_by_datetime))
+
+    redirect_to service_ticket_path(@service_ticket)
   end
 
   def stock_number_search
