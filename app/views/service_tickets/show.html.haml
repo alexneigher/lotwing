@@ -7,7 +7,8 @@
     .col-md-5
       %h4 
         Complete By: 
-        %span.text-orange= @service_ticket.complete_by_datetime.in_time_zone("Pacific Time (US & Canada)").strftime("%d %B %Y %l:%M %p")
+        - if @service_ticket.complete_by_datetime.present?
+          %span.text-orange= @service_ticket.complete_by_datetime.in_time_zone("Pacific Time (US & Canada)").strftime("%d %B %Y %l:%M %p")
     .col-md-3
       %h4 
         Status: 
@@ -59,4 +60,4 @@
             .col-md-6
               = link_to service_ticket_path(@service_ticket, service_ticket: {status: 'Complete'}), method: :put do
                 %btn.btn.btn-success.btn-block.btn-sm Mark complete 
-  .row
+%hr

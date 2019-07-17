@@ -21,7 +21,7 @@
               
               
           %tbody
-            - @service_tickets.incomplete.order(:created_at).each do |service_ticket|
+            - @service_tickets.incomplete.order(created_at: :desc).each do |service_ticket|
               %tr
                 %td
                   = link_to edit_service_ticket_path(service_ticket) do
@@ -39,7 +39,7 @@
                 %strong COMPLETED
 
 
-            - @service_tickets.complete.order(:created_at).each do |service_ticket|
+            - @service_tickets.complete.order(created_at: :desc).each do |service_ticket|
               %tr
                 %td
                   = link_to edit_service_ticket_path(service_ticket) do

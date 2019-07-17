@@ -18,6 +18,9 @@
               %td
                 - if event.event_type == "note" && !event.acknowledged?
                   = link_to "clear note", new_event_resolution_path(event), remote: true
+                  %br
+                  %small
+                    = link_to 'create service ticket', service_tickets_path(service_ticket: {stock_number: @vehicle.stock_number, make: @vehicle.make, model: @vehicle_model, created_by_user_id: current_user.id, status: 'In Progress', mileage: @vehicle.mileage, color: @vehicle.color, year: @vehicle.year, vin: @vehicle.vin}), method: :post
               %td
                 - event.resolutions.each do |resolution|
                   %div.py-1

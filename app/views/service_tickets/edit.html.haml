@@ -1,8 +1,7 @@
 .container
-  %h4 Edit Service Ticket
-
-  = link_to "Manage this ticket", service_ticket_path(@service_ticket)
+  = link_to "Manage this ticket", service_ticket_path(@service_ticket), class: 'btn btn-lg btn-success'
   %hr
+  %h4 Edit details
   = form_for :service_ticket, url: service_ticket_path(@service_ticket), method: :put do |f|
     = render partial: 'service_tickets/partials/form', locals: {f: f}
     
