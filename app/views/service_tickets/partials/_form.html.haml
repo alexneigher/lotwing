@@ -36,7 +36,7 @@
   .col-md-4
     .form-group
       %label Complete By
-      = f.text_field :complete_by_datetime, value: (@service_ticket&.complete_by_datetime || DateTime.now).in_time_zone("Pacific Time (US & Canada)").strftime("%d %B %Y %l:%M %p"), class: 'form-control'
+      = f.text_field :complete_by_datetime, value: (@service_ticket&.complete_by_datetime || DateTime.current).in_time_zone("Pacific Time (US & Canada)").strftime("%d %B %Y %l:%M %p %Z"), class: 'form-control'
 
       %small.text-muted
         (Pacific Time)

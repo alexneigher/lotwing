@@ -14,7 +14,7 @@ class ServiceTicketsController < ApplicationController
 
   def create   
     if service_ticket_params[:complete_by_datetime].present?
-      datetime = DateTime.strptime("#{service_ticket_params[:complete_by_datetime]} PST", "%d %B %Y %l:%M %p %Z")
+      datetime = DateTime.strptime("#{service_ticket_params[:complete_by_datetime]}", "%d %B %Y %l:%M %p %Z")
       formatted_complete_by_datetime = {complete_by_datetime: datetime}
     end
     
