@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190716033355) do
+ActiveRecord::Schema.define(version: 20190719151152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20190716033355) do
     t.decimal "map_zoom"
     t.date "custom_mtd_start_date"
     t.string "new_note_notification_addresses"
+    t.string "new_service_ticket_notification_addresses"
   end
 
   create_table "deals", force: :cascade do |t|

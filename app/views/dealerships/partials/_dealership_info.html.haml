@@ -15,10 +15,18 @@
 
       .card.mt-2
         .card-body
-          %label  New Note Email Notifications
-          = f.text_field :new_note_notification_addresses, placeholder: 'ex: email@gmail.com, email1@gmail.com', class: 'form-control'
-          .text-muted.small
-            (separate by commas)
+          .row
+            .col-6
+              %label Note Email Notifications
+              = f.text_field :new_note_notification_addresses, placeholder: 'ex: email@gmail.com, email1@gmail.com', class: 'form-control'
+              .text-muted.small
+                (separate by commas)
+            .col-6
+              %label Service Ticket Email Notifications
+              = f.text_field :new_service_ticket_notification_addresses, placeholder: 'email@gmail.com, email1@gmail.com', class: 'form-control'
+              .text-muted.small
+                (separate by commas)
+
     .col-md-3
       .card.bg-light
         - if current_user.permission_level == "admin"

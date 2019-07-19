@@ -6,4 +6,14 @@ class ServiceTicket < ApplicationRecord
 
   scope :incomplete, -> {where.not(status: 'Complete')}
   scope :complete, -> {where(status: 'Complete')}
+
+  
+  after_create :notify_dealership
+
+  private
+    def notify_dealership
+      ServiceTicketMailer.notify_about_service_ticket_created(self)
+    end
+
+
 end
