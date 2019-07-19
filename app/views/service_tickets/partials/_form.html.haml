@@ -4,7 +4,7 @@
     = f.select :status, options_for_select(['New', 'In Progress', 'Complete'], @service_ticket&.status), {}, class: 'form-control'
 
   .col-md-4
-    = hidden_field_tag 'service_ticket[created_by_user_id]', current_user.id
+    = hidden_field_tag 'service_ticket[created_by_user_id]', @service_ticket&.created_by_user_id || current_user.id
     %label Stock Number
     .form-group
       %div{style: 'position:relative'}
