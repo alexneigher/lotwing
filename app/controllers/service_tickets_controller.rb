@@ -9,7 +9,11 @@ class ServiceTicketsController < ApplicationController
   end
 
   def show
-    @service_ticket = current_user.dealership.service_tickets.find(params[:id])
+    @service_ticket = current_user
+                        .dealership
+                        .service_tickets
+                        .includes(service_ticket_jobs: :user)
+                        .find(params[:id])
   end
 
   def create   

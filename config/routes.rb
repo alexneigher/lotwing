@@ -60,6 +60,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :service_ticket_jobs, only: :create
+
   resources :suggested_trade_dealerships, only: :destroy
   
   resources :service_license_agreement, only: [:new, :create]

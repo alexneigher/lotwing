@@ -62,4 +62,29 @@
             .col-md-6
               = link_to service_ticket_path(@service_ticket, service_ticket: {status: 'Complete'}), method: :put do
                 %btn.btn.btn-success.btn-block.btn-sm Mark complete 
-%hr
+  .row
+    .col-9
+      %h4 Jobs
+
+      - @service_ticket.service_ticket_jobs.each do |job|
+        .card.shadow-sm
+          .card-body
+            %small.text-muted= "#{job.user.full_name} - #{job.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m-%e-%Y")}"
+            %br
+            %p.pt-3
+              = job.note
+
+  %hr
+  .row
+    .col-5
+      .card
+        .card-header
+          Add new Job
+        .card-body
+          = form_for :service_ticket_job, url: service_ticket_jobs_path(), method: :post do |f|
+            = f.hidden_field :service_ticket_id, value: @service_ticket.id
+            = f.hidden_field :user_id, value: current_user.id
+            .form-group
+              %label Note
+              = f.text_area :note, rows: 3, placeholder: 'The blinker fluid is low', class: 'form-control'
+            = f.submit "Create Job", class: 'btn btn-sm pull-right btn-primary'

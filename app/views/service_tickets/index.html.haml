@@ -19,8 +19,10 @@
               %th Written By
               %th Status
               
-              
           %tbody
+            %tr
+              %td{colspan: 8}
+                %strong OPEN
             - @service_tickets.incomplete.order(created_at: :desc).each do |service_ticket|
               %tr
                 %td

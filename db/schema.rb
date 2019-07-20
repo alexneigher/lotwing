@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190719151152) do
+ActiveRecord::Schema.define(version: 20190720003927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,6 +180,16 @@ ActiveRecord::Schema.define(version: 20190719151152) do
     t.index ["user_id"], name: "index_resolutions_on_user_id"
   end
 
+  create_table "service_ticket_jobs", force: :cascade do |t|
+    t.text "note"
+    t.bigint "service_ticket_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_ticket_id"], name: "index_service_ticket_jobs_on_service_ticket_id"
+    t.index ["user_id"], name: "index_service_ticket_jobs_on_user_id"
+  end
+
   create_table "service_tickets", force: :cascade do |t|
     t.bigint "dealership_id"
     t.bigint "created_by_user_id"
@@ -307,4 +317,6 @@ ActiveRecord::Schema.define(version: 20190719151152) do
   add_foreign_key "data_syncs", "dealerships"
   add_foreign_key "resolutions", "events"
   add_foreign_key "resolutions", "users"
+  add_foreign_key "service_ticket_jobs", "service_tickets"
+  add_foreign_key "service_ticket_jobs", "users"
 end

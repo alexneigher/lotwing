@@ -7,6 +7,7 @@ class ServiceTicket < ApplicationRecord
   scope :incomplete, -> {where.not(status: 'Complete')}
   scope :complete, -> {where(status: 'Complete')}
 
+  has_many :service_ticket_jobs, dependent: :destroy
   
   after_create :notify_dealership
 
