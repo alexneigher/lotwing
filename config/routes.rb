@@ -60,6 +60,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :notes, only: :create
+
   resources :service_ticket_jobs, only: :create
 
   resources :suggested_trade_dealerships, only: :destroy

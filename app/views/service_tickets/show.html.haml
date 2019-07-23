@@ -69,10 +69,30 @@
       - @service_ticket.service_ticket_jobs.each do |job|
         .card.shadow-sm
           .card-body
-            %small.text-muted= "#{job.user.full_name} - #{job.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m-%e-%Y")}"
-            %br
-            %p.pt-3
-              = job.note
+            .row
+              .col-9
+                %small.text-muted= "#{job.user.full_name} - #{job.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m-%e-%Y")}"
+              .col-3.text-right
+                = link_to "Add job note", "#", class: 'btn btn-info btn-sm', "aria-controls" => "collapseExample", "aria-expanded" => "false", "data-target" => "#newJobNote", "data-toggle" => "collapse"
+                
+               
+            %h4.pt-0
+              = job.title
+            %hr
+            - job.notes.each do |note|
+              %p
+                %em.text-blue
+                  = "#{note.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m-%e-%Y %l:%M %p")} #{note.user.full_name} wrote:"
+                %br
+                = note.text
+            #newJobNote.collapse
+              %hr
+              .row
+                .col-6
+                  = form_for :note, url: notes_path(), method: :post do |f|
+                    = f.hidden_field :service_ticket_job_id, value: job.id
+                    = f.text_area :text, rows: 2, placeholder: 'Add note text here', class: 'form-control'
+                    = f.submit "Save note", class: 'btn btn-sm btn-primary mt-3 pull-right'
 
   %hr
   .row
@@ -85,6 +105,6 @@
             = f.hidden_field :service_ticket_id, value: @service_ticket.id
             = f.hidden_field :user_id, value: current_user.id
             .form-group
-              %label Note
-              = f.text_area :note, rows: 3, placeholder: 'The blinker fluid is low', class: 'form-control'
+              %label Title
+              = f.text_area :title, rows: 3, placeholder: 'The blinker fluid is low', class: 'form-control'
             = f.submit "Create Job", class: 'btn btn-sm pull-right btn-primary'

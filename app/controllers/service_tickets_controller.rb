@@ -12,7 +12,7 @@ class ServiceTicketsController < ApplicationController
     @service_ticket = current_user
                         .dealership
                         .service_tickets
-                        .includes(service_ticket_jobs: :user)
+                        .includes(service_ticket_jobs: [:user, :notes])
                         .find(params[:id])
   end
 

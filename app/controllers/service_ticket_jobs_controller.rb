@@ -13,7 +13,7 @@ class ServiceTicketJobsController < ApplicationController
 
   private
     def service_ticket_job_params
-      params.require(:service_ticket_job).permit(:note, :user_id, :service_ticket_id)
+      params.require(:service_ticket_job).permit(:title, :user_id, :service_ticket_id)
     end
 
 end

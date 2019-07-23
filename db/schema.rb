@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190720003927) do
+ActiveRecord::Schema.define(version: 20190723154211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,16 @@ ActiveRecord::Schema.define(version: 20190720003927) do
     t.index ["dealership_id"], name: "index_key_board_locations_on_dealership_id"
   end
 
+  create_table "notes", force: :cascade do |t|
+    t.text "text"
+    t.bigint "user_id"
+    t.bigint "service_ticket_job_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_ticket_job_id"], name: "index_notes_on_service_ticket_job_id"
+    t.index ["user_id"], name: "index_notes_on_user_id"
+  end
+
   create_table "resolutions", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "user_id"
@@ -181,7 +191,7 @@ ActiveRecord::Schema.define(version: 20190720003927) do
   end
 
   create_table "service_ticket_jobs", force: :cascade do |t|
-    t.text "note"
+    t.text "title"
     t.bigint "service_ticket_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -315,6 +325,8 @@ ActiveRecord::Schema.define(version: 20190720003927) do
   end
 
   add_foreign_key "data_syncs", "dealerships"
+  add_foreign_key "notes", "service_ticket_jobs"
+  add_foreign_key "notes", "users"
   add_foreign_key "resolutions", "events"
   add_foreign_key "resolutions", "users"
   add_foreign_key "service_ticket_jobs", "service_tickets"
