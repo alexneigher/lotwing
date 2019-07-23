@@ -22,7 +22,7 @@
                   = link_to "clear note", new_event_resolution_path(event), remote: true
                   %br
                   %small
-                    = link_to 'create service ticket', service_tickets_path(service_ticket: {stock_number: @vehicle.stock_number, make: @vehicle.make, model: @vehicle_model, created_by_user_id: current_user.id, status: 'New', mileage: @vehicle.mileage, color: @vehicle.color, year: @vehicle.year, vin: @vehicle.vin}, service_ticket_job: {note: event.event_details, user_id: current_user.id}), method: :post
+                    = link_to 'create service ticket', service_tickets_path(service_ticket: {stock_number: @vehicle.stock_number, make: @vehicle.make, model: @vehicle_model, created_by_user_id: current_user.id, status: 'New', mileage: @vehicle.mileage, color: @vehicle.color, year: @vehicle.year, vin: @vehicle.vin}, service_ticket_job: {title: event.event_details, user_id: current_user.id}), method: :post
               %td
                 - event.resolutions.each do |resolution|
                   %div.py-1

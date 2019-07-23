@@ -28,7 +28,7 @@ class ServiceTicketsController < ApplicationController
 
     if @service_ticket.valid?
       if params[:service_ticket_job].present?
-        @service_ticket.service_ticket_jobs.create(note: params[:service_ticket_job][:note], user_id: current_user.id)
+        @service_ticket.service_ticket_jobs.create(title: params[:service_ticket_job][:title], user_id: current_user.id)
       end
 
       redirect_to service_ticket_path(@service_ticket)
