@@ -8,7 +8,9 @@ class ServiceTicket < ApplicationRecord
   scope :complete, -> {where(status: 'Complete')}
 
   has_many :service_ticket_jobs, dependent: :destroy
-  
+
+  accepts_nested_attributes_for :service_ticket_jobs
+
   after_create :notify_dealership
 
   private
