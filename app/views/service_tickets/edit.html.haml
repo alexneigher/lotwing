@@ -5,7 +5,8 @@
     
     
     = f.submit "Update Service Ticket", class: 'btn btn-primary mb-3'
-      
+    
+    = link_to 'Delete Service Ticket', service_ticket_path(@service_ticket), method: :delete, class: 'text-danger pull-right pt-2', data: {confirm: 'Are you sure?'}
 :javascript
   $(function(){
     //setup before functions

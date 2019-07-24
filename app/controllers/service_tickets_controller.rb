@@ -41,6 +41,15 @@ class ServiceTicketsController < ApplicationController
     end
   end
 
+  def destroy
+    @service_ticket = current_user.dealership.service_tickets.find(params[:id])
+    @service_ticket.destroy
+
+    redirect_to service_tickets_path
+  
+  end
+
+
   def edit
     @service_ticket = current_user.dealership.service_tickets.find(params[:id])
   end
