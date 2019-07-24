@@ -77,6 +77,11 @@
                 %th
                   = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
                     = vehicle.model
+
+                  - if vehicle.open_service_tickets.any?
+                    = link_to service_tickets_path(search: {stock_number: vehicle.stock_number}) do
+                      .text-danger
+                        (OPEN TICKETS)
                 %th
                   = vehicle.age_in_days
                   days

@@ -1,0 +1,10 @@
+.container
+  .row.justify-content-center
+    .col-md-5
+      .card.mt-5
+        .card-header
+          Edit Note
+        .card-body
+          = form_for @note, url: note_path(@note), method: :put do |f|
+            = f.text_area :text, class: 'form-control', rows: 3
+            = f.submit "Update", class: 'btn btn-primary btn-sm mt-3 pull-right'

@@ -8,6 +8,10 @@ class Vehicle < ApplicationRecord
   
   has_one :parking_space, through: :current_parking_tag, source: :shape
 
+  has_many :service_tickets, primary_key: :stock_number, foreign_key: :stock_number, dependent: :destroy
+
+  has_many :open_service_tickets, -> { where(status: ["New", "In Progress"]) }, primary_key: :stock_number, foreign_key: :stock_number, class_name: 'ServiceTicket'
+
   belongs_to :key_board_location, optional: true
   
   enum creation_source: [:data_feed_created, :user_created]

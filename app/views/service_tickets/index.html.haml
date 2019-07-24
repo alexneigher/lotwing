@@ -4,7 +4,13 @@
       %h3.text-center Service Tickets
       
     .col-md-10   
-
+      = form_for :filters, url: service_tickets_path, method: :get, autocomplete: "off" do
+        .row
+          .col-lg-2
+            .form-group
+              = text_field_tag "search[stock_number]", params.dig(:search, :stock_number), class: 'form-control-sm form-control', placeholder: 'Search Stock #'
+          .col-lg-2
+            = submit_tag 'Search', class: 'btn btn-primary btn-sm'
       .table-responsive.small{style: 'max-height: 80vh;'}
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead

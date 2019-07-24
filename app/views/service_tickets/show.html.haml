@@ -80,21 +80,29 @@
               = job.title
             %hr
             - job.notes.each do |note|
-              %p
-                %em.text-blue
-                  = "#{note.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m-%e-%Y %l:%M %p")} #{note.user.full_name} wrote:"
-                %br
-                = note.text
+              .row
+                .col-9
+                  %p
+                    %em.text-blue
+                      = "#{note.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m-%e-%Y %l:%M %p")} #{note.user.full_name} wrote:"
+                    %br
+                    = note.text
+                .col-3.text-right
+                  - if note.user_id == current_user.id
+                    = link_to edit_note_path(note) do
+                      %i.fa.fa-pencil
+                      edit
+
             #newJobNote.collapse
               %hr
-              .row
+              .row.mt-4
                 .col-6
                   = form_for :note, url: notes_path(), method: :post do |f|
                     = f.hidden_field :service_ticket_job_id, value: job.id
                     = f.text_area :text, rows: 2, placeholder: 'Add note text here', class: 'form-control'
                     = f.submit "Save note", class: 'btn btn-sm btn-primary mt-3 pull-right'
-
-  %hr
+        %hr
+                
   .row
     .col-5
       .card.mb-2
