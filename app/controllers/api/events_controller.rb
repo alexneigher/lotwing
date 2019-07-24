@@ -31,7 +31,7 @@ module Api
 
     def event_params
       # whitelist params
-      params.permit(:acknowledged, :event_type, :event_details)
+      params.permit(:acknowledged, :event_type, :event_details, :started_at, :ended_at)
     end
 
     def set_event

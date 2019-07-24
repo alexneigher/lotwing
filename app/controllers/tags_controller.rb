@@ -35,6 +35,6 @@ class TagsController < ApplicationController
     end
 
     def event_params
-      params.require(:event).permit(:event_type, :event_details)
+      params.require(:event).permit(:event_type, :event_details, :started_at, :ended_at)
     end
 end

@@ -14,7 +14,14 @@ module Api
 
       def show
         @vehicle = current_user.dealership.vehicles.find_by_stock_number(params[:stock_number])
-        render json: { vehicle: @vehicle, current_parking_space: @vehicle&.parking_space}
+        events = @vehicle
+                    &.events
+                    &.order(created_at: :desc)
+                    &.includes(tag: :shape)
+                    &.where(acknowledged: false)
+                    &.map{|e| EventSerializer.new(e, includes:[:user]) }
+                    
+        render json: { vehicle: @vehicle, current_parking_space: @vehicle&.parking_space, events: events}
 
       end
 
