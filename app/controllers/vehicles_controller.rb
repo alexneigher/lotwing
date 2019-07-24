@@ -5,7 +5,7 @@ class VehiclesController < ApplicationController
     all_vehicles = dealership.vehicles.includes(:current_parking_tag, :open_service_tickets)
     filtered_vehicles = all_vehicles
 
-    if params.dig(:filter).present?
+    if params.dig(:filter, :model).present?
       filtered_vehicles = all_vehicles.where(usage_type: "is_new").where(model: params[:filter][:model])
     end
 
@@ -49,10 +49,10 @@ class VehiclesController < ApplicationController
 
   def search
     dealership = current_user.dealership
-    @vehicles = dealership.vehicles.includes(:current_parking_tag).where('stock_number ilike ?', "%#{params[:stock_number]}%")
+    @vehicles = dealership.vehicles.includes(:current_parking_tag, :open_service_tickets).where('stock_number ilike ?', "%#{params[:stock_number]}%")
 
     @filtered_vehicles = @vehicles
-    @all_vehicles = dealership.vehicles.includes(:current_parking_tag)
+    @all_vehicles = dealership.vehicles.includes(:current_parking_tag, :open_service_tickets)
 
     render :index
   end
