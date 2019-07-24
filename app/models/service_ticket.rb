@@ -9,6 +9,7 @@ class ServiceTicket < ApplicationRecord
 
   has_many :service_ticket_jobs, dependent: :destroy
 
+  has_one :vehicle, foreign_key: "stock_number", primary_key: "stock_number"
   accepts_nested_attributes_for :service_ticket_jobs
 
   after_create :notify_dealership
