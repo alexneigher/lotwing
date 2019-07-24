@@ -1,5 +1,6 @@
 = render partial: 'shared/maxbox_dependencies'
 = javascript_include_tag('lot_view')
+
 .container-fluid
   .row
     .col-lg-4
@@ -12,7 +13,11 @@
         = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
       
         %hr.my-2
-      
+      %h5 Vehicles Currently Off Lot
+      - @vehicles_off_lot.each do |vehicle|
+        %strong= vehicle.stock_number
+        = "#{vehicle.year} #{vehicle.make} #{vehicle.model}"
+        started a #{vehicle.events.last.event_type.humanize} on #{vehicle.events.last.started_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%Y at %l:%M %p')}
     .col-lg-8{style: 'position: relative;'}
       #vehicle_data_container
       #map{ :style => "width: 100%; height: 550px" }
