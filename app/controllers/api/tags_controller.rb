@@ -6,7 +6,7 @@ module Api
       
       #if we are starting a test drive, create an inactive tag which will remove it from the lot
       maybe_active_tag = {active: event_params[:event_type] == 'test_drive'? false : true }
-      
+
       @tag = Tag.create(tag_params.merge(maybe_active_tag))
 
       #move all of the note events to the new tag to persist them on map
@@ -28,7 +28,7 @@ module Api
       end
 
       def event_params
-        params.require(:event).permit(:event_type, :event_details)
+        params.require(:event).permit(:event_type, :event_details, :started_at, :ended_at)
       end
   end
 end
