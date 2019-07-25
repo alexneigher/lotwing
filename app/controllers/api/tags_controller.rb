@@ -4,7 +4,10 @@ module Api
       @vehicle = Vehicle.find(params[:tag][:vehicle_id])
       @vehicle.tags.update_all(active: false)
       
-      @tag = Tag.create(tag_params)
+      #if we are starting a test drive, create an inactive tag which will remove it from the lot
+      maybe_active_tag = {active: event_params[:event_type] == 'test_drive'? false : true }
+      
+      @tag = Tag.create(tag_params.merge(maybe_active_tag))
 
       #move all of the note events to the new tag to persist them on map
       @vehicle.events.where(event_type: "note").update_all(tag_id: @tag.id)
