@@ -4,23 +4,18 @@ module Api
       @vehicle = Vehicle.find(params[:tag][:vehicle_id])
       @vehicle.tags.update_all(active: false)
       
-      # move this vehicle to a new space, unless it is a test drive, and then deactivate all of the tags
-      # which removes this vehicle from the lot
+      @tag = Tag.create(tag_params)
 
-      unless event_params[:event_type] == "test_drive"
-        @tag = Tag.create(tag_params)
+      #move all of the note events to the new tag to persist them on map
+      @vehicle.events.where(event_type: "note").update_all(tag_id: @tag.id)
 
-        #move all of the note events to the new tag to persist them on map
-        @vehicle.events.where(event_type: "note").update_all(tag_id: @tag.id)
-
-        # track the recency of movement
-        @tag.shape.update(most_recently_tagged_at: DateTime.current)
-      end
+      # track the recency of movement
+      @tag.shape.update(most_recently_tagged_at: DateTime.current)
 
       # create a new event
       event = @tag.events.create(event_params.merge(user_id: current_user.id))
 
-      render json: {status: 200, parking_space: @tag&.shape, vehicle: @vehicle, event: event}
+      render json: {status: 200, parking_space: @tag.shape, vehicle: @vehicle, event: event}
     end
 
 
