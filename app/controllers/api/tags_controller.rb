@@ -4,7 +4,9 @@ module Api
       @vehicle = Vehicle.find(params[:tag][:vehicle_id])
       @vehicle.tags.update_all(active: false)
       
-      @tag = Tag.create(tag_params)
+      # move this vehicle to a new space, unless it is a test drive, and then deactivate all of the tags
+      # which removes this vehicle from the lot
+      @tag = Tag.create(tag_params) unless event_params[:event_type] == "test_drive"
 
       #move all of the note events to the new tag to persist them on map
       @vehicle.events.where(event_type: "note").update_all(tag_id: @tag.id)
