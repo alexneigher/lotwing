@@ -7,7 +7,7 @@ module EventsHelper
         "Vehicle: #{vehicle.stock_number} (#{vehicle.full_description}) was taken for a test drive."
       when 'note'
         "Vehicle: #{vehicle.stock_number} (#{vehicle.full_description}) has a new note: <br> #{event.event_details}"
-      when "change_stall"
+      when "change_stall", "tag"
         "Vehicle: #{vehicle.stock_number} (#{vehicle.full_description}) was tagged in a parking space."
       when "odometer_update"
         "The odometer on vehicle: #{vehicle.vin} (#{vehicle.full_description}) has a new reading."
