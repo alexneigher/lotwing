@@ -4,15 +4,15 @@ module EventsHelper
     vehicle = event.tag.vehicle
     case event.event_type
       when 'test_drive'
-        "Vehicle: #{vehicle.stock_number} (#{vehicle.full_description}) was taken for a test drive."
+        "Vehicle was taken for a test drive. #{event.event_details}"
       when 'note'
-        "Vehicle: #{vehicle.stock_number} (#{vehicle.full_description}) has a new note: <br> #{event.event_details}"
+        "Vehicle has a new note: <br> #{event.event_details}"
       when "change_stall", "tag"
-        "Vehicle: #{vehicle.stock_number} (#{vehicle.full_description}) was tagged in a parking space."
+        "Vehicle was tagged in a parking space."
       when "odometer_update"
-        "The odometer on vehicle: #{vehicle.vin} (#{vehicle.full_description}) has a new reading."
+        "Vehicle has a new odometer reading. (#{event.event_details})"
       when "fuel_vehicle"
-        "The vehicle: #{vehicle.vin} was taken for fuel."
+        "Vehicle was taken for fuel."
     end
   end
 end
