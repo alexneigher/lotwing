@@ -55,7 +55,6 @@ module Api
                               &.events
                               &.order(created_at: :desc)
                               &.includes(tag: :shape)
-                              &.where(acknowledged: false)
                               &.map{|e| EventSerializer.new(e, includes:[:user]) }
       end
       
