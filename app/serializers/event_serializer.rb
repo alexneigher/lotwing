@@ -11,6 +11,6 @@ class EventSerializer
   end
 
   attribute :summary do |event|
-    "<strong> #{time_ago_in_words(event.created_at)} ago </strong><br> #{event.user.full_name}: #{event_type_short_description(event)}"
+    "<strong> #{event.user.full_name} (#{time_ago_in_words(event.created_at)} ago) </strong><br>#{event_type_short_description(event)}"
   end
 end

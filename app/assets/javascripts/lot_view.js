@@ -149,7 +149,7 @@ function render_event(events){
   str = ""
   if (events){
     for(var i = 0; i < events.length; i++){
-      str += "<hr style='margin:2px;'><div>"+events[i].data.attributes.summary+"</div>"
+      str += "<hr style='margin:2px;'><div style='font-size: 12px;'>"+events[i].data.attributes.summary+"</div>"
     }
   }
   return str
