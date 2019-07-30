@@ -6,7 +6,7 @@ module EventsHelper
       when 'test_drive'
         "Vehicle was taken for a test drive. #{event.event_details}"
       when 'note'
-        "Vehicle has a new note: <br> #{event.event_details}"
+        "Vehicle has a new note: #{event.event_details}"
       when "change_stall", "tag"
         "Vehicle was tagged in a parking space."
       when "odometer_update"
