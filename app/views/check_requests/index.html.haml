@@ -22,16 +22,16 @@
                 %i.fa.fa-pencil
               
               %th
-                = link_to check_requests_path(sort: {date: params.dig(:sort, :date) == 'asc' ? "desc": "asc"}) do
+                = link_to check_requests_path(sort: {request_date: params.dig(:sort, :request_date) == 'asc' ? "desc": "asc"}) do
                   Date
-                  - if params.dig(:sort, :date) == "asc"
+                  - if params.dig(:sort, :request_date) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to check_requests_path(sort: {date: params.dig(:sort, :user) == 'asc' ? "desc": "asc"}) do
+                = link_to check_requests_path(sort: {request_by: params.dig(:sort, :request_by) == 'asc' ? "desc": "asc"}) do
                   User
-                  - if params.dig(:sort, :user) == "asc"
+                  - if params.dig(:sort, :request_by) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down

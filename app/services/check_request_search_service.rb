@@ -2,6 +2,7 @@ class CheckRequestSearchService
   attr_reader :filters_applied
 
   def initialize(params, dealership)
+    @params = params
     @filters_applied = false
     @dealership = dealership
 
@@ -93,6 +94,14 @@ class CheckRequestSearchService
     end
 
     def base_query
-      @dealership.check_requests
+      check_requests = @dealership.check_requests
+      
+      if @params.dig(:sort).present?
+        @params.dig(:sort).each do |k,v|
+          check_requests = check_requests.order(k => v)
+        end
+      end
+
+      return check_requests
     end
 end
