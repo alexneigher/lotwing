@@ -173,5 +173,5 @@
 
         map.flyTo({center: #{raw(@service_ticket.vehicle.parking_space&.geo_info['geometry']['coordinates'][0][0].to_json)}});
 
-      }, 500);
+      }, 100);
     })
