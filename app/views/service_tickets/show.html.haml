@@ -142,6 +142,7 @@
 
 - if @service_ticket.vehicle.parking_space&.geo_info
   :javascript
+
     $(function(){
       $('#mapModal').on('shown.bs.modal', function (event) {
         //the map was just shown, here we can extract just the vehicle in question. and render it to the map
@@ -150,11 +151,6 @@
 
       setTimeout(function(){
 
-        layer = window.map.getLayer('singleVehicle');
-        if (layer){
-          window.map.removeLayer('singleVehicle');
-          window.map.removeSource('singleVehicle');
-        }
         window.map.addLayer({
           'id': 'singleVehicle',
           'type': 'fill',
