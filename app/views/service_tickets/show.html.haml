@@ -1,6 +1,4 @@
 = render partial: 'shared/maxbox_dependencies'
-= javascript_include_tag('vehicle_manager')
-
 
 .container
   .row.mt-3
@@ -142,32 +140,74 @@
 
 - if @service_ticket.vehicle.parking_space&.geo_info
   :javascript
-
     $(function(){
       $('#mapModal').on('shown.bs.modal', function (event) {
         //the map was just shown, here we can extract just the vehicle in question. and render it to the map
         window.map.resize();
       }); 
 
-      setTimeout(function(){
+      mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleG5laWdoZXIiLCJhIjoiY2psZ3I1bTllMDF5ZjNwdDUydjQzMWJ1cCJ9.nG0jV5mQE65ySlh66w5faQ';
+      window.map = new mapboxgl.Map({
+        container: 'map',
+        center: [-122.4194, 37.7749],
+        zoom: 10,
+        bearing: -60, // bearing in degrees
+        style: {
+          version: 8,
+          sources: {},
+          layers: [
+            {
+              id: 'background',
+              type: 'background',
+              paint: { 
+                'background-color': 'white' 
+              }
+            }
+          ]
+        }
+      });
 
-        window.map.addLayer({
-          'id': 'singleVehicle',
-          'type': 'fill',
-          'source': {
-              'type': 'geojson',
-              "data": {
-                        "type": "Feature",
-                        "geometry": #{raw(@service_ticket.vehicle.parking_space&.geo_info['geometry'].to_json)}
-                      }
+      window.map.on('load', function () {
+
+        $.ajax({
+          url:"/web_api/shapes",
+          dataType: "json",
+          success: function(data){
+            add_shapes_to_map(data, window.map, 'parking_lots');
+            add_shapes_to_map(data, window.map, 'buildings');
+            add_shapes_to_map(data, window.map, 'parking_spaces');
+            center_map(data);
+
+            layer = window.map.getLayer('singleVehicle');
+
+            if (layer){
+              window.map.removeLayer('singleVehicle');
+              window.map.removeSource('singleVehicle');
+            }
+
+            window.map.addLayer({
+              'id': 'singleVehicle',
+              'type': 'fill',
+              'source': {
+                  'type': 'geojson',
+                  "data": {
+                            "type": "Feature",
+                            "geometry": #{raw(@service_ticket.vehicle.parking_space&.geo_info['geometry'].to_json)}
+                          }
+              },
+              'layout': {},
+              'paint': {
+                'fill-color': "#{@service_ticket.vehicle.usage_type == "is_used" ? '#66CC00' : '#006699'}",
+              }
+            });
+
+            map.flyTo({center: #{raw(@service_ticket.vehicle.parking_space&.geo_info['geometry']['coordinates'][0][0].to_json)}});
           },
-          'layout': {},
-          'paint': {
-            'fill-color': "#{@service_ticket.vehicle.usage_type == "is_used" ? '#66CC00' : '#006699'}",
+          error: function (xhr) {
+            alert(xhr.statusText)
           }
         });
+      });
+    })//$(function)
 
-        map.flyTo({center: #{raw(@service_ticket.vehicle.parking_space&.geo_info['geometry']['coordinates'][0][0].to_json)}});
-
-      }, 100);
-    })
+  })
