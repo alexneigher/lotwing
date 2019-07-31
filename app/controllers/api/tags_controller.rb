@@ -4,8 +4,12 @@ module Api
       @vehicle = Vehicle.find(params[:tag][:vehicle_id])
       @vehicle.tags.update_all(active: false)
       
-      #if we are starting a test drive, create an inactive tag which will remove it from the lot
-      maybe_active_tag = {active: event_params[:event_type] == 'test_drive'? false : true }
+      #if we are starting a test_drive or a fuel_vehicle, create an inactive tag which will remove it from the lot
+      if event_params[:event_type] == 'test_drive' || event_params[:event_type] == 'fuel_vehicle'
+        maybe_active_tag = { active: false }
+      else
+        maybe_active_tag = { active: true }
+      end
 
       @tag = Tag.create(tag_params.merge(maybe_active_tag))
 
