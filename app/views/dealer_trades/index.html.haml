@@ -28,7 +28,13 @@
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
-              %th Date
+              %th
+                = link_to dealer_trades_path(sort: {date_created: params.dig(:sort, :date_created) == 'asc' ? "desc": "asc"}) do
+                  Date
+                  - if params.dig(:sort, :date_created) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
               %th Delivered Yr
               %th Model
               %th Received Yr
