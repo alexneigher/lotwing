@@ -22,6 +22,12 @@ module Api
       # create a new event
       event = @tag.events.create(event_params.merge(user_id: current_user.id))
 
+
+      # do event type specific stuff
+      if event.event_type == "odometer_update"
+        @vehicle.update(mileage: event.event_details)
+      end
+
       render json: {status: 200, parking_space: @tag.shape, vehicle: @vehicle, event: event}
     end
 

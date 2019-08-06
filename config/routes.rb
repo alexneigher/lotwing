@@ -23,7 +23,8 @@ Rails.application.routes.draw do
     resources :key_board_locations
     resources :vehicles
     resources :events
-
+    resources :deals, only: :index
+    
     resources :shapes do
       collection do
         get :parking_lots
