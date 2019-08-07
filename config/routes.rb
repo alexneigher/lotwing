@@ -20,6 +20,8 @@ Rails.application.routes.draw do
       resources :stock_numbers, param: :stock_number, only: [:index, :show]
     end
     
+    resource :dealership, only: :show
+
     resources :key_board_locations
     resources :vehicles
     resources :events
