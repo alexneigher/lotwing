@@ -58,7 +58,7 @@
                       .modal-footer
                         = f.submit "Create Service Ticket", class: 'btn btn-primary'
       %tbody
-        - @vehicle.tags.order(created_at: :asc).includes(events: [:user, :resolutions]).each do |tag|
+        - @vehicle.tags.order(created_at: :desc).includes(events: [:user, :resolutions]).each do |tag|
           - tag.events.each do |event|
             %tr
               %td= event.event_type.upcase
