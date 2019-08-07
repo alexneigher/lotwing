@@ -23,7 +23,13 @@ Rails.application.routes.draw do
     resources :key_board_locations
     resources :vehicles
     resources :events
-    resources :deals, only: :index
+
+    resources :deals do
+      collection do 
+        get :mtd
+        get :today
+      end
+    end
     
     resources :shapes do
       collection do
