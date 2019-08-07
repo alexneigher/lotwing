@@ -59,7 +59,7 @@
                         = f.submit "Create Service Ticket", class: 'btn btn-primary'
       %tbody
         - @vehicle.tags.includes(events: [:user, :resolutions]).each do |tag|
-          - tag.events.each do |event|
+          - tag.events.order(created_at: :desc).each do |event|
             %tr
               %td= event.event_type.upcase
               %td
