@@ -24,4 +24,21 @@ module ApplicationHelper
 
     #looks like = [{name: {new: count, used: count} }, {name: {new: count, used: count} }]
   end
+
+  def vehicle_usage_type_bg_color(usage_type)
+
+    case usage_type 
+      when "is_used"
+        "#66CC00"
+      when "is_new"
+        "#006699"
+      when "loaner"
+        "#E8F051"
+      when "lease_return"
+        "#D13CEA"
+      when "wholesale_unit"
+        "#8D8C88"
+      end
+  end
+  
 end
