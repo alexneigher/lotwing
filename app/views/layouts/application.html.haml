@@ -42,10 +42,10 @@
     .container-fluid  
       - if user_signed_in?  
         %ul.nav.nav-tabs.nav-justified.mb-2
-          - if current_user.permission_level == 'admin'
-            %li.nav-item
-              = link_to lot_view_path, class: 'nav-link' + (' active' if params[:controller] == 'home' && params[:action] == 'show').to_s do
-                Lot View
+          %li.nav-item
+            = link_to lot_view_path, class: 'nav-link' + (' active' if params[:controller] == 'home' && params[:action] == 'show').to_s do
+              Lot View
+              
           %li.nav-item
             = link_to vehicles_path, class: 'nav-link' + (' active' if params[:controller] == 'vehicles' && params[:action] == 'index').to_s do
               Vehicle Manager
