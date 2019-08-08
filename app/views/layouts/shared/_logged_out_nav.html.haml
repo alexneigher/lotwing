@@ -2,3 +2,5 @@
   = f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'Email', class: 'form-control mr-sm-2'
   = f.password_field :password, autocomplete: "current-password", placeholder: '********', class: 'form-control mr-2'
   = f.submit "Log in", class: 'btn btn-outline-success my-2'
+%div.mt-3.ml-3
+  = render "devise/shared/links"
