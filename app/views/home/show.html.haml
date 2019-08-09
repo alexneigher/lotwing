@@ -19,7 +19,7 @@
           %strong= vehicle.stock_number
         
           = "#{vehicle.year} #{vehicle.make} #{vehicle.model}"
-          started a #{vehicle.events.last.event_type.humanize} on #{vehicle.events.last.started_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%Y at %l:%M %p')}
+          started a #{vehicle.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last.event_type.humanize} on #{vehicle.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last.started_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%Y at %l:%M %p')}
         
     .col-lg-8{style: 'position: relative;'}
       #vehicle_data_container
