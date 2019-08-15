@@ -12,21 +12,27 @@
           .col-lg-2
             = submit_tag 'Search', class: 'btn btn-primary btn-sm'
           .col-lg-6.text-right.pt-1
-            - grouped = @filtered_vehicles.group_by(&:usage_type)
-            %span.p-1.rounded.text-white.small{style: "background-color: #{vehicle_usage_type_bg_color('is_new')}"}
-              = "New: #{grouped['is_new']&.count || 0}"
+            - grouped = @all_vehicles.group_by(&:usage_type)
+
+            = link_to vehicles_path(filter: {usage_type: 'is_new'}) do
+              %span.p-1.rounded.text-white.small{style: "background-color: #{vehicle_usage_type_bg_color('is_new')}"}
+                = "New: #{grouped['is_new']&.count || 0}"
             
-            %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('is_used')}"}
-              = "Used: #{grouped['is_used']&.count || 0}"
+            = link_to vehicles_path(filter: {usage_type: 'is_used'}) do
+              %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('is_used')}"}
+                = "Used: #{grouped['is_used']&.count || 0}"
 
-            %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('lease_return')}"}
-              = "LeaseRT: #{grouped['lease_return']&.count || 0}"
+            = link_to vehicles_path(filter: {usage_type: 'lease_return'}) do
+              %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('lease_return')}"}
+                = "LeaseRT: #{grouped['lease_return']&.count || 0}"
 
-            %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('loaner')}"}
-              = "SrvLn: #{grouped['loaner']&.count || 0}"
-
-            %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('wholesale_unit')}"}
-              = "Whl: #{grouped['wholesale_unit']&.count || 0}"
+            = link_to vehicles_path(filter: {usage_type: 'loaner'}) do
+              %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('loaner')}"}
+                = "SrvLn: #{grouped['loaner']&.count || 0}"
+                
+            = link_to vehicles_path(filter: {usage_type: 'wholesale_unit'}) do
+              %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('wholesale_unit')}"}
+                = "Whl: #{grouped['wholesale_unit']&.count || 0}"
 
       .table-responsive.vehicle-table{style: 'max-height: 75vh;'}
         %table.table.table-bordered.table-striped.table-sm

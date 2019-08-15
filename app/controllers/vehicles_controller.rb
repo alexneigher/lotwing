@@ -15,6 +15,11 @@ class VehiclesController < ApplicationController
       end
     end
 
+    if params.dig(:filter, :usage_type).present?
+      filtered_vehicles = filtered_vehicles.where(usage_type: params.dig(:filter, :usage_type))
+    end
+
+
     @filtered_vehicles = filtered_vehicles || all_vehicles
     @all_vehicles = all_vehicles
   end
