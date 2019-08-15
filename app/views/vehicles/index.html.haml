@@ -6,12 +6,12 @@
     .col-sm-6
       = form_tag search_vehicles_path, method: :get do
         .row
-          .col-lg-4
+          .col-lg-3
             .form-group
               = text_field_tag "stock_number", params[:stock_number], class: 'form-control-sm form-control', placeholder: 'Search Stock #'
           .col-lg-2
             = submit_tag 'Search', class: 'btn btn-primary btn-sm'
-          .col-lg-6.text-right.pt-1
+          .col-lg-7.text-right.pt-1.px-0
             - grouped = @all_vehicles.group_by(&:usage_type)
 
             = link_to vehicles_path(filter: {usage_type: 'is_new'}) do
