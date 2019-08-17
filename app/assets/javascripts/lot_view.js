@@ -40,14 +40,16 @@ $(function(){
       url:"/web_api/shapes/parking_spaces",
       dataType: "json",
       success: function(data){
-        console.log(data);
+
         add_shapes_to_map(data, window.map, 'used_vehicle_occupied_spaces');
         add_shapes_to_map(data, window.map, 'new_vehicle_occupied_spaces');
         add_shapes_to_map(data, window.map, 'loaner_occupied_spaces');
         add_shapes_to_map(data, window.map, 'lease_return_occupied_spaces');
         add_shapes_to_map(data, window.map, 'wholesale_unit_occupied_spaces');
         add_shapes_to_map(data, window.map, 'empty_parking_spaces');
-        add_shapes_to_map(data, window.map, 'duplicate_parked_spaces');
+        
+        // treat duplicate parkings similar to events
+        add_duplicate_parkings_to_map(data, window.map, 'duplicate_parked_spaces');
 
         fetch_events_and_render();
       },
