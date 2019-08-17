@@ -105,8 +105,12 @@ function map_shape_type_to_opacity(shape_type){
 
 function add_duplicate_parkings_to_map(data, map, event_type){
   var geo_json_array = []
+  
+  for(var i = 0; i < data[event_type].length; i++){
+    geo_json_array.push( { data: {attributes: {parking_space: data[event_type][i].geo_info}} } )
+  } 
+  data = {"duplicate_parking_events": geo_json_array};
 
-  data = {"duplicate_parking_events": [{data: {attributes: {parking_space: data[event_type][0].geo_info}}}]};
   add_events_to_map(data, map, "duplicate_parking_events");
 }
 
