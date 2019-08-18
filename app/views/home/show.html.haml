@@ -11,7 +11,6 @@
         %strong
           = user.full_name
         = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
-      
         %hr.my-2
       %h5 Vehicles Currently Off Lot
       - @vehicles_off_lot.each do |vehicle|
