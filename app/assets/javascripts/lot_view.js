@@ -142,7 +142,10 @@ function render_vehicle_year_make(vehicle){
   if (vehicle.year && vehicle.make){
     return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + vehicle.id + "'>"+vehicle.year+" "+ vehicle.make+" "+ vehicle.model+"</a></h3>"
   }else{
-    return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + vehicle.id + "'>"+vehicle.usage_type+" "+ vehicle.stock_number+"</a></h3>"
+    usage_type = vehicle.usage_type.split("_")
+    vehicle_name = usage_type.map(w => w.charAt(0).toUpperCase() + w.slice(1));
+
+    return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + vehicle.id + "'>"+ vehicle_name +" "+ vehicle.stock_number+"</a></h3>"
   }
   
 }
