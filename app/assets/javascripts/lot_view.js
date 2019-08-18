@@ -143,9 +143,9 @@ function render_vehicle_year_make(vehicle){
     return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + vehicle.id + "'>"+vehicle.year+" "+ vehicle.make+" "+ vehicle.model+"</a></h3>"
   }else{
     usage_type = vehicle.usage_type.split("_")
-    vehicle_name = usage_type.map(w => w.charAt(0).toUpperCase() + w.slice(1));
+    vehicle_name = usage_type.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
-    return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + vehicle.id + "'>"+ vehicle_name +" "+ vehicle.stock_number+"</a></h3>"
+    return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + vehicle.id + "'>"+ vehicle_name +"</a></h3>"
   }
   
 }
