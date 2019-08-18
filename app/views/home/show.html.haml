@@ -7,8 +7,10 @@
       %h2.mt-3 Lot View
       %hr
       %h5 Recent Activity (24 hours)
-      - @users_with_events.each do |user|
+      - @users_with_events.each_with_index do |user, i|
         %strong
+          - if i == 0
+            %i.fa.fa-star.text-success
           = user.full_name
         = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
         %hr.my-2
