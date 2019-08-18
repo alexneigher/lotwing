@@ -142,7 +142,7 @@ function render_vehicle_year_make(vehicle){
   if (vehicle.year && vehicle.make){
     return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + vehicle.id + "'>"+vehicle.year+" "+ vehicle.make+" "+ vehicle.model+"</a></h3>"
   }else{
-    return ""
+    return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + vehicle.id + "'>"+vehicle.usage_type+" "+ vehicle.stock_number+"</a></h3>"
   }
   
 }
