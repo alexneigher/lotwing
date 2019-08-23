@@ -14,9 +14,18 @@ class ServiceTicket < ApplicationRecord
 
   after_create :notify_dealership
 
+  after_update :maybe_persist_completed_time
+
   private
     def notify_dealership
       ServiceTicketMailer.notify_about_service_ticket_created(self)
+    end
+
+    def maybe_persist_completed_time
+      if self.saved_change_to_status? && self.status == "Complete"
+        # we just changes the status to complete, set the time
+        self.update( completed_at: DateTime.current )
+      end
     end
 
 

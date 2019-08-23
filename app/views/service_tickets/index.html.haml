@@ -23,11 +23,12 @@
               %th VIN
               %th Year
               %th Written By
+              %th Time
               %th Status
               
           %tbody
             %tr
-              %td{colspan: 8}
+              %td{colspan: 9}
                 %strong OPEN
             - @service_tickets.incomplete.order(created_at: :desc).each do |service_ticket|
               %tr
@@ -40,10 +41,15 @@
                 %td= service_ticket.vin
                 %td= service_ticket.year
                 %td= service_ticket.created_by_user.full_name
+                %td
+                  - delta = DateTime.current().in_time_zone("Pacific Time (US & Canada)") - service_ticket.created_at.in_time_zone("Pacific Time (US & Canada)")
+
+                  = format("%02d:%02d:%02d", delta / (60 * 60), (delta / 60) % 60, delta % 60)
+                  
                 %td.text-danger= service_ticket.status
 
             %tr
-              %td{colspan: 8}
+              %td{colspan: 9}
                 %strong COMPLETED
 
 
@@ -58,6 +64,10 @@
                 %td= service_ticket.vin
                 %td= service_ticket.year
                 %td= service_ticket.created_by_user.full_name
+                %td
+                  - if service_ticket.completed_at
+                    - delta = service_ticket.completed_at.in_time_zone("Pacific Time (US & Canada)") - service_ticket.created_at.in_time_zone("Pacific Time (US & Canada)")
+                    = format("%02d:%02d:%02d", delta / (60 * 60), (delta / 60) % 60, delta % 60)
                 %td.text-danger= service_ticket.status
 
    

@@ -16,12 +16,14 @@
         %hr.my-2
       %h5 Vehicles Currently Off Lot
       - @vehicles_off_lot.each do |vehicle|
+        - event = vehicle.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last
+
         %div.mb-2
-          %strong= vehicle.stock_number
-        
-          = "#{vehicle.year} #{vehicle.make} #{vehicle.model}"
-          started a #{vehicle.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last.event_type.humanize} on #{vehicle.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last.started_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%Y at %l:%M %p')}
-        
+          %strong
+            = event.user.full_name
+          started a #{event.event_type.humanize} on #{event.started_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%Y at %l:%M %p')}
+          = link_to vehicle_path(vehicle), target: "_blank" do
+            (#{vehicle.stock_number})
     .col-lg-8{style: 'position: relative;'}
       #vehicle_data_container
       #map{ :style => "width: 100%; height: 550px" }
