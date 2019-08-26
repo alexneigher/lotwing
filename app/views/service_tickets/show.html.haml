@@ -46,7 +46,7 @@
               %td.py-1
                 = @service_ticket.year
               %td.py-1 
-                - if @service_ticket.vehicle.parking_space&.geo_info
+                - if @service_ticket&.vehicle.parking_space&.geo_info
                   / Button trigger modal
                   %a#showVehicleTrigger{"data-target" => "#mapModal", "data-toggle" => "modal", :type => "link", href: ''}
                     %i.fa.fa-map-marker
@@ -138,7 +138,7 @@
       .modal-footer
         %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
 
-- if @service_ticket.vehicle.parking_space&.geo_info
+- if @service_ticket&.vehicle.parking_space&.geo_info
   :javascript
     $(function(){
       $('#mapModal').on('shown.bs.modal', function (event) {
