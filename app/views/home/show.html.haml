@@ -17,20 +17,22 @@
         #last_day.tab-pane.in.active{:role => "tabpanel"}
           %h5 Recent Activity (24 hours)
           - @users_with_24h_events.each_with_index do |user, i|
-            %strong
-              - if i == 0
-                %i.fa.fa-star.text-success
-              = user.full_name
-            = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
+            %div
+              %strong
+                - if i == 0
+                  %i.fa.fa-star.text-success
+                = user.full_name
+              = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
 
         #today.tab-pane{:role => "tabpanel"}
           %h5 Recent Activity (Today)
           - @users_with_today_events.each_with_index do |user, i|
-            %strong
-              - if i == 0
-                %i.fa.fa-star.text-success
-              = user.full_name
-            = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
+            %div
+              %strong
+                - if i == 0
+                  %i.fa.fa-star.text-success
+                = user.full_name
+              = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
       %hr.my-2 
       %hr.mt-2.mb-5
         
