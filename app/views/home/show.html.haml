@@ -6,14 +6,35 @@
     .col-lg-4
       %h2.mt-3 Lot View
       %hr
-      %h5 Recent Activity (24 hours)
-      - @users_with_events.each_with_index do |user, i|
-        %strong
-          - if i == 0
-            %i.fa.fa-star.text-success
-          = user.full_name
-        = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
-        %hr.my-2
+      %ul.nav.nav-tabs{:role => "tablist"}
+        %li.nav-item
+          %a.nav-link.active{"data-toggle" => "tab", :href => "#last_day", :role => "tab"} Last 24 Hours
+        %li.nav-item
+          %a.nav-link{"data-toggle" => "tab", :href => "#today", :role => "tab"} Today
+        
+      / Tab panes
+      .tab-content
+        #last_day.tab-pane.in.active{:role => "tabpanel"}
+          %h5 Recent Activity (24 hours)
+          - @users_with_24h_events.each_with_index do |user, i|
+            %strong
+              - if i == 0
+                %i.fa.fa-star.text-success
+              = user.full_name
+            = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
+
+        #today.tab-pane{:role => "tabpanel"}
+          %h5 Recent Activity (Today)
+          - @users_with_today_events.each_with_index do |user, i|
+            %strong
+              - if i == 0
+                %i.fa.fa-star.text-success
+              = user.full_name
+            = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
+      %hr.my-2 
+      %hr.mt-2.mb-5
+        
+
       %h5 Vehicles Currently Off Lot
       - @vehicles_off_lot.each do |vehicle|
         - event = vehicle.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last
@@ -24,6 +45,7 @@
           started a #{event.event_type.humanize} on #{event.started_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%Y at %l:%M %p')}
           = link_to vehicle_path(vehicle), target: "_blank" do
             (#{vehicle.stock_number})
+      
     .col-lg-8{style: 'position: relative;'}
       #vehicle_data_container
       #map{ :style => "width: 100%; height: 550px" }
