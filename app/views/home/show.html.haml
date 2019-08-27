@@ -8,13 +8,13 @@
       %hr
       %ul.nav.nav-tabs{:role => "tablist"}
         %li.nav-item
-          %a.nav-link.active{"data-toggle" => "tab", :href => "#last_day", :role => "tab"} Last 24 Hours
+          %a.nav-link{"data-toggle" => "tab", :href => "#last_day", :role => "tab"} Last 24 Hours
         %li.nav-item
-          %a.nav-link{"data-toggle" => "tab", :href => "#today", :role => "tab"} Today
+          %a.nav-link.active{"data-toggle" => "tab", :href => "#today", :role => "tab"} Today
         
       / Tab panes
       .tab-content.mt-3
-        #last_day.tab-pane.in.active{:role => "tabpanel"}
+        #last_day.tab-pane{:role => "tabpanel"}
           %h5 Recent Activity (24 hours)
           - @users_with_24h_events.each_with_index do |user, i|
             %div
@@ -24,7 +24,7 @@
                 = user.full_name
               = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
 
-        #today.tab-pane{:role => "tabpanel"}
+        #today.tab-pane.in.active{:role => "tabpanel"}
           %h5 Recent Activity (Today)
           - @users_with_today_events.each_with_index do |user, i|
             %div
