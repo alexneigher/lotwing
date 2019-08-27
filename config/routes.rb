@@ -18,12 +18,14 @@ Rails.application.routes.draw do
 
     namespace :vehicles do
       resources :stock_numbers, param: :stock_number, only: [:index, :show]
+      resources :vin_search, param: :vin, only: [:show]
     end
     
     resource :dealership, only: :show
 
     resources :key_board_locations
     resources :vehicles
+
     resources :events
 
     resources :deals do
