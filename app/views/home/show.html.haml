@@ -13,7 +13,7 @@
           %a.nav-link{"data-toggle" => "tab", :href => "#today", :role => "tab"} Today
         
       / Tab panes
-      .tab-content
+      .tab-content.mt-3
         #last_day.tab-pane.in.active{:role => "tabpanel"}
           %h5 Recent Activity (24 hours)
           - @users_with_24h_events.each_with_index do |user, i|
