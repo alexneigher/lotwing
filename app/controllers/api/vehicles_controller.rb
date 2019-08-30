@@ -35,7 +35,7 @@ module Api
 
     def vehicle_params
       # whitelist params
-      params.permit(:title, :make, :model, :year, :stock_number, :mileage, :creation_source, :key_board_location_name, :usage_type)
+      params.permit(:title, :make, :model, :year, :stock_number, :vin, :mileage, :creation_source, :key_board_location_name, :usage_type)
     end
 
     def set_vehicle
