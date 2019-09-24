@@ -53,7 +53,7 @@ gem "font-awesome-rails"
 gem 'uglifier', '>= 1.3.0'
 
 # Bootstrap 4 Ruby Gem for Rails / Sprockets and Compass.
-gem 'bootstrap', '~> 4.1.0'
+gem "bootstrap", ">= 4.3.1"
 
 # Better Markup for views
 gem 'haml'
@@ -65,7 +65,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
 
 # Flexible authentication solution for Rails with Warden.
-gem "devise", ">= 4.6.0"
+gem "devise", ">= 4.7.1"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
