@@ -4,7 +4,6 @@
 .container-fluid
   .row
     .col-lg-4
-      %h2.mt-3 Lot View
       %hr
       %ul.nav.nav-tabs{:role => "tablist"}
         %li.nav-item
@@ -16,36 +15,48 @@
       .tab-content.mt-3
         #today.tab-pane.in.active{:role => "tabpanel"}
           %h5 Recent Activity (Today)
-          - @users_with_today_events.each_with_index do |user, i|
-            %div
+          - @events_from_today.group_by(&:event_type).each do |event_type, events|
+            %div.mb-2
               %strong
-                - if i == 0
-                  %i.fa.fa-star.text-success
-                = user.full_name
-              = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
+                = event_type == "change_stall" ? "Stall Updates":event_type.titleize
+              .small
+                - events.group_by(&:user).sort.each do |user, events|
+
+                  = "#{user.full_name} (#{events.count})"
+                  %br
         #last_day.tab-pane{:role => "tabpanel"}
-          %h5 Recent Activity (24 hours)
-          - @users_with_24h_events.each_with_index do |user, i|
-            %div
+          %h5 Recent Activity (24 Hours)
+          - @events_from_24h.group_by(&:event_type).each do |event_type, events|
+            %div.mb-2
               %strong
-                - if i == 0
-                  %i.fa.fa-star.text-success
-                = user.full_name
-              = user.events.group_by(&:event_type).map{|k, v| pluralize(v.count, k.humanize) }.join(', ')
-      %hr.my-2 
-      %hr.mt-2.mb-5
+                = event_type == "change_stall" ? "Stall Updates":event_type.titleize
+              .small
+                - events.group_by(&:user).sort.each do |user, events|
+
+                  = "#{user.full_name} (#{events.count})"
+                  %br
         
-
       %h5 Vehicles Currently Off Lot
-      - @vehicles_off_lot.each do |vehicle|
-        - event = vehicle.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last
+      - loaners = @vehicles_off_lot.group_by(&:usage_type).values_at("loaner")
+      - stock_vehicles = @vehicles_off_lot.group_by(&:usage_type).values_at("is_new", "is_used", "lease_return", "wholesale_unit")
 
+      - usage_types = {"Loaners": loaners.flatten, "Stock Vehicles": stock_vehicles.flatten }
+      
+      - usage_types.each do |usage_type, vehicles|
+        - next unless vehicles.any?
         %div.mb-2
           %strong
-            = event.user.full_name
-          started a #{event.event_type.humanize} on #{event.started_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%Y at %l:%M %p')}
-          = link_to vehicle_path(vehicle), target: "_blank" do
-            (#{vehicle.stock_number})
+            = usage_type
+
+          - vehicles.each do |vehicle|
+            - next unless vehicle
+            - event = vehicle.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last
+            .small 
+              = event.user.full_name
+              = link_to vehicle_path(vehicle), target: "_blank" do
+                (#{vehicle.stock_number})
+              #{event.event_type.humanize} #{event.started_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%Y at %l:%M %p')}
+            
       
     .col-lg-8{style: 'position: relative;'}
       #vehicle_data_container
