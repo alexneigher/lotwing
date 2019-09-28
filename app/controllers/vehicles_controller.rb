@@ -24,6 +24,13 @@ class VehiclesController < ApplicationController
     @all_vehicles = all_vehicles
   end
 
+  def update
+    @vehicle = Vehicle.find(params[:id])
+    @vehicle.update(vehicle_params)
+
+    redirect_to vehicle_path(@vehicle)
+  end
+
   def show
     @vehicle = Vehicle.find(params[:id])
     dealership = current_user.dealership
@@ -73,6 +80,6 @@ class VehiclesController < ApplicationController
 
   private
     def vehicle_params
-      params.require(:vehicle).permit(:make, :model, :year, :vin, :dealership_id, :usage_type )
+      params.require(:vehicle).permit(:make, :model, :year, :vin, :color, :dealership_id, :usage_type )
     end
 end

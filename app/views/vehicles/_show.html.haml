@@ -57,6 +57,24 @@
                      
                       .modal-footer
                         = f.submit "Create Service Ticket", class: 'btn btn-primary'
+        %tr
+          %td{colspan: 4}
+            = form_for @vehicle, url: vehicle_path(@vehicle), method: :put do |f|
+              .row              
+                .col-2
+                  %label.small.mb-0 Year
+                  = f.text_field :year, placeholder: 'Year', class: 'form-control form-control-sm'
+                .col-2
+                  %label.small.mb-0 Make
+                  = f.text_field :make, placeholder: "Make", class: 'form-control form-control-sm'
+                .col-4
+                  %label.small.mb-0 Model
+                  = f.text_field :model, placeholder: "Model",  class: 'form-control form-control-sm'
+                .col-2
+                  %label.small.mb-0 Color
+                  = f.text_field :color, placeholder: "Color", class: 'form-control form-control-sm'
+                .col-2
+                  = f.submit "Update", class: 'btn btn-sm btn-primary btn-block mt-4'   
       %tbody
         - @vehicle.tags.order(created_at: :desc).includes(events: [:user, :resolutions]).each do |tag|
           - tag.events.each do |event|
