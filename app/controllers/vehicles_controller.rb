@@ -34,15 +34,26 @@ class VehiclesController < ApplicationController
   def show
     @vehicle = Vehicle.find(params[:id])
     dealership = current_user.dealership
-    vehicles = dealership.vehicles.includes(:current_parking_tag)
-    
+    all_vehicles = dealership.vehicles.includes(:current_parking_tag, :open_service_tickets)
+    filtered_vehicles = all_vehicles
+
+    if params.dig(:filter, :model).present?
+      filtered_vehicles = all_vehicles.where(usage_type: "is_new").where(model: params[:filter][:model])
+    end
+
     if params.dig(:sortings).present?
       params.dig(:sortings).each do |k,v|
-        vehicles = vehicles.order(k => v)
+        filtered_vehicles = filtered_vehicles.order(k => v)
       end
     end
 
-    @vehicles = vehicles
+    if params.dig(:filter, :usage_type).present?
+      filtered_vehicles = filtered_vehicles.where(usage_type: params.dig(:filter, :usage_type))
+    end
+
+
+    @filtered_vehicles = filtered_vehicles || all_vehicles
+    @all_vehicles = all_vehicles
   end
 
   #used to toggle the map modal only
