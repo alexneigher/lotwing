@@ -99,7 +99,11 @@
                       .text-danger
                         (OPEN TICKETS)
                 %th
-                  = vehicle.age_in_days
+
+                  - if vehicle.data_feed_created?
+                    = vehicle.age_in_days   
+                  - else
+                    = (DateTime.current.to_date - vehicle.created_at.to_date).to_i
                   days
                
         = link_to "Add New Vehicle", new_vehicle_path, class: 'btn btn-small btn-primary'
