@@ -18,7 +18,12 @@
           - @events_from_today.group_by(&:event_type).each do |event_type, events|
             %div.mb-2
               %strong
-                = event_type == "change_stall" ? "Stall Updates":event_type.titleize
+                - if event_type == "change_stall"
+                  Stall Updates
+                - elsif event_type == "tag"
+                  Confirm Stall
+                - else
+                  = event_type.titleize
               .small
                 - events.group_by(&:user).sort.each do |user, events|
 
