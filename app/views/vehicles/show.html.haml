@@ -76,6 +76,8 @@
                 %th
                   = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
                     = vehicle.model
+                    - if vehicle.user_created?
+                      (User Created)
                 %th
                   - if vehicle.data_feed_created?
                     = vehicle.age_in_days   

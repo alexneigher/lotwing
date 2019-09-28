@@ -85,6 +85,11 @@
                 - else
                   %td
                     = vehicle.stock_number
+                    - last_event = vehicle.events.last
+                    - if last_event && last_event.ended_at.nil? && !last_event.started_at.nil? && ["fuel_vehicle", "test_drive"].include?(last_event.event_type)
+                      .pull-right
+                        %i.fa.fa-car
+                        =" ~> "
                 %td
                   = vehicle.year
                 %td
@@ -93,7 +98,8 @@
                 %th
                   = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
                     = vehicle.model
-
+                    - if vehicle.user_created?
+                      (User Created)
                   - if vehicle.open_service_tickets.any?
                     = link_to service_tickets_path(search: {stock_number: vehicle.stock_number}) do
                       .text-danger
