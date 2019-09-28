@@ -46,7 +46,7 @@
         - next unless vehicles.any?
         %div.mb-2
           %strong
-            = usage_type
+            = "#{usage_type} (#{vehicles.count})"
 
           - vehicles.each do |vehicle|
             - next unless vehicle
