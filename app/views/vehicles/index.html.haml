@@ -85,8 +85,8 @@
                 - else
                   %td
                     = vehicle.stock_number
-                    - last_event = vehicle.events.last
-                    - if last_event && last_event.ended_at.nil? && !last_event.started_at.nil? && ["fuel_vehicle", "test_drive"].include?(last_event.event_type)
+                    - last_event = vehicle.events.where(event_type: ["fuel_vehicle", "test_drive"])&.last
+                    - if last_event && last_event.ended_at.nil? && !last_event.started_at.nil?
                       .pull-right
                         %i.fa.fa-car
                         =" ~> "
