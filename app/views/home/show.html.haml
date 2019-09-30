@@ -50,7 +50,7 @@
       - loaners = @vehicles_off_lot.group_by(&:usage_type).values_at("loaner")
       - stock_vehicles = @vehicles_off_lot.group_by(&:usage_type).values_at("is_new", "is_used", "lease_return", "wholesale_unit")
 
-      - usage_types = {"Loaners": loaners.flatten, "Stock Vehicles": stock_vehicles.flatten }
+      - usage_types = {"Loaners": loaners.compact.flatten, "Stock Vehicles": stock_vehicles.compact.flatten }
       
       - usage_types.each do |usage_type, vehicles|
         - next unless vehicles.any?
