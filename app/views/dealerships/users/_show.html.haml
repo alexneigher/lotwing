@@ -10,5 +10,9 @@
           = @user.permission_level
   .card-footer
     - unless @user == current_user || @user.permission_level == "admin"
-      = link_to 'delete user', dealership_user_path(@dealership, @user), method: :delete, class: 'text-danger', data: {confirm: "are you sure you want to delete #{@user.full_name}"}
+      - if @user.active?
+        = link_to 'deactivate user', dealership_user_path(@dealership, @user), method: :delete, class: 'text-danger', data: {confirm: "are you sure you want to deactivate #{@user.full_name}"}
+      - else
+        = link_to 'reactivate user', dealership_user_path(@dealership, @user, user:{status: :active}), method: :put, class: 'text-success', data: {confirm: "are you sure you want to reactivate #{@user.full_name}"}
+        
     

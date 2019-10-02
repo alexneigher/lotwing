@@ -98,7 +98,7 @@ Rails.application.routes.draw do
   end
 
   resources :dealerships, only: [:edit, :update] do
-    resources :users, only: [:new, :create, :show, :destroy], controller: 'dealerships/users'
+    resources :users, only: [:new, :create, :show, :destroy, :update], controller: 'dealerships/users'
   end
   
   resources :vehicles do

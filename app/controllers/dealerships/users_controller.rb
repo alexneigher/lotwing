@@ -24,18 +24,27 @@ module Dealerships
       @user = @dealership.users.find(params[:id])
     end
 
+    def update
+      @dealership = current_user.dealership
+      @user = @dealership.users.find(params[:id])
+
+      @user.update(user_params)
+
+      redirect_to edit_dealership_path(@dealership)
+    end
+
     def destroy
       @dealership = current_user.dealership
       @user = @dealership.users.find(params[:id])
 
-      @user.destroy
+      @user.update(status: :deactivated)
 
       redirect_to edit_dealership_path(@dealership)
     end
 
     private
       def user_params
-        params.require(:user).permit(:email, :full_name, :permission_level)
+        params.require(:user).permit(:email, :full_name, :permission_level, :status)
       end
   end
 end
