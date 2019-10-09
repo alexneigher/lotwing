@@ -38,6 +38,9 @@
           .col-12.text-right{ onclick: 'setTimeout(function(){document.location.href = "/dealer_trades"}, 0)' }
             = f.submit 'Print Trade Sheet', formtarget: "_blank", class: 'btn btn-sm btn-secondary'
 
+          .col-12.text-right
+            
+            = link_to "Print Sold Trade Sheet", dealer_trade_print_dealer_trade_sheet_path(@dealer_trade, format: :pdf), target: "_blank", class: 'btn btn-sm btn-secondary mt-2'
 
         .row.mb-4.no-gutters
           .col-md-6

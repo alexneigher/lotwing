@@ -1,0 +1,24 @@
+%div{style: "font-family: sans-serif;"}
+
+  %div{style:'margin-bottom: 0px;font-size: 40px;'}
+    %div{style:'margin-bottom:10px;'}
+      = @dealer_trade.date_created
+    %div{style:'margin-bottom:10px;'}
+      = @dealer_trade.desk_manager
+    %div{style:'margin-bottom:10px;'}
+      = @dealer_trade.trade_dealer_name
+
+  %div
+    %h1{style:'margin-top:45px;margin-bottom:0;font-size:185px;text-align:center;'}
+      DEALER
+      %br
+      TRADE
+
+  %div{style:'margin-bottom: 0px;font-size: 40px;'}
+    %div{style:'margin-bottom:10px;'}
+      = @dealer_trade.stock_number
+    %div{style:'margin-bottom:10px;'}
+      %span{style: 'margin-right: 145px;'}
+        = @dealer_trade.model
+      %span
+        = @dealer_trade.color

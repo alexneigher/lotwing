@@ -1,0 +1,22 @@
+%div{style: "font-family: sans-serif;"}
+
+  %div{style:'margin-bottom: 0px;font-size: 40px;'}
+    %div{style:'margin-bottom:10px;'}
+      = @deal.deal_date
+    %div{style:'margin-bottom:10px;'}
+      = @deal.desk_manager
+    %div{style:'margin-bottom:10px;'}
+      = @deal.sales_rep
+    %div{style:'margin-bottom:10px;'}
+      = @deal.client_last_name
+
+  %div
+    %h1{style:'margin-top:50px;margin-bottom:50px;font-size:200px;text-align:center;'}
+      SOLD
+
+  %div{style:'margin-bottom: 0px;font-size: 40px;'}
+    %div{style:'margin-bottom:10px;'}
+      = @deal.stock_number
+    %div{style:'margin-bottom:10px;'}
+      = @deal.model
+      

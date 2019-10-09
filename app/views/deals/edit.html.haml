@@ -2,11 +2,14 @@
   = form_for @deal, url: deal_path(@deal), method: :put do |f|
 
     .row
-      .col-md-12
-        %span{ onclick: 'setTimeout(function(){document.location.href = "/board-manager"}, 0)' }
-          = f.submit 'Print Cover Sheet', class: 'btn btn-sm btn-secondary pull-right mt-2', :formtarget => "_blank"
-
+      .col-8
         %h3 Board Manager - Editing #{@deal.client_last_name}
+      .col-4.text-right
+      
+        %span{ onclick: 'setTimeout(function(){document.location.href = "/board-manager"}, 0)' }
+          = f.submit 'Print Cover Sheet', class: 'btn btn-sm btn-secondary mt-2', :formtarget => "_blank"
+        %br
+        = link_to "Print Sold Sheet", deal_print_sold_sheet_path(@deal, format: :pdf), target: "_blank", class: 'btn btn-sm btn-secondary mt-2'
         
     .row.mt-4
       .col-md-2

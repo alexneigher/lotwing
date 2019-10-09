@@ -68,6 +68,19 @@ class DealerTradesController < ApplicationController
     end
   end
 
+  def print_dealer_trade_sheet
+    @dealer_trade = current_user.dealership.dealer_trades.find(params[:dealer_trade_id] )
+
+    respond_to do |format|
+     format.pdf do
+       render pdf: "Sold Sheet",
+       template: "dealer_trades/dealer_trade_printout_sheet.html.haml",
+       orientation: "Landscape",
+       layout: 'pdf.html.erb'
+     end
+    end
+  end
+
   def stock_number_search
     @vehicle = current_user.dealership.vehicles.where("stock_number ILIKE ?", "#{params[:stock_number]}").last
   end

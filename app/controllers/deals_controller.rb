@@ -50,6 +50,20 @@ class DealsController < ApplicationController
     end
   end
 
+  def print_sold_sheet
+    @deal = current_user.dealership.deals.find(params[:deal_id] )
+
+    respond_to do |format|
+     format.pdf do
+       render pdf: "Sold Sheet",
+       template: "deals/print_sold_sheet.html.haml",
+       orientation: "Landscape",
+       layout: 'pdf.html.erb'
+     end
+    end
+  end
+
+
   def stock_number_search
     @vehicle = current_user.dealership.vehicles.where("stock_number ILIKE ?", "#{params[:stock_number]}").last
     @existing_stock_number_deals = current_user.dealership.deals.where("stock_number ILIKE ?", "#{params[:stock_number]}").any?

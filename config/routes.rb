@@ -51,6 +51,7 @@ Rails.application.routes.draw do
 
   resources :dealer_trades do
     get :trade_sheet
+    get :print_dealer_trade_sheet
     collection do
       put :stock_number_search
       put :previous_trade_search
@@ -121,6 +122,7 @@ Rails.application.routes.draw do
 
   resources :deals, except: [:index] do
     get :cover_sheet
+    get :print_sold_sheet
     collection do
       put :stock_number_search
     end
