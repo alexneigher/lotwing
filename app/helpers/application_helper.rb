@@ -1,4 +1,7 @@
 module ApplicationHelper
+  require 'barby'
+  require 'barby/barcode/code_39'
+  require 'barby/outputter/html_outputter'
 
   def deal_rep_attribution_counts(deals)
     reps = deals.pluck(:sales_rep, :split_rep).flatten.uniq.reject(&:blank?)
@@ -39,6 +42,13 @@ module ApplicationHelper
       when "wholesale_unit"
         "#8D8C88"
       end
+  end
+
+  def html_barcode(string)
+    barcode = Barby::Code39.new(string)
+    barcode_for_html = Barby::HtmlOutputter.new(barcode)
+    
+    return barcode_for_html
   end
   
 end

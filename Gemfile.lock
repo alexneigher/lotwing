@@ -54,6 +54,7 @@ GEM
     arel (8.0.0)
     autoprefixer-rails (9.6.1.1)
       execjs
+    barby (0.6.8)
     bcrypt (3.1.13)
     bindex (0.5.0)
     bootstrap (4.3.1)
@@ -251,6 +252,7 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake
+  barby
   bootstrap (>= 4.3.1)
   byebug
   capybara (~> 2.13)
@@ -289,4 +291,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.16.0
+   1.17.3
