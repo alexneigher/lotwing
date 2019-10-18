@@ -1,7 +1,7 @@
 module ApplicationHelper
   require 'barby'
-  require 'barby/barcode/code_93'
-  require 'barby/outputter/html_outputter'
+  require 'barby/barcode/code_128'
+  require 'barby/outputter/png_outputter'
 
   def deal_rep_attribution_counts(deals)
     reps = deals.pluck(:sales_rep, :split_rep).flatten.uniq.reject(&:blank?)
@@ -45,10 +45,14 @@ module ApplicationHelper
   end
 
   def html_barcode(string)
-    barcode = Barby::Code93.new(string)
-    barcode_for_html = Barby::HtmlOutputter.new(barcode)
+    # barcode = Barby::Code128B.new(string)
+    # barcode_for_html = Barby::HtmlOutputter.new(barcode)
 
-    return barcode_for_html
+    # return barcode_for_html
+
+    code = Barby::Code128B.new(string).to_png(margin:3, height: 10)
+    image = Base64.encode64(code.to_s).gsub(/\s+/, "")
+    return "data:image/png;base64,#{Rack::Utils.escape(image)}"
   end
   
 end
