@@ -1,6 +1,6 @@
 module ApplicationHelper
   require 'barby'
-  require 'barby/barcode/code_128'
+  require 'barby/barcode/code_93'
   require 'barby/outputter/html_outputter'
 
   def deal_rep_attribution_counts(deals)
@@ -45,7 +45,7 @@ module ApplicationHelper
   end
 
   def html_barcode(string)
-    barcode = Barby::Code128.new(string)
+    barcode = Barby::Code93.new(string)
     barcode_for_html = Barby::HtmlOutputter.new(barcode)
 
     return barcode_for_html
