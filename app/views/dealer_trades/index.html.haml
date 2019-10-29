@@ -6,14 +6,50 @@
       .card.text-center.mt-1
         .card-header
           %small
-            Total Trades MTD: #{@dealer_trades.where("DATE(date_created) >= ?", DateTime.now.in_time_zone("Pacific Time (US & Canada)").beginning_of_month).count}
+            = link_to dealer_trades_path(search: {mtd_total_trades: true}) do
+              Total Trades MTD: #{@dealer_trades.where("DATE(date_created) >= ?", DateTime.now.in_time_zone("Pacific Time (US & Canada)").beginning_of_month).count}
       .card.text-center.mt-1
         .card-header
           %small
             Total Trades All Time: #{@dealer_trades.count}
         
     .col-md-10   
-      = link_to 'New Trade', new_dealer_trade_path, class: 'btn btn-primary btn-sm mb-1'
+      .row
+        .col-2
+          = link_to 'New Trade', new_dealer_trade_path, class: 'btn btn-primary btn-sm mb-1'
+        .col-10.form-inline.small{style: 'margin-bottom: 10px;'}
+          = form_tag dealer_trades_path, method: :get, autocomplete: "off" do
+            .input-group{style:'padding:5px 15px; border-radius: 5px; border:1px solid #ced4da;'}
+              .input-group
+                %label.mr-2{onclick: "$(this).parents('form').submit();"}
+                  = hidden_field_tag "search[veb_delivered]", 0
+                  = check_box_tag 'search[veb_delivered]', 1, params.dig(:search, :veb_delivered).to_i == 1 || params.dig(:search, :veb_delivered).nil?, class: 'mr-1'
+                  Veb Delivered
+
+              .input-group
+                %label.mr-2{onclick: "$(this).parents('form').submit();"}
+                  = hidden_field_tag "search[veb_received]", 0
+                  = check_box_tag 'search[veb_received]', 1, params.dig(:search, :veb_received).to_i == 1 || params.dig(:search, :veb_received).nil?, class: 'mr-1'
+                  Veb Received
+                
+              .input-group
+                .input-group-prepend
+                  %span.input-group-text{style:'padding: 0 5px;'}
+                    %i.fa.fa-calendar
+                = text_field_tag "search[start_date]", params.dig(:search, :start_date), autocomplete: "off", placeholder: 'Start Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
+              .input-group
+                .input-group-prepend
+                  %span.input-group-text{style:'padding: 0 5px;'}
+                    %i.fa.fa-calendar
+                = text_field_tag "search[end_date]", params.dig(:search, :end_date), autocomplete: "off", placeholder: 'End Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
+              .input-group
+                .input-group-prepend
+                  %span.input-group-text{style:'padding: 0 5px;'}
+                    %i.fa.fa-list
+                = text_field_tag "search[query]", params.dig(:search, :query), placeholder: 'Stock # or Model', class: 'form-control form-control-sm'
+
+              = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
+
       .table-responsive.small{style: 'max-height: 80vh;'}
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead
@@ -22,23 +58,35 @@
                 %i.fa.fa-pencil
               %th Dealer Name
               %th
-                = link_to dealer_trades_path(sort: {dealer_code: params.dig(:sort, :dealer_code) == 'asc' ? "desc": "asc"}) do
+                = link_to dealer_trades_path(sort: {dealer_code: params.dig(:sort, :dealer_code) == 'asc' ? "desc": "asc"}, search: params[:search].as_json) do
                   Dealer Code
                   - if params.dig(:sort, :dealer_code) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to dealer_trades_path(sort: {date_created: params.dig(:sort, :date_created) == 'asc' ? "desc": "asc"}) do
+                = link_to dealer_trades_path(sort: {date_created: params.dig(:sort, :date_created) == 'asc' ? "desc": "asc"}, search: params[:search].as_json) do
                   Date
                   - if params.dig(:sort, :date_created) == "asc"
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
               %th Delivered Yr
-              %th Model
+              %th
+                = link_to dealer_trades_path(sort: {model: params.dig(:sort, :model) == 'asc' ? "desc": "asc"}, search: params[:search].as_json) do
+                  Model
+                  - if params.dig(:sort, :model) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
               %th Received Yr
-              %th Model
+              %th
+                = link_to dealer_trades_path(sort: {trade_model: params.dig(:sort, :trade_model) == 'asc' ? "desc": "asc"}, search: params[:search].as_json) do
+                  Model
+                  - if params.dig(:sort, :trade_model) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
               %th Contact
               %th Trade By
               %th Difference
@@ -73,3 +121,9 @@
                     Our Purchase
 
             
+:javascript
+  $(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd'
+     });
+  });

@@ -4,6 +4,28 @@ class DealerTradesController < ApplicationController
   def index
     @dealer_trades = current_user.dealership.dealer_trades
 
+    if params.dig(:search, :query).present?
+      @dealer_trades = @dealer_trades
+                          .where("stock_number ilike :query OR trade_stock_number ilike :query OR model ilike :query OR trade_model ilike :query", query: params.dig(:search, :query))
+    end
+
+    if params.dig(:search, :start_date).present? && params.dig(:search, :end_date).present?
+      start_date = DateTime.strptime(params.dig(:search, :start_date), "%Y-%m-%d").beginning_of_day
+      
+      end_date = DateTime.strptime(params.dig(:search, :end_date).presence || Date.today.strftime("%Y-%m-%d"), "%Y-%m-%d").end_of_day
+      
+      @dealer_trades = @dealer_trades.where("CAST(date_created AS DATE) >= ? AND CAST(date_created AS DATE) <= ?", start_date, end_date)
+    
+    elsif params.dig(:search, :start_date).present?
+      start_date = DateTime.strptime(params.dig(:search, :start_date), "%Y-%m-%d").beginning_of_day
+      @dealer_trades = @dealer_trades.where("CAST(date_created AS DATE) >= ?", start_date)
+
+    end
+
+    if params.dig(:search, :mtd_total_trades).present?
+      @dealer_trades = @dealer_trades.where("DATE(date_created) >= ?", DateTime.now.in_time_zone("Pacific Time (US & Canada)").beginning_of_month)
+    end
+
     if params.dig(:sort).present?
       params.dig(:sort).each do |k,v|
         @dealer_trades = @dealer_trades.order(k => v)
