@@ -36,8 +36,9 @@ $(function(){
     fetch_data_and_render('buildings');
     
     // fetch parking spaces
+    display_mode = getUrlParameter("display_mode") || '';
     $.ajax({
-      url:"/web_api/shapes/parking_spaces",
+      url:"/web_api/shapes/parking_spaces?display_mode=" + display_mode,
       dataType: "json",
       success: function(data){
 

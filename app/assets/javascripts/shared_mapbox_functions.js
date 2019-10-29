@@ -125,8 +125,6 @@ function add_events_to_map(data, map, event_type){
       tag_json = data[event_type][i];
     }
 
-    console.log(tag_json, event_type);
-
     geo_json = tag_json.data.attributes.parking_space;
     geo_json_array.push(geo_json);
   }
@@ -195,3 +193,19 @@ function shape_opacity(most_recently_tagged_at, shape_type){
   }
   
 }
+
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
