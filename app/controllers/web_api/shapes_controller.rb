@@ -79,11 +79,12 @@ module WebApi
       def maybe_filter_by_no_test_drives
         return unless params.dig(:display_mode) == "no_test_drives"
         
-        test_drive_shape_ids = Event.includes(:tag).where(event_type: "test_drive").map{|e| e.tag.shape_id}
+        test_drive_vehicle_ids = Event.includes(:tag).where(event_type: "test_drive").map{|e| e.tag.vehicle_id}
+
+        @new_vehicle_occupied_space = @new_vehicle_occupied_space.includes(:vehicle).where.not(vehicles: {id: test_drive_vehicle_ids})
+        @used_vehicle_occupied_space = @used_vehicle_occupied_space.includes(:vehicle).where.not(vehicles: {id: test_drive_vehicle_ids})
         
-        @new_vehicle_occupied_space = @new_vehicle_occupied_space.where.not(id: test_drive_shape_ids)
-        @used_vehicle_occupied_space = @used_vehicle_occupied_space.where.not(id: test_drive_shape_ids)
-        @duplicate_shape_ids = []
+        @duplicate_shape_ids = @parking_spaces.includes(:tags).where(tags: {active: true}).select{|p| p.tags.length > 1 && !test_drive_vehicle_ids.include?(p.tags.pluck(:vehicle_id)) }
 
         @loaner_occupied_spaces = []
         @lease_return_occupied_spaces = []
