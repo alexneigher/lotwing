@@ -7,7 +7,7 @@
         .card-header
           %small
             = link_to dealer_trades_path(search: {mtd_total_trades: true}) do
-              Total Trades MTD: #{@dealer_trades.where("DATE(date_created) >= ?", DateTime.now.in_time_zone("Pacific Time (US & Canada)").beginning_of_month).count}
+              Total Trades MTD: #{current_user.dealership.dealer_trades.where("DATE(date_created) >= ?", DateTime.now.in_time_zone("Pacific Time (US & Canada)").beginning_of_month).count}
       .card.text-center.mt-1
         .card-header
           %small
@@ -22,15 +22,26 @@
             .input-group{style:'padding:5px 15px; border-radius: 5px; border:1px solid #ced4da;'}
               .input-group
                 %label.mr-2{onclick: "$(this).parents('form').submit();"}
-                  = hidden_field_tag "search[delivered]", 0
-                  = check_box_tag 'search[delivered]', 1, params.dig(:search, :delivered).to_i == 1 || params.dig(:search, :delivered).nil?, class: 'mr-1'
-                  Delivered
-
+                  = hidden_field_tag "search[trade_options][your_trade]", 0
+                  = check_box_tag 'search[trade_options][your_trade]', 1, params.dig(:search, :trade_options, :your_trade).to_i == 1 || params.dig(:search, :trade_options, :your_trade).nil?, class: 'mr-1'
+                  Your Trade
               .input-group
                 %label.mr-2{onclick: "$(this).parents('form').submit();"}
-                  = hidden_field_tag "search[received]", 0
-                  = check_box_tag 'search[received]', 1, params.dig(:search, :received).to_i == 1 || params.dig(:search, :received).nil?, class: 'mr-1'
-                  Received
+                  = hidden_field_tag "search[trade_options][your_purchase]", 0
+                  = check_box_tag 'search[trade_options][your_purchase]', 1, params.dig(:search, :trade_options, :your_purchase).to_i == 1 || params.dig(:search, :trade_options, :your_purchase).nil?, class: 'mr-1'
+                  Your Purchase
+              .input-group
+                %label.mr-2{onclick: "$(this).parents('form').submit();"}
+                  = hidden_field_tag "search[trade_options][our_trade]", 0
+                  = check_box_tag 'search[trade_options][our_trade]', 1, params.dig(:search, :trade_options, :our_trade).to_i == 1 || params.dig(:search,:trade_options, :our_trade).nil?, class: 'mr-1'
+                  Our Trade
+              .input-group  
+                %label.mr-2{onclick: "$(this).parents('form').submit();"}
+                  = hidden_field_tag "search[trade_options][our_purchase]", 0
+                  = check_box_tag 'search[trade_options][our_purchase]', 1, params.dig(:search, :trade_options, :our_purchase).to_i == 1 || params.dig(:search,:trade_options, :our_purchase).nil?, class: 'mr-1'
+                  Our Purchase
+
+              
                 
               .input-group
                 .input-group-prepend

@@ -9,6 +9,17 @@ class DealerTradesController < ApplicationController
                           .where("stock_number ilike :query OR trade_stock_number ilike :query OR model ilike :query OR trade_model ilike :query OR trade_dealer_name ilike :query", query: "%#{params.dig(:search, :query)}%")
     end
 
+    if params.dig(:search, :trade_options).present?
+      search_by = params.dig(:search, :trade_options).select{|k, v| v == "1"}
+      sql = ""
+      search_by.keys.each_with_index do |key, i|
+        condition = (i == 0 ? "": " OR")
+        sql += "#{condition} #{key} is TRUE "
+      end
+
+      @dealer_trades = @dealer_trades.where(sql)
+    end
+
     if params.dig(:search, :start_date).present? && params.dig(:search, :end_date).present?
       start_date = DateTime.strptime(params.dig(:search, :start_date), "%Y-%m-%d").beginning_of_day
       
