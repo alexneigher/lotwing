@@ -26,8 +26,11 @@
                   = event_type.titleize
               .small
                 - events.group_by(&:user).sort.each do |user, events|
-
                   = "#{user.full_name} (#{events.count})"
+                  - if event_type == "test_drive"
+                    - events.each do |event|
+                      = link_to vehicle_path(event.tag.vehicle) do
+                        = "(#{event.tag.vehicle.stock_number})"
                   %br
         #last_day.tab-pane{:role => "tabpanel"}
           %h5 Recent Activity (24 Hours)
@@ -44,6 +47,10 @@
                 - events.group_by(&:user).sort.each do |user, events|
 
                   = "#{user.full_name} (#{events.count})"
+                  - if event_type == "test_drive"
+                    - events.each do |event|
+                      = link_to vehicle_path(event.tag.vehicle) do
+                        = "(#{event.tag.vehicle.stock_number}) "
                   %br
         
       %h5 Vehicles Currently Off Lot
