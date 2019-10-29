@@ -33,6 +33,9 @@ class VehiclesController < ApplicationController
 
   def show
     @vehicle = Vehicle.find(params[:id])
+    
+    @events = @vehicle.events.includes(:user, :resolutions)
+
     dealership = current_user.dealership
     all_vehicles = dealership.vehicles.includes(:current_parking_tag, :open_service_tickets)
     filtered_vehicles = all_vehicles

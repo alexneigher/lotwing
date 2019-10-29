@@ -4,6 +4,8 @@
     .row
       .col-8
         = "#{@vehicle.make} #{@vehicle.model} (#{@vehicle.stock_number}) History"
+        %br
+        %strong= @vehicle.vin
       .col-4.text-right
         %a.small{"data-target" => "#createServiceTicketModal", "data-toggle" => "modal", :type => "link", href: ''}
           create service ticket
@@ -24,16 +26,48 @@
           = f.text_field :color, placeholder: "Color", class: 'form-control form-control-sm'
         .col-2
           = f.submit "Update", class: 'btn btn-sm btn-primary btn-block mt-4'   
-    %hr.m00
-    
-    - grouped_events = @vehicle.events.includes(:user, :resolutions).group_by(&:event_type)
+    - if @events.any?
+      %hr.mb-0
+      .row
+        .col-6
+          %table.table.table-sm.mb-0.bg-light
+            %tbody
+              %tr
+                %td.align-middle
+                  %h2.mb-0
+                    = (DateTime.current.in_time_zone("US/Pacific").to_date - @events.where(event_type: 'change_stall').order(:created_at).last.created_at.in_time_zone("US/Pacific").to_date).to_i
+                %td.align-middle
+                  days
+                %td.align-middle
+                  %i.fa.fa-car
+                %td
+                  %small
+                    = "This vehicle has not moved in #{time_ago_in_words(@events.where(event_type: 'change_stall').order(:created_at).last.created_at.in_time_zone("US/Pacific"))}."
+        .col-6
+          %table.table.table-sm.mb-0
+            %tbody
+              %tr
+                %td.align-middle
+                  %h2.mb-0
+                    = (DateTime.current.in_time_zone("US/Pacific").to_date - @events.order(:created_at).last.created_at.in_time_zone("US/Pacific").to_date).to_i
+                %td.align-middle
+                  days
+                %td.align-middle
+                  %i.fa.fa-user
+                %td
+                  %small
+                    = @events.order(:created_at).last.event_type.titleize
+                    %br
+                    = @events.order(:created_at).last.user.full_name
+    %hr.mt-0
+    - grouped_events = @events.group_by(&:event_type)
     
     %ul.nav.nav-tabs.mt-0{:role => "tablist"}
 
       - grouped_events.keys.each_with_index do |key, i|
         %li.nav-item
           %a.nav-link{"data-toggle" => "tab", :href => "##{key}", :role => "tab", class: ('active' if i == 0)}
-            = key.titleize
+            = "#{key.titleize} (#{grouped_events[key].count})"
     .tab-content.mt-3
       - grouped_events.each do |k, events|   
         .tab-pane{:role => "tabpanel", id: k, class: ('active in' if grouped_events.first[0] == k).to_s }   
