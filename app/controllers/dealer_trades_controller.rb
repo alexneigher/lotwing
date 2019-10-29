@@ -6,7 +6,7 @@ class DealerTradesController < ApplicationController
 
     if params.dig(:search, :query).present?
       @dealer_trades = @dealer_trades
-                          .where("stock_number ilike :query OR trade_stock_number ilike :query OR model ilike :query OR trade_model ilike :query", query: params.dig(:search, :query))
+                          .where("stock_number ilike :query OR trade_stock_number ilike :query OR model ilike :query OR trade_model ilike :query OR trade_dealer_name ilike :query", query: "%#{params.dig(:search, :query)}%")
     end
 
     if params.dig(:search, :start_date).present? && params.dig(:search, :end_date).present?

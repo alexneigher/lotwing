@@ -22,15 +22,15 @@
             .input-group{style:'padding:5px 15px; border-radius: 5px; border:1px solid #ced4da;'}
               .input-group
                 %label.mr-2{onclick: "$(this).parents('form').submit();"}
-                  = hidden_field_tag "search[veb_delivered]", 0
-                  = check_box_tag 'search[veb_delivered]', 1, params.dig(:search, :veb_delivered).to_i == 1 || params.dig(:search, :veb_delivered).nil?, class: 'mr-1'
-                  Veb Delivered
+                  = hidden_field_tag "search[delivered]", 0
+                  = check_box_tag 'search[delivered]', 1, params.dig(:search, :delivered).to_i == 1 || params.dig(:search, :delivered).nil?, class: 'mr-1'
+                  Delivered
 
               .input-group
                 %label.mr-2{onclick: "$(this).parents('form').submit();"}
-                  = hidden_field_tag "search[veb_received]", 0
-                  = check_box_tag 'search[veb_received]', 1, params.dig(:search, :veb_received).to_i == 1 || params.dig(:search, :veb_received).nil?, class: 'mr-1'
-                  Veb Received
+                  = hidden_field_tag "search[received]", 0
+                  = check_box_tag 'search[received]', 1, params.dig(:search, :received).to_i == 1 || params.dig(:search, :received).nil?, class: 'mr-1'
+                  Received
                 
               .input-group
                 .input-group-prepend
@@ -46,7 +46,7 @@
                 .input-group-prepend
                   %span.input-group-text{style:'padding: 0 5px;'}
                     %i.fa.fa-list
-                = text_field_tag "search[query]", params.dig(:search, :query), placeholder: 'Stock # or Model', class: 'form-control form-control-sm'
+                = text_field_tag "search[query]", params.dig(:search, :query), placeholder: 'Stock # / Model / Dealer', class: 'form-control form-control-sm'
 
               = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
 
