@@ -30,19 +30,20 @@
       %hr.mb-0
       .row
         .col-6
-          %table.table.table-sm.mb-0.bg-light
-            %tbody
-              %tr
-                %td.align-middle
-                  %h2.mb-0
-                    = (DateTime.current.in_time_zone("US/Pacific").to_date - @events.where(event_type: 'change_stall').order(:created_at).last.created_at.in_time_zone("US/Pacific").to_date).to_i
-                %td.align-middle
-                  days
-                %td.align-middle
-                  %i.fa.fa-car
-                %td
-                  %small
-                    = "This vehicle has not moved in #{time_ago_in_words(@events.where(event_type: 'change_stall').order(:created_at).last.created_at.in_time_zone("US/Pacific"))}."
+          - if @events.where(event_type: 'change_stall').any?
+            %table.table.table-sm.mb-0.bg-light
+              %tbody
+                %tr
+                  %td.align-middle
+                    %h2.mb-0
+                      = (DateTime.current.in_time_zone("US/Pacific").to_date - @events.where(event_type: 'change_stall').order(:created_at).last.created_at.in_time_zone("US/Pacific").to_date).to_i
+                  %td.align-middle
+                    days
+                  %td.align-middle
+                    %i.fa.fa-car
+                  %td
+                    %small
+                      = "This vehicle has not moved in #{time_ago_in_words(@events.where(event_type: 'change_stall').order(:created_at).last.created_at.in_time_zone("US/Pacific"))}."
         .col-6
           %table.table.table-sm.mb-0
             %tbody
