@@ -8,7 +8,9 @@
         %strong= @vehicle.vin
       .col-4.text-right
         %a.small{"data-target" => "#createServiceTicketModal", "data-toggle" => "modal", :type => "link", href: ''}
-          create service ticket
+          Create service ticket
+        %br
+        = link_to "Hold options", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#holdsContainer", "data-toggle" => "collapse" 
     %hr.m00
     = form_for @vehicle, url: vehicle_path(@vehicle), method: :put do |f|
       .row              
@@ -25,7 +27,25 @@
           %label.small.mb-0 Color
           = f.text_field :color, placeholder: "Color", class: 'form-control form-control-sm'
         .col-2
-          = f.submit "Update", class: 'btn btn-sm btn-primary btn-block mt-4'   
+          = f.submit "Update", class: 'btn btn-sm btn-primary btn-block mt-4'
+      .row
+        .col-12
+          #holdsContainer.collapse
+            %hr.mb-0
+            .py-1
+              .row
+                .col-6
+                  %label.small.mb-0
+                    Place this vehicle on a Sales Hold
+                    = f.check_box :sales_hold, class: 'ml-1'
+                  = f.text_area :sales_hold_notes, placeholder: 'Sales Hold Notes', rows: 2, class: 'form-control form-control-sm'
+            .bg-light.py-2
+              .row
+                .col-6
+                  %label.small.mb-0
+                    Place this vehicle on a Service Hold
+                    = f.check_box :service_hold, class: 'ml-1'
+                  = f.text_area :service_hold_notes, placeholder: 'Service Hold Notes', rows: 2, class: 'form-control form-control-sm'
     - if @events.any?
       %hr.mb-0
       .row
