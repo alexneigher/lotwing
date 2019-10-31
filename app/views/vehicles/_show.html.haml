@@ -75,7 +75,7 @@
         .tab-pane{:role => "tabpanel", id: k, class: ('active in' if grouped_events.first[0] == k).to_s }   
           %table.table.table-bordered.table-striped.table-sm.mb-0
             %tbody
-              - events.each do |event|
+              - events.sort_by{|s| s.created_at}.reverse.each do |event|
                 %tr
                   %td= event.event_type.upcase
                   %td
