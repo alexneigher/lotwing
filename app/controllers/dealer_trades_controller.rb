@@ -61,6 +61,7 @@ class DealerTradesController < ApplicationController
                                       dealer_code: params[:dealer_trade][:dealer_code]
                                     )
 
+    @dealer_trade.vehicle&.update(sold_status: "Sold to #{@dealer_trade.trade_dealer_name}") #mark associated vehicle as sold
     if params[:commit] == "Create And Print Trade Sheet"
       redirect_to dealer_trade_trade_sheet_path(@dealer_trade, format: :pdf) and return
     else

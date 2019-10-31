@@ -23,4 +23,8 @@ class Vehicle < ApplicationRecord
   def full_description
     "#{year} #{make} #{model}"
   end
+
+  def sold?
+    sold_status.present?
+  end
 end
