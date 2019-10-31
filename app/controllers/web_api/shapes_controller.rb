@@ -36,6 +36,7 @@ module WebApi
       @duplicate_shape_ids = @parking_spaces.includes(:tags).where(tags: {active: true}).select{|p| p.tags.length > 1}
 
       maybe_filter_by_older_than_4_days
+      maybe_filter_by_holds
       maybe_filter_by_no_test_drives
 
       @empty_parking_space = @parking_spaces - [@new_vehicle_occupied_space + @used_vehicle_occupied_space + @loaner_occupied_spaces + @lease_return_occupied_spaces +@wholesale_unit_occupied_spaces].flatten
@@ -74,6 +75,15 @@ module WebApi
         @lease_return_occupied_spaces = @lease_return_occupied_spaces.where('shapes.most_recently_tagged_at < ?', 4.days.ago)
         @wholesale_unit_occupied_spaces = @wholesale_unit_occupied_spaces.where('shapes.most_recently_tagged_at < ?', 4.days.ago)
         @duplicate_shape_ids = @parking_spaces.includes(:tags).where('shapes.most_recently_tagged_at < ?', 4.days.ago).where(tags: {active: true}).select{|p| p.tags.length > 1}
+      end
+
+      def maybe_filter_by_holds
+        return unless params.dig(:display_mode) == "hold_vehicles"
+        @new_vehicle_occupied_space = @new_vehicle_occupied_space.where("vehicles.sales_hold is true OR vehicles.service_hold is true")
+        @used_vehicle_occupied_space = @used_vehicle_occupied_space.where("vehicles.sales_hold is true OR vehicles.service_hold is true")
+        @loaner_occupied_spaces = @loaner_occupied_spaces.where("vehicles.sales_hold is true OR vehicles.service_hold is true")
+        @lease_return_occupied_spaces = @lease_return_occupied_spaces.where("vehicles.sales_hold is true OR vehicles.service_hold is true")
+        @wholesale_unit_occupied_spaces = @wholesale_unit_occupied_spaces.where("vehicles.sales_hold is true OR vehicles.service_hold is true")
       end
 
       def maybe_filter_by_no_test_drives

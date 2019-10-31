@@ -18,6 +18,8 @@ class Vehicle < ApplicationRecord
   
   enum usage_type: [:is_new, :is_used, :loaner, :lease_return, :wholesale_unit]
 
+  scope :data_feed_deleteable, -> { where(creation_source: :data_feed_created, sales_hold: false, service_hold: false) }
+
   def full_description
     "#{year} #{make} #{model}"
   end
