@@ -41,9 +41,10 @@
                     days
                   %td.align-middle
                     %i.fa.fa-car
-                  %td
+                  %td.align-middle{style:"line-height:12px;"}
                     %small
                       = "This vehicle has not moved in #{time_ago_in_words(@events.where(event_type: 'change_stall').order(:created_at).last.created_at.in_time_zone("US/Pacific"))}."
+                  
         .col-6
           %table.table.table-sm.mb-0
             %tbody
@@ -55,7 +56,7 @@
                   days
                 %td.align-middle
                   %i.fa.fa-user
-                %td
+                %td.align-middle{style:"line-height:12px;"}
                   %small
                     = @events.order(:created_at).last.event_type.titleize
                     %br
