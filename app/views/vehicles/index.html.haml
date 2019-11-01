@@ -95,7 +95,8 @@
                 %td
                   = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
                     = vehicle.make
-                %th
+                %td
+
                   = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
                     = vehicle.model
                     - if vehicle.user_created?
@@ -104,6 +105,10 @@
                     = link_to service_tickets_path(search: {stock_number: vehicle.stock_number}) do
                       .text-danger
                         (OPEN TICKETS)
+                  - if vehicle.sold?
+                    .text-black
+                      %strong
+                        ="[#{vehicle.sold_status}]"
                 %th
 
                   - if vehicle.data_feed_created?
