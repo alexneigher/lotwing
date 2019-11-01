@@ -86,6 +86,7 @@ function map_shape_type_to_color(shape_type) {
                 "loaner_occupied_spaces": "#E8F051",
                 "lease_return_occupied_spaces": "#D13CEA",
                 "wholesale_unit_occupied_spaces": "#8D8C88",
+                "sold_vehicle_spaces": "#000",
                 'parking_spaces': '#FFFFFF',
                 "parking_lots": '#CCCCCC',
                 "buildings": '#FF9933',
