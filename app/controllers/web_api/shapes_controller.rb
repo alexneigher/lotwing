@@ -60,18 +60,25 @@ module WebApi
     end
 
     def show
+      html = ''
       @shape = current_user.dealership.shapes.find(params[:id])
       
-      @vehicle = @shape.vehicle
+      vehicles = @shape.vehicles.includes(:tags).where(tags: {active: true})
+
+      vehicles.each do |vehicle|
+        @vehicle = vehicle
+        
+        @events = @vehicle.events.includes(:user, :resolutions)
+
+        dealership = current_user.dealership
+        
+        @context = "lot_view"
+
+        html += render_to_string partial: "vehicles/show"
+
+      end
       
-      @events = @vehicle.events.includes(:user, :resolutions)
-
-      dealership = current_user.dealership
-      
-      @context = "lot_view"
-
-
-      render partial: "vehicles/show"
+      render inline: html
     end
 
     private
