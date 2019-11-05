@@ -86,6 +86,8 @@ class DealerTradesController < ApplicationController
 
   def destroy
     @dealer_trade = current_user.dealership.dealer_trades.find(params[:id])
+    @dealer_trade.vehicle&.update(sold_status: nil) #mark associated vehicle as available
+
     @dealer_trade.destroy
     redirect_to dealer_trades_path
   end

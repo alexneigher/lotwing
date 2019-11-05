@@ -35,6 +35,7 @@ class DealsController < ApplicationController
 
   def destroy
     @deal = current_user.dealership.deals.find(params[:id])
+    @deal.vehicle&.update(sold_status: nil) #mark associated vehicle as available
     @deal.destroy
     redirect_to board_manager_path
   end
