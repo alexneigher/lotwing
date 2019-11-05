@@ -88,14 +88,14 @@ function fetch_events_and_render(){
 }
 
 function open_popup(e){
-  show_vehicle_data("Loading...");
+  $('#vehicle_data_container').html("Loading...");
 
   $.ajax({
     url:"/web_api/shapes/" + e.features[0].properties.shape_id,
-    dataType: "json",
+    
     success: function(data){
-      str = tooltip_html(data)
-      show_vehicle_data("<div style='padding: 10px;'><div class='close'>&times;</div>" + str + "</div>");
+      $('#vehicle_data_container').html(data);
+      
     },
     error: function (xhr) {
       alert(xhr.statusText)
@@ -104,27 +104,8 @@ function open_popup(e){
 }
 
 
-function show_vehicle_data(str){
-  $('#vehicle_data_container').html(str);
-}
-
 function hide_vehicle_data(){
   $('#vehicle_data_container').html('');
-}
-
-function tooltip_html(data){
-  str = ''
-
-  for (i = 0; i < data.vehicles.length; i++) { 
-
-    str += render_vehicle_year_make(data.vehicles[i]) + 
-            render_vehicle_stock_number(data.vehicles[i]) +
-            render_vehicle_color(data.vehicles[i]) +
-            "<div style='float:left;margin-top:6px;'>"+ data.vehicles[i].age_in_days +" days in stock</div><div style='clear:both;'></div>" +
-            render_event(data.events[i])
-  }
-  
-  return str
 }
 
 function days_ago(created_at_date){

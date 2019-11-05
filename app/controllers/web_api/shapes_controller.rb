@@ -61,16 +61,17 @@ module WebApi
 
     def show
       @shape = current_user.dealership.shapes.find(params[:id])
-      serialized_events = []
-      @shape.vehicles.includes(:tags).where(tags: {active: true}).each do |vehicle|
-        serialized_events << vehicle
-                              &.events
-                              &.order(created_at: :desc)
-                              &.includes(tag: :shape)
-                              &.map{|e| EventSerializer.new(e, includes:[:user]) }
-      end
       
-      render json: { shape: @shape, events: serialized_events, vehicles: @shape.vehicles.includes(:tags).where(tags: {active: true}) }
+      @vehicle = @shape.vehicles.first
+      
+      @events = @vehicle.events.includes(:user, :resolutions)
+
+      dealership = current_user.dealership
+      
+      @context = "lot_view"
+
+
+      render partial: "vehicles/show"
     end
 
     private

@@ -7,6 +7,9 @@
         %br
         %strong= @vehicle.vin
       .col-4.text-right
+        - if @context == "lot_view"
+          .close
+            x
         %a.small{"data-target" => "#createServiceTicketModal", "data-toggle" => "modal", :type => "link", href: ''}
           Create service ticket
         %br
@@ -169,7 +172,7 @@
                         = resolution.details
   .row.p-2
     .col
-      - if @vehicle.parking_space&.geo_info
+      - if @vehicle.parking_space&.geo_info && @context != 'lot_view'
         / Button trigger modal
         %a#showVehicleTrigger{"data-target" => "#mapModal", "data-toggle" => "modal", :type => "link", href: ''}
           %i.fa.fa-map-marker
@@ -246,7 +249,8 @@
        
         .modal-footer
           = f.submit "Create Service Ticket", class: 'btn btn-primary'
-- if @vehicle.parking_space&.geo_info
+
+- if @vehicle.parking_space&.geo_info && @context != 'lot_view'
   :javascript
     $(function(){
       setTimeout(function(){
