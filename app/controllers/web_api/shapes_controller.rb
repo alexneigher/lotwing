@@ -62,7 +62,7 @@ module WebApi
     def show
       @shape = current_user.dealership.shapes.find(params[:id])
       
-      @vehicle = @shape.vehicles.first
+      @vehicle = @shape.vehicle
       
       @events = @vehicle.events.includes(:user, :resolutions)
 
