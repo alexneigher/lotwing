@@ -2,11 +2,28 @@
 .card.mb-1
   .card-body.pb-0
     .row
-      .col-8
+      .col-6
         = "#{@vehicle.make} #{@vehicle.model} (#{@vehicle.stock_number}) History"
         %br
         %strong= @vehicle.vin
-      .col-4.text-right
+      .col-3
+        - if @vehicle.open_service_tickets.any?
+          = link_to service_tickets_path(search: {stock_number: @vehicle.stock_number}) do
+            .text-danger.text-underline
+              Open Service Tickets
+
+        - if @vehicle.sales_hold?
+          %strong
+            Sales Hold
+
+        - if @vehicle.service_hold?
+          %strong
+            Service Hold
+
+        - if @vehicle.sold?
+          %strong
+            = @vehicle.sold_status
+      .col-3.text-right
         - if @context == "lot_view"
           .close
             x
