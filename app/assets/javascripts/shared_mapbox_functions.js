@@ -115,15 +115,27 @@ function add_duplicate_parkings_to_map(data, map, event_type){
   add_events_to_map(data, map, "duplicate_parking_events");
 }
 
+function add_service_holds_to_map(data, map, event_type){
+  var geo_json_array = []
+  
+  for(var i = 0; i < data[event_type].length; i++){
+    geo_json_array.push( { data: {attributes: {parking_space: data[event_type][i].geo_info}} } )
+  } 
+  data = {"service_hold_events": geo_json_array};
+  console.log(data);
+  add_events_to_map(data, map, "service_hold_events");
+
+}
+
 function add_events_to_map(data, map, event_type){
   var geo_json_array = []
 
   for(var i = 0; i < data[event_type].length; i++){
 
-    if (event_type != "duplicate_parking_events"){
-      tag_json = JSON.parse(data[event_type][i]);
-    }else{
+    if (event_type == "duplicate_parking_events" || event_type == "service_hold_events"){
       tag_json = data[event_type][i];
+    }else{
+      tag_json = JSON.parse(data[event_type][i]);
     }
 
     geo_json = tag_json.data.attributes.parking_space;
@@ -157,7 +169,8 @@ function map_image_url_to_event_type(event_type){
                 "note_events": "https://upload.wikimedia.org/wikipedia/commons/d/de/MB_line_1_icon.png",
                 "test_drive_events": "https://vignette.wikia.nocookie.net/leapfrog/images/b/be/Yellow_Circle.png",
                 "fuel_vehicle_events": "https://vignette.wikia.nocookie.net/leapfrog/images/b/be/Yellow_Circle.png",
-                "duplicate_parking_events": "plus-24.png"
+                "duplicate_parking_events": "plus-24.png",
+                "service_hold_events": "triangle-24.png"
               }
 
   return hash[event_type]
@@ -168,7 +181,8 @@ function map_event_type_to_size(event_type){
                 "note_events": 0.007,
                 "test_drive_events": 0.01,
                 "fuel_vehicle_events": 0.01,
-                "duplicate_parking_events": 0.4
+                "duplicate_parking_events": 0.4,
+                "service_hold_events": 0.45
               }
 
   return hash[event_type]
