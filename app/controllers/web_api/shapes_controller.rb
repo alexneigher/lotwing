@@ -42,7 +42,7 @@ module WebApi
       maybe_filter_by_holds
       maybe_filter_by_no_test_drives
 
-      all_vehicle_spaces  = [@new_vehicle_occupied_space + @used_vehicle_occupied_space + @loaner_occupied_spaces + @lease_return_occupied_spaces +@wholesale_unit_occupied_spaces + @sold_vehicle_spaces].flatten
+      all_vehicle_spaces  = [@new_vehicle_occupied_space + @used_vehicle_occupied_space + @loaner_occupied_spaces + @lease_return_occupied_spaces +@wholesale_unit_occupied_spaces + @sold_vehicle_spaces + @service_hold_spaces].flatten
       
       @empty_parking_space = @parking_spaces - all_vehicle_spaces
 

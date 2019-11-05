@@ -32,9 +32,15 @@ module Api
       @lease_return_occupied_spaces = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "lease_return"})
       @wholesale_unit_occupied_spaces = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "wholesale_unit"})
 
+      @service_hold_spaces = @parking_spaces.joins(:vehicle).where(vehicles: {service_hold: true})
+
+      @sold_vehicle_spaces = @parking_spaces.joins(:vehicle).where.not(vehicles: {sold_status: nil})
+
       @duplicate_shape_ids = @parking_spaces.includes(:tags).where(tags: {active: true}).select{|p| p.tags.length > 1}
 
-      @empty_parking_space = @parking_spaces - [@new_vehicle_occupied_space + @used_vehicle_occupied_space +@loaner_occupied_spaces + @lease_return_occupied_spaces +@wholesale_unit_occupied_spaces].flatten
+      all_vehicle_spaces  = [@new_vehicle_occupied_space + @used_vehicle_occupied_space + @loaner_occupied_spaces + @lease_return_occupied_spaces +@wholesale_unit_occupied_spaces + @sold_vehicle_spaces + @service_hold_spaces].flatten
+      
+      @empty_parking_space = @parking_spaces - all_vehicle_spaces
 
       render json: {
                     new_vehicle_occupied_spaces: @new_vehicle_occupied_space,
@@ -42,8 +48,10 @@ module Api
                     loaner_occupied_spaces: @loaner_occupied_spaces,
                     lease_return_occupied_spaces: @lease_return_occupied_spaces,
                     wholesale_unit_occupied_spaces: @wholesale_unit_occupied_spaces, 
+                    sold_vehicle_spaces: @sold_vehicle_spaces,
                     empty_parking_spaces: @empty_parking_space,
-                    duplicate_parked_spaces: @duplicate_shape_ids
+                    duplicate_parked_spaces: @duplicate_shape_ids,
+                    service_hold_spaces: @service_hold_spaces 
                    }
     end
 
