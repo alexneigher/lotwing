@@ -103,16 +103,13 @@
                     (Open Service Tickets)
 
               - if vehicle.sales_hold?
-                %strong
-                  Sales Hold
+                Sales Hold
 
               - if vehicle.service_hold?
-                %strong
-                  Service Hold
+                Service Hold
 
-              - if vehicle.sold?
-                %strong
-                  = vehicle.sold_status
+              - if vehicle.sold?                
+                = vehicle.sold_status
             %th
 
               - if vehicle.data_feed_created?
