@@ -172,7 +172,7 @@ function map_event_type_to_size(event_type){
                 "fuel_vehicle_events": 0.01,
                 "duplicate_parked_spaces": 0.4,
                 "service_hold_spaces": 0.45,
-                "sales_hold_spaces": 0.007
+                "sales_hold_spaces": 0.35
               }
 
   return hash[event_type]
