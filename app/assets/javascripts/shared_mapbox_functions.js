@@ -186,8 +186,9 @@ function shape_opacity(most_recently_tagged_at, shape_type){
   }else if(vehicle_shapes.includes(shape_type)){
     
     // for parking spaces that are more than 12 hours old, make them transparent
-    hours_old = Math.abs(new Date().getTime() - new Date(most_recently_tagged_at).getTime()) / 36e5
-    if (hours_old > 12){
+    hours_old = Math.abs(new Date() - new Date(most_recently_tagged_at)) / 36e5
+    
+    if (hours_old > 24){
       return 0.4
     }else{
       return 1
