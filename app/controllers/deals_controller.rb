@@ -132,6 +132,11 @@ class DealsController < ApplicationController
           :certified_pre_owned,
           :f_i_pre_sell,
           :f_i_pre_sell_product_list,
-        ).merge({stored: (params[:commit] == 'Store Entry' ? true : false)})
+        ).merge(stored_param)
+    end
+
+    def stored_param
+      return nil unless params[:commit] == 'Store Entry'
+      return { stored: true }
     end
 end

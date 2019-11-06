@@ -51,10 +51,13 @@ $(function(){
         add_shapes_to_map(data, window.map, 'empty_parking_spaces');
         
         // treat duplicate parkings similar to events
-        add_duplicate_parkings_to_map(data, window.map, 'duplicate_parked_spaces');
+        add_shape_overlay_icons(data, window.map, 'duplicate_parked_spaces');
 
-        // treat service holds parkings to events
-        add_service_holds_to_map(data, window.map, 'service_hold_spaces');
+        // treat service holds parkings similar to events
+        add_shape_overlay_icons(data, window.map, 'service_hold_spaces');
+
+        // treat sales holds parkings similar to events
+        add_shape_overlay_icons(data, window.map, 'sales_hold_spaces');
 
         fetch_events_and_render();
       },
