@@ -3,7 +3,8 @@
 = javascript_include_tag('vehicle_manager')
 .container-fluid
   .row
-    = render partial: 'vehicles/index'
+    - cache "#{current_user.dealership.id}/vehicles/index?#{params}" do
+      = render partial: 'vehicles/index'
       
     .col-sm-6
       #vehicleDetailContainer

@@ -20,6 +20,11 @@ class Vehicle < ApplicationRecord
 
   scope :data_feed_deleteable, -> { where(creation_source: :data_feed_created, sales_hold: false, service_hold: false) }
 
+  #for now globally purge
+  after_commit do
+    Rails.cache.clear
+  end 
+
   def full_description
     "#{year} #{make} #{model}"
   end
