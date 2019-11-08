@@ -13,7 +13,6 @@ class DealsController < ApplicationController
     @deal = current_user.dealership.deals.create(deal_params)
     if @deal.valid?
       flash[:error] = nil
-      @deal.vehicle&.update(sold_status: "Sold to #{@deal.client_last_name}") #mark associated vehicle as sold
 
       redirect_to board_manager_path
     else
