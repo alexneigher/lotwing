@@ -105,12 +105,12 @@
               - if vehicle.sales_hold?
                 Sales Hold
                 %strong
-                  = vehicle.sales_hold_notes.truncate(15)
+                  = vehicle.sales_hold_notes&.truncate(15)
 
               - if vehicle.service_hold?
                 Service Hold
                 %strong
-                  = vehicle.service_hold_notes.truncate(15)
+                  = vehicle.service_hold_notes&.truncate(15)
 
               - if vehicle.sold?                
                 = vehicle.sold_status
