@@ -16,6 +16,8 @@ gem 'pg', '~> 0.20'
 gem 'barby'
 gem 'chunky_png'
 
+gem 'dalli'
+
 gem 'rack-cors', :require => 'rack/cors'
 gem 'jwt'
 gem 'simple_command'
