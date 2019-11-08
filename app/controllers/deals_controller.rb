@@ -136,7 +136,7 @@ class DealsController < ApplicationController
     end
 
     def stored_param
-      return nil unless params[:commit] == 'Store Entry'
-      return { stored: true }
+      return { stored: true } if params[:commit] == 'Store Entry'
+      return { stored: false } if params[:commit] == "Update"
     end
 end
