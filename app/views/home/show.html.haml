@@ -11,9 +11,8 @@
       = link_to lot_view_path(display_mode: :no_tag_4_days) do
         %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_tag_4_days' ? 'btn-primary':'btn-outline-primary')} No tag 4 days
 
-      - if current_user.permission_level == "admin"
-        = link_to lot_view_path(display_mode: :hold_vehicles) do
-          %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'hold_vehicles' ? 'btn-primary':'btn-outline-primary')} Hold Vehicles
+      = link_to lot_view_path(display_mode: :hold_vehicles) do
+        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'hold_vehicles' ? 'btn-primary':'btn-outline-primary')} Hold Vehicles
       
       = link_to lot_view_path(display_mode: :no_test_drives) do
         %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_test_drives' ? 'btn-primary':'btn-outline-primary')} No test drives
