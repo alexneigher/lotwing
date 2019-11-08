@@ -104,6 +104,8 @@
 
               - if vehicle.sales_hold?
                 Sales Hold
+                %strong
+                  = vehicle.sales_hold_notes.truncate(15)
 
               - if vehicle.service_hold?
                 Service Hold
