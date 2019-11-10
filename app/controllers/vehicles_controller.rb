@@ -92,6 +92,30 @@ class VehiclesController < ApplicationController
   end
 
 
+  def print_hold_tag
+    @vehicle = Vehicle.find(params[:vehicle_id])
+    respond_to do |format|
+     format.pdf do
+       render pdf: "Hold Tag - #{@vehicle.stock_number}",
+       template: "vehicles/hold_tag.html.haml",
+       orientation: "Landscape",
+       layout: 'pdf.html.erb'
+     end
+    end
+  end
+
+  def print_service_hold_tag
+    @vehicle = Vehicle.find(params[:vehicle_id])
+    respond_to do |format|
+     format.pdf do
+       render pdf: "Hold Tag - #{@vehicle.stock_number}",
+       template: "vehicles/service_hold_tag.html.haml",
+       orientation: "Landscape",
+       layout: 'pdf.html.erb'
+     end
+    end
+  end
+
   private
     def vehicle_params
       params.require(:vehicle).permit(:make, :model, :year, :vin, :color, :dealership_id, :usage_type, :sales_hold, :service_hold, :sales_hold_notes, :service_hold_notes )

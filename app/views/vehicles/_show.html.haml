@@ -67,6 +67,12 @@
                     Place this vehicle on a Sales Hold
                     = f.check_box :sales_hold, class: 'ml-1'
                   = f.text_area :sales_hold_notes, placeholder: 'Sales Hold Notes', rows: 2, class: 'form-control form-control-sm'
+                .col-2
+                  .mt-4.text-center
+                    %span.p-1.text-white{style:'background-color: #000;'}
+                      H
+                .col-4.text-right
+                  = link_to "Print Hold Tag", vehicle_print_hold_tag_path(@vehicle, format: :pdf), target: "_blank", class: 'btn btn-sm btn-primary mt-4'
             .bg-light.py-2
               .row
                 .col-6
@@ -74,6 +80,10 @@
                     Place this vehicle on a Service Hold
                     = f.check_box :service_hold, class: 'ml-1'
                   = f.text_area :service_hold_notes, placeholder: 'Service Hold Notes', rows: 2, class: 'form-control form-control-sm'
+                .col-2
+                  %img.mx-auto.d-block.mt-4{src: "/triangle-24.png"}
+                .col-4.text-right
+                  = link_to "Print Service Hold Tag", vehicle_print_service_hold_tag_path(@vehicle, format: :pdf), target: "_blank", class: 'btn btn-sm btn-primary mt-4'
     - if @events.any?
       %hr.mb-0
       .row

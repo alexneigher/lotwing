@@ -104,6 +104,8 @@ Rails.application.routes.draw do
   
   resources :vehicles do
     get :show_map
+    get :print_hold_tag
+    get :print_service_hold_tag
     collection do
       get :search
     end
