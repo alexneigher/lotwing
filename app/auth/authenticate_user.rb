@@ -1,7 +1,7 @@
 # app/auth/authenticate_user.rb
 class AuthenticateUser
   prepend SimpleCommand
-  attr_accessor :email, :password
+  attr_accessor :email, :password, :user
 
   #this is where parameters are taken when the command is called
   def initialize(email, password)
@@ -14,11 +14,12 @@ class AuthenticateUser
     JsonWebToken.encode(user_id: user.id) if user
   end
 
-  private
 
   def user
-    user = User.find_by_email(email)
-    return user if user && user.valid_password?(password) && user.active?
+    return @user if @user.present?
+    
+    @user = User.find_by_email(email)
+    return @user if @user && @user.valid_password?(password) && @user.active?
 
     errors.add :user_authentication, 'Invalid credentials'
     nil

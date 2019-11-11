@@ -25,6 +25,10 @@ module Api
         if command.success?
           render json: {
             access_token: command.result,
+            user_info: {
+              full_name: command.user.full_name,
+              dealership_name: command.user.dealership.name
+            },
             message: 'Login Successful'
           }
         else
