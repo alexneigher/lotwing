@@ -28,6 +28,8 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.find(params[:id])
     @vehicle.update(vehicle_params)
 
+    VehicleHoldUpdaterService.new(@vehicle, vehicle_params, current_user).maybe_update_holds
+
     redirect_to vehicle_path(@vehicle)
   end
 

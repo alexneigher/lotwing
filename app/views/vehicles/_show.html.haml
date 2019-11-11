@@ -72,7 +72,7 @@
                     %span.p-1.text-white{style:'background-color: #000;'}
                       H
                 .col-4.text-right
-                  = link_to "Print Hold Tag", vehicle_print_hold_tag_path(@vehicle, format: :pdf), target: "_blank", class: 'btn btn-sm btn-primary mt-4'
+                  = link_to "Print Hold Tag", vehicle_print_hold_tag_path(@vehicle, format: :pdf), target: "_blank", class: 'btn btn-sm btn-outline-primary mt-4'
             .bg-light.py-2
               .row
                 .col-6
@@ -83,7 +83,7 @@
                 .col-2
                   %img.mx-auto.d-block.mt-4{src: "/triangle-24.png"}
                 .col-4.text-right
-                  = link_to "Print Service Hold Tag", vehicle_print_service_hold_tag_path(@vehicle, format: :pdf), target: "_blank", class: 'btn btn-sm btn-primary mt-4'
+                  = link_to "Print Service Hold Tag", vehicle_print_service_hold_tag_path(@vehicle, format: :pdf), target: "_blank", class: 'btn btn-sm btn-outline-primary mt-4'
     - if @events.any?
       %hr.mb-0
       .row

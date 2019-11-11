@@ -18,86 +18,11 @@
         %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_test_drives' ? 'btn-primary':'btn-outline-primary')} No test drives
 
       %hr
-      %ul.nav.nav-tabs{:role => "tablist"}
-        %li.nav-item
-          %a.nav-link.active{"data-toggle" => "tab", :href => "#today", :role => "tab"} Today
-        %li.nav-item
-          %a.nav-link{"data-toggle" => "tab", :href => "#last_day", :role => "tab"} Last 24 Hours
-        
-      / Tab panes
-      .tab-content.mt-3
-        #today.tab-pane.in.active{:role => "tabpanel"}
-          %h5 Recent Activity (Today)
-          - @events_from_today.group_by(&:event_type).each do |event_type, events|
-            %div.mb-2
-              %strong
-                - if event_type == "change_stall"
-                  Stall Updates
-                - elsif event_type == "tag"
-                  Confirm Stall
-                - else
-                  = event_type.titleize
-              .small
-                - events.group_by(&:user).sort.each do |user, events|
-                  = "#{user.full_name} (#{events.count})"
-                  - if event_type == "test_drive"
-                    - events.each do |event|
-                      = link_to vehicle_path(event.tag.vehicle) do
-                        = "(#{event.tag.vehicle.stock_number})"
-                  %br
-        #last_day.tab-pane{:role => "tabpanel"}
-          %h5 Recent Activity (24 Hours)
-          - @events_from_24h.group_by(&:event_type).each do |event_type, events|
-            %div.mb-2
-              %strong
-                - if event_type == "change_stall"
-                  Stall Updates
-                - elsif event_type == "tag"
-                  Confirm Stall
-                - else
-                  = event_type.titleize
-              .small
-                - events.group_by(&:user).sort.each do |user, events|
-
-                  = "#{user.full_name} (#{events.count})"
-                  - if event_type == "test_drive"
-                    - events.each do |event|
-                      = link_to vehicle_path(event.tag.vehicle) do
-                        = "(#{event.tag.vehicle.stock_number}) "
-                  %br
-      %hr
-      %h5{style:'margin-bottom:-2px;'} Vehicles Currently Off Lot
-      .text-danger{style:'font-size:9px;margin-bottom:10px;'}
-        &#9632; = longer than 2 days off lot
-
-      - loaners = @vehicles_off_lot.group_by(&:usage_type).values_at("loaner")
-      - stock_vehicles = @vehicles_off_lot.group_by(&:usage_type).values_at("is_new", "is_used", "lease_return", "wholesale_unit")
-
-      - usage_types = {"Loaners": loaners.compact.flatten, "Stock Vehicles": stock_vehicles.compact.flatten }
+      - if params.dig(:display_mode) == "hold_vehicles"
+        = render partial: 'home/hold_stats'
+      - else
+        = render partial: 'home/lot_view_stats'
       
-      - usage_types.each do |usage_type, vehicles|
-        - next unless vehicles.any?
-        %div.mb-2.small
-          %strong
-            = "#{usage_type} (#{vehicles.count})"
-
-          - vehicles.sort_by{|v| v.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last.started_at}.each do |vehicle|
-            - next unless vehicle
-            - event = vehicle.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last
-            .small 
-              = event.user.full_name
-              = link_to vehicle_path(vehicle), target: "_blank" do
-                (#{vehicle.stock_number})
-              #{event.event_type.humanize} #{event.started_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%Y at %l:%M %p')}
-              
-              - time_diff = Time.now - event.started_at.in_time_zone("Pacific Time (US & Canada)")
-                
-              - mm, ss = time_diff.divmod(60) 
-              - hh, mm = mm.divmod(60)
-              - dd, hh = hh.divmod(24)
-              %span{class: ('text-danger' if dd >= 2 )}
-                
-                = "#{pluralize(dd, 'day')}, #{pluralize(hh, 'hour')}"
             
       
     .col-lg-8{style: 'position: relative;'}

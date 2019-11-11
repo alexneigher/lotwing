@@ -32,4 +32,5 @@ class Vehicle < ApplicationRecord
   def sold?
     sold_status.present?
   end
+
 end
