@@ -19,7 +19,7 @@
 .mt-3
   %strong{style:'margin-bottom:-2px;'} Service Holds
 %div{style:'font-size:9px;margin-bottom:10px;'}
-  (stock number) Hold creator, age of hold
+  (stock number) Hold creator, age of hold, vehicle age
 
 
 - @vehicles_with_service_holds.each do |vehicle|
@@ -35,3 +35,10 @@
         - hh, mm = mm.divmod(60)
         - dd, hh = hh.divmod(24)        
         = "#{pluralize(dd, 'day')}, #{pluralize(hh, 'hour')}"
+    %span
+      - if vehicle.data_feed_created?
+        - count = vehicle.age_in_days   
+      - else
+        - count = (DateTime.current.to_date - vehicle.created_at.to_date).to_i
+      
+      = pluralize(count, "day")
