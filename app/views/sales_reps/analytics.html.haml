@@ -1,0 +1,52 @@
+%link{:href => "//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css", :rel => "stylesheet"}/
+%script{:src => "//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"}
+
+.container
+  .row
+    .col-6
+      - today = DateTime.current.in_time_zone("US/Pacific")
+      %h2 90 Day Average, #{today.strftime('%A')} the #{today.day.ordinalize}
+  .row
+    .col-6
+      .bg-warning.px-2.d-flex.justify-content-between
+        %div
+          = @user.full_name
+        %div
+          - if @current_month_deals_by_day
+            Pace #{ @current_month_deals_by_day.map{|k,v| v}.sum }
+          - else 
+            N/A
+  .row
+    - (@sales_rep_deals_grouped_by_month).each do |month, count|
+      .col-12
+        = month.strftime("%B")
+        = count
+  .row
+    .col-12
+      .text-success
+        3 month average
+        #{(@sales_rep_deals_grouped_by_month.map{|k, v| v}.sum.to_f / @sales_rep_deals_grouped_by_month.length).round(0)}
+  %hr
+  %h3= Date.current.strftime("%B")
+  .ct-chart.ct-major-twelfth
+
+- if @sales_rep_deals_grouped_by_month.any?
+  :javascript
+    var options = {
+      low: 0,
+      high: #{@sales_rep_deals_grouped_by_month.sort_by{|k, v| v}.reverse.first[1]}
+    }
+
+    var data = {
+      // A labels array that can contain any sort of values
+      labels: #{a = *(1..Date.current.end_of_month.day)},
+      // Our series array that contains series objects or in this case series data arrays
+      series: [
+        #{@chart_data_month_counts_by_day}
+      ]
+    };
+
+    // Create a new line chart object where as first parameter we pass in a selector
+    // that is resolving to our chart container element. The Second parameter
+    // is the actual data object.
+    new Chartist.Line('.ct-chart', data, options);

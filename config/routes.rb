@@ -102,6 +102,10 @@ Rails.application.routes.draw do
     resources :users, only: [:new, :create, :show, :destroy, :update], controller: 'dealerships/users'
   end
   
+  resources :sales_reps, only: :show do
+    get :analytics
+  end
+
   resources :vehicles do
     get :show_map
     get :print_hold_tag
