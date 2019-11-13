@@ -12,29 +12,29 @@
         %div
           = @user.full_name
         %div
-          - if @current_month_deals_by_day
-            Pace #{ @current_month_deals_by_day.map{|k,v| v}.sum }
+          - if @combined_deals_by_day
+            Pace #{ @combined_deals_by_day.map{|k,v| v}.sum }
           - else 
             N/A
   .row
-    - (@sales_rep_deals_grouped_by_month).each do |month, count|
+    - (@combined_deals_by_month).each do |month, count|
       .col-12
         = month.strftime("%B")
-        = count
+        = number_with_precision(count, strip_insignificant_zeros: true)
   .row
     .col-12
       .text-success
         3 month average
-        #{(@sales_rep_deals_grouped_by_month.map{|k, v| v}.sum.to_f / @sales_rep_deals_grouped_by_month.length).round(0)}
+        = @rolling_monthly_average_value
   %hr
   %h3= Date.current.strftime("%B")
   .ct-chart.ct-major-twelfth
 
-- if @sales_rep_deals_grouped_by_month.any?
+- if @combined_deals_by_month.any?
   :javascript
     var options = {
       low: 0,
-      high: #{@sales_rep_deals_grouped_by_month.sort_by{|k, v| v}.reverse.first[1]}
+      high: #{@combined_deals_by_month.sort_by{|k, v| v}.reverse.first[1]}
     }
 
     var data = {
@@ -42,7 +42,7 @@
       labels: #{a = *(1..Date.current.end_of_month.day)},
       // Our series array that contains series objects or in this case series data arrays
       series: [
-        #{@chart_data_month_counts_by_day}
+        #{@chart_data_month_counts_by_day}, #{@chart_monthly_counts_by_day}
       ]
     };
 
