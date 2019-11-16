@@ -23,11 +23,11 @@
               %small
                 - deal_rep_attribution_counts(@deals.included_in_counts.where(stored: false)).sort_by{ |k, v| v[:new] + v[:used] }.reverse_each do |rep, deals|
 
-                  = "<b>#{rep.presence || 'Unknown Rep'}</b> (#{number_with_precision(deals[:new] + deals[:used], significant: true, precision: 2, strip_insignificant_zeros: true)})".html_safe
+                  = "<b>#{rep.presence || 'Unknown Rep'}</b> (#{number_with_precision(deals[:new] + deals[:used], significant: true, precision: 3, strip_insignificant_zeros: true)})".html_safe
                   %br
-                  = "#{number_with_precision(deals[:new], significant: true, precision: 2, strip_insignificant_zeros: true)} New"
+                  = "#{number_with_precision(deals[:new], significant: true, precision: 3, strip_insignificant_zeros: true)} New"
                   &#183;
-                  = "#{number_with_precision(deals[:used], significant: true, precision: 2, strip_insignificant_zeros: true)} Used"
+                  = "#{number_with_precision(deals[:used], significant: true, precision: 3, strip_insignificant_zeros: true)} Used"
                   
                   - if current_user.permission_level == "admin"
                     .pull-right
