@@ -16,6 +16,9 @@
             Pace #{ @combined_deals_by_day.map{|k,v| v}.sum }
           - else 
             N/A
+      %div.text-right.small
+        %em
+          Based on MTD sales
   .row
     - (@combined_deals_by_month).each do |month, count|
       .col-12
