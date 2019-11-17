@@ -32,11 +32,12 @@
                   .pull-right
                     %div{style: 'margin-top: -8px'}
                       - u = User.find_by_full_name(rep)
-                      = link_to sales_rep_analytics_path(u), style: 'padding: 10px 0;', target: "_blank" do
-                        - if u.sales_rep_above_monthly_moving_average?
-                          %i.fa.fa-arrow-up.text-success
-                        - else
-                          %i.fa.fa-arrow-down.text-danger 
+                      - if u.present?
+                        = link_to sales_rep_analytics_path(u), style: 'padding: 10px 0;', target: "_blank" do
+                          - if u.sales_rep_above_monthly_moving_average?
+                            %i.fa.fa-arrow-up.text-success
+                          - else
+                            %i.fa.fa-arrow-down.text-danger 
                   .clearfix
 
                   %hr.my-1
