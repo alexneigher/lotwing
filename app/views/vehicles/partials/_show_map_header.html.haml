@@ -1,6 +1,6 @@
 .row
   .col-6
-    = "#{@vehicle.make} #{@vehicle.model} (#{@vehicle.stock_number}) History"
+    = "#{@vehicle.make} #{@vehicle.model} (#{@vehicle.stock_number})"
     %strong= @vehicle.vin
   .col-6
     - if @vehicle.open_service_tickets.any?
