@@ -41,7 +41,7 @@
               %label Stock Number
               = f.text_field :stock_number, class: 'form-control form-control-sm'
           
-      .row              
+      .row.mb-3              
         .col-2
           %label.small.mb-0 Year
           = f.text_field :year, placeholder: 'Year', class: 'form-control form-control-sm'
@@ -84,41 +84,9 @@
                   %img.mx-auto.d-block.mt-4{src: "/triangle-24.png"}
                 .col-4.text-right
                   = link_to "Print Service Hold Tag", vehicle_print_service_hold_tag_path(@vehicle, format: :pdf), target: "_blank", class: 'btn btn-sm btn-outline-primary mt-4'
-    - if @events.any?
-      %hr.mb-0
-      .row
-        .col-6
-          - if @events.where(event_type: 'change_stall').any?
-            %table.table.table-sm.mb-0.bg-light
-              %tbody
-                %tr
-                  %td.align-middle
-                    %h2.mb-0
-                      = (DateTime.current.in_time_zone("US/Pacific").to_date - @events.where(event_type: 'change_stall').order(:created_at).last.created_at.in_time_zone("US/Pacific").to_date).to_i
-                  %td.align-middle
-                    days
-                  %td.align-middle
-                    %i.fa.fa-car
-                  %td.align-middle{style:"line-height:12px;"}
-                    %small
-                      = "This vehicle has not moved in #{time_ago_in_words(@events.where(event_type: 'change_stall').order(:created_at).last.created_at.in_time_zone("US/Pacific"))}."
-                  
-        .col-6
-          %table.table.table-sm.mb-0
-            %tbody
-              %tr
-                %td.align-middle
-                  %h2.mb-0
-                    = (DateTime.current.in_time_zone("US/Pacific").to_date - @events.order(:created_at).last.created_at.in_time_zone("US/Pacific").to_date).to_i
-                %td.align-middle
-                  days
-                %td.align-middle
-                  %i.fa.fa-user
-                %td.align-middle{style:"line-height:12px;"}
-                  %small
-                    = @events.order(:created_at).last.event_type.titleize
-                    %br
-                    = @events.order(:created_at).last.user.full_name
+    
+    = render partial: 'vehicles/partials/show_recent_events'
+    
     %hr.mt-0
     - grouped_events = @events.group_by(&:event_type)
     
@@ -209,7 +177,7 @@
     .col
       - if @vehicle.parking_space&.geo_info && @context != 'lot_view'
         / Button trigger modal
-        %a#showVehicleTrigger{"data-target" => "#mapModal", "data-toggle" => "modal", :type => "link", href: ''}
+        = link_to vehicle_show_map_path(@vehicle), remote: true do
           %i.fa.fa-map-marker
           Show Map
 
@@ -285,33 +253,3 @@
         .modal-footer
           = f.submit "Create Service Ticket", class: 'btn btn-primary'
 
-- if @vehicle.parking_space&.geo_info && @context != 'lot_view'
-  :javascript
-    $(function(){
-      setTimeout(function(){
-
-        layer = window.map.getLayer('singleVehicle');
-        if (layer){
-          window.map.removeLayer('singleVehicle');
-          window.map.removeSource('singleVehicle');
-        }
-        window.map.addLayer({
-          'id': 'singleVehicle',
-          'type': 'fill',
-          'source': {
-              'type': 'geojson',
-              "data": {
-                        "type": "Feature",
-                        "geometry": #{raw(@vehicle.parking_space&.geo_info['geometry'].to_json)}
-                      }
-          },
-          'layout': {},
-          'paint': {
-            'fill-color': "#{@vehicle.usage_type == "is_used" ? '#66CC00' : '#006699'}",
-          }
-        });
-
-        map.flyTo({center: #{raw(@vehicle.parking_space&.geo_info['geometry']['coordinates'][0][0].to_json)}});
-
-      }, 500);
-    })

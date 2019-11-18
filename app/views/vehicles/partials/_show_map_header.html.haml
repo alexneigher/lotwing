@@ -1,0 +1,21 @@
+.row
+  .col-6
+    = "#{@vehicle.make} #{@vehicle.model} (#{@vehicle.stock_number}) History"
+    %strong= @vehicle.vin
+  .col-6
+    - if @vehicle.open_service_tickets.any?
+      = link_to service_tickets_path(search: {stock_number: @vehicle.stock_number}) do
+        .text-danger.text-underline
+          Open Service Tickets
+
+    - if @vehicle.sales_hold?
+      %strong
+        Sales Hold
+
+    - if @vehicle.service_hold?
+      %strong
+        Service Hold
+
+    - if @vehicle.sold?
+      %strong
+        = @vehicle.sold_status

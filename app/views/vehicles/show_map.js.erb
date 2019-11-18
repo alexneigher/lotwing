@@ -1,4 +1,6 @@
 $('#mapModal').modal('show');
+$('#mapModal .modal-header .content').html('<%= j(render partial: "vehicles/partials/show_map_header") %>')
+$('#mapModal .footer').html('<%= j(render partial: "vehicles/partials/show_map_footer") %>')
 
 setTimeout(function(){
 
