@@ -1,13 +1,22 @@
 - unless current_user.permission_level == "sales_rep"
   .row
-    .col-md-4{style:"max-height: 65vh;overflow: scroll"}
+    .col-md-4
       %h4 
         Team members
         %small
           .small
             = link_to "Add new", new_dealership_user_path(@dealership), remote: true
-      .bg-light.px-3.py-1
-        - @dealership.users.group_by(&:permission_level).reverse_each do |permission_level, users|
+      - grouped_users = @dealership.users.group_by(&:permission_level)
+      
+      .px-3.py-1
+        %h5 Admin
+        - grouped_users["admin"].each do |user|
+          = link_to dealership_user_path(current_user.dealership, user), remote: true do
+            %div{class: ('text-strike' if user.deactivated?)}
+              %div{id: dom_id(user)}
+                = user.full_name 
+      .bg-light.px-3.py-1{style:"max-height: 55vh;overflow: scroll"}
+        - grouped_users.except("admin").reverse_each do |permission_level, users|
           %h5.mt-4
             %span{title: user_permission_list(permission_level), data:{toggle: "tooltip", placement: "top", html: 'true'}}= permission_level.titleize
           - users.each do |user|
