@@ -33,8 +33,8 @@
     %td
 
   %td= deal.trade
-  %td= deal.sales_rep
-  %td= deal.split_rep
+  %td= deal.sales_rep.full_name
+  %td= deal.split_rep&.full_name
   %td= deal.city
   %td= deal.result
   - klass = (deal.report_status.in?(["Not RDR'd", "Not RDR'd Supp/Part", "Need to X"]) ? 'text-danger' : '')

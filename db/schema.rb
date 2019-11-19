@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191119152449) do
+ActiveRecord::Schema.define(version: 20191119155910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,8 +99,6 @@ ActiveRecord::Schema.define(version: 20191119152449) do
     t.string "source"
     t.string "stock_number"
     t.string "trade"
-    t.string "sales_rep"
-    t.string "split_rep"
     t.string "city"
     t.string "model"
     t.string "make"
