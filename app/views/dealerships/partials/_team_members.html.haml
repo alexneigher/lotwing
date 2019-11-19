@@ -14,7 +14,8 @@
          
             = link_to dealership_user_path(current_user.dealership, user), remote: true do
               %div{class: ('text-strike' if user.deactivated?)}
-                = user.full_name 
+                %div{id: dom_id(user)}
+                  = user.full_name 
               
     .col-md-8
       #userShow  

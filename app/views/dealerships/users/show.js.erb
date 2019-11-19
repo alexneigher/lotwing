@@ -1,1 +1,5 @@
+$('.bg-dark').removeClass('bg-dark');
+
 $('#userShow').html('<%= j(render partial: "show") %>')
+
+$("#<%= dom_id(@user) %>").addClass('bg-dark');
