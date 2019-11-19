@@ -97,7 +97,7 @@
     .label
       Sales Rep
     .border
-      = @deal.sales_rep
+      = User.find(@deal.sales_rep_id)&.full_name
   %div{style: 'width: 110px;float:left;margin: 5px 5px 5px 0;' }
     .label
       Split Rep

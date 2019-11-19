@@ -5,11 +5,9 @@ class Deal < ApplicationRecord
 
   scope :included_in_counts, -> { where.not( result:'N/C' ) }
 
-  validates_presence_of :sales_rep
+  validates_presence_of :sales_rep_id
 
   after_save :maybe_update_vehicle
-
-
 
   private
     def maybe_update_vehicle

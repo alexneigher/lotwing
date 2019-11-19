@@ -21,9 +21,9 @@
               .text-center
                 Sales Reps
               %small
-                - deal_rep_attribution_counts(@deals.included_in_counts.where(stored: false)).sort_by{ |k, v| v[:new] + v[:used] }.reverse_each do |rep, deals|
-
-                  = "<b>#{rep.presence || 'Unknown Rep'}</b> (#{number_with_precision(deals[:new] + deals[:used], significant: true, precision: 3, strip_insignificant_zeros: true)})".html_safe
+                - deal_rep_attribution_counts(@deals.included_in_counts.where(stored: false)).sort_by{ |k, v| v[:new] + v[:used] }.reverse_each do |rep_id, deals|
+                  - u = User.find(rep_id)
+                  = "<b>#{u.full_name.presence || 'Unknown Rep'}</b> (#{number_with_precision(deals[:new] + deals[:used], significant: true, precision: 3, strip_insignificant_zeros: true)})".html_safe
                   %br
                   = "#{number_with_precision(deals[:new], significant: true, precision: 3, strip_insignificant_zeros: true)} New"
                   &#183;
@@ -31,7 +31,7 @@
                   
                   .pull-right
                     %div{style: 'margin-top: -8px'}
-                      - u = User.find_by_full_name(rep)
+                      
                       - if u.present?
                         = link_to sales_rep_analytics_path(u), style: 'padding: 10px 0;', target: "_blank" do
                           - if u.sales_rep_above_monthly_moving_average?

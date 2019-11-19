@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191116224256) do
+ActiveRecord::Schema.define(version: 20191119152449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,7 +147,11 @@ ActiveRecord::Schema.define(version: 20191116224256) do
     t.string "model_code"
     t.boolean "f_i_pre_sell", default: false
     t.text "f_i_pre_sell_product_list"
+    t.bigint "sales_rep_id"
+    t.bigint "split_rep_id"
     t.index ["dealership_id"], name: "index_deals_on_dealership_id"
+    t.index ["sales_rep_id"], name: "index_deals_on_sales_rep_id"
+    t.index ["split_rep_id"], name: "index_deals_on_split_rep_id"
   end
 
   create_table "events", force: :cascade do |t|
