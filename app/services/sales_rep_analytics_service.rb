@@ -64,7 +64,7 @@ class SalesRepAnalyticsService
 
     def sales_rep_deals_grouped_by_month 
       Deal
-        .where(sales_rep: @user.full_name)
+        .where(sales_rep_id: @user.id)
         .where("created_at >= ? and created_at < ?", 3.months.ago.beginning_of_month, Date.current.beginning_of_month)
         .group("date_trunc('month', created_at) ")
         .count
@@ -72,7 +72,7 @@ class SalesRepAnalyticsService
 
     def split_rep_deals_grouped_by_month 
       Deal
-        .where(split_rep: @user.full_name)
+        .where(split_rep_id: @user.id)
         .where("created_at >= ? and created_at < ?", 3.months.ago.beginning_of_month, Date.current.beginning_of_month)
         .group("date_trunc('month', created_at) ")
         .count.map{|k, v| [k, v.to_f/2]}.to_h  
@@ -80,7 +80,7 @@ class SalesRepAnalyticsService
 
     def current_month_sales_deals_by_day 
       Deal
-        .where(sales_rep: @user.full_name)
+        .where(sales_rep_id: @user.id)
         .where("created_at >= ?", Date.current.beginning_of_month)
         .group("date_trunc('day', created_at) ")
         .count
@@ -88,7 +88,7 @@ class SalesRepAnalyticsService
 
     def current_month_split_deals_by_day
       Deal
-        .where(split_rep: @user.full_name)
+        .where(split_rep_id: @user.id)
         .where("created_at >= ?", Date.current.beginning_of_month)
         .group("date_trunc('day', created_at) ")
         .count.map{|k, v| [k, v.to_f/2]}.to_h
