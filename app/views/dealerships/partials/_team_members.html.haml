@@ -1,24 +1,21 @@
 - unless current_user.permission_level == "sales_rep"
   .row
-    .col-md-4
+    .col-md-4{style:"max-height: 65vh;overflow: scroll"}
       %h4 
         Team members
         %small
           .small
             = link_to "Add new", new_dealership_user_path(@dealership), remote: true
-      %ul.list-group
-        - @dealership.users.each do |user|
-          %li.list-group-item
-            - if user.reset_password_token.present?
-              %i.fa.fa-unlink
+      .bg-light.px-3.py-1
+        - @dealership.users.group_by(&:permission_level).reverse_each do |permission_level, users|
+          %h5.mt-4
+            %span{title: user_permission_list(permission_level), data:{toggle: "tooltip", placement: "top", html: 'true'}}= permission_level.titleize
+          - users.each do |user|
+         
             = link_to dealership_user_path(current_user.dealership, user), remote: true do
-              %span{class: ('text-strike' if user.deactivated?)}
-                = "#{user.full_name} (#{user.permission_level.titleize})"
-            %br
-            - if user.accepted_service_license_agreement
-              %small.text-muted
-                Terms accepted #{user.accepted_service_license_agreement_datetime&.in_time_zone("Pacific Time (US & Canada)")&.strftime("%b %e, %Y")}
-            
+              %div{class: ('text-strike' if user.deactivated?)}
+                = user.full_name 
+              
     .col-md-8
       #userShow  
       #newUserForm  

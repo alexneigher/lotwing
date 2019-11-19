@@ -1,0 +1,21 @@
+.card
+  .card-body
+    = form_for @user, url: dealership_user_path(current_user.dealership, @user), method: :put do |f|
+      .form-group
+        .row
+          .col-6
+            %label Name
+            = f.text_field :full_name, class: "form-control"
+          .col-6
+            %label Permission Level
+            = f.select :permission_level, options_for_select(User.permission_levels.map{|p| [p[0].titleize, p[0]]}, @user.permission_level),{}, class: 'form-control'
+      .form-group
+        .row
+          .col-6
+            %label Email
+            = f.text_field :email, class: "form-control"
+          .col-6.text-right
+            = f.submit "Update", class: "btn btn-primary mt-4"
+  .card-footer.text-right
+    .text-orange.pointer{onclick: "$('#userShow').html('');"}
+      cancel    

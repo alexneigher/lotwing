@@ -1,8 +1,14 @@
 .card
   .card-body
-    %h5= @user.full_name
+    %h5
+      = @user.full_name
+      - if current_user.permission_level == "admin"
+        .pull-right
+          %small
+            = link_to "edit", edit_dealership_user_path(current_user.dealership, @user), remote: true
     .small
       ="(#{@user.email})"
+    
     %hr
       %h6 Permissions
       .card-body.bg-light

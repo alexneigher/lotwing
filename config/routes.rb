@@ -99,7 +99,7 @@ Rails.application.routes.draw do
   end
 
   resources :dealerships, only: [:edit, :update] do
-    resources :users, only: [:new, :create, :show, :destroy, :update], controller: 'dealerships/users'
+    resources :users, controller: 'dealerships/users'
   end
   
   resources :sales_reps, only: :show do

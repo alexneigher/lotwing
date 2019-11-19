@@ -33,6 +33,11 @@ module Dealerships
       redirect_to edit_dealership_path(@dealership)
     end
 
+    def edit
+      @dealership = current_user.dealership
+      @user = @dealership.users.find(params[:id])
+    end
+
     def destroy
       @dealership = current_user.dealership
       @user = @dealership.users.find(params[:id])

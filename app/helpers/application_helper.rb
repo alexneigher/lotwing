@@ -54,5 +54,20 @@ module ApplicationHelper
     image = Base64.encode64(code.to_s).gsub(/\s+/, "")
     return "data:image/png;base64,#{Rack::Utils.escape(image)}"
   end
+
+  def user_permission_list(permission)
+    case permission
+    
+      when 'admin'
+        "All" 
+      when "sales_manager"
+       "Add/Modify Sales Users<br>Delete Vehicles<br>Modify Stock Number<br>Create Service Tickets<br>Create/modify/delete deals".html_safe 
+      when 'sales_rep'
+        "Create vehicles".html_safe
+      when "service_user"
+        "Complete service tickets<br>Add/modify service users".html_safe
+      when "sales_rep"
+    end
+  end
   
 end
