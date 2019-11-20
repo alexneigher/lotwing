@@ -80,7 +80,6 @@ function fetch_events_and_render(){
     url:"/web_api/events",
     dataType: "json",
     success: function(data){
-      add_events_to_map(data, window.map, "note_events");
       add_events_to_map(data, window.map, "test_drive_events");
       add_events_to_map(data, window.map, "fuel_vehicle_events");
     },

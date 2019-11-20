@@ -22,9 +22,8 @@
             = "#{user.full_name} (#{events.count})"
             - if event_type == "test_drive"
               - events.each do |event|
-                %span.text-orange.map-overlay-trigger.cursor-pointer{data: {shape_id: event.tag.vehicle.parking_space&.id}}
+                = link_to vehicle_path(event.tag.vehicle) do
                   = "(#{event.tag.vehicle.stock_number})"
-
             %br
   #last_day.tab-pane{:role => "tabpanel"}
     %h5 Recent Activity (24 Hours)
@@ -43,8 +42,8 @@
             = "#{user.full_name} (#{events.count})"
             - if event_type == "test_drive"
               - events.each do |event|
-                %span.text-orange.map-overlay-trigger.cursor-pointer{data: {shape_id: event.tag.vehicle.parking_space&.id}}
-                  = "(#{event.tag.vehicle.stock_number})"
+                = link_to vehicle_path(event.tag.vehicle) do
+                  = "(#{event.tag.vehicle.stock_number}) "
             %br
 %hr
 %h5{style:'margin-bottom:-2px;'} Vehicles Currently Off Lot
