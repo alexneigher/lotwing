@@ -3,7 +3,10 @@ module Api
     
     def show
       dealership = current_user.dealership
-      json_response(dealership)
+      render json: {
+                    dealership: dealership,
+                    users: dealership.users
+                  }
     end
 
   end
