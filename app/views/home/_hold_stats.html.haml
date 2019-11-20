@@ -5,7 +5,7 @@
 
 - @vehicles_with_sales_holds.each do |vehicle|
   %div.mb-2.small
-    = link_to vehicle_path(vehicle) do
+    %span.text-orange.map-overlay-trigger.cursor-pointer{data: {shape_id: vehicle.parking_space&.id}}
       = "(#{vehicle.stock_number})"
     = vehicle.sales_hold_creator
 
@@ -24,7 +24,7 @@
 
 - @vehicles_with_service_holds.each do |vehicle|
   %div.mb-2.small
-    = link_to vehicle_path(vehicle) do
+    %span.text-orange.map-overlay-trigger.cursor-pointer{data: {shape_id: vehicle.parking_space&.id}}
       = "(#{vehicle.stock_number})"
     = vehicle.service_hold_creator
 

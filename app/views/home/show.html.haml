@@ -33,3 +33,26 @@
         //place all dom-dependent info here
         %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
         %input#dealership_map_zoom{value: current_user.dealership.map_zoom }  
+
+
+
+:javascript
+  $(function(){
+    $('.map-overlay-trigger').click(function(){
+      $('#vehicle_data_container').html("Loading...");
+      shape_id = $(this).data("shape-id");
+
+      $.ajax({
+        url:"/web_api/shapes/" + shape_id,
+        
+        success: function(data){
+          $('#vehicle_data_container').html(data);
+          
+        },
+        error: function (xhr) {
+          alert(xhr.statusText)
+        }
+      });
+    })
+      
+  })
