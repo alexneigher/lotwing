@@ -13,7 +13,12 @@
     - unless current_user.permission_level == "service_user"
       = link_to edit_deal_path(deal), target: (new_tab ? "_blank": "").to_s do
         %i.fa.fa-pencil.edit-icon
-  %td= deal.client_last_name
+  %td
+    = deal.client_last_name
+    - if deal.vehicle&.sales_hold? || deal.vehicle&.service_hold?
+      %div
+        %strong.text-danger
+          HOLD ON MAP 
   
   %td= deal.stock_number
   
