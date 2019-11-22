@@ -42,7 +42,12 @@ class BoardManagersController < ApplicationController
     
     if params.dig(:sortings).present?
       params.dig(:sortings).each do |k,v|
-        deals = deals.order(k => v)
+        if k == "sales_rep"
+          user_ids = current_user.dealership.users.order("full_name #{v}").pluck(:id)
+          deals = deals.order_by_rep_ids(user_ids, "sales_rep_id")
+        else
+          deals = deals.order(k => v)
+        end
       end
     end
 
