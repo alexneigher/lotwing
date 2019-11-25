@@ -23,10 +23,14 @@ $link-color:            $brand-primary !default;
   color: $link-color;
 }
 
+.bg-orange{
+  background-color: $link-color !important;
+}
+
 .bg-blue{
   background-color: #006699;
 }
 
 .bg-green{
-  background-color: #66CC00;
+  background-color: #4e9a01 !important;
 }

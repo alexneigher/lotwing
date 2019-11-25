@@ -13,7 +13,6 @@ class DealsController < ApplicationController
     @deal = current_user.dealership.deals.create(deal_params)
     if @deal.valid?
       flash[:error] = nil
-
       redirect_to board_manager_path
     else
       flash[:error] = @deal.errors.full_messages.join(', ')
@@ -25,6 +24,8 @@ class DealsController < ApplicationController
     @deal = current_user.dealership.deals.find(params[:id])
     @deal.update(deal_params)
     
+    maybe_create_sales_hold(@deal.vehicle)
+
     if params[:commit] == "Print Cover Sheet"
       redirect_to deal_cover_sheet_path(@deal, format: :pdf) and return
     else
@@ -138,4 +139,12 @@ class DealsController < ApplicationController
       return { stored: true } if params[:commit] == 'Store Entry'
       return { stored: false } if params[:commit] == "Update"
     end
+
+    def maybe_create_sales_hold(vehicle)
+      return unless vehicle.present?
+      if params[:create_with_hold] == "create_with_hold"
+        vehicle.update(sales_hold: true, sales_hold_notes: "Sales hold created by #{current_user.full_name}.")
+      end
+    end
+
 end

@@ -112,5 +112,16 @@
           = link_to 'Delete deal', deal_path(@deal), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger'
           
       .col-md-6.text-center
-        = f.submit 'Update', class: 'btn btn-primary mx-2'
+        %a.btn.btn-primary.mx-2{"data-target" => "#dealCreateModal", "data-toggle" => "modal", :href => "#"} Update
+        #dealCreateModal.modal
+          .modal-dialog.modal-sm
+            .modal-content
+              .modal-body
+                Is this vehicle leaving the lot today?
+                
+              .modal-footer
+                = f.button 'No, place sales <br>hold on vehicle.'.html_safe, name: 'create_with_hold', value: "create_with_hold", class: 'btn bg-orange text-white mr-auto', style: 'font-size:12px; line-height:13px;'
+
+                = f.button 'Yes, leaving lot <br> today, no hold.'.html_safe, class: 'btn bg-green text-white ml-auto', style: 'font-size:12px; line-height:13px;'
+
         = f.submit 'Store Entry', class: 'btn btn-outline-secondary mx-2'

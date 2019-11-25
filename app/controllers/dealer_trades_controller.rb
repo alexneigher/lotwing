@@ -62,6 +62,8 @@ class DealerTradesController < ApplicationController
                                     )
 
     @dealer_trade.vehicle&.update(sold_status: "Sold to #{@dealer_trade.trade_dealer_name}") #mark associated vehicle as sold
+    maybe_create_sales_hold(@dealer_trade.vehicle)
+
     if params[:commit] == "Create And Print Trade Sheet"
       redirect_to dealer_trade_trade_sheet_path(@dealer_trade, format: :pdf) and return
     else
@@ -167,5 +169,12 @@ class DealerTradesController < ApplicationController
         :trade_difference,
         :trade_payment_type,
       )
+    end
+
+    def maybe_create_sales_hold(vehicle)
+      return unless vehicle.present?
+      if params[:create_with_hold] == "create_with_hold"
+        vehicle.update(sales_hold: true, sales_hold_notes: "Sales hold created by #{current_user.full_name}.")
+      end
     end
 end

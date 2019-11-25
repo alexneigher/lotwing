@@ -173,8 +173,17 @@
 
     .row.my-5
       .col-12
-        = f.submit "Create Dealer Trade", class: 'btn btn-primary pull-right'
+        %a.btn.btn-primary.pull-right{"data-target" => "#dealCreateModal", "data-toggle" => "modal", :href => "#"} Create Dealer Trade
+        #dealCreateModal.modal
+          .modal-dialog.modal-sm
+            .modal-content
+              .modal-body
+                Is this vehicle leaving the lot today?
+                
+              .modal-footer
+                = f.button 'No, place sales <br>hold on vehicle.'.html_safe, name: 'create_with_hold', value: "create_with_hold", class: 'btn bg-orange text-white mr-auto', style: 'font-size:12px; line-height:13px;'
 
+                = f.button 'Yes, leaving lot <br> today, no hold.'.html_safe, class: 'btn bg-green text-white ml-auto', style: 'font-size:12px; line-height:13px;'
 
 
 :javascript
