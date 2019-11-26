@@ -136,7 +136,6 @@ class DealsController < ApplicationController
     end
 
     def stored_param
-      binding.pry
       return { stored: true } if params[:commit] == 'Store Entry'
       return { stored: false } if remove_stored_status?
     end
