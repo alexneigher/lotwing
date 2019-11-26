@@ -136,8 +136,13 @@ class DealsController < ApplicationController
     end
 
     def stored_param
+      binding.pry
       return { stored: true } if params[:commit] == 'Store Entry'
-      return { stored: false } if params[:commit] == "Update"
+      return { stored: false } if remove_stored_status?
+    end
+
+    def remove_stored_status?
+      params[:commit] == "Update" || params[:create_with_hold] == "create_with_hold" || params[:create_with_hold] == "create_without_hold"
     end
 
     def maybe_create_sales_hold(vehicle)

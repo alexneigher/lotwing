@@ -122,6 +122,6 @@
               .modal-footer
                 = f.button 'No, place sales <br>hold on vehicle.'.html_safe, name: 'create_with_hold', value: "create_with_hold", class: 'btn bg-orange text-white mr-auto', style: 'font-size:12px; line-height:13px;'
 
-                = f.button 'Yes, leaving lot <br> today, no hold.'.html_safe, class: 'btn bg-green text-white ml-auto', style: 'font-size:12px; line-height:13px;'
+                = f.button 'Yes, leaving lot <br> today, no hold.'.html_safe, name: 'create_with_hold', value: "create_without_hold", class: 'btn bg-green text-white ml-auto', style: 'font-size:12px; line-height:13px;'
 
         = f.submit 'Store Entry', class: 'btn btn-outline-secondary mx-2'

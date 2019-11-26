@@ -16,7 +16,6 @@ class DealerTradesController < ApplicationController
         condition = (i == 0 ? "": " OR")
         sql += "#{condition} #{key} is TRUE "
       end
-
       @dealer_trades = @dealer_trades.where(sql)
     end
 
@@ -67,7 +66,7 @@ class DealerTradesController < ApplicationController
     if params[:commit] == "Create And Print Trade Sheet"
       redirect_to dealer_trade_trade_sheet_path(@dealer_trade, format: :pdf) and return
     else
-      redirect_to edit_dealer_trade_path(@dealer_trade) and return
+      redirect_to dealer_trades_path and return
     end
   end
 
