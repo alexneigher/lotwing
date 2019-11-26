@@ -1,6 +1,11 @@
 = javascript_include_tag('dealer-trade-math.js')
 
 .container
+  .row
+    .col-12
+      - if flash[:error].present? 
+        .alert.alert-danger
+          = flash[:error]
   = form_for :dealer_trade, url: dealer_trades_path, method: :post do |f|
     .row
       .col-md-5

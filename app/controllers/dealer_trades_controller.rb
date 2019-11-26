@@ -48,25 +48,29 @@ class DealerTradesController < ApplicationController
 
   def create
     @dealer_trade = current_user.dealership.dealer_trades.create(dealer_trade_params)
+    if @dealer_trade.valid? 
+      suggested_trade_dealership = current_user
+                                    .dealership
+                                    .suggested_trade_dealerships
+                                    .find_or_create_by(
+                                        name: params[:dealer_trade][:trade_dealer_name],
+                                        address: params[:dealer_trade][:trade_dealer_address],
+                                        phone: params[:dealer_trade][:trade_contact_phone],
+                                        contact: params[:dealer_trade][:trade_dealer_contact],
+                                        dealer_code: params[:dealer_trade][:dealer_code]
+                                      )
 
-    suggested_trade_dealership = current_user
-                                  .dealership
-                                  .suggested_trade_dealerships
-                                  .find_or_create_by(
-                                      name: params[:dealer_trade][:trade_dealer_name],
-                                      address: params[:dealer_trade][:trade_dealer_address],
-                                      phone: params[:dealer_trade][:trade_contact_phone],
-                                      contact: params[:dealer_trade][:trade_dealer_contact],
-                                      dealer_code: params[:dealer_trade][:dealer_code]
-                                    )
+      @dealer_trade.vehicle&.update(sold_status: "Sold to #{@dealer_trade.trade_dealer_name}") #mark associated vehicle as sold
+      maybe_create_sales_hold(@dealer_trade.vehicle)
 
-    @dealer_trade.vehicle&.update(sold_status: "Sold to #{@dealer_trade.trade_dealer_name}") #mark associated vehicle as sold
-    maybe_create_sales_hold(@dealer_trade.vehicle)
-
-    if params[:commit] == "Create And Print Trade Sheet"
-      redirect_to dealer_trade_trade_sheet_path(@dealer_trade, format: :pdf) and return
+      if params[:commit] == "Create And Print Trade Sheet"
+        redirect_to dealer_trade_trade_sheet_path(@dealer_trade, format: :pdf) and return
+      else
+        redirect_to dealer_trades_path and return
+      end
     else
-      redirect_to dealer_trades_path and return
+      flash.now[:error] = @dealer_trade.errors.full_messages.join('')
+      render :new
     end
   end
 
