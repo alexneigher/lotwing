@@ -6,7 +6,7 @@
     %div{style:'margin-bottom:10px;'}
       = @deal.desk_manager
     %div{style:'margin-bottom:10px;'}
-      = @deal.sales_rep
+      = @deal.sales_rep&.full_name
     %div{style:'margin-bottom:10px;'}
       = @deal.client_last_name
 
