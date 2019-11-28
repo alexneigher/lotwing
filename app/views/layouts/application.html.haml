@@ -27,17 +27,17 @@
     %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
   %body
     / Navigation
-    %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.mb-1.p-0
-      .container
-        %a.navbar-brand{style: 'padding-top:10px;padding-bottom:10px;'}
-          = image_tag "logo_light.png", style: 'max-width:100px;'
-        
-        %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
-          %span.navbar-toggler-icon
-        #navbarResponsive.collapse.navbar-collapse
-          %ul.navbar-nav.ml-auto
-            = render partial: 'layouts/shared/logged_in_nav' if user_signed_in?
-            = render partial: 'layouts/shared/logged_out_nav' unless user_signed_in?
+    - if user_signed_in?
+      %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.mb-1.p-0
+        .container
+          %a.navbar-brand{style: 'padding-top:10px;padding-bottom:10px;'}
+            = image_tag "logo_light.png", style: 'max-width:100px;'
+          
+          %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
+            %span.navbar-toggler-icon
+          #navbarResponsive.collapse.navbar-collapse
+            %ul.navbar-nav.ml-auto
+              = render partial: 'layouts/shared/logged_in_nav'
        
     .container-fluid  
       - if user_signed_in?  
