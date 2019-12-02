@@ -105,7 +105,7 @@
                 %tr
                   %td= event.event_type.upcase
                   %td
-                    = "Created By #{event.user.full_name} #{event.created_at.strftime('%m/%d/%Y')}"
+                    = "Created By #{event.user.full_name} #{event.created_at.in_time_zone("US/Pacific").strftime('%m/%d/%Y')}"
                     %br
                     = event.event_details
                   %td
@@ -170,7 +170,7 @@
                   %td
                     - event.resolutions.each do |resolution|
                       %div.py-1
-                        %strong= "#{resolution.user.full_name}'s action on #{resolution.created_at.strftime('%m/%d/%Y')}"
+                        %strong= "#{resolution.user.full_name}'s action on #{resolution.created_at.in_time_zone("US/Pacific").strftime('%m/%d/%Y')}"
                         %br
                         = resolution.details
   .row.p-2
