@@ -59,7 +59,7 @@ class SalesRepAnalyticsService
 
   private
     def day_at_the_end_of_the_month
-      Date.current.end_of_month.day
+      Date.current.in_time_zone("US/Pacific").end_of_month.day
     end
 
     def days_this_month
@@ -67,11 +67,11 @@ class SalesRepAnalyticsService
     end
 
     def day_at_today
-      Date.current.day
+      Date.current.in_time_zone("US/Pacific").day
     end
 
     def beginning_of_month
-      Date.current.beginning_of_month
+      Date.current.in_time_zone("US/Pacific").beginning_of_month
     end
 
     def three_months_ago_beginning_of_month
