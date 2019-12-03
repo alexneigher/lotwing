@@ -3,7 +3,7 @@ class SalesRepsController < ApplicationController
   def analytics
     
     @user = User.find(params[:sales_rep_id])
-    service = SalesRepAnalyticsService.new(@user)
+    service = SalesRepAnalyticsService.new(@user, ending_month_override: params[:end_month].presence)
     
 
     @combined_deals_by_month = service.combined_deals_by_month

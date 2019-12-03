@@ -1,6 +1,6 @@
 class SalesRepAnalyticsService
 
-  def initialize(user)
+  def initialize(user, ending_month_override: nil)
     @user = user
 
     @chart_data_month_counts_by_day = []
@@ -32,10 +32,10 @@ class SalesRepAnalyticsService
   def chart_monthly_counts_by_day
     arr = []
     
-    a = *(1..Date.current.end_of_month.day)
+    a = *(1..day_at_the_end_of_the_month)
     
     a.each do |i|
-      arr << rolling_monthly_average_value.to_f / (Date.current.end_of_month.day.to_f / (i))
+      arr << rolling_monthly_average_value.to_f / (day_at_the_end_of_the_month.to_f / (i))
     end
 
     return arr
@@ -50,7 +50,7 @@ class SalesRepAnalyticsService
   #in the last 3 months, what is the average count
 
   def above_moving_average?
-    delta = chart_data_month_counts_by_day[Date.current.day - 1] - chart_monthly_counts_by_day[Date.current.day - 1]
+    delta = chart_data_month_counts_by_day[day_at_today - 1] - chart_monthly_counts_by_day[day_at_today - 1]
     #todays deal counts minus linear value for today, positive means you are above average
 
     return delta > 0
@@ -58,14 +58,31 @@ class SalesRepAnalyticsService
   #returns whether or not this sales rep is above their monthly linear trend line by day, for todays date
 
   private
-    def days_this_month
-      (1..Date.current.day)
+    def day_at_the_end_of_the_month
+      Date.current.end_of_month.day
     end
+
+    def days_this_month
+      (1..day_at_today)
+    end
+
+    def day_at_today
+      Date.current.day
+    end
+
+    def beginning_of_month
+      Date.current.beginning_of_month
+    end
+
+    def three_months_ago_beginning_of_month
+      beginning_of_month - 3.months
+    end
+
 
     def sales_rep_deals_grouped_by_month 
       Deal
         .where(sales_rep_id: @user.id)
-        .where("created_at >= ? and created_at < ?", 3.months.ago.beginning_of_month, Date.current.beginning_of_month)
+        .where("created_at >= ? and created_at < ?", three_months_ago_beginning_of_month, beginning_of_month)
         .group("date_trunc('month', created_at) ")
         .count
     end
@@ -73,7 +90,7 @@ class SalesRepAnalyticsService
     def split_rep_deals_grouped_by_month 
       Deal
         .where(split_rep_id: @user.id)
-        .where("created_at >= ? and created_at < ?", 3.months.ago.beginning_of_month, Date.current.beginning_of_month)
+        .where("created_at >= ? and created_at < ?", three_months_ago_beginning_of_month, beginning_of_month)
         .group("date_trunc('month', created_at) ")
         .count.map{|k, v| [k, v.to_f/2]}.to_h  
     end
@@ -81,7 +98,7 @@ class SalesRepAnalyticsService
     def current_month_sales_deals_by_day 
       Deal
         .where(sales_rep_id: @user.id)
-        .where("created_at >= ?", Date.current.beginning_of_month)
+        .where("created_at >= ?", beginning_of_month)
         .group("date_trunc('day', created_at) ")
         .count
     end
@@ -89,7 +106,7 @@ class SalesRepAnalyticsService
     def current_month_split_deals_by_day
       Deal
         .where(split_rep_id: @user.id)
-        .where("created_at >= ?", Date.current.beginning_of_month)
+        .where("created_at >= ?", beginning_of_month)
         .group("date_trunc('day', created_at) ")
         .count.map{|k, v| [k, v.to_f/2]}.to_h
     end

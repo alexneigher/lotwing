@@ -25,6 +25,11 @@
       %div.text-right.small
         %em
           Based on MTD sales
+    .col-6
+      //%strong Show Month End
+      =# form_tag sales_rep_analytics_path(params[:sales_rep_id]), method: :get do
+      =# text_field_tag "end_month"
+
   .row
     - (@combined_deals_by_month).each do |month, count|
       .col-12
