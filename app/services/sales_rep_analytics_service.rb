@@ -1,8 +1,8 @@
 class SalesRepAnalyticsService
 
   def initialize(user, ending_month_override: nil)
+    @ending_month_override = ending_month_override&.to_i
     @user = user
-
     @chart_data_month_counts_by_day = []
   end
 
@@ -47,6 +47,15 @@ class SalesRepAnalyticsService
     
     ((combined_deals_by_month.map{|k, v| v}.sum.to_f) / (combined_deals_by_month.length)).round(0)
   end
+
+  def month_name
+    if @ending_month_override.present?
+      @ending_month_override.months.ago.in_time_zone("US/Pacific").strftime("%B")
+    else
+      Date.current.in_time_zone("US/Pacific").strftime("%B")
+    end
+  end
+
   #in the last 3 months, what is the average count
 
   def above_moving_average?
@@ -59,7 +68,11 @@ class SalesRepAnalyticsService
 
   private
     def day_at_the_end_of_the_month
-      Date.current.in_time_zone("US/Pacific").end_of_month.day
+      if @ending_month_override.present?
+        @ending_month_override.months.ago.in_time_zone("US/Pacific").end_of_month.day
+      else
+        Date.current.in_time_zone("US/Pacific").end_of_month.day
+      end
     end
 
     def days_this_month
@@ -67,22 +80,39 @@ class SalesRepAnalyticsService
     end
 
     def day_at_today
-      Date.current.in_time_zone("US/Pacific").day
+      if @ending_month_override.present?
+        @ending_month_override.months.ago.in_time_zone("US/Pacific").end_of_month.day
+      else
+        Date.current.in_time_zone("US/Pacific").day
+      end
     end
 
-    def beginning_of_month
-      Date.current.in_time_zone("US/Pacific").beginning_of_month
+    def beginning_of_the_month
+      if @ending_month_override.present?
+        @ending_month_override.months.ago.in_time_zone("US/Pacific").beginning_of_month
+      else
+        Date.current.in_time_zone("US/Pacific").beginning_of_month
+      end
     end
+
+    def end_of_the_month
+      if @ending_month_override.present?
+        @ending_month_override.months.ago.in_time_zone("US/Pacific").end_of_month
+      else
+        Date.current.in_time_zone("US/Pacific").end_of_month
+      end
+    end
+
 
     def three_months_ago_beginning_of_month
-      beginning_of_month - 3.months
+      beginning_of_the_month - 3.months
     end
 
 
     def sales_rep_deals_grouped_by_month 
       Deal
         .where(sales_rep_id: @user.id)
-        .where("created_at >= ? and created_at < ?", three_months_ago_beginning_of_month, beginning_of_month)
+        .where("created_at >= ? and created_at < ?", three_months_ago_beginning_of_month, beginning_of_the_month)
         .group("date_trunc('month', created_at) ")
         .count
     end
@@ -90,7 +120,7 @@ class SalesRepAnalyticsService
     def split_rep_deals_grouped_by_month 
       Deal
         .where(split_rep_id: @user.id)
-        .where("created_at >= ? and created_at < ?", three_months_ago_beginning_of_month, beginning_of_month)
+        .where("created_at >= ? and created_at < ?", three_months_ago_beginning_of_month, beginning_of_the_month)
         .group("date_trunc('month', created_at) ")
         .count.map{|k, v| [k, v.to_f/2]}.to_h  
     end
@@ -98,7 +128,7 @@ class SalesRepAnalyticsService
     def current_month_sales_deals_by_day 
       Deal
         .where(sales_rep_id: @user.id)
-        .where("created_at >= ?", beginning_of_month)
+        .where("created_at >= ? and created_at < ?", beginning_of_the_month, end_of_the_month)
         .group("date_trunc('day', created_at) ")
         .count
     end
@@ -106,7 +136,7 @@ class SalesRepAnalyticsService
     def current_month_split_deals_by_day
       Deal
         .where(split_rep_id: @user.id)
-        .where("created_at >= ?", beginning_of_month)
+        .where("created_at >= ? and created_at < ?", beginning_of_the_month, end_of_the_month)
         .group("date_trunc('day', created_at) ")
         .count.map{|k, v| [k, v.to_f/2]}.to_h
     end

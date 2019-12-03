@@ -26,9 +26,11 @@
         %em
           Based on MTD sales
     .col-6
-      //%strong Show Month End
-      =# form_tag sales_rep_analytics_path(params[:sales_rep_id]), method: :get do
-      =# text_field_tag "end_month"
+      - if current_user.permission_level == "admin"
+        %strong.pull-left.mr-3 Show Period Ending:
+        - month_options = (1..9).map{|i| [i.months.ago.strftime('%B %Y') , i]}
+        = form_tag sales_rep_analytics_path(params[:sales_rep_id]), method: :get do
+          = select_tag "go_back_month_override", options_for_select(month_options, params[:go_back_month_override]), include_blank: true, onChange: "this.form.submit();"
 
   .row
     - (@combined_deals_by_month).each do |month, count|
@@ -41,14 +43,13 @@
         3 month average
         = @rolling_monthly_average_value
   %hr
-  %h3= Date.current.strftime("%B")
+  %h3= @month_name
   .ct-chart.ct-major-twelfth
 
 - if @combined_deals_by_month.any?
   :javascript
     var options = {
-      low: 0,
-      high: #{@combined_deals_by_month.sort_by{|k, v| v}.reverse.first[1]}
+      low: 0
     }
 
     var data = {
