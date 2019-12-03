@@ -28,6 +28,8 @@ Rails.application.routes.draw do
 
     resources :events
 
+    resource :active_drives
+
     resources :deals do
       collection do 
         get :mtd
