@@ -112,32 +112,32 @@ class SalesRepAnalyticsService
     def sales_rep_deals_grouped_by_month 
       Deal
         .where(sales_rep_id: @user.id)
-        .where("created_at >= ? and created_at < ?", three_months_ago_beginning_of_month, beginning_of_the_month)
-        .group("date_trunc('month', created_at) ")
+        .where("deal_date >= ? and deal_date < ?", three_months_ago_beginning_of_month, beginning_of_the_month)
+        .group("date_trunc('month', deal_date) ")
         .count
     end
 
     def split_rep_deals_grouped_by_month 
       Deal
         .where(split_rep_id: @user.id)
-        .where("created_at >= ? and created_at < ?", three_months_ago_beginning_of_month, beginning_of_the_month)
-        .group("date_trunc('month', created_at) ")
+        .where("deal_date >= ? and deal_date < ?", three_months_ago_beginning_of_month, beginning_of_the_month)
+        .group("date_trunc('month', deal_date) ")
         .count.map{|k, v| [k, v.to_f/2]}.to_h  
     end
 
     def current_month_sales_deals_by_day 
       Deal
         .where(sales_rep_id: @user.id)
-        .where("created_at >= ? and created_at < ?", beginning_of_the_month, end_of_the_month)
-        .group("date_trunc('day', created_at) ")
+        .where("deal_date >= ? and deal_date < ?", beginning_of_the_month, end_of_the_month)
+        .group("date_trunc('day', deal_date) ")
         .count
     end
 
     def current_month_split_deals_by_day
       Deal
         .where(split_rep_id: @user.id)
-        .where("created_at >= ? and created_at < ?", beginning_of_the_month, end_of_the_month)
-        .group("date_trunc('day', created_at) ")
+        .where("deal_date >= ? and deal_date < ?", beginning_of_the_month, end_of_the_month)
+        .group("date_trunc('day', deal_date) ")
         .count.map{|k, v| [k, v.to_f/2]}.to_h
     end
 
