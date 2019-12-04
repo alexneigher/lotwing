@@ -13,6 +13,8 @@ class SalesRepsController < ApplicationController
     @chart_monthly_counts_by_day = service.chart_monthly_counts_by_day
     @rolling_monthly_average_value = service.rolling_monthly_average_value
       
+    @above_moving_average = service.above_moving_average? if params[:go_back_month_override].present?
+
     @month_name = service.month_name
   end
 

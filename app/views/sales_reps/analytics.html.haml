@@ -1,7 +1,7 @@
 %link{:href => "//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css", :rel => "stylesheet"}/
 %script{:src => "//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"}
 
-- if @user.sales_rep_above_monthly_moving_average?
+- if @user.sales_rep_above_monthly_moving_average? || @above_moving_average
   :css
     .ct-series-a .ct-line, .ct-series-a .ct-point{
       stroke: #66CC00 !important;
