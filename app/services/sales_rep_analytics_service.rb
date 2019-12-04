@@ -69,9 +69,9 @@ class SalesRepAnalyticsService
   private
     def day_at_the_end_of_the_month
       if @ending_month_override.present?
-        @ending_month_override.months.ago.in_time_zone("US/Pacific").end_of_month.day
+        @ending_month_override.months.ago.end_of_month.day
       else
-        Date.current.in_time_zone("US/Pacific").end_of_month.day
+        Date.current.end_of_month.day
       end
     end
 
@@ -81,25 +81,25 @@ class SalesRepAnalyticsService
 
     def day_at_today
       if @ending_month_override.present?
-        @ending_month_override.months.ago.in_time_zone("US/Pacific").end_of_month.day
+        @ending_month_override.months.ago.end_of_month.day
       else
-        Date.current.in_time_zone("US/Pacific").day
+        Date.current.day
       end
     end
 
     def beginning_of_the_month
       if @ending_month_override.present?
-        @ending_month_override.months.ago.in_time_zone("US/Pacific").beginning_of_month
+        @ending_month_override.months.ago.beginning_of_month
       else
-        Date.current.in_time_zone("US/Pacific").beginning_of_month
+        Date.current.beginning_of_month
       end
     end
 
     def end_of_the_month
       if @ending_month_override.present?
-        @ending_month_override.months.ago.in_time_zone("US/Pacific").end_of_month
+        @ending_month_override.months.ago.end_of_month
       else
-        Date.current.in_time_zone("US/Pacific").end_of_month
+        Date.current.end_of_month
       end
     end
 
@@ -110,32 +110,55 @@ class SalesRepAnalyticsService
 
 
     def sales_rep_deals_grouped_by_month 
-      Deal
-        .where(sales_rep_id: @user.id)
-        .where("deal_date >= ? and deal_date < ?", three_months_ago_beginning_of_month, beginning_of_the_month)
-        .group("date_trunc('month', deal_date) ")
-        .count
+      solo_deals = Deal
+                    .included_in_counts
+                    .where(sales_rep_id: @user.id, split_rep_id: nil, stored: false)
+                    .where("deal_date >= ? and deal_date < ?", three_months_ago_beginning_of_month, beginning_of_the_month)
+                    .group("date_trunc('month', deal_date) ")
+                    .count
+      shared_deals = Deal
+                      .included_in_counts
+                      .where(sales_rep_id: @user.id, stored: false).where.not(split_rep_id: nil)
+                      .where("deal_date >= ? and deal_date < ?", three_months_ago_beginning_of_month, beginning_of_the_month)
+                      .group("date_trunc('month', deal_date) ")
+                      .count.map{|k, v| [k, v.to_f/2]}.to_h  
+      combined = solo_deals.merge(shared_deals){ |k, a_value, b_value| a_value + b_value }.sort.to_h
+
+      return combined
     end
 
     def split_rep_deals_grouped_by_month 
       Deal
-        .where(split_rep_id: @user.id)
+        .included_in_counts
+        .where(split_rep_id: @user.id, stored: false)
         .where("deal_date >= ? and deal_date < ?", three_months_ago_beginning_of_month, beginning_of_the_month)
         .group("date_trunc('month', deal_date) ")
         .count.map{|k, v| [k, v.to_f/2]}.to_h  
     end
 
     def current_month_sales_deals_by_day 
-      Deal
-        .where(sales_rep_id: @user.id)
-        .where("deal_date >= ? and deal_date < ?", beginning_of_the_month, end_of_the_month)
-        .group("date_trunc('day', deal_date) ")
-        .count
+      solo_deals = Deal
+                    .included_in_counts
+                    .where(sales_rep_id: @user.id, split_rep_id: nil,  stored: false)
+                    .where("deal_date >= ? and deal_date <= ?", beginning_of_the_month, end_of_the_month)
+                    .group("date_trunc('day', deal_date) ")
+                    .count
+
+      shared_deals = Deal
+                      .included_in_counts
+                      .where(sales_rep_id: @user.id,  stored: false).where.not(split_rep_id: nil)
+                      .where("deal_date >= ? and deal_date <= ?", beginning_of_the_month, end_of_the_month)
+                      .group("date_trunc('day', deal_date) ")
+                      .count.map{|k, v| [k, v.to_f/2]}.to_h
+      combined = solo_deals.merge(shared_deals){ |k, a_value, b_value| a_value + b_value }.sort.to_h
+
+      return combined
     end
 
     def current_month_split_deals_by_day
       Deal
-        .where(split_rep_id: @user.id)
+        .included_in_counts
+        .where(split_rep_id: @user.id, stored: false)
         .where("deal_date >= ? and deal_date < ?", beginning_of_the_month, end_of_the_month)
         .group("date_trunc('day', deal_date) ")
         .count.map{|k, v| [k, v.to_f/2]}.to_h

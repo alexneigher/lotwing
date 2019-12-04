@@ -21,7 +21,6 @@ module ApplicationHelper
     end
 
     rep_hash = rep_hash.delete_if{|k,v | k.blank?}
-    
     return rep_hash
 
     #looks like = [{user_id: {new: count, used: count} }, {user_id: {new: count, used: count} }]
