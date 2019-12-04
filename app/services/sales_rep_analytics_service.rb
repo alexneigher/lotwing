@@ -159,7 +159,7 @@ class SalesRepAnalyticsService
       Deal
         .included_in_counts
         .where(split_rep_id: @user.id, stored: false)
-        .where("deal_date >= ? and deal_date <= ?", beginning_of_the_month, end_of_the_month.end_of_day)
+        .where("deal_date >= ? and deal_date <= ?", beginning_of_the_month, end_of_the_month)
         .group("date_trunc('day', deal_date) ")
         .count.map{|k, v| [k, v.to_f/2]}.to_h
     end
