@@ -11,7 +11,7 @@ module WebApi
     end
 
     def note_events
-      return [] if params[:display_mode] == "hold_vehicles"
+      return [] if ["hold_vehicles", "no_tag_4_days", "no_test_drives"].include?(params[:display_mode])
       
       @note_events = current_user.dealership.events.includes(tag: :shape).where(event_type: "note", acknowledged: :false).where(tags: {active: :true})
 
