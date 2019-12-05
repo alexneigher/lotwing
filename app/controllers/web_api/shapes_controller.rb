@@ -85,13 +85,17 @@ module WebApi
     private
       def maybe_filter_by_older_than_4_days
         return unless params.dig(:display_mode) == "no_tag_4_days"
+        
         @new_vehicle_occupied_space = @new_vehicle_occupied_space.where('shapes.most_recently_tagged_at < ?', 4.days.ago)
+        
         @used_vehicle_occupied_space = @used_vehicle_occupied_space.where('shapes.most_recently_tagged_at < ?', 4.days.ago)
         @loaner_occupied_spaces = @loaner_occupied_spaces.where('shapes.most_recently_tagged_at < ?', 4.days.ago)
         @lease_return_occupied_spaces = @lease_return_occupied_spaces.where('shapes.most_recently_tagged_at < ?', 4.days.ago)
         @wholesale_unit_occupied_spaces = @wholesale_unit_occupied_spaces.where('shapes.most_recently_tagged_at < ?', 4.days.ago)
         @sold_vehicle_spaces = @sold_vehicle_spaces.where('shapes.most_recently_tagged_at < ?', 4.days.ago)
         @duplicate_shape_ids = @parking_spaces.includes(:tags).where('shapes.most_recently_tagged_at < ?', 4.days.ago).where(tags: {active: true}).select{|p| p.tags.length > 1}
+        @sales_hold_spaces = []
+        @service_hold_spaces = []
       end
 
       def maybe_filter_by_holds
@@ -118,6 +122,8 @@ module WebApi
         @loaner_occupied_spaces = []
         @lease_return_occupied_spaces = []
         @wholesale_unit_occupied_spaces = []
+        @sales_hold_spaces = []
+        @service_hold_spaces = []
       end
   end
 end
