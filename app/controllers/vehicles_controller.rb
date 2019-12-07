@@ -19,6 +19,13 @@ class VehiclesController < ApplicationController
       filtered_vehicles = filtered_vehicles.where(usage_type: params.dig(:filter, :usage_type))
     end
 
+    #do no tag stuff here
+    currently_parked_vehicle_ids = dealership.shapes.where(shape_type: 'parking_space').joins(:vehicle).pluck(:vehicle_id)
+    @vehicles_missing_tags = filtered_vehicles.reject{|v| v.id.in?(currently_parked_vehicle_ids) }
+    
+    if params.dig(:filter, :no_tag).present?
+      filtered_vehicles = @vehicles_missing_tags
+    end
 
     @filtered_vehicles = filtered_vehicles || all_vehicles
     @all_vehicles = all_vehicles
