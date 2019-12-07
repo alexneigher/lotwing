@@ -117,11 +117,13 @@ module WebApi
         @used_vehicle_occupied_space = @used_vehicle_occupied_space.where.not(vehicles: {id: test_drive_vehicle_ids})
         @sold_vehicle_spaces = @sold_vehicle_spaces.where.not(vehicles: {id: test_drive_vehicle_ids})
 
+
+        @loaner_occupied_spaces = @loaner_occupied_spaces.where.not(vehicles: {id: test_drive_vehicle_ids})
+        @lease_return_occupied_spaces = @lease_return_occupied_spaces.where.not(vehicles: {id: test_drive_vehicle_ids})
+        @wholesale_unit_occupied_spaces = @wholesale_unit_occupied_spaces.where.not(vehicles: {id: test_drive_vehicle_ids})
+
         @duplicate_shape_ids = @parking_spaces.includes(:tags).where(tags: {active: true}).select{|p| p.tags.length > 1 && !test_drive_vehicle_ids.include?(p.tags.pluck(:vehicle_id)) }
 
-        @loaner_occupied_spaces = []
-        @lease_return_occupied_spaces = []
-        @wholesale_unit_occupied_spaces = []
         @sales_hold_spaces = []
         @service_hold_spaces = []
       end
