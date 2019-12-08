@@ -33,4 +33,13 @@ class Vehicle < ApplicationRecord
     sold_status.present?
   end
 
+  def is_currently_on_test_drive?
+    last_event = events.last
+    
+    return false unless last_event
+
+    last_event.event_type.in?(["test_drive", "fuel_vehicle"]) && last_event.ended_at.nil?
+  end
+
+
 end
