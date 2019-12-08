@@ -135,7 +135,9 @@ class VehiclesController < ApplicationController
     def maybe_filter_by_no_tags(all_vehicles)
       currently_parked_vehicle_ids = @dealership.shapes.where(shape_type: 'parking_space').joins(:vehicle).pluck(:vehicle_id)
 
-      @vehicles_missing_tags = (all_vehicles || []).reject{|v| v.id.in?(currently_parked_vehicle_ids) || !v.is_currently_on_test_drive? }
+      all_vehicles_not_on_test_drives = all_vehicles.reject{|v| v.is_currently_on_test_drive? } 
+
+      @vehicles_missing_tags = (all_vehicles_not_on_test_drives || []).reject{|v| v.id.in?(currently_parked_vehicle_ids)}
       
       if params.dig(:filter, :no_tag).present?
         filtered_vehicles = @vehicles_missing_tags

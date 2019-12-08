@@ -34,11 +34,11 @@ class Vehicle < ApplicationRecord
   end
 
   def is_currently_on_test_drive?
-    last_event = events.last
+    most_recent_event = events.order(created_at: :desc)&.first
     
-    return false unless last_event
-
-    last_event.event_type.in?(["test_drive", "fuel_vehicle"]) && last_event.ended_at.nil?
+    return false unless most_recent_event
+    return true if (most_recent_event.event_type.in?(["test_drive", "fuel_vehicle"]) && most_recent_event.ended_at.nil?)
+    return false
   end
 
 
