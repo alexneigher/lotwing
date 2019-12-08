@@ -19,7 +19,8 @@ class VehiclesController < ApplicationController
       filtered_vehicles = filtered_vehicles.where(usage_type: params.dig(:filter, :usage_type))
     end
 
-    filtered_vehicles = maybe_filter_by_no_tags(all_vehicles)
+    count_by_no_tags(all_vehicles)
+    filtered_vehicles = maybe_filter_by_no_tags(filtered_vehicles)
 
     @filtered_vehicles = filtered_vehicles || all_vehicles
     @all_vehicles = all_vehicles
@@ -57,7 +58,8 @@ class VehiclesController < ApplicationController
       filtered_vehicles = filtered_vehicles.where(usage_type: params.dig(:filter, :usage_type))
     end
 
-    filtered_vehicles = maybe_filter_by_no_tags(all_vehicles)
+    count_by_no_tags(all_vehicles)
+    filtered_vehicles = maybe_filter_by_no_tags(filtered_vehicles)
 
     @filtered_vehicles = filtered_vehicles || all_vehicles
     @all_vehicles = all_vehicles
@@ -82,14 +84,12 @@ class VehiclesController < ApplicationController
     @dealership = current_user.dealership
     @vehicles = @dealership.vehicles.includes(:current_parking_tag, :open_service_tickets).where('stock_number ilike ?', "%#{params[:stock_number]}%")
 
-
     @all_vehicles = @dealership.vehicles.includes(:current_parking_tag, :open_service_tickets)
 
-    maybe_filter_by_no_tags(@all_vehicles)
+    count_by_no_tags(all_vehicles)
+    filtered_vehicles = maybe_filter_by_no_tags(filtered_vehicles)
 
     @filtered_vehicles = @vehicles
-
-    
 
     render :index
   end
@@ -132,13 +132,17 @@ class VehiclesController < ApplicationController
       params.require(:vehicle).permit(:make, :model, :year, :vin, :color, :dealership_id, :usage_type, :sales_hold, :service_hold, :sales_hold_notes, :service_hold_notes, :stock_number )
     end
 
-    def maybe_filter_by_no_tags(all_vehicles)
+    def count_by_no_tags(all_vehicles)
+      return @vehicles_missing_tags if @vehicles_missing_tags.present?
+
       currently_parked_vehicle_ids = @dealership.shapes.where(shape_type: 'parking_space').joins(:vehicle).pluck(:vehicle_id)
 
       all_vehicles_not_on_test_drives = all_vehicles.reject{|v| v.is_currently_on_test_drive? } 
 
       @vehicles_missing_tags = (all_vehicles_not_on_test_drives || []).reject{|v| v.id.in?(currently_parked_vehicle_ids)}
-      
+    end
+
+    def maybe_filter_by_no_tags(filtered_vehicles)
       if params.dig(:filter, :no_tag).present?
         filtered_vehicles = @vehicles_missing_tags
       end

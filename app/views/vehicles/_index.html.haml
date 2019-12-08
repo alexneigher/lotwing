@@ -28,7 +28,7 @@
             
         = link_to vehicles_path(filter: {usage_type: 'wholesale_unit'}) do
           %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('wholesale_unit')}"}
-            = "Whl: #{grouped['wholesale_unit']&.count || 0}"
+            = "Trd/Whl: #{grouped['wholesale_unit']&.count || 0}"
 
   .table-responsive.vehicle-table{style: 'max-height: 75vh;'}
     %table.table.table-bordered.table-striped.table-sm
