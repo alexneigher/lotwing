@@ -133,8 +133,6 @@ class VehiclesController < ApplicationController
     end
 
     def count_by_no_tags(all_vehicles)
-      return @vehicles_missing_tags if @vehicles_missing_tags.present?
-
       currently_parked_vehicle_ids = @dealership.shapes.where(shape_type: 'parking_space').joins(:vehicle).pluck(:vehicle_id)
 
       all_vehicles_not_on_test_drives = all_vehicles.reject{|v| v.is_currently_on_test_drive? } 
