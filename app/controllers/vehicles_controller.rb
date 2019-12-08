@@ -86,7 +86,7 @@ class VehiclesController < ApplicationController
 
     @all_vehicles = @dealership.vehicles.includes(:current_parking_tag, :open_service_tickets)
 
-    count_by_no_tags(all_vehicles)
+    count_by_no_tags(@all_vehicles)
     filtered_vehicles = maybe_filter_by_no_tags(filtered_vehicles)
 
     @filtered_vehicles = @vehicles
