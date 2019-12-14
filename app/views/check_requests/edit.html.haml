@@ -72,7 +72,7 @@
               %label.pt-2
                 %strong Department
             .col-4
-              = f.select :department, options_for_select(['New Sales', 'Used Sales', 'Service', 'Parts', 'Collision', 'Accounting']), {}, class: 'form-control'
+              = f.select :department, options_for_select(['All Departments', 'New Sales', 'Used Sales', 'Service', 'Parts', 'Collision', 'Accounting'], @check_request.department), {}, class: 'form-control'
 
         .form-group
           .row.no-gutters
