@@ -10,8 +10,9 @@
     %li
       %a.nav-link{"data-toggle" => "tab", :href => "#custom_fields"} Custom Fields
 
-    %li
-      %a.nav-link{"data-toggle" => "tab", :href => "#payment_tab"} Payment Info
+    - if current_user.id == 1
+      %li
+        %a.nav-link{"data-toggle" => "tab", :href => "#payment_tab"} Payment Info
 
   - if flash[:error]
     .alert.alert-danger.mt-2
