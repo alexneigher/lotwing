@@ -9,6 +9,14 @@
         %a.nav-link{"data-toggle" => "tab", :href => "#team_members"} Team Members
     %li
       %a.nav-link{"data-toggle" => "tab", :href => "#custom_fields"} Custom Fields
+
+    %li
+      %a.nav-link{"data-toggle" => "tab", :href => "#payment_tab"} Payment Info
+
+  - if flash[:error]
+    .alert.alert-danger.mt-2
+      = flash[:error]
+
   .tab-content.pt-3
     #dealership_info.tab-pane.active
       = render partial: 'dealerships/partials/dealership_info'
@@ -17,6 +25,9 @@
 
     #custom_fields.tab-pane
       = render partial: 'dealerships/partials/custom_fields'
+
+    #payment_tab.tab-pane
+      = render partial: 'dealerships/partials/payments'
       
 :javascript 
   $(function() {

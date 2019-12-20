@@ -101,6 +101,7 @@ Rails.application.routes.draw do
   end
 
   resources :dealerships, only: [:edit, :update] do
+    resources :payment_plans, controller: 'dealerships/payment_plans', only: :create
     resources :users, controller: 'dealerships/users'
   end
   

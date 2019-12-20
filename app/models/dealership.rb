@@ -19,6 +19,12 @@ class Dealership < ApplicationRecord
 
   after_create :create_data_sync
 
+  def in_good_financial_standing?
+    false
+    # stripe_customer_id.present? &&
+    # stripe_subscription_present? &&
+    # most_recent_payment_created_at >= date.today.beginning_of_month
+  end
 
   private
     def create_data_sync

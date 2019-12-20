@@ -1,0 +1,31 @@
+- if current_user.dealership.in_good_financial_standing?
+
+  You are all set! We will continue charging your credit card
+  %strong %200/month.
+
+- else
+
+
+  .row
+    .col-md-8
+      .card
+        .card-body
+          = form_tag dealership_payment_plans_path(current_user.dealership), id: 'payment-form', method: :post do
+            .form-row
+              %label{:for => "card-element"}
+                Credit or debit card
+              #card-element
+                / A Stripe Element will be inserted here.
+              / Used to display form errors.
+              #card-errors{:role => "alert"}
+            
+
+            %p.mt-3.text-muted.small 
+              Lotwing costs 
+              %strong $200/month.
+              We will automatically charge your credit card, and send you a paid invoice once per month.
+
+            %button.btn.btn-primary.mt-2.pull-right Initiate Payments
+  %script{:src => "https://js.stripe.com/v3/"}
+  = render partial: 'dealerships/partials/stripe_javascript'
+
