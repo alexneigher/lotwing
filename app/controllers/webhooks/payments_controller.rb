@@ -3,6 +3,8 @@ module Webhooks
     skip_before_action :authenticate_user!
     skip_before_action :verify_authenticity_token
 
+    # We currently only are told when payments are successful.
+    # TODO implement a payment failure flow
     def create
       @stripe_customer_id = params['data']['object']['customer']
       @stripe_charge_id = params['data']['object']['charge']

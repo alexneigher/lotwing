@@ -8,7 +8,7 @@ module Dealerships
       token = params[:stripeToken]
 
       if setup_payment_plan(token)
-        flash[:error] = 'YOU DID IT'
+        #Success
       else
         flash[:error] = @errors.join(', ')
       end
