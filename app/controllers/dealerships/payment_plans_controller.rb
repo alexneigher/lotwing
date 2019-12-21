@@ -53,11 +53,11 @@ module Dealerships
           subscription = Stripe::Subscription.create(
             {
               :customer => customer['id'],
-              :billing => 'charge_automatically',
+              :collection_method => 'charge_automatically',
               :items => 
                 [
                   {
-                    :plan => '200_monthly_charge'
+                    :plan => '200_monthly_payment'
                   }
                 ],
             }
