@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  
+  namespace :webhooks do
+    resources :payments, only: :create
+  end
+
   # for javascript clients
   namespace :web_api do
     resources :events
