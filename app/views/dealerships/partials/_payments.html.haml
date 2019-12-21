@@ -1,10 +1,14 @@
 - if current_user.dealership.in_good_financial_standing?
 
-  You are all set! We will continue charging your credit card
-  %strong %200/month.
+  Your most recent payment was recorded 
+  %strong= @dealership.most_recent_payment_received_at.in_time_zone("US/Pacific").strftime("%m/%d/%Y")
+  %hr
+
+  .text-muted.small
+    You are all set! We will continue charging your credit card
+    %strong $200/month.
 
 - else
-
 
   .row
     .col-md-8
@@ -25,7 +29,7 @@
               %strong $200/month.
               We will automatically charge your credit card, and send you a paid invoice once per month.
 
-            %button.btn.btn-primary.mt-2.pull-right Initiate Payments
+            %button.btn.btn-primary.mt-2.pull-right{data:{disable_with: "Processing"}} Initiate Payments
   %script{:src => "https://js.stripe.com/v3/"}
   = render partial: 'dealerships/partials/stripe_javascript'
 

@@ -8,11 +8,13 @@ module Dealerships
       token = params[:stripeToken]
 
       if setup_payment_plan(token)
-        #yay
+        flash[:error] = 'YOU DID IT'
       else
         flash[:error] = @errors.join(', ')
-        redirect_to edit_dealership_path(@dealership, anchor: "payment_tab")
       end
+
+      redirect_to edit_dealership_path(@dealership, anchor: "payment_tab")
+
     end
 
 
@@ -43,7 +45,7 @@ module Dealerships
 
         return nil unless customer
 
-        #@dealership.update(stripe_customer_id: customer['id'])
+        @dealership.update(stripe_customer_id: customer['id'])
 
         return customer
       end
@@ -59,16 +61,19 @@ module Dealerships
                   {
                     :plan => '200_monthly_payment'
                   }
-                ],
+                ]
             }
           )
         rescue => e
           @errors << e.to_s
         end
-        
-        return nil unless subscription
 
-        #@dealership.update(stripe_subscription_id: subscription['id'] )
+        if subscription&.status == "incomplete"
+          @errors << "Your card could not be charged. Please try again."
+          return nil
+        end
+
+        @dealership.update(stripe_subscription_id: subscription['id'], most_recent_payment_received_at: DateTime.now )
 
         return subscription
       end
