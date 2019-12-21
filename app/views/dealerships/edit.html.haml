@@ -10,7 +10,7 @@
     %li
       %a.nav-link{"data-toggle" => "tab", :href => "#custom_fields"} Custom Fields
 
-    - if current_user.id == 1
+    - if current_user.permission_level == "admin"
       %li
         %a.nav-link{"data-toggle" => "tab", :href => "#payment_tab"} Payment Info
 
