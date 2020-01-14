@@ -20,6 +20,9 @@ class Vehicle < ApplicationRecord
 
   scope :data_feed_deleteable, -> { where(creation_source: :data_feed_created, sales_hold: false, service_hold: false) }
 
+  before_save :upcase_stock_number
+  before_save :titleize_make_and_model
+
   #for now globally purge
   after_commit do
     Rails.cache.clear
@@ -42,4 +45,16 @@ class Vehicle < ApplicationRecord
   end
 
 
+  private
+    def upcase_stock_number
+      self.stock_number = stock_number.upcase
+    end
+
+    def titleize_make_and_model
+      return unless make.present?
+      self.make = make.downcase.titleize
+
+      return unless model.present?
+      self.model = model.downcase.titleize
+    end
 end
