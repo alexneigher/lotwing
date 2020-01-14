@@ -147,6 +147,11 @@ class DealsController < ApplicationController
     def maybe_create_sales_hold(vehicle)
       return unless vehicle.present?
       if params[:create_with_hold] == "create_with_hold"
+        
+        vehicle_params = {sales_hold:"1"}.with_indifferent_access
+
+        VehicleHoldUpdaterService.new(vehicle, vehicle_params, current_user).maybe_update_holds
+
         vehicle.update(sales_hold: true, sales_hold_notes: "Sales hold created by #{current_user.full_name}.")
       end
     end

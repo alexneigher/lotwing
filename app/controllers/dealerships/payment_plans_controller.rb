@@ -41,6 +41,7 @@ module Dealerships
 
         rescue => e
           @errors << e.to_s
+          return false
         end
 
         return nil unless customer
@@ -66,6 +67,7 @@ module Dealerships
           )
         rescue => e
           @errors << e.to_s
+          return false
         end
 
         if subscription&.status == "incomplete"
