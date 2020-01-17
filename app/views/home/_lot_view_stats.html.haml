@@ -3,6 +3,10 @@
     %a.nav-link.active{"data-toggle" => "tab", :href => "#today", :role => "tab"} Today
   %li.nav-item
     %a.nav-link{"data-toggle" => "tab", :href => "#last_day", :role => "tab"} Last 24 Hours
+
+  - if current_user.permission_level == "admin"
+    %li.nav-item
+      %a.nav-link{"data-toggle" => "tab", :href => "#users", :role => "tab"} Users
   
 / Tab panes
 .tab-content.mt-3
@@ -45,6 +49,11 @@
                 = link_to vehicle_path(event.tag.vehicle) do
                   = "(#{event.tag.vehicle.stock_number}) "
             %br
+  #users.tab-pane{:role => "tabpanel"}
+    #user-activity-container
+      %i.fa.fa-refresh.fa-spin
+
+
 %hr
 %h5{style:'margin-bottom:-2px;'} Vehicles Currently Off Lot
 .text-danger{style:'font-size:9px;margin-bottom:10px;'}
@@ -78,3 +87,17 @@
         %span{class: ('text-danger' if dd >= 2 )}
           
           = "#{pluralize(dd, 'day')}, #{pluralize(hh, 'hour')}"
+
+
+
+:javascript
+  $(function(){
+    $('.nav-tabs a').on('shown.bs.tab', function(event){
+      if (event.target.hash == "#users"){
+        $.ajax({
+          url:"/home/user_activity",
+          method: 'GET',
+        });
+      }
+    });
+  })
