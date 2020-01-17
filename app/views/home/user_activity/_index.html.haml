@@ -1,1 +1,27 @@
-_index.html.hamlsup
+.row.mb-2
+  .col-12
+    .row
+      .col-4
+      .col-8
+        .row.small.text-center
+          .col-4.text-orange Today
+          .col-4.text-orange Last 7 Days
+          .col-4.text-orange MTD
+
+- @role_grouped_user_events.each do |role, users_with_events|
+  .row.mb-2
+    .col-12
+      %strong
+        = role.titleize
+    .col-12
+      - users_with_events.each do |user, event_count|
+        .row.small
+          .col-4
+            = user.full_name 
+          .col-8.text-center
+            .row
+              .col-4= event_count
+              .col-4= event_count
+              .col-4= event_count
+      
+        
