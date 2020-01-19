@@ -23,7 +23,7 @@
 
           .form-group
             %label 
-              Used Vehicle?
-              = f.check_box :is_used
+              Vehicle Usage Type
+              = f.select :usage_type, options_for_select([:is_new, :is_used, :loaner, :lease_return, :wholesale_unit]), {}, class: 'form-control'
           .form-group
             =f.submit 'Save', class: 'btn btn-block btn-success'
