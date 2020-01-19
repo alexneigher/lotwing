@@ -18,6 +18,10 @@
             %label VIN
             = f.text_field :vin, placeholder: '1234EDFGR45', class: 'form-control'
           .form-group
+            %label Stock Number
+            = f.text_field :stock_number, placeholder: '3455768A', class: 'form-control'
+
+          .form-group
             %label 
               Used Vehicle?
               = f.check_box :is_used
