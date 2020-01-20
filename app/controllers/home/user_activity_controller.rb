@@ -3,11 +3,16 @@ class Home::UserActivityController < ApplicationController
   def index
     hash = {}
 
+    @event_type = params[:event_type].presence
+
+    event_type_hash = @event_type ? {event_type: @event_type}:{}
+
     all_dealership_users = current_user.dealership.users
 
     grouped_by_user_events = current_user
                               .dealership
                               .events
+                              .where(event_type_hash)
                               .where("events.created_at >= ?", Date.today.beginning_of_month)
                               .group_by(&:user_id)
 

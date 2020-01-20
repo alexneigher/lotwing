@@ -1,3 +1,9 @@
+.row
+  .col-8
+  .col-4
+    = form_tag home_user_activity_index_path, method: :get, remote: true do
+      = select_tag 'event_type', options_for_select(Event.event_types, @event_type), class: 'form-control form-control-sm', include_blank: true, onChange: 'Rails.fire(this.form, "submit")'
+      = submit_tag 'submit', class: 'd-none'
 .row.mb-2
   .col-12
     .row
