@@ -4,9 +4,9 @@
       .col-4
       .col-8
         .row.small.text-center
-          .col-4.text-orange Today
-          .col-4.text-orange Last 7 Days
-          .col-4.text-orange MTD
+          .col-4 Today
+          .col-4 Last 7 Days
+          .col-4 MTD
 
 - @role_grouped_user_events.each do |role, users_with_events|
   .row.mb-2
@@ -14,14 +14,14 @@
       %strong
         = role.titleize
     .col-12
-      - users_with_events.each do |user, event_count|
+      - users_with_events.sort_by{|_,events_hash| events_hash["mtd"]}.reverse.to_h.each do |user, event_count|
         .row.small
           .col-4
             = user.full_name 
           .col-8.text-center
-            .row
-              .col-4= event_count
-              .col-4= event_count
-              .col-4= event_count
+            .row.text-orange
+              .col-4= event_count["1"]
+              .col-4= event_count["7"]
+              .col-4= event_count["mtd"]
       
         
