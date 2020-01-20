@@ -3,10 +3,8 @@
     %a.nav-link.active{"data-toggle" => "tab", :href => "#today", :role => "tab"} Today
   %li.nav-item
     %a.nav-link{"data-toggle" => "tab", :href => "#last_day", :role => "tab"} Last 24 Hours
-
-  - if current_user.permission_level == "admin"
-    %li.nav-item
-      %a.nav-link{"data-toggle" => "tab", :href => "#users", :role => "tab"} Users
+  %li.nav-item
+    %a.nav-link{"data-toggle" => "tab", :href => "#users", :role => "tab"} Users
   
 / Tab panes
 .tab-content.mt-3
