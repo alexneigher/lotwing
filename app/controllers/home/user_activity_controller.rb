@@ -13,13 +13,13 @@ class Home::UserActivityController < ApplicationController
                               .dealership
                               .events
                               .where(event_type_hash)
-                              .where("events.created_at >= ?", Date.today.beginning_of_month)
+                              .where("events.created_at >= ?", DateTime.current.in_time_zone("US/Pacific").beginning_of_month)
                               .group_by(&:user_id)
 
     grouped_by_user_events.each do |user_id, events|
-      last_day_events = events.select{|e| e.created_at.in_time_zone("US/Pacific") >= Date.today.beginning_of_day.in_time_zone("US/Pacific")}.count
-      last_week_events = events.select{ |e| e.created_at.in_time_zone("US/Pacific") >= 1.week.ago.beginning_of_day.in_time_zone("US/Pacific")}.count
-      mtd_events = events.select{|e| e.created_at.in_time_zone("US/Pacific") >= Date.today.beginning_of_month.in_time_zone("US/Pacific")}.count
+      last_day_events = events.select{|e| e.created_at.in_time_zone("US/Pacific") >= DateTime.current.in_time_zone("US/Pacific").beginning_of_day}.count
+      last_week_events = events.select{ |e| e.created_at.in_time_zone("US/Pacific") >= 1.week.ago.in_time_zone("US/Pacific").beginning_of_day}.count
+      mtd_events = events.select{|e| e.created_at.in_time_zone("US/Pacific") >= DateTime.current.in_time_zone("US/Pacific").beginning_of_month}.count
 
       user = all_dealership_users.detect{|u| u.id == user_id }
 
