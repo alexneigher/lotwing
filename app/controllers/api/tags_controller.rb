@@ -2,6 +2,11 @@ module Api
   class TagsController < Api::BaseController
     def create
       @vehicle = Vehicle.find(params[:tag][:vehicle_id])
+
+      if @vehicle.is_currently_on_test_drive?
+        render json: {status: 403, error: "This vehicle is currently on a test drive"} and return
+      end
+
       @vehicle.tags.update_all(active: false)
       
       #if we are starting a test_drive or a fuel_vehicle, create an inactive tag which will remove it from the lot
