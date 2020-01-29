@@ -12,4 +12,11 @@ class Api::BaseController < ActionController::API
       render json: { error: 'Not Authorized' }, status: 401 unless @current_user
     end
 
+    # Add current user_id to lograge payload for better logging
+    #https://coderwall.com/p/9x0h6a/better-rails-logging-user_id-remote_ip-with-lograge-on-heroku
+    def append_info_to_payload(payload)
+      super
+      payload[:user_id] = current_user.present? ? current_user.id : "no user"
+    end
+
 end
