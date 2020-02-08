@@ -4,7 +4,7 @@ function fetch_data_and_render(shape_type){
     dataType: "json",
     success: function(data){
       add_shapes_to_map(data, window.map, shape_type);
-      
+
       if (shape_type == 'parking_lots'){
         center_map(data);
       }
@@ -57,7 +57,7 @@ function add_shapes_to_map(data, map, shape_type){
 
     geo_info.push(features[i].geo_info)
   }
-  
+
   map.addLayer({
     'id': shape_type,
     'type': 'fill',
@@ -71,8 +71,24 @@ function add_shapes_to_map(data, map, shape_type){
     'layout': {},
     'paint': {
         'fill-color': map_shape_type_to_color(shape_type),
-        'fill-outline-color': "#6b6d6f",
         'fill-opacity': ['get', 'fill_opacity']
+    }
+  });
+
+  smooth_borders(shape_type);
+
+}
+
+
+function smooth_borders(source_name){
+  window.map.addLayer({
+    id: "lots-smooth-borders" + source_name,
+    type: "line",
+    source: source_name,
+    layout: {},
+    paint: {
+      "line-color": "#6b6d6f", // same whatever color
+      "line-width": 0.5
     }
   });
 }
@@ -109,7 +125,7 @@ function add_shape_overlay_icons(data, map, event_type){
 
   for(var i = 0; i < data[event_type].length; i++){
     geo_json_array.push( { data: {attributes: {parking_space: data[event_type][i].geo_info}} } )
-  } 
+  }
   data = {};
   data[event_type] = geo_json_array;
   add_events_to_map(data, map, event_type);
@@ -149,7 +165,7 @@ function add_events_to_map(data, map, event_type){
           }
       });
   });
-  
+
 }
 
 function map_image_url_to_event_type(event_type){
@@ -180,14 +196,14 @@ function map_event_type_to_size(event_type){
 
 function shape_opacity(most_recently_tagged_at, shape_type){
   vehicle_shapes = ["used_vehicle_occupied_spaces", "new_vehicle_occupied_spaces", "loaner_occupied_spaces", "lease_return_occupied_spaces", "wholesale_unit_occupied_spaces"]
-  
+
   if (shape_type == 'parking_lots'){
     return 0.4
   }else if(vehicle_shapes.includes(shape_type)){
-    
+
     // for parking spaces that are more than 12 hours old, make them transparent
     hours_old = Math.abs(new Date() - new Date(most_recently_tagged_at)) / 36e5
-    
+
     if (hours_old > 24){
       return 0.4
     }else{
@@ -197,7 +213,7 @@ function shape_opacity(most_recently_tagged_at, shape_type){
   }else{
     return 1
   }
-  
+
 }
 
 

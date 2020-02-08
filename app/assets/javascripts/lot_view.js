@@ -12,8 +12,8 @@ $(function(){
         {
           id: 'background',
           type: 'background',
-          paint: { 
-            'background-color': 'white' 
+          paint: {
+            'background-color': 'white'
           }
         }
       ]
@@ -35,7 +35,7 @@ $(function(){
   window.map.on('load', function () {
     fetch_data_and_render('parking_lots');
     fetch_data_and_render('buildings');
-    
+
     // fetch parking spaces
     display_mode = getUrlParameter("display_mode") || '';
     $.ajax({
@@ -49,7 +49,7 @@ $(function(){
         add_shapes_to_map(data, window.map, 'wholesale_unit_occupied_spaces');
         add_shapes_to_map(data, window.map, 'sold_vehicle_spaces');
         add_shapes_to_map(data, window.map, 'empty_parking_spaces');
-        
+
         // treat duplicate parkings similar to events
         add_shape_overlay_icons(data, window.map, 'duplicate_parked_spaces');
 
@@ -96,10 +96,10 @@ function open_popup(e){
 
   $.ajax({
     url:"/web_api/shapes/" + e.features[0].properties.shape_id,
-    
+
     success: function(data){
       $('#vehicle_data_container').html(data);
-      
+
     },
     error: function (xhr) {
       alert(xhr.statusText)
@@ -115,7 +115,7 @@ function hide_vehicle_data(){
 function days_ago(created_at_date){
   var date2 = new Date();
   var date1 = new Date(created_at_date);
-  
+
   return Math.round((date2-date1)/(1000*60*60*24));
 }
 
@@ -137,7 +137,7 @@ function render_vehicle_year_make(vehicle){
 
     return "<h3 style='float:left;margin-right: 10px;'><a href='/vehicles/" + vehicle.id + "'>"+ vehicle_name +"</a></h3>"
   }
-  
+
 }
 
 function render_event(events){
@@ -156,5 +156,5 @@ function render_vehicle_color(vehicle){
   }else{
     return ""
   }
-  
+
 }
