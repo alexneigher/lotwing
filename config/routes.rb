@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   namespace :webhooks do
     resources :payments, only: :create
   end
@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       collection do
         get :parking_lots
         get :buildings
+        get :landscaping
         get :parking_spaces
       end
     end
@@ -25,7 +26,7 @@ Rails.application.routes.draw do
       resources :stock_numbers, param: :stock_number, only: [:index, :show]
       resources :vin_search, param: :vin, only: [:show]
     end
-    
+
     resource :dealership, only: :show
 
     resources :key_board_locations
@@ -36,12 +37,12 @@ Rails.application.routes.draw do
     resource :active_drives
 
     resources :deals do
-      collection do 
+      collection do
         get :mtd
         get :today
       end
     end
-    
+
     resources :shapes do
       collection do
         get :parking_lots
@@ -84,9 +85,9 @@ Rails.application.routes.draw do
   resources :service_ticket_jobs, only: :create
 
   resources :suggested_trade_dealerships, only: :destroy
-  
+
   resources :service_license_agreement, only: [:new, :create]
-  
+
   resources :key_board_locations, only: [:create, :edit, :update]
 
   # UI for drawing shapes on the map and saving them
@@ -113,7 +114,7 @@ Rails.application.routes.draw do
     resources :payment_plans, controller: 'dealerships/payment_plans', only: :create
     resources :users, controller: 'dealerships/users'
   end
-  
+
   resources :sales_reps, only: :show do
     get :analytics
   end

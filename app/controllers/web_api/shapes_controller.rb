@@ -1,6 +1,6 @@
 module WebApi
   class ShapesController < ApplicationController
-   
+
     def index
       @shapes = current_user.dealership.shapes.where.not(shape_type: 'parking_space').order(shape_type: :desc).all
       @parking_spaces = current_user.dealership.shapes.where(shape_type: 'parking_space')
@@ -22,12 +22,17 @@ module WebApi
       render json: {buildings: @building}
     end
 
+    def landscaping
+      @landscaping = current_user.dealership.shapes.where(shape_type: 'landscaping')
+      render json: {landscaping: @landscaping}
+    end
+
     def parking_spaces
       @parking_spaces = current_user.dealership.shapes.where(shape_type: 'parking_space')
 
       @new_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "is_new", sold_status: nil})
       @used_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "is_used", sold_status: nil})
-      
+
       @loaner_occupied_spaces = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "loaner", sold_status: nil})
       @lease_return_occupied_spaces = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "lease_return", sold_status: nil})
       @wholesale_unit_occupied_spaces = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "wholesale_unit", sold_status: nil})
@@ -43,7 +48,7 @@ module WebApi
       maybe_filter_by_no_test_drives
 
       all_vehicle_spaces  = [@new_vehicle_occupied_space + @used_vehicle_occupied_space + @loaner_occupied_spaces + @lease_return_occupied_spaces +@wholesale_unit_occupied_spaces + @sold_vehicle_spaces + @service_hold_spaces + @sales_hold_spaces].flatten
-      
+
       @empty_parking_space = @parking_spaces - all_vehicle_spaces
 
       render json: {
@@ -51,7 +56,7 @@ module WebApi
                     used_vehicle_occupied_spaces: @used_vehicle_occupied_space,
                     loaner_occupied_spaces: @loaner_occupied_spaces,
                     lease_return_occupied_spaces: @lease_return_occupied_spaces,
-                    wholesale_unit_occupied_spaces: @wholesale_unit_occupied_spaces, 
+                    wholesale_unit_occupied_spaces: @wholesale_unit_occupied_spaces,
                     sold_vehicle_spaces: @sold_vehicle_spaces,
                     empty_parking_spaces: @empty_parking_space,
                     duplicate_parked_spaces: @duplicate_shape_ids,
@@ -63,31 +68,31 @@ module WebApi
     def show
       html = ''
       @shape = current_user.dealership.shapes.find(params[:id])
-      
+
       vehicles = @shape.vehicles.includes(:tags).where(tags: {active: true})
 
       vehicles.each do |vehicle|
         @vehicle = vehicle
-        
+
         @events = @vehicle.events.includes(:user, :resolutions)
 
         dealership = current_user.dealership
-        
+
         @context = "lot_view"
 
         html += render_to_string partial: "vehicles/show"
 
       end
-      
+
       render inline: html
     end
 
     private
       def maybe_filter_by_older_than_4_days
         return unless params.dig(:display_mode) == "no_tag_4_days"
-        
+
         @new_vehicle_occupied_space = @new_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 4.days.ago)
-        
+
         @used_vehicle_occupied_space = @used_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 4.days.ago)
         @loaner_occupied_spaces = @loaner_occupied_spaces.where('shapes.most_recently_tagged_at <= ?', 4.days.ago)
         @lease_return_occupied_spaces = @lease_return_occupied_spaces.where('shapes.most_recently_tagged_at <= ?', 4.days.ago)
@@ -110,7 +115,7 @@ module WebApi
 
       def maybe_filter_by_no_test_drives
         return unless params.dig(:display_mode) == "no_test_drives"
-        
+
         test_drive_vehicle_ids = Event.includes(:tag).where(event_type: "test_drive").map{|e| e.tag.vehicle_id}
 
         @new_vehicle_occupied_space = @new_vehicle_occupied_space.where.not(vehicles: {id: test_drive_vehicle_ids})

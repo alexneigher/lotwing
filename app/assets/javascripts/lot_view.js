@@ -35,6 +35,8 @@ $(function(){
   window.map.on('load', function () {
     fetch_data_and_render('parking_lots');
     fetch_data_and_render('buildings');
+    fetch_data_and_render('landscaping');
+
 
     // fetch parking spaces
     display_mode = getUrlParameter("display_mode") || '';
