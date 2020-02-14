@@ -43,6 +43,7 @@ function set_zoom(){
 }
 
 function add_shapes_to_map(data, map, shape_type){
+  console.log(shape_type);
   features = data[shape_type]
   if (!features){
     return false;
@@ -53,7 +54,7 @@ function add_shapes_to_map(data, map, shape_type){
   for(var i=0, size=features.length; i<size; i++){
     features[i].geo_info.properties.shape_id = features[i].id
 
-    features[i].geo_info.properties.fill_opacity = shape_opacity(features[i].most_recently_tagged_at, shape_type);
+    features[i].geo_info.properties.fill_opacity = shape_opacity(features[i].most_recently_tagged_at, features[i].temporary, shape_type);
 
     geo_info.push(features[i].geo_info)
   }
@@ -87,7 +88,7 @@ function smooth_borders(source_name){
     source: source_name,
     layout: {},
     paint: {
-      "line-color": "#6b6d6f", // same whatever color
+      "line-color": "#6b6d6f",
       "line-width": 0.5
     }
   });
@@ -195,7 +196,7 @@ function map_event_type_to_size(event_type){
   return hash[event_type]
 }
 
-function shape_opacity(most_recently_tagged_at, shape_type){
+function shape_opacity(most_recently_tagged_at, temporary, shape_type){
   vehicle_shapes = ["used_vehicle_occupied_spaces", "new_vehicle_occupied_spaces", "loaner_occupied_spaces", "lease_return_occupied_spaces", "wholesale_unit_occupied_spaces"]
 
   if (shape_type == 'parking_lots'){
@@ -211,9 +212,13 @@ function shape_opacity(most_recently_tagged_at, shape_type){
       return 1
     }
 
+  } else if ((shape_type == "empty_parking_spaces" || shape_type == "parking_spaces") && temporary == true){
+    //the or here is for only empty spaces, or if in map builder, all spaces
+    return 0.00
   }else{
     return 1
   }
+
 
 }
 

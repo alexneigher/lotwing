@@ -12,20 +12,20 @@
           .form-group
             .row
               .col-6
-                %label 
+                %label
                   %small Shape Type
                 = f.select :shape_type, Shape.shape_types.to_a, {}, class: 'form-control'
               .col-6
-                %label 
+                %label
                   %small Number of Shapes
                 = select_tag 'shape[horizontal_splits]', options_for_select([[1,0], [2,1], [4,3], [8, 7]]), class: 'form-control'
             = f.text_area :geo_info, class: 'form-control d-none', placeholder: 'Draw new shape on the map'
           = f.submit class: 'btn btn-sm btn-primary'
-      
+
       .bg-light.p-2
         %small.small
           %strong
-            Map Settings 
+            Map Settings
           %br
         = form_for current_user.dealership, url: dealership_path(current_user.dealership), method: :put do |f|
           .row
@@ -40,7 +40,7 @@
             .col-1
               %label
               =f.submit 'Update', class: 'btn btn-sm btn-success mt-2'
-    
+
 
       %hr
       #shapeList{style:'max-height: 400px;overflow:scroll;position:relative;'}
@@ -50,9 +50,18 @@
               %i.fa{class: map_builder_icon_shape(shape)}
               = "#{shape.shape_type.titleize}: #{shape.id}"
               .pull-right
-                =link_to shape_path(shape), method: :delete do
-                  %i.fa.fa-trash
-      
+                %i.fa.fa-pencil.text-orange{data: {target:"##{dom_id(shape)}-edit", toggle:'collapse'}}
+              .bg-light.p-1.mt-1.collapse{id:"#{dom_id(shape)}-edit"}
+                .row
+                  .col
+                    = form_for shape, url: shape_path(shape), namespace: dom_id(shape), method: :put do |f|
+                      %label
+                        = f.check_box :temporary, onchange: "$(this).parents('form').submit();"
+                        temporary
+                  .col.text-right
+                    = link_to shape_path(shape), method: :delete, data: {confirm: 'Are you sure?'} do
+                      %i.fa.fa-trash.text-danger
+
     .col-md-8
       .my-1
         %btn.btn.btn-primary.btn-sm{onclick: "window.draw.changeMode('simple_select');"}
@@ -62,4 +71,4 @@
         %btn.btn.btn-primary.btn-sm{onclick: "window.draw.changeMode('rotate');"}
           Rotate
       #map{:style => "width: 100%; height: 550px;"}
-      
+

@@ -10,7 +10,7 @@ $(function(){
   window.modes = MapboxDraw.modes;
   modes.draw_rectangle = DrawRectangle.default;
   modes.rotate = RotateMode;
-  
+
   window.draw = new MapboxDraw({
       modes: window.modes,
       displayControlsDefault: false,
@@ -21,7 +21,7 @@ $(function(){
   window.map.addControl(window.draw, 'top-left');
 
   window.draw.changeMode('simple_select');
-  
+
   window.geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken
   })
@@ -50,7 +50,6 @@ $(function(){
       url:"/web_api/shapes",
       dataType: "json",
       success: function(data){
-        console.log(data);
         add_shapes_to_map(data, window.map, 'parking_lots');
         add_shapes_to_map(data, window.map, 'buildings');
         add_shapes_to_map(data, window.map, 'parking_spaces');
