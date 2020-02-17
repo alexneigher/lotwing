@@ -4,35 +4,24 @@
 .container-fluid
   .row
     .col-lg-4
-      %h5 Map Display Mode
-      = link_to lot_view_path do
-        %btn.btn.btn-sm{class: (params.dig(:display_mode).nil? ? 'btn-primary':'btn-outline-primary')} All Vehicles
-      
-      = link_to lot_view_path(display_mode: :no_tag_4_days) do
-        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_tag_4_days' ? 'btn-primary':'btn-outline-primary')} No tag 4 days
-
-      = link_to lot_view_path(display_mode: :hold_vehicles) do
-        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'hold_vehicles' ? 'btn-primary':'btn-outline-primary')} Hold Vehicles
-      
-      = link_to lot_view_path(display_mode: :no_test_drives) do
-        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_test_drives' ? 'btn-primary':'btn-outline-primary')} No test drives
+      = render partial: 'home/display_modes'
 
       %hr
       - if params.dig(:display_mode) == "hold_vehicles"
         = render partial: 'home/hold_stats'
       - else
         = render partial: 'home/lot_view_stats'
-      
-            
-      
+
+
+
     .col-lg-8{style: 'position: relative;'}
       #vehicle_data_container
       #map{ :style => "width: 100%; height: 550px" }
-      
+
       .d-none
         //place all dom-dependent info here
         %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
-        %input#dealership_map_zoom{value: current_user.dealership.map_zoom }  
+        %input#dealership_map_zoom{value: current_user.dealership.map_zoom }
 
 
 
@@ -44,15 +33,15 @@
 
       $.ajax({
         url:"/web_api/shapes/" + shape_id,
-        
+
         success: function(data){
           $('#vehicle_data_container').html(data);
-          
+
         },
         error: function (xhr) {
           alert(xhr.statusText)
         }
       });
     })
-      
+
   })

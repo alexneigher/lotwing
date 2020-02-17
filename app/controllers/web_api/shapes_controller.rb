@@ -46,6 +46,9 @@ module WebApi
       maybe_filter_by_older_than_4_days
       maybe_filter_by_holds
       maybe_filter_by_no_test_drives
+      maybe_filter_by_older_than_90_days
+      maybe_filter_by_older_than_60_days
+      maybe_filter_by_older_than_14_days
 
       all_vehicle_spaces  = [@new_vehicle_occupied_space + @used_vehicle_occupied_space + @loaner_occupied_spaces + @lease_return_occupied_spaces +@wholesale_unit_occupied_spaces + @sold_vehicle_spaces + @service_hold_spaces + @sales_hold_spaces].flatten
 
@@ -99,6 +102,49 @@ module WebApi
         @wholesale_unit_occupied_spaces = @wholesale_unit_occupied_spaces.where('shapes.most_recently_tagged_at <= ?', 4.days.ago)
         @sold_vehicle_spaces = @sold_vehicle_spaces.where('shapes.most_recently_tagged_at <= ?', 4.days.ago)
         @duplicate_shape_ids = @parking_spaces.includes(:tags).where('shapes.most_recently_tagged_at <= ?', 4.days.ago).where(tags: {active: true}).select{|p| p.tags.length > 1}
+        @sales_hold_spaces = []
+        @service_hold_spaces = []
+      end
+
+      def maybe_filter_by_older_than_14_days
+        return unless params.dig(:display_mode) == "no_tag_14_days"
+
+        @new_vehicle_occupied_space = @new_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
+
+        @used_vehicle_occupied_space = @used_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
+        @loaner_occupied_spaces = @loaner_occupied_spaces.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
+        @lease_return_occupied_spaces = @lease_return_occupied_spaces.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
+        @wholesale_unit_occupied_spaces = @wholesale_unit_occupied_spaces.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
+        @sold_vehicle_spaces = @sold_vehicle_spaces.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
+        @duplicate_shape_ids = @parking_spaces.includes(:tags).where('shapes.most_recently_tagged_at <= ?', 14.days.ago).where(tags: {active: true}).select{|p| p.tags.length > 1}
+        @sales_hold_spaces = []
+        @service_hold_spaces = []
+      end
+
+      #this is only for new vehicles
+      def maybe_filter_by_older_than_90_days
+        return unless params.dig(:display_mode) == "no_tag_90_days"
+        @new_vehicle_occupied_space = @new_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 90.days.ago)
+        @sold_vehicle_spaces = []
+        @duplicate_shape_ids = []
+        @used_vehicle_occupied_space = []
+        @loaner_occupied_spaces = []
+        @lease_return_occupied_spaces = []
+        @wholesale_unit_occupied_spaces = []
+        @sales_hold_spaces = []
+        @service_hold_spaces = []
+      end
+
+      #this is only for used vehicles
+      def maybe_filter_by_older_than_60_days
+        return unless params.dig(:display_mode) == "no_tag_60_days"
+        @used_vehicle_occupied_space = @used_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 60.days.ago)
+        @sold_vehicle_spaces = []
+        @duplicate_shape_ids = []
+        @new_vehicle_occupied_space = []
+        @loaner_occupied_spaces = []
+        @lease_return_occupied_spaces = []
+        @wholesale_unit_occupied_spaces = []
         @sales_hold_spaces = []
         @service_hold_spaces = []
       end
