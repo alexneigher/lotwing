@@ -107,7 +107,7 @@ module WebApi
       end
 
       def maybe_filter_by_older_than_14_days
-        return unless params.dig(:display_mode) == "no_tag_14_days"
+        return unless params.dig(:display_mode) == "no_movement_14_days"
 
         @new_vehicle_occupied_space = @new_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
 
@@ -123,8 +123,8 @@ module WebApi
 
       #this is only for new vehicles
       def maybe_filter_by_older_than_90_days
-        return unless params.dig(:display_mode) == "no_tag_90_days"
-        @new_vehicle_occupied_space = @new_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 90.days.ago)
+        return unless params.dig(:display_mode) == "age_90_days_old"
+        @new_vehicle_occupied_space = @new_vehicle_occupied_space.where('vehicles.age_in_days > 90')
         @sold_vehicle_spaces = []
         @duplicate_shape_ids = []
         @used_vehicle_occupied_space = []
@@ -137,8 +137,8 @@ module WebApi
 
       #this is only for used vehicles
       def maybe_filter_by_older_than_60_days
-        return unless params.dig(:display_mode) == "no_tag_60_days"
-        @used_vehicle_occupied_space = @used_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 60.days.ago)
+        return unless params.dig(:display_mode) == "age_60_days_old"
+        @used_vehicle_occupied_space = @used_vehicle_occupied_space.where('vehicles.age_in_days > 60')
         @sold_vehicle_spaces = []
         @duplicate_shape_ids = []
         @new_vehicle_occupied_space = []

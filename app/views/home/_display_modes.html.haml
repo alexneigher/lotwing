@@ -14,13 +14,13 @@
 - if current_user.permission_level == "admin"
   .small.text-orange.cursor-pointer.mt-1{data: {target:"#more-display-modes", toggle:'collapse'}} more options
 
-  %div{id:"more-display-modes", class: ('collapse' unless params.dig(:display_mode).in?(['no_tag_90_days','no_tag_60_days','no_tag_14_days']) ) }
+  %div{id:"more-display-modes", class: ('collapse' unless params.dig(:display_mode).in?(['age_90_days_old','age_60_days_old','no_movement_14_days']) ) }
     .pt-1
-      = link_to lot_view_path(display_mode: :no_tag_90_days) do
-        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_tag_90_days' ? 'btn-primary':'btn-outline-primary')} No tag 90 days (new)
+      = link_to lot_view_path(display_mode: :age_90_days_old) do
+        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'age_90_days_old' ? 'btn-primary':'btn-outline-primary')} 90+ days old
 
-      = link_to lot_view_path(display_mode: :no_tag_60_days) do
-        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_tag_60_days' ? 'btn-primary':'btn-outline-primary')} No tag 60 days (used)
+      = link_to lot_view_path(display_mode: :age_60_days_old) do
+        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'age_60_days_old' ? 'btn-primary':'btn-outline-primary')} 60+ days old
 
-      = link_to lot_view_path(display_mode: :no_tag_14_days) do
-        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_tag_14_days' ? 'btn-primary':'btn-outline-primary')} No tag 14 days
+      = link_to lot_view_path(display_mode: :no_movement_14_days) do
+        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_movement_14_days' ? 'btn-primary':'btn-outline-primary')} No movement 14 days

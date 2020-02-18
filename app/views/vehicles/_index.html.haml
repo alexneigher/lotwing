@@ -13,7 +13,7 @@
         = link_to vehicles_path(filter: {usage_type: 'is_new'}) do
           %span.p-1.rounded.ml-1.text-white.small{style: "background-color: #{vehicle_usage_type_bg_color('is_new')}"}
             = "New: #{grouped['is_new']&.count || 0}"
-        
+
         = link_to vehicles_path(filter: {usage_type: 'is_used'}) do
           %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('is_used')}"}
             = "Used: #{grouped['is_used']&.count || 0}"
@@ -25,7 +25,7 @@
         = link_to vehicles_path(filter: {usage_type: 'loaner'}) do
           %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('loaner')}"}
             = "SrvLn: #{grouped['loaner']&.count || 0}"
-            
+
         = link_to vehicles_path(filter: {usage_type: 'wholesale_unit'}) do
           %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('wholesale_unit')}"}
             = "Trd/Whl: #{grouped['wholesale_unit']&.count || 0}"
@@ -34,7 +34,7 @@
     %table.table.table-bordered.table-striped.table-sm
       %thead
         %tr
-          %th 
+          %th
             = link_to vehicles_path(filter:{model: params.dig(:filter,:model)}, sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}) do
               Stock #
               - if params.dig(:sortings, :stock_number) == "asc"
@@ -70,7 +70,7 @@
               - else
                 %i.fa.fa-sort-down
 
-          
+
       %tbody.small
         - @filtered_vehicles.each do |vehicle|
           %tr{id: dom_id(vehicle)}
@@ -112,14 +112,14 @@
                 %strong
                   = vehicle.service_hold_notes&.truncate(15)
 
-              - if vehicle.sold?                
+              - if vehicle.sold?
                 = vehicle.sold_status
             %th
 
               - if vehicle.data_feed_created?
-                = vehicle.age_in_days   
+                = vehicle.age_in_days
               - else
                 = (DateTime.current.to_date - vehicle.created_at.to_date).to_i
               days
-           
+
     = link_to "Add New Vehicle", new_vehicle_path, class: 'btn btn-small btn-primary'
