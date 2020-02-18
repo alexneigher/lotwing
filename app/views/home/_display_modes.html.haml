@@ -21,5 +21,6 @@
     = link_to lot_view_path(display_mode: :age_60_days_old) do
       %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'age_60_days_old' ? 'btn-primary':'btn-outline-primary')} 60+ days old (U)
 
-    = link_to lot_view_path(display_mode: :no_movement_14_days) do
-      %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_movement_14_days' ? 'btn-primary':'btn-outline-primary')} No movement 14 days
+    =# todo fix this
+    =# link_to lot_view_path(display_mode: :no_movement_14_days) do
+    =# %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_movement_14_days' ? 'btn-primary':'btn-outline-primary')} No movement 14 days
