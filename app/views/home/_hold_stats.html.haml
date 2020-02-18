@@ -5,16 +5,16 @@
 
 - @vehicles_with_sales_holds.each do |vehicle|
   %div.mb-2.small
-    %span.text-orange.map-overlay-trigger.cursor-pointer{data: {shape_id: vehicle.parking_space&.id}}
+    = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
       = "(#{vehicle.stock_number})"
     = vehicle.sales_hold_creator
 
     %span.text-danger.small
       -if vehicle.sales_hold_created_at
         - time_diff = Time.now - vehicle.sales_hold_created_at.in_time_zone("Pacific Time (US & Canada)")
-        - mm, ss = time_diff.divmod(60) 
+        - mm, ss = time_diff.divmod(60)
         - hh, mm = mm.divmod(60)
-        - dd, hh = hh.divmod(24)        
+        - dd, hh = hh.divmod(24)
         = "#{pluralize(dd, 'day')} #{pluralize(hh, 'hour')}"
 .mt-3
   %strong{style:'margin-bottom:-2px;'} Service Holds
@@ -24,21 +24,21 @@
 
 - @vehicles_with_service_holds.each do |vehicle|
   %div.mb-2.small
-    %span.text-orange.map-overlay-trigger.cursor-pointer{data: {shape_id: vehicle.parking_space&.id}}
+    = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
       = "(#{vehicle.stock_number})"
     = vehicle.service_hold_creator
 
     %span.text-danger.small
       -if vehicle.service_hold_created_at
         - time_diff = Time.now - vehicle.service_hold_created_at.in_time_zone("Pacific Time (US & Canada)")
-        - mm, ss = time_diff.divmod(60) 
+        - mm, ss = time_diff.divmod(60)
         - hh, mm = mm.divmod(60)
-        - dd, hh = hh.divmod(24)        
+        - dd, hh = hh.divmod(24)
         = "#{pluralize(dd, 'day')}, #{pluralize(hh, 'hour')}"
     %span
       - if vehicle.data_feed_created?
-        - count = vehicle.age_in_days   
+        - count = vehicle.age_in_days
       - else
         - count = (DateTime.current.to_date - vehicle.created_at.to_date).to_i
-      
+
       = pluralize(count, "day")

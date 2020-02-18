@@ -5,7 +5,7 @@
     %a.nav-link{"data-toggle" => "tab", :href => "#last_day", :role => "tab"} Last 24 Hours
   %li.nav-item
     %a.nav-link{"data-toggle" => "tab", :href => "#users", :role => "tab"} Users
-  
+
 / Tab panes
 .tab-content.mt-3
   #today.tab-pane.in.active{:role => "tabpanel"}
@@ -24,7 +24,7 @@
             = "#{user.full_name} (#{events.count})"
             - if event_type == "test_drive"
               - events.each do |event|
-                = link_to vehicle_path(event.tag.vehicle) do
+                = link_to vehicle_show_info_modal_path(event.tag.vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
                   = "(#{event.tag.vehicle.stock_number})"
             %br
   #last_day.tab-pane{:role => "tabpanel"}
@@ -44,7 +44,7 @@
             = "#{user.full_name} (#{events.count})"
             - if event_type == "test_drive"
               - events.each do |event|
-                = link_to vehicle_path(event.tag.vehicle) do
+                = link_to vehicle_show_info_modal_path(event.tag.vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
                   = "(#{event.tag.vehicle.stock_number}) "
             %br
   #users.tab-pane{:role => "tabpanel"}
@@ -71,19 +71,19 @@
     - vehicles.sort_by{|v| v.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last.started_at}.each do |vehicle|
       - next unless vehicle
       - event = vehicle.events.where('event_type': ['test_drive' ,'fuel_vehicle']).last
-      .small 
+      .small
         = event.user.full_name
-        = link_to vehicle_path(vehicle), target: "_blank" do
+        = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
           (#{vehicle.stock_number})
         #{event.event_type.humanize} #{event.started_at.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%Y at %l:%M %p')}
-        
+
         - time_diff = Time.now - event.started_at.in_time_zone("Pacific Time (US & Canada)")
-          
-        - mm, ss = time_diff.divmod(60) 
+
+        - mm, ss = time_diff.divmod(60)
         - hh, mm = mm.divmod(60)
         - dd, hh = hh.divmod(24)
         %span{class: ('text-danger' if dd >= 2 )}
-          
+
           = "#{pluralize(dd, 'day')}, #{pluralize(hh, 'hour')}"
 
 

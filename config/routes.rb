@@ -121,6 +121,7 @@ Rails.application.routes.draw do
 
   resources :vehicles do
     get :show_map
+    get :show_info_modal
     get :print_hold_tag
     get :print_service_hold_tag
     collection do

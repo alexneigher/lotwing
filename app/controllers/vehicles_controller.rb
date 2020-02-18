@@ -65,6 +65,13 @@ class VehiclesController < ApplicationController
     @all_vehicles = all_vehicles
   end
 
+  def show_info_modal
+    @vehicle = current_user.dealership.vehicles.includes(:tags).find(params[:vehicle_id])
+    @events = @vehicle.events.includes(:user, :resolutions)
+    @context = "lot_view"
+  end
+
+
   #used to toggle the map modal only
   def show_map
     @vehicle = Vehicle.find(params[:vehicle_id])
