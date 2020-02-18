@@ -17,10 +17,10 @@
   %div{id:"more-display-modes", class: ('collapse' unless params.dig(:display_mode).in?(['age_90_days_old','age_60_days_old','no_movement_14_days']) ) }
     .pt-1
       = link_to lot_view_path(display_mode: :age_90_days_old) do
-        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'age_90_days_old' ? 'btn-primary':'btn-outline-primary')} 90+ days old
+        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'age_90_days_old' ? 'btn-primary':'btn-outline-primary')} 90+ days old (N)
 
       = link_to lot_view_path(display_mode: :age_60_days_old) do
-        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'age_60_days_old' ? 'btn-primary':'btn-outline-primary')} 60+ days old (N)
+        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'age_60_days_old' ? 'btn-primary':'btn-outline-primary')} 60+ days old (U)
 
       = link_to lot_view_path(display_mode: :no_movement_14_days) do
-        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_movement_14_days' ? 'btn-primary':'btn-outline-primary')} No movement 14 days (U)
+        %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_movement_14_days' ? 'btn-primary':'btn-outline-primary')} No movement 14 days
