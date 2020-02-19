@@ -48,6 +48,7 @@ Rails.application.routes.draw do
         get :parking_lots
         get :buildings
         get :parking_spaces
+        get :landscaping
       end
     end
     resources :tags, only: :create
