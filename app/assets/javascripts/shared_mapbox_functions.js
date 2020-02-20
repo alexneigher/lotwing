@@ -107,7 +107,7 @@ function map_shape_type_to_color(shape_type) {
                 'parking_spaces': '#FFFFFF',
                 "parking_lots": '#CCCCCC',
                 "buildings": '#FF9933',
-                "landscaping": "#067C3E"
+                "landscaping": "#D2F7DC"
               }
 
   return hash[shape_type]
