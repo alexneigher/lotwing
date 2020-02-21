@@ -43,7 +43,6 @@ function set_zoom(){
 }
 
 function add_shapes_to_map(data, map, shape_type){
-  console.log(shape_type);
   features = data[shape_type]
   if (!features){
     return false;
@@ -55,6 +54,10 @@ function add_shapes_to_map(data, map, shape_type){
     features[i].geo_info.properties.shape_id = features[i].id
 
     features[i].geo_info.properties.fill_opacity = shape_opacity(features[i].most_recently_tagged_at, features[i].temporary, shape_type);
+
+    features[i].geo_info.properties.fill_color = shape_color(features[i].most_recently_tagged_at, shape_type);
+
+    console.log(features[i].geo_info.properties);
 
     geo_info.push(features[i].geo_info)
   }
@@ -71,7 +74,7 @@ function add_shapes_to_map(data, map, shape_type){
     },
     'layout': {},
     'paint': {
-        'fill-color': map_shape_type_to_color(shape_type),
+        'fill-color': ['get', 'fill_color'],
         'fill-opacity': ['get', 'fill_opacity']
     }
   });
@@ -94,33 +97,6 @@ function smooth_borders(source_name){
   });
 }
 
-function map_shape_type_to_color(shape_type) {
-  var hash  = {
-                "new_vehicle_occupied_spaces": "#006699",
-                "used_vehicle_occupied_spaces": "#66CC00",
-                'empty_parking_spaces': '#FFFFFF',
-                "duplicate_parked_spaces": "#ff0000",
-                "loaner_occupied_spaces": "#E8F051",
-                "lease_return_occupied_spaces": "#D13CEA",
-                "wholesale_unit_occupied_spaces": "#8D8C88",
-                "sold_vehicle_spaces": "#000",
-                'parking_spaces': '#FFFFFF',
-                "parking_lots": '#CCCCCC',
-                "buildings": '#FF9933',
-                "landscaping": "#D2F7DC"
-              }
-
-  return hash[shape_type]
-}
-
-
-function map_shape_type_to_opacity(shape_type){
-  if (shape_type == 'parking_lots'){
-    return 0.4
-  }else{
-    return 1
-  }
-}
 
 function add_shape_overlay_icons(data, map, event_type){
   var geo_json_array = []
@@ -197,31 +173,43 @@ function map_event_type_to_size(event_type){
 }
 
 function shape_opacity(most_recently_tagged_at, temporary, shape_type){
-  vehicle_shapes = ["used_vehicle_occupied_spaces", "new_vehicle_occupied_spaces", "loaner_occupied_spaces", "lease_return_occupied_spaces", "wholesale_unit_occupied_spaces"]
 
-  if (shape_type == 'parking_lots'){
-    return 0.4
-  }else if(vehicle_shapes.includes(shape_type)){
-
-    // for parking spaces that are more than 12 hours old, make them transparent
-    hours_old = Math.abs(new Date() - new Date(most_recently_tagged_at)) / 36e5
-
-    if (hours_old > 24){
-      return 0.4
-    }else{
-      return 1
-    }
-
-  } else if ((shape_type == "empty_parking_spaces" || shape_type == "parking_spaces") && temporary == true){
+  if ((shape_type == "empty_parking_spaces" || shape_type == "parking_spaces") && temporary == true){
     //the or here is for only empty spaces, or if in map builder, all spaces
     return 0.00
   }else{
+
     return 1
   }
 
 
 }
 
+function shape_color(most_recently_tagged_at, shape_type){
+  var stale = 0
+  var hours_old = Math.abs(new Date() - new Date(most_recently_tagged_at)) / 36e5
+
+  if (hours_old > 24){
+    stale = 1
+  }
+
+  var hash = {
+                "new_vehicle_occupied_spaces": {0: "#376794", 1: "#9CB6C6"},
+                "used_vehicle_occupied_spaces": {0: "#90C055", 1: "#C5DB9D"},
+                'empty_parking_spaces': {0: "#fff", 1: "#fff"},
+                "duplicate_parked_spaces": {0: "#ff000", 1: "#ff000"},
+                "loaner_occupied_spaces": {0: "#E6E570", 1: "#EBECB4"},
+                "lease_return_occupied_spaces": {0: "#9A5C9D", 1: "#C893BC"},
+                "wholesale_unit_occupied_spaces": {0: "#8D8C88", 1: "#C4C2C2"},
+                "sold_vehicle_spaces": {0: "#000", 1: "#000"},
+                'parking_spaces': {0: "#fff", 1: "#fff"},
+                "parking_lots": {0: "#EBEBEB", 1: "#EBEBEB"},
+                "buildings": {0: "#F29836", 1: "#F29836"},
+                "landscaping": {0: "#067C3E", 1: "#067C3E"}
+              }
+
+  return hash[shape_type][stale]
+}
 
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
