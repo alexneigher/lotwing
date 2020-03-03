@@ -48,7 +48,7 @@ module WebApi
       maybe_filter_by_no_test_drives
       maybe_filter_by_older_than_90_days
       maybe_filter_by_older_than_60_days
-      maybe_filter_by_older_than_14_days
+      maybe_filter_by_no_movement_14_days
 
       all_vehicle_spaces  = [@new_vehicle_occupied_space + @used_vehicle_occupied_space + @loaner_occupied_spaces + @lease_return_occupied_spaces +@wholesale_unit_occupied_spaces + @sold_vehicle_spaces + @service_hold_spaces + @sales_hold_spaces].flatten
 
@@ -106,17 +106,19 @@ module WebApi
         @service_hold_spaces = []
       end
 
-      def maybe_filter_by_older_than_14_days
+      def maybe_filter_by_no_movement_14_days
         return unless params.dig(:display_mode) == "no_movement_14_days"
 
-        @new_vehicle_occupied_space = @new_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
+        recent_change_stall_vehicle_ids = current_user.dealership.events.joins(:tag).where(event_type: 'change_stall').where("events.created_at >= ?", 14.days.ago).pluck(:vehicle_id)
 
-        @used_vehicle_occupied_space = @used_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
-        @loaner_occupied_spaces = @loaner_occupied_spaces.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
-        @lease_return_occupied_spaces = @lease_return_occupied_spaces.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
-        @wholesale_unit_occupied_spaces = @wholesale_unit_occupied_spaces.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
-        @sold_vehicle_spaces = @sold_vehicle_spaces.where('shapes.most_recently_tagged_at <= ?', 14.days.ago)
-        @duplicate_shape_ids = @parking_spaces.includes(:tags).where('shapes.most_recently_tagged_at <= ?', 14.days.ago).where(tags: {active: true}).select{|p| p.tags.length > 1}
+        @new_vehicle_occupied_space = @new_vehicle_occupied_space.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
+        @used_vehicle_occupied_space = @used_vehicle_occupied_space.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
+        @loaner_occupied_spaces = @loaner_occupied_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
+        @lease_return_occupied_spaces = @lease_return_occupied_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
+        @wholesale_unit_occupied_spaces = @wholesale_unit_occupied_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
+        @sold_vehicle_spaces = @sold_vehicle_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
+
+        @duplicate_shape_ids = []
         @sales_hold_spaces = []
         @service_hold_spaces = []
       end
