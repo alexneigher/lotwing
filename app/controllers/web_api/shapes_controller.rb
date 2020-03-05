@@ -111,12 +111,12 @@ module WebApi
 
         recent_change_stall_vehicle_ids = current_user.dealership.events.joins(:tag).where(event_type: 'change_stall').where("events.created_at >= ?", 14.days.ago).pluck(:vehicle_id)
 
-        @new_vehicle_occupied_space = @new_vehicle_occupied_space.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
-        @used_vehicle_occupied_space = @used_vehicle_occupied_space.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
-        @loaner_occupied_spaces = @loaner_occupied_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
-        @lease_return_occupied_spaces = @lease_return_occupied_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
-        @wholesale_unit_occupied_spaces = @wholesale_unit_occupied_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
-        @sold_vehicle_spaces = @sold_vehicle_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids})
+        @new_vehicle_occupied_space = @new_vehicle_occupied_space.where.not(vehicles: {id: recent_change_stall_vehicle_ids}).where("vehicles.created_at < ?", 14.days.ago)
+        @used_vehicle_occupied_space = @used_vehicle_occupied_space.where.not(vehicles: {id: recent_change_stall_vehicle_ids}).where("vehicles.created_at < ?", 14.days.ago)
+        @loaner_occupied_spaces = @loaner_occupied_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids}).where("vehicles.created_at < ?", 14.days.ago)
+        @lease_return_occupied_spaces = @lease_return_occupied_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids}).where("vehicles.created_at < ?", 14.days.ago)
+        @wholesale_unit_occupied_spaces = @wholesale_unit_occupied_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids}).where("vehicles.created_at < ?", 14.days.ago)
+        @sold_vehicle_spaces = @sold_vehicle_spaces.where.not(vehicles: {id: recent_change_stall_vehicle_ids}).where("vehicles.created_at < ?", 14.days.ago)
 
         @duplicate_shape_ids = []
         @sales_hold_spaces = []
