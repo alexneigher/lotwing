@@ -11,8 +11,8 @@ module WebApi
     end
 
     def note_events
-      return [] if ["hold_vehicles", "no_tag_4_days", "no_test_drives"].include?(params[:display_mode])
-      
+      return [] if ["hold_vehicles", "no_tag_4_days", "no_test_drives", "no_movement_14_days", "age_90_days_old", "age_60_days_old"].include?(params[:display_mode])
+
       @note_events = current_user.dealership.events.includes(tag: :shape).where(event_type: "note", acknowledged: :false).where(tags: {active: :true})
 
       return @note_events.map{|e| EventSerializer.new(e).serialized_json}

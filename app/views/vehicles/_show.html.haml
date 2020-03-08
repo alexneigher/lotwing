@@ -6,6 +6,16 @@
         = "#{@vehicle.make} #{@vehicle.model} (#{@vehicle.stock_number}) History"
         %br
         %strong= @vehicle.vin
+
+        .small
+          %strong
+            Age
+            - if @vehicle.data_feed_created?
+              - count = @vehicle.age_in_days
+            - else
+              - count = (DateTime.current.to_date - @vehicle.created_at.to_date).to_i
+
+            = "#{count} days"
       .col-3
         - if @vehicle.open_service_tickets.any?
           = link_to service_tickets_path(search: {stock_number: @vehicle.stock_number}) do
@@ -30,7 +40,7 @@
         %a.small{"data-target" => "#createServiceTicketModal_#{dom_id(@vehicle)}", "data-toggle" => "modal", :type => "link", href: ''}
           Create service ticket
         %br
-        = link_to "Hold options", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#holdsContainer_#{dom_id(@vehicle)}", "data-toggle" => "collapse" 
+        = link_to "Hold options", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#holdsContainer_#{dom_id(@vehicle)}", "data-toggle" => "collapse"
     %hr.m00
     = form_for @vehicle, url: vehicle_path(@vehicle), method: :put do |f|
       - if current_user.permission_level.in? ["admin", "sales_manager"]
@@ -40,8 +50,8 @@
             .collapse{id: "stockNumberContainer_#{dom_id(@vehicle)}"}
               %label Stock Number
               = f.text_field :stock_number, class: 'form-control form-control-sm'
-          
-      .row.mb-3              
+
+      .row.mb-3
         .col-2
           %label.small.mb-0 Year
           = f.text_field :year, placeholder: 'Year', class: 'form-control form-control-sm'
@@ -84,12 +94,12 @@
                   %img.mx-auto.d-block.mt-4{src: "/triangle-24.png"}
                 .col-4.text-right
                   = link_to "Print Service Hold Tag", vehicle_print_service_hold_tag_path(@vehicle, format: :pdf), target: "_blank", class: 'btn btn-sm btn-outline-primary mt-4'
-    
+
     = render partial: 'vehicles/partials/show_recent_events'
-    
+
     %hr.mt-0
     - grouped_events = @events.group_by(&:event_type)
-    
+
     %ul.nav.nav-tabs.mt-0{:role => "tablist"}
 
       - grouped_events.keys.each_with_index do |key, i|
@@ -97,8 +107,8 @@
           %a.nav-link{"data-toggle" => "tab", :href => "##{key}_#{dom_id(@vehicle)}", :role => "tab", class: ('active' if i == 0)}
             = "#{key.titleize} (#{grouped_events[key].count})"
     .tab-content.mt-3
-      - grouped_events.each do |k, events|   
-        .tab-pane{:role => "tabpanel", id: "#{k}_#{dom_id(@vehicle)}", class: ('active in' if grouped_events.first[0] == k).to_s }   
+      - grouped_events.each do |k, events|
+        .tab-pane{:role => "tabpanel", id: "#{k}_#{dom_id(@vehicle)}", class: ('active in' if grouped_events.first[0] == k).to_s }
           %table.table.table-bordered.table-striped.table-sm.mb-0
             %tbody
               - events.sort_by{|s| s.created_at}.reverse.each do |event|
@@ -151,22 +161,22 @@
                                       %label Miles
                                       = f.text_field :mileage, value: @vehicle.mileage, class: 'form-control'
 
-                                    
+
                                 .form-group
                                   .row
                                     .col-6
                                       %label Complete By
                                       = f.text_field :complete_by_datetime, value: (@service_ticket&.complete_by_datetime || DateTime.current).in_time_zone("Pacific Time (US & Canada)").strftime("%d %B %Y %l:%M %p %Z"), class: 'form-control'
-                                      
+
                                     .col-6
                                       %label Job Title
                                       = text_area_tag "service_ticket_job[title]", event&.event_details, class: 'form-control'
                                       = hidden_field_tag 'service_ticket_job[user_id]', current_user.id
-                             
+
                               .modal-footer
                                 = f.submit "Create Service Ticket", class: 'btn btn-primary'
 
-                      
+
                   %td
                     - event.resolutions.each do |resolution|
                       %div.py-1
@@ -239,7 +249,7 @@
                 %label Miles
                 = f.text_field :mileage, value: @vehicle.mileage, class: 'form-control'
 
-              
+
           .form-group
             .row
               .col-6
@@ -249,7 +259,7 @@
                 %label Job Title
                 = text_area_tag "service_ticket_job[title]",nil, class: 'form-control'
                 = hidden_field_tag 'service_ticket_job[user_id]', current_user.id
-       
+
         .modal-footer
           = f.submit "Create Service Ticket", class: 'btn btn-primary'
 

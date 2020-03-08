@@ -3,7 +3,7 @@
 .container
   .row
     .col-12
-      - if flash[:error].present? 
+      - if flash[:error].present?
         .alert.alert-danger
           = flash[:error]
   = form_for :dealer_trade, url: dealer_trades_path, method: :post do |f|
@@ -54,8 +54,8 @@
           .col-md-6
             = f.text_field :date_created, value: DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date.strftime("%m/%d/%Y"), class: 'form-control'
           .col-md-6
-            = f.text_field :time_created, value: Time.now.in_time_zone("Pacific Time (US & Canada)").strftime("%I:%M %p"), class: 'form-control' 
-        = f.select :desk_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name)), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
+            = f.text_field :time_created, value: Time.now.in_time_zone("Pacific Time (US & Canada)").strftime("%I:%M %p"), class: 'form-control'
+        = f.select :desk_manager, options_for_select(current_user.dealership.users.active.sales_manager.pluck(:full_name)), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
     .row
       .col-12.mb-4
         .card.border-dark
@@ -82,29 +82,29 @@
 
               .col-md-2
                 = f.text_field :model, placeholder: 'Model', class: 'form-control'
-                
+
               .col-md-5.delivered-invoice-inputs
                 .row.no-gutters
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong Invoice
                   .col-6
                     = f.text_field :delivered_invoice, placeholder: 'Delivered Invoice', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong + Accessories
                   .col-6
                     = f.text_field :plus_deliver_acc, placeholder: 'Plus Deliver Acc', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong - Dealer Rebate
                   .col-6
                     = f.text_field :less_rebate_1, placeholder: 'Less Rebate 1', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong Vehicle Delivered Total
                   .col-6
                     = f.text_field :delivered_total, placeholder: 'Delivered Total', class: 'form-control'
@@ -134,44 +134,44 @@
               .col-md-5.received-invoice-inputs
                 .row.no-gutters
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong Invoice
                   .col-6
                     = f.text_field :received_invoice, placeholder: 'Received Invoice', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong + Accessories
                   .col-6
                     = f.text_field :received_acc, placeholder: 'Received Acc', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong - Dealer Rebate
                   .col-6
                     = f.text_field :received_rebate, placeholder: 'Received Rebate', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong Vehicle Delivered Total
                   .col-6
                     = f.text_field :received_sum, placeholder: 'Received (Sum)', class: 'form-control'
     .row.mt-2
       .col-4
-        History 
+        History
         %strong X
         Trades
       .col-4
         .row.no-gutters
           .col-6.text-right
-            %div.pt-2.pr-1 
+            %div.pt-2.pr-1
               %strong Payment
           .col-6
             = f.text_field :trade_payment_type, placeholder: 'Trade Payment Type', class: 'form-control'
       .col-4
         .row.no-gutters
           .col-4.text-right
-            %div.pt-2.pr-1 
+            %div.pt-2.pr-1
               %strong Difference
           .col-8
             = f.text_field :trade_difference, placeholder: 'Trade Difference', class: 'form-control'
@@ -184,7 +184,7 @@
             .modal-content
               .modal-body
                 Is this vehicle leaving the lot today?
-                
+
               .modal-footer
                 = f.button 'No, place sales <br>hold on vehicle.'.html_safe, name: 'create_with_hold', value: "create_with_hold", class: 'btn bg-orange text-white mr-auto', style: 'font-size:12px; line-height:13px;'
 
@@ -208,7 +208,7 @@
     function doneTypingStockNumber () {
       if ($stock_number_input.val()){
         $('.loading-spin').removeClass('d-none');
-        
+
         $.ajax({
           url:"/dealer_trades/stock_number_search",
           method: 'PUT',
@@ -227,7 +227,7 @@
     function doneTypingTradeDealer(el) {
       if (el.val()){
         $('.loading-spin-trade-dealer').removeClass('d-none');
-        
+
         $.ajax({
           url:"/dealer_trades/previous_trade_search",
           method: 'PUT',

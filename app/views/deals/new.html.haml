@@ -17,8 +17,8 @@
           %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin{style:'position:absolute;right:10px;top:11px;'}
           = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control mb-1'
         = f.text_field :trade, placeholder: 'Trade', class: 'form-control mb-1'
-        = f.select :sales_rep_id, options_for_select(current_user.dealership.users.sales_rep.pluck(:full_name, :id)), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
-        = f.select :split_rep_id, options_for_select(current_user.dealership.users.sales_rep.pluck(:full_name, :id)), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
+        = f.select :sales_rep_id, options_for_select(current_user.dealership.users.active.sales_rep.pluck(:full_name, :id)), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
+        = f.select :split_rep_id, options_for_select(current_user.dealership.users.active.sales_rep.pluck(:full_name, :id)), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
         = f.text_field :city, placeholder: 'City', class: 'form-control mb-1'
       .col-md-2
         = f.text_field :make, placeholder: 'Make', class: 'form-control mb-1'
@@ -55,8 +55,8 @@
         = f.text_field :miles_per_year, placeholder: 'Miles Per Year (LSE)', class: 'form-control mb-1'
         = f.text_area :rebates, placeholder: 'Rebates', class: 'form-control mb-1', rows: 3
         = f.text_area :bulletin_number, placeholder: 'Bulletin Number', class: 'form-control mb-1', rows: 3
-        = f.select :desk_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name)), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
-        = f.select :finance_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name)), {include_blank: 'Finance Manager'}, class: 'form-control mb-1'
+        = f.select :desk_manager, options_for_select(current_user.dealership.users.active.sales_manager.pluck(:full_name)), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
+        = f.select :finance_manager, options_for_select(current_user.dealership.users.active.sales_manager.pluck(:full_name)), {include_blank: 'Finance Manager'}, class: 'form-control mb-1'
         %label
           = f.check_box :dealer_demo
           Dealer Demo
@@ -86,7 +86,7 @@
             .modal-content
               .modal-body
                 Is this vehicle leaving the lot today?
-                
+
               .modal-footer
                 = f.button 'No, place sales <br>hold on vehicle.'.html_safe, name: 'create_with_hold', value: "create_with_hold", class: 'btn bg-orange text-white mr-auto', style: 'font-size:12px; line-height:13px;'
 
@@ -112,7 +112,7 @@
     function doneTyping () {
       if ($input.val()){
         $('.loading-spin').removeClass('d-none');
-        
+
         $.ajax({
           url:"/deals/stock_number_search",
           method: 'PUT',

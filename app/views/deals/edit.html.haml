@@ -5,12 +5,12 @@
       .col-8
         %h3 Board Manager - Editing #{@deal.client_last_name}
       .col-4.text-right
-      
+
         %span{ onclick: 'setTimeout(function(){document.location.href = "/board-manager"}, 0)' }
           = f.submit 'Print Cover Sheet', class: 'btn btn-sm btn-secondary mt-2', :formtarget => "_blank"
         %br
         = link_to "Print Sold Sheet", deal_print_sold_sheet_path(@deal, format: :pdf), target: "_blank", class: 'btn btn-sm btn-secondary mt-2'
-        
+
     .row.mt-4
       .col-md-2
         - unless current_user.permission_level == "sales_rep"
@@ -19,12 +19,12 @@
         = f.text_field :source, placeholder: 'Source', class: 'form-control mb-1'
         = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control mb-1'
         = f.text_field :trade, placeholder: 'Trade', class: 'form-control mb-1'
-        = f.select :sales_rep_id, options_for_select(current_user.dealership.users.sales_rep.pluck(:full_name, :id), @deal.sales_rep_id), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
-        = f.select :split_rep_id, options_for_select(current_user.dealership.users.sales_rep.pluck(:full_name, :id), @deal.split_rep_id), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
+        = f.select :sales_rep_id, options_for_select(current_user.dealership.users.active.sales_rep.pluck(:full_name, :id), @deal.sales_rep_id), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
+        = f.select :split_rep_id, options_for_select(current_user.dealership.users.active.sales_rep.pluck(:full_name, :id), @deal.split_rep_id), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
         = f.text_field :city, placeholder: 'City', class: 'form-control mb-1'
 
         %a{"data-target" => "#historyModal", "data-toggle" => "modal", :href => "#"} Show History
-        
+
 
         / The Modal
         #historyModal.modal
@@ -46,8 +46,8 @@
                       - next if key == "updated_at"
                       changed
                       %strong= key
-                      to 
-                      = value[1] 
+                      to
+                      = value[1]
                   %hr
               .modal-footer
                 %button.btn.btn-outline-secondary{"data-dismiss" => "modal", :type => "button"} Close
@@ -82,8 +82,8 @@
         = f.text_field :miles_per_year, placeholder: 'Miles Per Year (LSE)', class: 'form-control mb-1'
         = f.text_area :rebates, placeholder: 'Rebates', class: 'form-control mb-1', rows: 3
         = f.text_area :bulletin_number, placeholder: 'Bulletin Number', class: 'form-control mb-1', rows: 3
-        = f.select :desk_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name), @deal.desk_manager), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
-        = f.select :finance_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name), @deal.finance_manager), {include_blank: 'Finance Manager'}, class: 'form-control mb-1'
+        = f.select :desk_manager, options_for_select(current_user.dealership.users.active.sales_manager.pluck(:full_name), @deal.desk_manager), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
+        = f.select :finance_manager, options_for_select(current_user.dealership.users.active.sales_manager.pluck(:full_name), @deal.finance_manager), {include_blank: 'Finance Manager'}, class: 'form-control mb-1'
         %label
           = f.check_box :dealer_demo
           Dealer Demo
@@ -110,7 +110,7 @@
       .col-md-4
         - unless current_user.permission_level == 'sales_rep'
           = link_to 'Delete deal', deal_path(@deal), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger'
-          
+
       .col-md-6.text-center
         %a.btn.btn-primary.mx-2{"data-target" => "#dealCreateModal", "data-toggle" => "modal", :href => "#"} Update
         #dealCreateModal.modal
@@ -118,7 +118,7 @@
             .modal-content
               .modal-body
                 Is this vehicle leaving the lot today?
-                
+
               .modal-footer
                 = f.button 'No, place sales <br>hold on vehicle.'.html_safe, name: 'create_with_hold', value: "create_with_hold", class: 'btn bg-orange text-white mr-auto', style: 'font-size:12px; line-height:13px;'
 

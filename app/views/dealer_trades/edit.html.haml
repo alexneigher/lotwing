@@ -39,15 +39,15 @@
             = f.submit 'Print Trade Sheet', formtarget: "_blank", class: 'btn btn-sm btn-secondary'
 
           .col-12.text-right
-            
+
             = link_to "Print Sold Trade Sheet", dealer_trade_print_dealer_trade_sheet_path(@dealer_trade, format: :pdf), target: "_blank", class: 'btn btn-sm btn-secondary mt-2'
 
         .row.mb-4.no-gutters
           .col-md-6
             = f.text_field :date_created, class: 'form-control'
           .col-md-6
-            = f.text_field :time_created, value: Time.now.strftime("%I:%M %p"), class: 'form-control' 
-        = f.select :desk_manager, options_for_select(current_user.dealership.users.sales_manager.pluck(:full_name), @dealer_trade.desk_manager), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
+            = f.text_field :time_created, value: Time.now.strftime("%I:%M %p"), class: 'form-control'
+        = f.select :desk_manager, options_for_select(current_user.dealership.users.active.sales_manager.pluck(:full_name), @dealer_trade.desk_manager), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
     .row
       .col-12.mb-4
         .card.border-dark
@@ -75,25 +75,25 @@
               .col-md-5.delivered-invoice-inputs
                 .row.no-gutters
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong Invoice
                   .col-6
                     = f.text_field :delivered_invoice, placeholder: 'Delivered Invoice', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong + Accessories
                   .col-6
                     = f.text_field :plus_deliver_acc, placeholder: 'Plus Deliver Acc', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong - Dealer Rebate
                   .col-6
                     = f.text_field :less_rebate_1, placeholder: 'Less Rebate 1', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong Vehicle Delivered Total
                   .col-6
                     = f.text_field :delivered_total, placeholder: 'Delivered Total', class: 'form-control'
@@ -125,44 +125,44 @@
               .col-md-5.received-invoice-inputs
                 .row.no-gutters
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong Invoice
                   .col-6
                     = f.text_field :received_invoice, placeholder: 'Received Invoice', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong + Accessories
                   .col-6
                     = f.text_field :received_acc, placeholder: 'Received Acc', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong - Dealer Rebate
                   .col-6
                     = f.text_field :received_rebate, placeholder: 'Received Rebate', class: 'form-control dynamic'
                 .row.no-gutters.my-3
                   .col-6.text-right
-                    %div.pt-2.pr-1 
+                    %div.pt-2.pr-1
                       %strong Vehicle Delivered Total
                   .col-6
                     = f.text_field :received_sum, placeholder: 'Received (Sum)', class: 'form-control'
     .row.mt-2
       .col-4
-        History 
+        History
         %strong= current_user.dealership.dealer_trades.where(trade_dealer_name: @dealer_trade.trade_dealer_name)&.count || 0
         Trades
       .col-4
         .row.no-gutters
           .col-6.text-right
-            %div.pt-2.pr-1 
+            %div.pt-2.pr-1
               %strong Payment
           .col-6
             = f.text_field :trade_payment_type, placeholder: 'Trade Payment Type', class: 'form-control'
       .col-4
         .row.no-gutters
           .col-4.text-right
-            %div.pt-2.pr-1 
+            %div.pt-2.pr-1
               %strong Difference
           .col-8
             = f.text_field :trade_difference, placeholder: 'Trade Difference', class: 'form-control'
@@ -170,7 +170,7 @@
     .row.my-5
       .col-4
         %a{"data-target" => "#historyModal", "data-toggle" => "modal", :href => "#"} Show History
-        
+
 
         / The Modal
         #historyModal.modal
@@ -192,8 +192,8 @@
                       - next if key == "updated_at"
                       changed
                       %strong= key
-                      to 
-                      = value[1] 
+                      to
+                      = value[1]
                   %hr
               .modal-footer
                 %button.btn.btn-outline-secondary{"data-dismiss" => "modal", :type => "button"} Close

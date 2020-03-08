@@ -7,7 +7,7 @@ class Home::UserActivityController < ApplicationController
 
     event_type_hash = @event_type ? {event_type: @event_type}:{}
 
-    all_dealership_users = current_user.dealership.users
+    all_dealership_users = current_user.dealership.users.active
 
     grouped_by_user_events = current_user
                               .dealership
@@ -31,7 +31,7 @@ class Home::UserActivityController < ApplicationController
     remaining_users.each do |u|
       hash[u] = {"1" => 0, "7" => 0, "mtd" => 0}
     end
-    
+
     @role_grouped_user_events = hash.group_by{ |u, event_counts| u.permission_level }
   end
 
