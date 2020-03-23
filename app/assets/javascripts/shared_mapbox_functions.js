@@ -57,8 +57,6 @@ function add_shapes_to_map(data, map, shape_type){
 
     features[i].geo_info.properties.fill_color = shape_color(features[i].most_recently_tagged_at, shape_type);
 
-    console.log(features[i].geo_info.properties);
-
     geo_info.push(features[i].geo_info)
   }
 

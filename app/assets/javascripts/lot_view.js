@@ -33,40 +33,49 @@ $(function(){
   map.on('click', 'sold_vehicle_spaces', open_popup);
 
   window.map.on('load', function () {
-    fetch_data_and_render('parking_lots');
-    fetch_data_and_render('buildings');
-    fetch_data_and_render('landscaping');
+    fetch_data_and_render('parking_lots')
+    setTimeout(function(){
+      fetch_data_and_render('buildings');
+    }, 200);
+
+    setTimeout(function(){
+      fetch_data_and_render('landscaping');
+    },400);
 
 
-    // fetch parking spaces
-    display_mode = getUrlParameter("display_mode") || '';
-    $.ajax({
-      url:"/web_api/shapes/parking_spaces?display_mode=" + display_mode,
-      dataType: "json",
-      success: function(data){
-        add_shapes_to_map(data, window.map, 'used_vehicle_occupied_spaces');
-        add_shapes_to_map(data, window.map, 'new_vehicle_occupied_spaces');
-        add_shapes_to_map(data, window.map, 'loaner_occupied_spaces');
-        add_shapes_to_map(data, window.map, 'lease_return_occupied_spaces');
-        add_shapes_to_map(data, window.map, 'wholesale_unit_occupied_spaces');
-        add_shapes_to_map(data, window.map, 'sold_vehicle_spaces');
-        add_shapes_to_map(data, window.map, 'empty_parking_spaces');
+    setTimeout(function(){
+      console.log('timeout')
+      // fetch parking spaces
+      display_mode = getUrlParameter("display_mode") || '';
+      $.ajax({
+        url:"/web_api/shapes/parking_spaces?display_mode=" + display_mode,
+        dataType: "json",
+        success: function(data){
+          add_shapes_to_map(data, window.map, 'used_vehicle_occupied_spaces');
+          add_shapes_to_map(data, window.map, 'new_vehicle_occupied_spaces');
+          add_shapes_to_map(data, window.map, 'loaner_occupied_spaces');
+          add_shapes_to_map(data, window.map, 'lease_return_occupied_spaces');
+          add_shapes_to_map(data, window.map, 'wholesale_unit_occupied_spaces');
+          add_shapes_to_map(data, window.map, 'sold_vehicle_spaces');
+          add_shapes_to_map(data, window.map, 'empty_parking_spaces');
 
-        // treat duplicate parkings similar to events
-        add_shape_overlay_icons(data, window.map, 'duplicate_parked_spaces');
+          // treat duplicate parkings similar to events
+          add_shape_overlay_icons(data, window.map, 'duplicate_parked_spaces');
 
-        // treat service holds parkings similar to events
-        add_shape_overlay_icons(data, window.map, 'service_hold_spaces');
+          // treat service holds parkings similar to events
+          add_shape_overlay_icons(data, window.map, 'service_hold_spaces');
 
-        // treat sales holds parkings similar to events
-        add_shape_overlay_icons(data, window.map, 'sales_hold_spaces');
+          // treat sales holds parkings similar to events
+          add_shape_overlay_icons(data, window.map, 'sales_hold_spaces');
 
-        fetch_events_and_render();
-      },
-      error: function (xhr) {
-        alert(xhr.statusText)
-      }
-    });
+          fetch_events_and_render();
+        },
+        error: function (xhr) {
+          alert(xhr.statusText)
+        }
+      }); //end ajax
+
+    },600);//end setTimeout
 
   });
 
