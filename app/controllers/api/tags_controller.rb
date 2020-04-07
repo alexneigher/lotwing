@@ -7,8 +7,25 @@ module Api
         render json: {status: 403, error: "This vehicle is currently on a test drive"} and return
       end
 
+      # before doing anything with the new event, check if it should be a change stall or a tag (if one of those type)
+      # tag is when they are the same
+      # change stall is when the new shape_id is different from the current shape id
+      true_event_type = event_params[:event_type]
+
+      if event_params[:event_type] == "change_stall" || event_params[:event_type] == 'tag'
+        if @vehicle.parking_space&.id&.to_s == tag_params[:shape_id]
+          # if the vehicle has been tagged in the same parking space, make sure this is just a tag event
+          true_event_type = 'tag'
+        else
+          # if it is different (or if the current parking space is unknown)
+          # this is a change stall
+          true_event_type = "change_stall"
+        end
+
+      end
+
       @vehicle.tags.update_all(active: false)
-      
+
       #if we are starting a test_drive or a fuel_vehicle, create an inactive tag which will remove it from the lot
       if event_params[:event_type] == 'test_drive' || event_params[:event_type] == 'fuel_vehicle'
         maybe_active_tag = { active: false }
@@ -25,7 +42,7 @@ module Api
       @tag.shape.update(most_recently_tagged_at: DateTime.current)
 
       # create a new event
-      event = @tag.events.create(event_params.merge(user_id: current_user.id))
+      event = @tag.events.create(event_params.merge(user_id: current_user.id, event_type: true_event_type))
 
 
       # do event type specific stuff
