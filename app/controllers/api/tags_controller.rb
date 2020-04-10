@@ -11,11 +11,12 @@ module Api
       # tag is when they are the same
       # change stall is when the new shape_id is different from the current shape id
       true_event_type = event_params[:event_type]
-
+      event_details = params[:event_details]
       if event_params[:event_type] == "change_stall" || event_params[:event_type] == 'tag'
         if @vehicle.parking_space&.id&.to_s == tag_params[:shape_id]
           # if the vehicle has been tagged in the same parking space, make sure this is just a tag event
           true_event_type = 'tag'
+          event_details = "Tagged vehicle in stall #{@vehicle.parking_space&.id}"
         else
           # if it is different (or if the current parking space is unknown)
           # this is a change stall
@@ -42,7 +43,7 @@ module Api
       @tag.shape.update(most_recently_tagged_at: DateTime.current)
 
       # create a new event
-      event = @tag.events.create(event_params.merge(user_id: current_user.id, event_type: true_event_type))
+      event = @tag.events.create(event_params.merge(user_id: current_user.id, event_type: true_event_type, event_details: event_details))
 
 
       # do event type specific stuff
