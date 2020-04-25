@@ -3,7 +3,7 @@
   :javascript
     $(function(){
       $.ajax({
-        url:"/vehicles/new_vehicle_groupings",
+        url:"/vehicles/new_vehicle_groupings?#{params.to_unsafe_h.to_query}",
         method: "get",
       });
     })
