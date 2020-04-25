@@ -16,6 +16,8 @@ gem 'pg', '~> 0.20'
 gem 'barby'
 gem 'chunky_png'
 
+gem 'kaminari'
+
 gem 'dalli'
 
 gem 'rack-cors', :require => 'rack/cors'
@@ -94,7 +96,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   gem "letter_opener"
-  
+
   #Rails >= 3 pry initializer
   gem 'pry-rails'
 

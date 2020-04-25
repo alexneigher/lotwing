@@ -1,0 +1,9 @@
+#inventory-count-container
+  %i.fa.fa-refresh.fa-spin
+  :javascript
+    $(function(){
+      $.ajax({
+        url:"/vehicles/inventory_count",
+        method: "get",
+      });
+    })

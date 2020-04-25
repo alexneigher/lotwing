@@ -3,30 +3,114 @@
 = javascript_include_tag('vehicle_manager')
 .container-fluid
   .row
-    - cache "#{current_user.dealership.id}/vehicles/index?#{params}" do
-      = render partial: 'vehicles/index'
+    .col-sm-6
+      = form_tag vehicles_path, class: 'form-inline', method: :get do
+        .form-group.w-100.mb-3
+          = text_field_tag "stock_number", params[:stock_number], class: 'form-control-sm form-control', placeholder: 'Search Stock #'
+          = submit_tag 'Search', class: 'btn btn-primary btn-sm ml-1'
+          .ml-auto
+            = render partial: 'vehicles/inventory_count_container'
+      .row
+        .col-12
+          .table-responsive.vehicle-table{style: 'max-height: 75vh;'}
+            %table.table.table-bordered.table-striped.table-sm
+              %thead
+                %tr
+                  %th
+                    = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}) do
+                      Stock #
+                      - if params.dig(:sortings, :stock_number) == "asc"
+                        %i.fa.fa-sort-up
+                      - else
+                        %i.fa.fa-sort-down
+                  %th
+                    = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {year: params.dig(:sortings, :year) == 'asc' ? "desc": "asc"}) do
+                      Year
+                      - if params.dig(:sortings, :year) == "asc"
+                        %i.fa.fa-sort-up
+                      - else
+                        %i.fa.fa-sort-down
+                  %th
+                    = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {make: params.dig(:sortings, :make) == 'asc' ? "desc": "asc"}) do
+                      Make
+                      - if params.dig(:sortings, :make) == "asc"
+                        %i.fa.fa-sort-up
+                      - else
+                        %i.fa.fa-sort-down
+                  %th
+                    = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {model: params.dig(:sortings, :model) == 'asc' ? "desc": "asc"}) do
+                      Model
+                      - if params.dig(:sortings, :model) == "asc"
+                        %i.fa.fa-sort-up
+                      - else
+                        %i.fa.fa-sort-down
+                  %th
+                    = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {age_in_days: params.dig(:sortings, :age_in_days) == 'asc' ? "desc": "asc"}) do
+                      Age
+                      - if params.dig(:sortings, :age_in_days) == "asc"
+                        %i.fa.fa-sort-up
+                      - else
+                        %i.fa.fa-sort-down
+              %tbody.small
+                - @vehicles.each do |vehicle|
+                  %tr{id: dom_id(vehicle)}
+                    - if vehicle.current_parking_tag.present?
+                      %td{style: "background-color: #{vehicle_usage_type_bg_color(vehicle.usage_type)}" }
+                        = link_to vehicle_show_map_path(vehicle), remote: true do
+                          = vehicle.stock_number
+                    - else
+                      %td
+                        = vehicle.stock_number
+                        - if vehicle.is_currently_on_test_drive?
+                          .pull-right
+                            %i.fa.fa-car
+                            =" ~> "
+                    %td
+                      = vehicle.year
+                    %td
+                      = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
+                        = vehicle.make
+                    %td
+                      = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
+                        = vehicle.model
+                        - if vehicle.user_created?
+                          (User Created)
+                      %br
+                      - if vehicle.open_service_tickets.any?
+                        = link_to service_tickets_path(search: {stock_number: vehicle.stock_number}) do
+                          .text-danger.text-underline
+                            (Open Service Tickets)
+                      - if vehicle.sales_hold?
+                        Sales Hold
+                        %strong
+                          = vehicle.sales_hold_notes&.truncate(15)
 
+                      - if vehicle.service_hold?
+                        Service Hold
+                        %strong
+                          = vehicle.service_hold_notes&.truncate(15)
+
+                      - if vehicle.sold?
+                        = vehicle.sold_status
+
+
+                    %td
+                      - if vehicle.data_feed_created?
+                        = vehicle.age_in_days
+                      - else
+                        = (DateTime.current.to_date - vehicle.created_at.to_date).to_i
+                      days
+
+            = paginate @vehicles
+
+
+    -#---- RIGHT SIDE STARTS HERE
     .col-sm-6
       #vehicleDetailContainer
       #vehicle_data_container
       .row.no-gutters
-        - cache "#{current_user.dealership.id}/vehicles/index/new_vehicles/?#{params}" do
-          - @all_vehicles.where(usage_type: "is_new").group_by(&:model).sort_by{ |key| key }.to_h.each do |model, vehicles|
-            .col-4.mt-3.small
-              = link_to vehicles_path(filter: {model: model}) do
-                %strong #{model} (#{vehicles.count})
+        =# render partial: 'vehicles/new_vehicle_groupings'
 
-              - if params.dig(:filter, :model) == model
-                - vehicles.group_by(&:trim_level).each do |trim_level, vehicles|
-                  .mt-2
-                    %strong.text-default #{trim_level} (#{vehicles.count})
-                    %div
-                      - vehicles.each do |vehicle|
-                        = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
-                          %span.text-blue= vehicle.stock_number
-                        = vehicle.color
-                        = number_to_currency vehicle.sale_price
-                        %br
 
       / Modal
       #mapModal.modal{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}

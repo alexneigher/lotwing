@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     resources :key_board_locations
     resources :vehicles
 
+
     resources :events
 
     resource :active_drives
@@ -126,7 +127,8 @@ Rails.application.routes.draw do
     get :print_hold_tag
     get :print_service_hold_tag
     collection do
-      get :search
+      get :inventory_count
+      get :new_vehicle_breakdown
     end
   end
 
