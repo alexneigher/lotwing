@@ -6,13 +6,15 @@
         %strong #{model} (#{vehicles.count})
 
       .collapse{ id: "#{model.parameterize}-expand" }
-        - vehicles.group_by(&:trim_level).each do |trim_level, vehicles|
-          .mt-2
-            %strong.text-default #{trim_level} (#{vehicles.count})
-            %div
-              - vehicles.each do |vehicle|
-                = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
-                  %span.text-blue= vehicle.stock_number
-                = vehicle.color
-                = number_to_currency vehicle.sale_price
-                %br
+        - vehicles.group_by(&:year).each do |year, vehicles|
+          %h4.mb0= "#{year} (#{vehicles.count})"
+          - vehicles.group_by(&:trim_level).each do |trim_level, vehicles|
+            .mt-2
+              %strong.text-default #{trim_level} (#{vehicles.count})
+              %div
+                - vehicles.each do |vehicle|
+                  = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
+                    %span.text-blue= vehicle.stock_number
+                  = vehicle.color
+                  = number_to_currency vehicle.sale_price
+                  %br
