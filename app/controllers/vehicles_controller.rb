@@ -12,6 +12,12 @@ class VehiclesController < ApplicationController
       @vehicles = @vehicles.where(usage_type: params.dig(:filter, :usage_type))
     end
 
+    if params.dig(:sortings).present?
+      params.dig(:sortings).each do |k,v|
+        @vehicles = @vehicles.order(k => v)
+      end
+    end
+
   end
 
   def update
@@ -63,8 +69,9 @@ class VehiclesController < ApplicationController
   end
 
   # route used by right side of VM page to render grouped new vehicles
-  def new_vehicle_breakdown
-
+  def new_vehicle_groupings
+    dealership = current_user.dealership
+    @vehicles = dealership.vehicles.where(usage_type: "is_new").group_by(&:model).sort_by{ |key| key }.to_h
   end
 
 

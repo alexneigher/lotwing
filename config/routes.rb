@@ -128,7 +128,7 @@ Rails.application.routes.draw do
     get :print_service_hold_tag
     collection do
       get :inventory_count
-      get :new_vehicle_breakdown
+      get :new_vehicle_groupings
     end
   end
 

@@ -1,0 +1,9 @@
+#new-vehicle-groupings-container
+  %i.fa.fa-refresh.fa-spin
+  :javascript
+    $(function(){
+      $.ajax({
+        url:"/vehicles/new_vehicle_groupings",
+        method: "get",
+      });
+    })
