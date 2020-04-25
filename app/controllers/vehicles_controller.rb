@@ -2,7 +2,7 @@ class VehiclesController < ApplicationController
 
   def index
     @dealership = current_user.dealership
-    @vehicles = @dealership.vehicles.includes(:current_parking_tag, :open_service_tickets).page(params[:page]).per(50)
+    @vehicles = @dealership.vehicles.includes(:current_parking_tag, :open_service_tickets)
 
     if params.dig(:stock_number).present?
       @vehicles = @vehicles.where('stock_number ilike ?', "%#{params[:stock_number]}%")
@@ -18,6 +18,12 @@ class VehiclesController < ApplicationController
       end
     end
 
+    if params.dig(:filter, :no_tag).present?
+      @vehicles = Vehicle.where(id: vehicles_missing_tags(@dealership, @vehicles).pluck(:id))
+
+    end
+
+    @vehicles = @vehicles.page(params[:page]).per(50)
   end
 
   def update
@@ -58,14 +64,8 @@ class VehiclesController < ApplicationController
 
     @grouped_vehicles = vehicles.group(:usage_type).count
 
-    currently_parked_vehicle_ids = dealership.shapes.where(shape_type: 'parking_space').joins(:vehicle).pluck(:vehicle_id)
-    active_test_drive_vehicle_ids = dealership.events.where(event_type: 'test_drive', ended_at: nil).includes(:tag).pluck(:vehicle_id)
+    @vehicles_missing_tags_length = vehicles_missing_tags(dealership, vehicles).length
 
-    all_vehicles_not_on_test_drives = vehicles.reject{|v| v.id.in?(active_test_drive_vehicle_ids) }
-
-    vehicles_missing_tags = (all_vehicles_not_on_test_drives || []).reject{|v| v.id.in?(currently_parked_vehicle_ids)}
-
-    @vehicles_missing_tags_length = vehicles_missing_tags.length
   end
 
   # route used by right side of VM page to render grouped new vehicles
@@ -118,19 +118,13 @@ class VehiclesController < ApplicationController
       params.require(:vehicle).permit(:make, :model, :year, :vin, :color, :dealership_id, :usage_type, :sales_hold, :service_hold, :sales_hold_notes, :service_hold_notes, :stock_number )
     end
 
-    # def count_by_no_tags(all_vehicles)
-    #   currently_parked_vehicle_ids = @dealership.shapes.where(shape_type: 'parking_space').joins(:vehicle).pluck(:vehicle_id)
+    def vehicles_missing_tags(dealership, vehicles)
+      currently_parked_vehicle_ids = dealership.shapes.where(shape_type: 'parking_space').joins(:vehicle).pluck(:vehicle_id)
+      active_test_drive_vehicle_ids = dealership.events.where(event_type: 'test_drive', ended_at: nil).includes(:tag).pluck(:vehicle_id)
 
-    #   all_vehicles_not_on_test_drives = all_vehicles.reject{|v| v.is_currently_on_test_drive? }
+      all_vehicles_not_on_test_drives = vehicles.reject{|v| v.id.in?(active_test_drive_vehicle_ids) }
 
-    #   @vehicles_missing_tags = (all_vehicles_not_on_test_drives || []).reject{|v| v.id.in?(currently_parked_vehicle_ids)}
-    # end
+      vehicles_missing_tags = (all_vehicles_not_on_test_drives || []).reject{|v| v.id.in?(currently_parked_vehicle_ids)}
+    end
 
-    # def maybe_filter_by_no_tags(filtered_vehicles)
-    #   if params.dig(:filter, :no_tag).present?
-    #     filtered_vehicles = @vehicles_missing_tags
-    #   end
-
-    #   return filtered_vehicles
-    # end
 end
