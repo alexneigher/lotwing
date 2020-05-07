@@ -19,8 +19,11 @@
         = f.text_field :source, placeholder: 'Source', class: 'form-control mb-1'
         = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control mb-1'
         = f.text_field :trade, placeholder: 'Trade', class: 'form-control mb-1'
-        = f.select :sales_rep_id, options_for_select(current_user.dealership.users.active.sales_rep.pluck(:full_name, :id), @deal.sales_rep_id), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
-        = f.select :split_rep_id, options_for_select(current_user.dealership.users.active.sales_rep.pluck(:full_name, :id), @deal.split_rep_id), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
+        - reps = sales_reps_for_pickers(current_user.dealership.users.active)
+        = f.select :sales_rep_id, options_for_select(reps, selected: @deal.sales_rep_id, disabled: '-----'), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
+
+        = f.select :split_rep_id, options_for_select(reps, selected: @deal.split_rep_id, disabled: '-----'), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
+
         = f.text_field :city, placeholder: 'City', class: 'form-control mb-1'
 
         %a{"data-target" => "#historyModal", "data-toggle" => "modal", :href => "#"} Show History

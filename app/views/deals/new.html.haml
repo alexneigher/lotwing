@@ -17,8 +17,9 @@
           %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin{style:'position:absolute;right:10px;top:11px;'}
           = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control mb-1'
         = f.text_field :trade, placeholder: 'Trade', class: 'form-control mb-1'
-        = f.select :sales_rep_id, options_for_select(current_user.dealership.users.active.sales_rep.pluck(:full_name, :id)), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
-        = f.select :split_rep_id, options_for_select(current_user.dealership.users.active.sales_rep.pluck(:full_name, :id)), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
+        - reps = sales_reps_for_pickers(current_user.dealership.users.active)
+        = f.select :sales_rep_id, options_for_select(reps, disabled: "-----"), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
+        = f.select :split_rep_id, options_for_select(reps, disabled: "-----"), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
         = f.text_field :city, placeholder: 'City', class: 'form-control mb-1'
       .col-md-2
         = f.text_field :make, placeholder: 'Make', class: 'form-control mb-1'
