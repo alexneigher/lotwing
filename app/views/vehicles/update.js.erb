@@ -1,0 +1,5 @@
+$('#vehicleDetailContainer').html("<%= j(render partial: 'vehicles/show')%>");
+
+setTimeout(function(){
+  $('#updateFlash').remove();
+},2000)

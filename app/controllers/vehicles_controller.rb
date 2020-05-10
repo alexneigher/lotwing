@@ -34,10 +34,10 @@ class VehiclesController < ApplicationController
   def update
     @vehicle = Vehicle.find(params[:id])
     @vehicle.update(vehicle_params)
-
+    @events = @vehicle.events.includes(:user, :resolutions) #needed to re-render
+    flash.now[:success] = 'Vehicle update saved'
     VehicleHoldUpdaterService.new(@vehicle, vehicle_params, current_user).maybe_update_holds
 
-    redirect_to vehicle_path(@vehicle)
   end
 
   def show
