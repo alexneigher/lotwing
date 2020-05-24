@@ -23,7 +23,7 @@
                       %div{style:'background-color: #efefef;padding: 10px;color: #000; font-family: Trebuchet MS;line-height: 28px;'}
                         - @grouped_stock_numbers.each do |stock_number, count|
                           .my-2
-                            = link_to search_vehicles_url(stock_number: stock_number) do
+                            = link_to vehicles_url(stock_number: stock_number) do
                               = "#{stock_number}:"
                             = count
 
