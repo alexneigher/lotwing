@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200214015213) do
+ActiveRecord::Schema.define(version: 20200528020005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -285,7 +285,7 @@ ActiveRecord::Schema.define(version: 20200214015213) do
     t.string "vin"
     t.string "make"
     t.string "model"
-    t.string "year"
+    t.string "year", default: ""
     t.string "color"
     t.integer "mileage", default: 0, null: false
     t.bigint "dealership_id"
