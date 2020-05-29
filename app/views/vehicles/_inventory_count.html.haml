@@ -7,7 +7,7 @@
     = "New: #{@grouped_vehicles['is_new'] || 0}"
 
 = link_to vehicles_path(filter: {usage_type: 'is_used'}) do
-  %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('is_used')}"}
+  %span.p-1.rounded.ml-1.small.text-dark{style: "background-color: #{vehicle_usage_type_bg_color('is_used')}"}
     = "Used: #{@grouped_vehicles['is_used'] || 0}"
 
 = link_to vehicles_path(filter: {usage_type: 'lease_return'}) do
