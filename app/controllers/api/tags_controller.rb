@@ -49,7 +49,7 @@ module Api
 
       # do event type specific stuff
       if event.event_type == "odometer_update"
-        @vehicle.update(mileage: event.event_details)
+        @vehicle.update(mileage: event.event_details.presence || 0)
       end
 
       render json: {status: 200, parking_space: @tag.shape, vehicle: @vehicle, event: event}
