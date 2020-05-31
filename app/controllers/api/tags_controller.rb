@@ -11,7 +11,7 @@ module Api
       # tag is when they are the same
       # change stall is when the new shape_id is different from the current shape id
       true_event_type = event_params[:event_type]
-      event_details = params[:event][:event_details]
+      event_details = params[:event_details].presence || params.dig(:event, :event_details) #the payload may be different depending on endpoint
 
       if event_params[:event_type] == "change_stall" || event_params[:event_type] == 'tag'
         if @vehicle.parking_space&.id&.to_s == tag_params[:shape_id]
