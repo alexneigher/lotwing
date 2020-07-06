@@ -4,8 +4,15 @@ class EventMailer < ActionMailer::Base
   def self.notify_about_note_created(event)
     @event = event
 
-    recipients = @event.user.dealership.new_note_notification_addresses.split(',').uniq
-    
+    recipients = @event
+                  .user
+                  .dealership
+                  .users
+                  .joins(:email_preference)
+                  .where(email_preferences: {note_email: true})
+                  .pluck(:email)
+                  .uniq
+
     recipients.each do |email|
       EventMailer.new_note_created(event, email.strip).deliver
     end

@@ -4,8 +4,14 @@ class ServiceTicketMailer < ActionMailer::Base
   def self.notify_about_service_ticket_created(service_ticket)
     @service_ticket = service_ticket
 
-    recipients = @service_ticket.dealership.new_service_ticket_notification_addresses.split(',').uniq
-    
+    recipients = @service_ticket
+                  .dealership
+                  .users
+                  .joins(:email_preference)
+                  .where(email_preferences: {service_ticket_email: true})
+                  .pluck(:email)
+                  .uniq
+
     recipients.each do |email|
       ServiceTicketMailer.new_service_ticket_created(service_ticket, email.strip).deliver
     end

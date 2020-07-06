@@ -17,15 +17,22 @@
         .card-body
           .row
             .col-6
-              %label Note Email Notifications
-              = f.text_field :new_note_notification_addresses, placeholder: 'ex: email@gmail.com, email1@gmail.com', class: 'form-control'
-              .text-muted.small
-                (separate by commas)
+              %strong Note Email Notifications
+              - @dealership_users.where(email_preferences: {note_email: true}).each do |user|
+                = user.email
+                %br
             .col-6
-              %label Service Ticket Email Notifications
-              = f.text_field :new_service_ticket_notification_addresses, placeholder: 'email@gmail.com, email1@gmail.com', class: 'form-control'
-              .text-muted.small
-                (separate by commas)
+              %strong Service Ticket Email Notifications
+              - @dealership_users.where(email_preferences: {service_ticket_email: true}).each do |user|
+                = user.email
+                %br
+          .row.mt-3
+            .col-6
+              %strong Duplicate Stock Number Email Notifications
+              - @dealership_users.where(email_preferences: {duplicate_stock_number_email: true}).each do |user|
+                = user.email
+                %br
+
 
     .col-md-3
       .card.bg-light
