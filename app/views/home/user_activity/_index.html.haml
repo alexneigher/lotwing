@@ -23,11 +23,14 @@
       - users_with_events.sort_by{|_,events_hash| events_hash["mtd"]}.reverse.to_h.each do |user, event_count|
         .row.small
           .col-4
-            = user.full_name 
+            = user.full_name
           .col-8.text-center
-            .row.text-orange
-              .col-4= event_count["1"]
-              .col-4= event_count["7"]
-              .col-4= event_count["mtd"]
-      
-        
+            .row
+              .col-4{class: ('text-orange' if event_count["1"]&.zero?) }
+                = event_count["1"]
+
+              .col-4{class: ('text-orange' if event_count["7"]&.zero?) }
+                = event_count["7"]
+              .col-4{class: ('text-orange' if event_count["mtd"]&.zero?) }
+                = event_count["mtd"]
+
