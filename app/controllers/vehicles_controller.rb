@@ -82,6 +82,9 @@ class VehiclesController < ApplicationController
 
   def create
     Vehicle.user_created.create(vehicle_params)
+
+    Event.create(event_type: :create_vehicle, user: current_user, event_details: vehicle_params.to_unsafe_h)
+
     redirect_to vehicles_path
   end
 
