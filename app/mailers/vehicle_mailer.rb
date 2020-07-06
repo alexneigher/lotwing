@@ -4,6 +4,7 @@ class VehicleMailer < ActionMailer::Base
   def self.duplicate_stock_numbers(dealership, grouped_stock_numbers)
     recipients = dealership
                   .users
+                  .active
                   .joins(:email_preference)
                   .where(email_preferences: {duplicate_stock_number_email: true})
                   .pluck(:email)

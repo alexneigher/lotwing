@@ -7,6 +7,7 @@ class ServiceTicketMailer < ActionMailer::Base
     recipients = @service_ticket
                   .dealership
                   .users
+                  .active
                   .joins(:email_preference)
                   .where(email_preferences: {service_ticket_email: true})
                   .pluck(:email)

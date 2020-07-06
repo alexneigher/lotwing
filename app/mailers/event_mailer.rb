@@ -8,6 +8,7 @@ class EventMailer < ActionMailer::Base
                   .user
                   .dealership
                   .users
+                  .active
                   .joins(:email_preference)
                   .where(email_preferences: {note_email: true})
                   .pluck(:email)
