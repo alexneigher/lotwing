@@ -1,6 +1,6 @@
 module Dealerships
   class UsersController < ApplicationController
-    
+
     def new
     end
 
@@ -49,7 +49,7 @@ module Dealerships
 
     private
       def user_params
-        params.require(:user).permit(:email, :full_name, :permission_level, :status)
+        params.require(:user).permit(:email, :full_name, :permission_level, :status, email_preference_attributes:[:id, :note_email, :duplicate_stock_number_email, :service_ticket_email] )
       end
   end
 end

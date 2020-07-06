@@ -14,8 +14,26 @@
           .col-6
             %label Email
             = f.text_field :email, class: "form-control"
-          .col-6.text-right
+          .col-6
+            = f.fields_for :email_preference do |ff|
+              %label
+                = ff.check_box :note_email
+                Note Email
+
+              %br
+              %label
+                = ff.check_box :service_ticket_email
+                Service Ticket Email
+
+              %br
+              %label
+                = ff.check_box :duplicate_stock_number_email
+                Duplicate Stock Number Email
+
+        .row
+          .col-12.text-right
             = f.submit "Update", class: "btn btn-primary mt-4"
+
   .card-footer.text-right
     .text-orange.pointer{onclick: "$('#userShow').html('');"}
-      cancel    
+      cancel
