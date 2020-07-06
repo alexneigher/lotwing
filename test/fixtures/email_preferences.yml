@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  references: 
+  note_email: false
+  service_ticket_email: false
+  duplicate_stock_number_email: false
+
+two:
+  references: 
+  note_email: false
+  service_ticket_email: false
+  duplicate_stock_number_email: false
