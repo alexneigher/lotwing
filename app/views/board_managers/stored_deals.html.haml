@@ -3,7 +3,7 @@
     .col-md-2
       %h3 Stored Deals
       = link_to '< Board Manager', board_manager_path()
-    .col-md-10   
+    .col-md-10
       .table-responsive.small
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead
@@ -21,8 +21,10 @@
               %th City
               %th Result
               %th Report
-              
+
           %tbody
             - @deals.each do |deal|
               = render partial: 'deals/shared/deal_row', locals: {deal: deal}
-              
+
+
+= render partial: 'shared/map_popover'

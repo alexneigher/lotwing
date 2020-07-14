@@ -2,10 +2,10 @@
   .row.mb-1
     .col-md-1
       %h3 Running Total
-      
+
       = link_to '< Board Manager', board_manager_path()
 
-    .col-md-11  
+    .col-md-11
       = form_for :filters, url: running_total_board_manager_path, method: :get, autocomplete: "off" do
         .row.my-2
           .col-md-9.form-inline{style: 'margin-top: -5px;'}
@@ -13,7 +13,7 @@
               %label.mr-2{onclick: "$(this).parents('form').submit();"}
                 = hidden_field_tag "filters[f_i_pre_sell]", 0
                 = check_box_tag 'filters[f_i_pre_sell]', 1, params.dig(:filters, :f_i_pre_sell).to_i == 1, class: 'mr-1'
-                Pre-sell Only 
+                Pre-sell Only
             .input-group
               .input-group-prepend
                 %span.input-group-text{style:'padding: 0 5px;'}
@@ -24,8 +24,8 @@
                 %span.input-group-text{style:'padding: 0 5px;'}
                   %i.fa.fa-calendar
               = text_field_tag "filters[end_date]", params.dig(:filters, :end_date), autocomplete: "off", placeholder: 'End Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
-            
-              = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary' 
+
+              = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
 
           .col-md-3
             = link_to 'Print Report', running_total_board_manager_path(request.parameters.merge(format: :pdf)), class: 'btn btn-secondary btn-sm ml-auto pull-right'
@@ -59,7 +59,7 @@
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
-              
+
           %tbody
             - @grouped_deals.reverse_each do |date, deals|
               %tr
@@ -70,12 +70,11 @@
               - deals.each do |deal|
                 = render partial: 'deals/shared/deal_row', locals: {deal: deal, include_presell: true, new_tab: true}
 
-                 
- 
+= render partial: 'shared/map_popover'
+
 :javascript
   $(function() {
     $('.datepicker').datepicker({
       dateFormat: 'yy-mm-dd'
      });
   });
-               

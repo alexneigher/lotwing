@@ -16,7 +16,7 @@
               = model
               = " (#{deals.count})"
               %hr.my-1
-    .col-md-10   
+    .col-md-10
       = form_for :filters, url: new_vehicle_report_board_manager_path, method: :get, autocomplete: "off" do
         .row.my-2
           .col-md-9.form-inline{style: 'margin-top: -5px;'}
@@ -30,7 +30,7 @@
                 %span.input-group-text{style:'padding: 0 5px;'}
                   %i.fa.fa-calendar
               = text_field_tag "filters[end_date]", params.dig(:filters, :end_date), autocomplete: "off", placeholder: 'End Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
-            
+
               = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
       .table-responsive.small{style: 'max-height: 80vh;'}
         %table.table.table-striped.table-sm.mb-0.board-manager-table
@@ -49,7 +49,7 @@
               %th City
               %th Result
               %th Report
-              
+
           %tbody
             - @grouped_deals.reverse_each do |model, deals|
               %tr
@@ -59,7 +59,9 @@
                     = " (#{deals.count})"
               - deals.each do |deal|
                 = render partial: 'deals/shared/deal_row', locals: {deal: deal}
-      
+
+= render partial: 'shared/map_popover'
+
 :javascript
   $(function() {
     $('.datepicker').datepicker({
