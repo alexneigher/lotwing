@@ -1,6 +1,3 @@
-/ Page Content
-= render partial: 'shared/maxbox_dependencies'
-= javascript_include_tag('vehicle_manager')
 .container-fluid
   .row
     .col-sm-6
@@ -12,31 +9,10 @@
       #vehicle_data_container
       = render partial: 'vehicles/new_vehicle_groupings_container'
 
-
-      / Modal
-      #mapModal.modal{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}
-        .modal-dialog.modal-lg{:role => "document"}
-          .modal-content
-            .modal-header
-              .content
-              %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-                %span{"aria-hidden" => "true"} ×
-            .modal-body
-              .row
-                #map{ :style => "width: 100%; height: 400px" }
-                .d-none
-                  //place all dom-dependent info here
-                  %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
-                  %input#dealership_map_zoom{value: current_user.dealership.map_zoom }
-            .footer
-
+= render partial: 'shared/map_popover'
 
 :javascript
   $(function(){
-    $('#mapModal').on('shown.bs.modal', function (event) {
-      //the map was just shown, here we can extract just the vehicle in question. and render it to the map
-      window.map.resize();
-    });
 
     $(document).on('click', '.close', function(){
       hide_vehicle_data();
