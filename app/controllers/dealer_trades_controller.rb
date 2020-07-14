@@ -21,11 +21,11 @@ class DealerTradesController < ApplicationController
 
     if params.dig(:search, :start_date).present? && params.dig(:search, :end_date).present?
       start_date = DateTime.strptime(params.dig(:search, :start_date), "%Y-%m-%d").beginning_of_day
-      
+
       end_date = DateTime.strptime(params.dig(:search, :end_date).presence || Date.today.strftime("%Y-%m-%d"), "%Y-%m-%d").end_of_day
-      
+
       @dealer_trades = @dealer_trades.where("CAST(date_created AS DATE) >= ? AND CAST(date_created AS DATE) <= ?", start_date, end_date)
-    
+
     elsif params.dig(:search, :start_date).present?
       start_date = DateTime.strptime(params.dig(:search, :start_date), "%Y-%m-%d").beginning_of_day
       @dealer_trades = @dealer_trades.where("CAST(date_created AS DATE) >= ?", start_date)
@@ -38,7 +38,11 @@ class DealerTradesController < ApplicationController
 
     if params.dig(:sort).present?
       params.dig(:sort).each do |k,v|
-        @dealer_trades = @dealer_trades.order(k => v)
+        if k == "date_created"
+          @dealer_trades = @dealer_trades.order("Date(date_created) #{v}")
+        else
+          @dealer_trades = @dealer_trades.order(k => v)
+        end
       end
     end
   end
@@ -48,7 +52,7 @@ class DealerTradesController < ApplicationController
 
   def create
     @dealer_trade = current_user.dealership.dealer_trades.create(dealer_trade_params)
-    if @dealer_trade.valid? 
+    if @dealer_trade.valid?
       suggested_trade_dealership = current_user
                                     .dealership
                                     .suggested_trade_dealerships
@@ -81,7 +85,7 @@ class DealerTradesController < ApplicationController
   def update
     @dealer_trade = current_user.dealership.dealer_trades.find(params[:id])
     @dealer_trade.update(dealer_trade_params)
-    
+
     if params[:commit] == "Print Trade Sheet"
       redirect_to dealer_trade_trade_sheet_path(@dealer_trade, format: :pdf) and return
     else
