@@ -93,7 +93,12 @@ class VehiclesController < ApplicationController
     vehicle = @dealership.vehicles.find(params[:id])
     vehicle.destroy
 
-    redirect_to vehicles_path
+    #when triggering delete from a filtered lot view, sometimes there will be a display mode
+    if params[:display_mode].present?
+      redirect_to lot_view_path(display_mode: params[:display_mode])
+    else
+      redirect_to vehicles_path
+    end
   end
 
 

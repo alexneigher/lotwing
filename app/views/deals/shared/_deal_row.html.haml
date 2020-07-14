@@ -18,12 +18,18 @@
     - if deal.vehicle&.sales_hold? || deal.vehicle&.service_hold?
       %div
         %strong.text-danger
-          HOLD ON MAP 
-  
-  %td= deal.stock_number
-  
+          HOLD ON MAP
+
+  %td
+
+    - if deal.vehicle.present?
+      = link_to vehicle_show_map_path(deal.vehicle), remote: true do
+        %i.fa.fa-map-marker
+        = deal.stock_number
+    - else
+      = deal.stock_number
   %td= deal.source
-  
+
   - if deal.is_used
     %td
     %td

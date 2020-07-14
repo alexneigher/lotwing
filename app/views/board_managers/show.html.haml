@@ -1,3 +1,6 @@
+= render partial: 'shared/maxbox_dependencies'
+= javascript_include_tag('vehicle_manager')
+
 .container-fluid
   .row.mb-1
     .col-md-2
@@ -14,8 +17,8 @@
               .bg-green.rounded
                 .py-1
                   = "Used: #{grouped[true]&.length || 0}"
-      
-        .text-left.small.pt-3 
+
+        .text-left.small.pt-3
           .row.no-gutters
             .col-md-8{style:'font-size:11px;padding-right:4px;border-right: 1px solid #efefef;'}
               .text-center
@@ -28,21 +31,21 @@
                   = "#{number_with_precision(deals[:new], significant: true, precision: 3, strip_insignificant_zeros: true)} New"
                   &#183;
                   = "#{number_with_precision(deals[:used], significant: true, precision: 3, strip_insignificant_zeros: true)} Used"
-                  
+
                   .pull-right
                     %div{style: 'margin-top: -8px'}
-                      
+
                       - if u.present?
                         = link_to sales_rep_analytics_path(u), style: 'padding: 10px 0;', target: "_blank" do
                           - if u.sales_rep_above_monthly_moving_average?
                             %i.fa.fa-arrow-up.text-success
                           - else
-                            %i.fa.fa-arrow-down.text-danger 
+                            %i.fa.fa-arrow-down.text-danger
                   .clearfix
 
                   %hr.my-1
-                  
-            
+
+
             .col-md-4{style:'font-size:11px;padding-left:4px;'}
               .text-center
                 New By Model
@@ -68,12 +71,12 @@
           = link_to 'MTD CPO Report', cpo_report_board_manager_path, class: 'dropdown-item'
 
           = link_to 'Stored Deals', stored_deals_board_manager_path, class: 'dropdown-item'
-           
+
       = form_for :filters, url: board_manager_path, method: :get, autocomplete: "off" do
         .row.pt-1
           .col-md-3.pt-1
             .btn-group{"data-toggle" => "buttons"}
-              %label.btn.btn-sm{onchange: "$('#filters_start_date').val(''); $('#filters_end_date').val(''); $(this).parents('form').submit();", class: (params.dig(:filters, :mtd) == '0' || params.dig(:filters, :mtd).nil?) ? 'btn-success': 'btn-secondary'} 
+              %label.btn.btn-sm{onchange: "$('#filters_start_date').val(''); $('#filters_end_date').val(''); $(this).parents('form').submit();", class: (params.dig(:filters, :mtd) == '0' || params.dig(:filters, :mtd).nil?) ? 'btn-success': 'btn-secondary'}
                 %small
                   Today
                 = radio_button_tag 'filters[mtd]', "0", params.dig(:filters, :mtd) == '0' || params.dig(:filters, :mtd).nil?, class: 'd-none'
@@ -95,7 +98,7 @@
                   %label.mr-2{onclick: "$(this).parents('form').submit();"}
                     = hidden_field_tag "filters[used]", 0
                     = check_box_tag 'filters[used]', 1, params.dig(:filters, :used).to_i == 1 || params.dig(:filters, :used).nil?, class: 'mr-1'
-                    Used 
+                    Used
               .input-group
                 - unless params.dig(:filters, :mtd) == '1'
                   .input-group-prepend
@@ -116,6 +119,7 @@
 
               = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
 
+      #vehicle_data_container
       .table-responsive.small{style:' max-height:70vh;overflow-y: scroll;'}
         %table.table.table-striped.table-sm.mb-0.board-manager-table
           %thead
@@ -175,7 +179,7 @@
                     %i.fa.fa-sort-up
                   - else
                     %i.fa.fa-sort-down
-              
+
           %tbody
             - @grouped_deals.reverse_each do |date, deals|
               %tr
@@ -186,9 +190,32 @@
               - deals.each do |deal|
                 = render partial: 'deals/shared/deal_row', locals: {deal: deal}
 
+/ Modal
+#mapModal.modal{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-lg{:role => "document"}
+    .modal-content
+      .modal-header
+        .content
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        .row
+          #map{ :style => "width: 100%; height: 400px" }
+          .d-none
+            //place all dom-dependent info here
+            %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
+            %input#dealership_map_zoom{value: current_user.dealership.map_zoom }
+      .footer
+
 :javascript
   $(function() {
     $('.datepicker').datepicker({
       dateFormat: 'yy-mm-dd'
      });
+
+     $('#mapModal').on('shown.bs.modal', function (event) {
+       //the map was just shown, here we can extract just the vehicle in question. and render it to the map
+       window.map.resize();
+     });
+
   });

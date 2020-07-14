@@ -121,7 +121,7 @@
                 %tr
                   %td= event.event_type.upcase
                   %td
-                    = "Created By #{event.user.full_name} #{event.created_at.in_time_zone("US/Pacific").strftime('%m/%d/%Y')}"
+                    = "Created By #{event.user.full_name} #{event.created_at.in_time_zone("US/Pacific").strftime('%m/%d/%Y %l:%M %p')}"
                     %br
                     = event.event_details
                   %td
@@ -203,7 +203,7 @@
         View Data Feed
     .col.text-right
       - if current_user.permission_level == "admin" || current_user.permission_level == "sales_manager"
-        = link_to vehicle_path(@vehicle), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure?'} do
+        = link_to vehicle_path(@vehicle, display_mode: params[:display_mode]), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure?'} do
           %i.fa.fa-trash
           Delete
 

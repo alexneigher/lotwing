@@ -104,9 +104,9 @@ function fetch_events_and_render(){
 
 function open_popup(e){
   $('#vehicle_data_container').html("Loading...");
-
+  display_mode = getUrlParameter("display_mode") || '';
   $.ajax({
-    url:"/web_api/shapes/" + e.features[0].properties.shape_id,
+    url:"/web_api/shapes/" + e.features[0].properties.shape_id + "?display_mode=" + display_mode,
 
     success: function(data){
       $('#vehicle_data_container').html(data);
