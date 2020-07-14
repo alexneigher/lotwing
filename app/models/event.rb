@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   belongs_to :user
-  belongs_to :tag
+  belongs_to :tag, optional: true
 
   has_many :resolutions, dependent: :destroy
   #some of these happen automatically, some of them can be user input

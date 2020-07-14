@@ -18,18 +18,18 @@
           .row
             .col-6
               %strong Note Email Notifications
-              - @dealership_users.where(email_preferences: {note_email: true}).each do |user|
+              - @dealership_users.active.where(email_preferences: {note_email: true}).each do |user|
                 %br
                 = user.email
             .col-6
               %strong Service Ticket Email Notifications
-              - @dealership_users.where(email_preferences: {service_ticket_email: true}).each do |user|
+              - @dealership_users.active.where(email_preferences: {service_ticket_email: true}).each do |user|
                 %br
                 = user.email
           .row.mt-3
             .col-6
               %strong Duplicate Stock Number Email Notifications
-              - @dealership_users.where(email_preferences: {duplicate_stock_number_email: true}).each do |user|
+              - @dealership_users.active.where(email_preferences: {duplicate_stock_number_email: true}).each do |user|
                 %br
                 = user.email
 

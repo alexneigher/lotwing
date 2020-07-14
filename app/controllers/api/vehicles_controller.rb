@@ -11,7 +11,6 @@ module Api
     # POST /api/vehicles
     def create
       @vehicle = current_user.dealership.vehicles.user_created.create!(vehicle_params)
-
       Event.create(event_type: :create_vehicle, user: current_user, event_details: vehicle_params.to_unsafe_h)
       json_response(@vehicle, :created)
     end
