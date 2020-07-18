@@ -1,6 +1,6 @@
 = link_to vehicles_path(filter: {no_tag: 'no_tag'}) do
   %span.p-1.rounded.text-white.small.bg-danger
-    = "No Tag: #{@vehicles_missing_tags_length}"
+    = "Lost: #{@vehicles_missing_tags_length}"
 
 = link_to vehicles_path(filter: {usage_type: 'is_new'}) do
   %span.p-1.rounded.ml-1.text-white.small{style: "background-color: #{vehicle_usage_type_bg_color('is_new')}"}

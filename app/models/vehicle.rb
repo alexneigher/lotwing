@@ -44,6 +44,23 @@ class Vehicle < ApplicationRecord
     return false
   end
 
+  def map_color
+    case usage_type
+      when "is_new"
+        "#376794"
+      when "is_used"
+        "#90C055"
+      when "loaner"
+        "#E6E570"
+      when "lease_return"
+        "#9A5C9D"
+      when "wholesale_unit"
+        "#8D8C88"
+      else
+        "#FF9933"
+      end
+  end
+
 
   private
     def upcase_stock_number

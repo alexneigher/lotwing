@@ -57,6 +57,8 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.find(params[:vehicle_id])
     @events = @vehicle.events.includes(:user, :resolutions)
     dealership = current_user.dealership
+
+    @vehicle_color = @vehicle.map_color
   end
 
   def new
