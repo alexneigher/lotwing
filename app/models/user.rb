@@ -12,7 +12,7 @@ class User < ApplicationRecord
   enum permission_level: [:sales_rep, :sales_manager, :admin, :service_user]
   enum status: [:active, :deactivated]
 
-  before_create :set_default_email_preference
+  after_create :set_default_email_preference
 
   accepts_nested_attributes_for :email_preference, update_only: true
 
