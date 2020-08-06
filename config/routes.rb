@@ -99,6 +99,8 @@ Rails.application.routes.draw do
 
   namespace :home do
     resources :user_activity, only: :index, controller: 'user_activity'
+
+    get :lot_view_info_bar
   end
 
   scope "/invitations/:reset_password_token/", as: :invitations, controller: :invitations do

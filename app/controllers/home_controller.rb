@@ -11,7 +11,25 @@ class HomeController < ApplicationController
 
     @vehicles_with_sales_holds = current_user.dealership.vehicles.where(sales_hold: true)
 
-    @vehicles_with_service_holds =  current_user.dealership.vehicles.where(service_hold: true)
+    @vehicles_with_service_holds = current_user.dealership.vehicles.where(service_hold: true)
+  end
+
+  def lot_view_info_bar
+    dealership = current_user.dealership
+    @parking_spaces = dealership.shapes.where(shape_type: 'parking_space')
+
+    @new_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "is_new", sold_status: nil}).count
+    @used_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "is_used", sold_status: nil}).count
+
+    @loaner_occupied_spaces = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "loaner", sold_status: nil}).count
+    @lease_return_occupied_spaces = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "lease_return", sold_status: nil}).count
+    @wholesale_unit_occupied_spaces = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "wholesale_unit", sold_status: nil}).count
+
+    all_vehicle_spaces = @new_vehicle_occupied_space + @used_vehicle_occupied_space + @loaner_occupied_spaces + @lease_return_occupied_spaces + @wholesale_unit_occupied_spaces
+
+    @total_parking_spaces = @parking_spaces.count
+
+    @empty_parking_spaces = @total_parking_spaces - all_vehicle_spaces
   end
 
   def map_builder

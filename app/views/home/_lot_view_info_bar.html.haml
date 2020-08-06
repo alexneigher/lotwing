@@ -1,0 +1,67 @@
+.row
+  .col-11.bg-light.p-2
+    .row
+      .col-3
+        .row
+          .col-7
+            Total
+            %strong= @total_parking_spaces
+            %br
+            Available
+            %strong= @empty_parking_spaces
+          .col-5
+            .bg-dark.text-light.text-center
+              = number_to_percentage( (@empty_parking_spaces.to_f / @total_parking_spaces) * 100, precision: 0 )
+              .small
+                Available
+      .col.text-white.text-center{style: "background-color: #{vehicle_usage_type_bg_color('is_new')}"}
+        .small
+          Total New:
+        .row
+          .col-6.align-self-center
+            .font-20
+              = @new_vehicle_occupied_space
+          .col-6.align-self-center
+            .small
+              = number_to_percentage( (@new_vehicle_occupied_space.to_f / @total_parking_spaces) * 100, precision: 0 )
+
+      .col.text-white.text-center{style: "background-color: #{vehicle_usage_type_bg_color('is_used')}"}
+        .small
+          Total Used:
+        .row
+          .col-6.align-self-center
+            .font-20
+              = @used_vehicle_occupied_space
+          .col-6.align-self-center
+            .small
+              = number_to_percentage( (@used_vehicle_occupied_space.to_f / @total_parking_spaces) * 100, precision: 0 )
+      .col.text-white.text-center{style: "background-color: #{vehicle_usage_type_bg_color('lease_return')}"}
+        .small
+          Total Lease RT:
+        .row
+          .col-6.align-self-center
+            .font-20
+              = @lease_return_occupied_spaces
+          .col-6.align-self-center
+            .small
+              = number_to_percentage( (@lease_return_occupied_spaces.to_f / @total_parking_spaces) * 100, precision: 0 )
+      .col.text-white.text-center{style: "background-color: #{vehicle_usage_type_bg_color('wholesale_unit')}"}
+        .small
+          Total Wholesale:
+        .row
+          .col-6.align-self-center
+            .font-20
+              = @wholesale_unit_occupied_spaces
+          .col-6.align-self-center
+            .small
+              = number_to_percentage( (@wholesale_unit_occupied_spaces.to_f / @total_parking_spaces) * 100, precision: 0 )
+      .col.text-dark.text-center{style: "background-color: #{vehicle_usage_type_bg_color('loaner')}"}
+        .small
+          Total Loaners:
+        .row
+          .col-6.align-self-center
+            .font-20
+              = @loaner_occupied_spaces
+          .col-6.align-self-center
+            .small
+              = number_to_percentage( (@loaner_occupied_spaces.to_f / @total_parking_spaces) * 100, precision: 0 )

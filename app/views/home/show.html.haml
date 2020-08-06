@@ -17,7 +17,16 @@
     .col-lg-8{style: 'position: relative;'}
       #vehicle_data_container
       #map{ :style => "width: 100%; height: 550px" }
-
+      - unless params[:display_mode].present?
+        #lot-view-info-bar
+          %i.fa.fa-refresh.fa-spin
+          :javascript
+            $(function(){
+              $.ajax({
+                url:"/home/lot_view_info_bar",
+                method: "get",
+              });
+            })
       .d-none
         //place all dom-dependent info here
         %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
