@@ -10,6 +10,7 @@ class Deal < ApplicationRecord
 
   validates_presence_of :sales_rep_id
 
+  before_save :upcase_stock_number
   after_save :maybe_update_vehicle
 
   def self.order_by_rep_ids(ids, rep_id_type)
@@ -22,6 +23,10 @@ class Deal < ApplicationRecord
   end
 
   private
+
+    def upcase_stock_number
+      self.stock_number = stock_number.upcase
+    end
 
     def maybe_update_vehicle
       #we edited the vehicle associated with this deal, un-mark-as-sold the old vehicle
