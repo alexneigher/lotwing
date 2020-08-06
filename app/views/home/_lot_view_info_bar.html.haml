@@ -10,7 +10,7 @@
             Available
             %strong= @empty_parking_spaces
           .col-5
-            .bg-dark.text-light.text-center
+            .bg-dark.text-light.text-center.pb-1
               = number_to_percentage( (@empty_parking_spaces.to_f / @total_parking_spaces) * 100, precision: 0 )
               .small
                 Available
