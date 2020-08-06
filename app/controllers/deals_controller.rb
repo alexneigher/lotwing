@@ -23,7 +23,7 @@ class DealsController < ApplicationController
   def update
     @deal = current_user.dealership.deals.find(params[:id])
     @deal.update(deal_params)
-    
+
     maybe_create_sales_hold(@deal.vehicle)
 
     if params[:commit] == "Print Cover Sheet"
@@ -146,8 +146,8 @@ class DealsController < ApplicationController
 
     def maybe_create_sales_hold(vehicle)
       return unless vehicle.present?
-      if params[:create_with_hold] == "create_with_hold"
-        
+      if params[:create_with_hold] == "create_with_hold" || params[:commit] == 'Store Entry'
+
         vehicle_params = {sales_hold:"1"}.with_indifferent_access
 
         VehicleHoldUpdaterService.new(vehicle, vehicle_params, current_user).maybe_update_holds

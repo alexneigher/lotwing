@@ -94,7 +94,6 @@ module WebApi
       def maybe_filter_by_older_than_4_days
         return unless params.dig(:display_mode) == "no_tag_4_days"
 
-        #@new_vehicle_occupied_space = @new_vehicle_occupied_space.where('shapes.most_recently_tagged_at <= ?', 4.days.ago)
         @new_vehicle_occupied_space = @new_vehicle_occupied_space.includes(:tags).where(tags: {active: true}).where("tags.created_at <= ?", 4.days.ago)
 
         @used_vehicle_occupied_space = @used_vehicle_occupied_space.includes(:tags).where(tags: {active: true}).where("tags.created_at <= ?", 4.days.ago)
