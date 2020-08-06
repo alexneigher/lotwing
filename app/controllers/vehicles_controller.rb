@@ -4,8 +4,8 @@ class VehiclesController < ApplicationController
     @dealership = current_user.dealership
     @vehicles = @dealership.vehicles.includes(:current_parking_tag, :open_service_tickets)
 
-    if params.dig(:stock_number).present?
-      @vehicles = @vehicles.where('stock_number ilike ?', "%#{params[:stock_number]}%")
+    if params.dig(:stock_number_or_vin).present?
+      @vehicles = @vehicles.where('stock_number ilike ? OR vin ilike ?', "%#{params[:stock_number_or_vin]}%", "%#{params[:stock_number_or_vin]}%")
     end
 
     if params.dig(:filter, :usage_type).present?

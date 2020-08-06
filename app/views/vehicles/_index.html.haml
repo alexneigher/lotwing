@@ -1,6 +1,6 @@
 = form_tag vehicles_path, class: 'form-inline', method: :get do
   .form-group.w-100.mb-3
-    = text_field_tag "stock_number", params[:stock_number], class: 'form-control-sm form-control', placeholder: 'Search Stock #'
+    = text_field_tag "stock_number_or_vin", params[:stock_number_or_vin], class: 'form-control-sm form-control', placeholder: 'Search Stock #'
     = submit_tag 'Search', class: 'btn btn-primary btn-sm ml-1'
     .ml-auto
       = render partial: 'vehicles/inventory_count_container'
