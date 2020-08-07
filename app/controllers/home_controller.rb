@@ -16,7 +16,7 @@ class HomeController < ApplicationController
 
   def lot_view_info_bar
     dealership = current_user.dealership
-    @parking_spaces = dealership.shapes.where(shape_type: 'parking_space')
+    @parking_spaces = dealership.shapes.where(shape_type: 'parking_space', temporary: false)
 
     @new_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "is_new", sold_status: nil}).count
     @used_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "is_used", sold_status: nil}).count
