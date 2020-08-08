@@ -52,9 +52,11 @@
                   - stock_number = eval(event.event_details).to_h["stock_number"]
                   - vehicle = Vehicle.find_by_stock_number(stock_number)
                 - else
-                  - vehicle = event.tag.vehicle
-                = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
-                  = "(#{vehicle.stock_number})"
+                  - vehicle = event&.tag&.vehicle
+
+                - if vehicle.present?
+                  = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
+                    = "(#{vehicle.stock_number})"
             %br
   #users.tab-pane{:role => "tabpanel"}
     #user-activity-container
