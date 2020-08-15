@@ -14,7 +14,7 @@ module Api
       event_details = params[:event_details].presence || params.dig(:event, :event_details) #the payload may be different depending on endpoint
 
       if event_params[:event_type] == "change_stall" || event_params[:event_type] == 'tag'
-        if @vehicle.parking_space&.id&.to_s == tag_params[:shape_id]
+        if @vehicle.parking_space&.id&.to_s == tag_params[:shape_id]&.to_s
           # if the vehicle has been tagged in the same parking space, make sure this is just a tag event
           true_event_type = 'tag'
           event_details = "Tagged vehicle in stall #{@vehicle.parking_space&.id}"
