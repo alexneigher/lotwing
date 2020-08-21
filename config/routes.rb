@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :barcodes, only: :create
+
   #for Mobile clients
   namespace :api do
     post "auth/login", controller: :authentication, action: :login

@@ -1,0 +1,13 @@
+= wicked_pdf_image_tag 'logo_black_small.png', style: 'position:absolute; width: 100px; top: 10px; right: 20px;'
+
+%h1{style:'font-size: 80px;margin-bottom:0;'}
+  = @stock_number
+
+%h4= @vin
+
+
+%div
+  = image_tag(html_barcode(@vin), style: 'width: 40%;margin-top:150px')
+
+%div
+  = image_tag(html_barcode(@vin), style: 'width: 90%;margin-top:280px')
