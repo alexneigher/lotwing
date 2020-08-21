@@ -9,23 +9,24 @@
       #vehicle_data_container
       = render partial: 'vehicles/new_vehicle_groupings_container'
 
-      %hr
+      -if current_user.permission_level == "admin"
+        %hr
 
-      %h5
-        = link_to "Generate Barcode", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#barCodeContainer", "data-toggle" => "collapse"
+        %h5
+          = link_to "Generate Barcode", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#barCodeContainer", "data-toggle" => "collapse"
 
-      .collapse{id: "barCodeContainer"}
-        = form_for :barcode, url: barcodes_path(format: :pdf), method: :post do
-          .form-group
-            %label Stock Number*
-            = text_field_tag "stock_number", nil, class: 'form-control', placeholder: '89293', required: true
-          .form-group
-            %label VIN*
-            %small
-              %strong (min length 17 characters)
-            = text_field_tag "vin", nil, minlength: 17, class: 'form-control', placeholder: '3VW5T7AU2KM028967', required: true
-          .form-group
-            = submit_tag "Create printout", class: 'btn btn-primary'
+        .collapse{id: "barCodeContainer"}
+          = form_for :barcode, url: barcodes_path(format: :pdf), method: :post do
+            .form-group
+              %label Stock Number*
+              = text_field_tag "stock_number", nil, class: 'form-control', placeholder: '89293', required: true
+            .form-group
+              %label VIN*
+              %small
+                %strong (min length 17 characters)
+              = text_field_tag "vin", nil, minlength: 17, class: 'form-control', placeholder: '3VW5T7AU2KM028967', required: true
+            .form-group
+              = submit_tag "Create printout", class: 'btn btn-primary'
 
 
 = render partial: 'shared/map_popover'
