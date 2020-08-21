@@ -2,7 +2,7 @@
 %div{style: 'width:50%;border: 1px solid #e0e0e0;position:relative; padding: 10px 15px;'}
   = wicked_pdf_image_tag 'logo_black_small.png', style: 'position:absolute; width: 150px; top: 10px; right: 20px;'
 
-  %h1{style:'font-size: 40px;margin-bottom:0;margin-top: 0;'}= @stock_number
+  %h1{style:'font-size: 40px;margin-bottom:0;margin-top: 0;margin-top:10px;'}= @stock_number
 
   %div{style:'text-align: center;font-size: 35px;margin-top:20px;'}
     = "#{@vehicle.year} #{@vehicle.make} #{@vehicle.model}"
