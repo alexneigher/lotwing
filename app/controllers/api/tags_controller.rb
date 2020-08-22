@@ -44,7 +44,7 @@ module Api
       @tag.shape.update(most_recently_tagged_at: DateTime.current)
 
       # create a new event
-      event = @tag.events.create(event_params.merge(user_id: current_user.id, event_type: true_event_type, event_details: event_details))
+      event = @tag.events.create!(event_params.merge(user_id: current_user.id, event_type: true_event_type, event_details: event_details))
 
 
       # do event type specific stuff
