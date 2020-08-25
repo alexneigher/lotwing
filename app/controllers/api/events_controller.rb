@@ -10,7 +10,11 @@ module Api
     # PUT /api/events/:id
     def update
       event = @event.update(event_params)
-      
+
+      if event_params[:started_at].present?
+        event.tag.update!(active: false) #this "removes" the vehicle from the lot since the test drive has formally been started
+      end
+
       json_response(event)
       head :no_content
     end
