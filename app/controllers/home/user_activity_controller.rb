@@ -9,14 +9,10 @@ class Home::UserActivityController < ApplicationController
 
     all_dealership_users = current_user.dealership.users.active
 
-    grouped_by_user_events = current_user
-                              .dealership
-                              .events
-                              .where(event_type_hash)
-                              .where("events.created_at >= ?", DateTime.current.in_time_zone("US/Pacific").beginning_of_month)
-                              .group_by(&:user_id)
+    grouped_by_user_events = current_user.dealership.events.where(event_type_hash).where("events.created_at >= ?", DateTime.current.in_time_zone("US/Pacific").beginning_of_month).group_by(&:user_id)
 
     grouped_by_user_events.each do |user_id, events|
+      next unless user_id.in?(all_dealership_users.pluck(:id))
       last_day_events = events.select{|e| e.created_at.in_time_zone("US/Pacific") >= DateTime.current.in_time_zone("US/Pacific").beginning_of_day}.count
       last_week_events = events.select{ |e| e.created_at.in_time_zone("US/Pacific") >= 1.week.ago.in_time_zone("US/Pacific").beginning_of_day}.count
       mtd_events = events.select{|e| e.created_at.in_time_zone("US/Pacific") >= DateTime.current.in_time_zone("US/Pacific").beginning_of_month}.count
