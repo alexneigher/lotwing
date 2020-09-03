@@ -14,6 +14,10 @@
       %li
         %a.nav-link{"data-toggle" => "tab", :href => "#payment_tab"} Payment Info
 
+    - if current_user.id == 10000
+      %li
+        %a.nav-link{"data-toggle" => "tab", :href => "#deleted_data_tab"} Deleted vehicles/deals
+
   - if flash[:error]
     .alert.alert-danger.mt-2
       = flash[:error]
@@ -29,8 +33,11 @@
 
     #payment_tab.tab-pane
       = render partial: 'dealerships/partials/payments'
-      
-:javascript 
+
+    #deleted_data_tab.tab-pane
+      = render partial: 'dealerships/partials/deleted_data'
+
+:javascript
   $(function() {
     $('.datepicker').datepicker({
       dateFormat: 'yy-mm-dd'

@@ -54,6 +54,7 @@ Rails.application.routes.draw do
         get :landscaping
       end
     end
+    resources :tags, only: :create
   end
 
   devise_for :users
