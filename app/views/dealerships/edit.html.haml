@@ -14,9 +14,8 @@
       %li
         %a.nav-link{"data-toggle" => "tab", :href => "#payment_tab"} Payment Info
 
-    - if current_user.id == 10000
-      %li
-        %a.nav-link{"data-toggle" => "tab", :href => "#deleted_data_tab"} Deleted vehicles/deals
+    %li
+      %a.nav-link{"data-toggle" => "tab", :href => "#deleted_data_tab"} Deleted vehicles/deals
 
   - if flash[:error]
     .alert.alert-danger.mt-2

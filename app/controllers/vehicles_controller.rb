@@ -129,6 +129,10 @@ class VehiclesController < ApplicationController
   end
 
   private
+    def user_for_paper_trail
+      current_user.full_name
+    end
+
     def vehicle_params
       params.require(:vehicle).permit(:make, :model, :year, :vin, :color, :dealership_id, :usage_type, :sales_hold, :service_hold, :sales_hold_notes, :service_hold_notes, :stock_number )
     end

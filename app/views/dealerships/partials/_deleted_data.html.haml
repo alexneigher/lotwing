@@ -23,7 +23,7 @@
                   %td
                     = vehicle.deleted_at.in_time_zone('US/Pacific').strftime("%m/%d/%Y %l:%M %p")
                   %td
-                    Deletd by
+                    = vehicle.versions&.last&.whodunnit
 
 
   .col-md-6
@@ -53,6 +53,6 @@
                   %td
                     = deal.deleted_at.in_time_zone('US/Pacific').strftime("%m/%d/%Y %l:%M %p")
                   %td
-                    = deal.versions.last.whodunnit
+                    = deal.versions&.last&.whodunnit
 
 

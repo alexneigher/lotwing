@@ -154,8 +154,4 @@ Rails.application.routes.draw do
       put :stock_number_search
     end
   end
-
-  resources :tags do
-    get :deactivate
-  end
 end

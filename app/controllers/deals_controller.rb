@@ -1,6 +1,4 @@
 class DealsController < ApplicationController
-  before_action :set_paper_trail_whodunnit, only: [:update, :create]
-
   def new
     @deal = Deal.new
   end
