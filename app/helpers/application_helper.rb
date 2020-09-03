@@ -42,6 +42,15 @@ module ApplicationHelper
       end
   end
 
+  def vehicle_usage_type_text_color_class(usage_type)
+    case usage_type
+      when "is_used", "loaner"
+        "text-dark"
+      else
+        "text-white"
+      end
+  end
+
   def html_barcode(string)
     # barcode = Barby::Code128B.new(string)
     # barcode_for_html = Barby::HtmlOutputter.new(barcode)
