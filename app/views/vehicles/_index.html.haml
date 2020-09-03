@@ -53,12 +53,17 @@
                   = link_to vehicle_show_map_path(vehicle), class: ('text-dark' if vehicle.usage_type == "is_used"), remote: true do
                     = vehicle.stock_number
               - else
-                %td
-                  = vehicle.stock_number
-                  - if vehicle.is_currently_on_test_drive?
+                - is_on_test_drive = vehicle.is_currently_on_test_drive?
+
+                - if is_on_test_drive
+                  %td
+                    = vehicle.stock_number
                     .pull-right
                       %i.fa.fa-car
                       =" ~> "
+                - else
+                  %td.bg-danger.text-white
+                    = vehicle.stock_number
               %td
                 = vehicle.year
               %td

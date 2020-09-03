@@ -5,13 +5,13 @@ module ApplicationHelper
 
   def deal_rep_attribution_counts(deals)
     reps = deals.pluck(:sales_rep_id, :split_rep_id).flatten.uniq.reject(&:blank?)
-    
+
     rep_hash = Hash[*reps.map{ |x| [x, {new: 0, used: 0} ] }.flatten]
 
-    deals.where(split_rep_id:nil).group_by(&:sales_rep_id).each do |k , v| 
+    deals.where(split_rep_id:nil).group_by(&:sales_rep_id).each do |k , v|
 
       rep_hash[k] = {
-                      new: v.select{|d| d.is_used == false}.count, 
+                      new: v.select{|d| d.is_used == false}.count,
                       used: v.select{|d| d.is_used == true}.count
                     }
     end
@@ -28,7 +28,7 @@ module ApplicationHelper
 
   def vehicle_usage_type_bg_color(usage_type)
 
-    case usage_type 
+    case usage_type
       when "is_used"
         "#66CC00"
       when "is_new"
@@ -55,11 +55,11 @@ module ApplicationHelper
 
   def user_permission_list(permission)
     case permission
-    
+
       when 'admin'
-        "All" 
+        "All"
       when "sales_manager"
-       "Add/Modify Sales Users<br>Delete Vehicles<br>Modify Stock Number<br>Create Service Tickets<br>Create/modify/delete deals".html_safe 
+       "Add/Modify Sales Users<br>Delete Vehicles<br>Modify Stock Number<br>Create Service Tickets<br>Create/modify/delete deals".html_safe
       when 'sales_rep'
         "Create vehicles".html_safe
       when "service_user"
@@ -67,5 +67,5 @@ module ApplicationHelper
       when "sales_rep"
     end
   end
-  
+
 end
