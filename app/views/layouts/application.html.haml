@@ -4,7 +4,7 @@
     %title LotWing
     = csrf_meta_tags
     %meta{charset: 'utf-8'}
-    
+
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
     %link{:href => "/apple-icon-57x57.png", :rel => "apple-touch-icon", :sizes => "57x57"}/
@@ -32,20 +32,20 @@
         .container
           %a.navbar-brand{style: 'padding-top:10px;padding-bottom:10px;'}
             = image_tag "logo_light.png", style: 'max-width:100px;'
-          
+
           %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
             %span.navbar-toggler-icon
           #navbarResponsive.collapse.navbar-collapse
             %ul.navbar-nav.ml-auto
               = render partial: 'layouts/shared/logged_in_nav'
-       
-    .container-fluid  
-      - if user_signed_in?  
+
+    .container-fluid
+      - if user_signed_in?
         %ul.nav.nav-tabs.nav-justified.mb-2
           %li.nav-item
             = link_to lot_view_path, class: 'nav-link' + (' active' if params[:controller] == 'home' && params[:action] == 'show').to_s do
               Lot View
-              
+
           %li.nav-item
             = link_to vehicles_path, class: 'nav-link' + (' active' if params[:controller] == 'vehicles' && params[:action] == 'index').to_s do
               Vehicle Manager
@@ -72,10 +72,6 @@
               = link_to service_tickets_path, class: 'nav-link' + (' active' if params[:controller] == 'service_tickets').to_s do
                 Service Tickets
 
-          - if current_user.permission_level == 'admin'
-            %li.nav-item
-              = link_to new_tag_path, class: 'nav-link' do
-                Tag Manager
     = yield
     .container-fluid
       .row

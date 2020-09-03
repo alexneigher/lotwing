@@ -1,0 +1,44 @@
+%hr
+%h5.mb-0 User Deleted Vehicles
+%small.text-muted
+  Will be fully removed from the system once delivered in accounting
+.row
+  .col-12
+    .table-responsive.vehicle-table{style: 'max-height: 75vh;'}
+      %table.table.table-bordered.table-striped.table-sm
+        %thead
+          %tr
+            %th
+              Stock #
+            %th
+              Year
+            %th
+              Make
+            %th
+              Model
+            %th
+              Age
+        %tbody.small
+          - @deleted_vehicles.each do |vehicle|
+            %tr{id: dom_id(vehicle)}
+              %td
+                = vehicle.stock_number
+              %td
+                = vehicle.year
+              %td
+                = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
+                  = vehicle.make
+              %td
+                = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
+                  = vehicle.model
+                  - if vehicle.user_created?
+                    (User Created)
+                - if vehicle.sold?
+                  = vehicle.sold_status
+
+              %td
+                - if vehicle.data_feed_created?
+                  = vehicle.age_in_days
+                - else
+                  = (DateTime.current.to_date - vehicle.created_at.to_date).to_i
+                days

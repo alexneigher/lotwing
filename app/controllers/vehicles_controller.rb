@@ -25,7 +25,7 @@ class VehiclesController < ApplicationController
 
     if params.dig(:filter, :no_tag).present?
       @vehicles = Vehicle.where(id: vehicles_missing_tags(@dealership, @vehicles).pluck(:id))
-
+      @deleted_vehicles = @dealership.vehicles.only_deleted
     end
 
     @vehicles = @vehicles.page(params[:page]).per(50)

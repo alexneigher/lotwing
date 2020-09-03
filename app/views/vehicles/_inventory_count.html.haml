@@ -11,13 +11,13 @@
     = "Used: #{@grouped_vehicles['is_used'] || 0}"
 
 = link_to vehicles_path(filter: {usage_type: 'lease_return'}) do
-  %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('lease_return')}"}
+  %span.p-1.rounded.ml-1.text-white.small{style: "background-color: #{vehicle_usage_type_bg_color('lease_return')}"}
     = "LeaseRT: #{@grouped_vehicles['lease_return'] || 0}"
 
 = link_to vehicles_path(filter: {usage_type: 'loaner'}) do
-  %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('loaner')}"}
+  %span.p-1.rounded.ml-1.small.text-dark{style: "background-color: #{vehicle_usage_type_bg_color('loaner')}"}
     = "SrvLn: #{@grouped_vehicles['loaner'] || 0}"
 
 = link_to vehicles_path(filter: {usage_type: 'wholesale_unit'}) do
-  %span.p-1.rounded.ml-1.small{style: "background-color: #{vehicle_usage_type_bg_color('wholesale_unit')}"}
+  %span.p-1.rounded.ml-1.small.text-white{style: "background-color: #{vehicle_usage_type_bg_color('wholesale_unit')}"}
     = "Trd/Whl: #{@grouped_vehicles['wholesale_unit'] || 0}"

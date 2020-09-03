@@ -1,4 +1,6 @@
 class Vehicle < ApplicationRecord
+  acts_as_paranoid
+
   has_many :tags, dependent: :destroy
   has_many :shapes, through: :tags
 

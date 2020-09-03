@@ -3,6 +3,9 @@
     .col-sm-6
       = render partial: 'vehicles/index'
 
+      -if @deleted_vehicles.present?
+        = render partial: 'vehicles/deleted_index'
+
     -#---- RIGHT SIDE STARTS HERE
     .col-sm-6
       #vehicleDetailContainer

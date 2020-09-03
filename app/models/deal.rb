@@ -1,5 +1,7 @@
 class Deal < ApplicationRecord
   has_paper_trail
+  acts_as_paranoid
+
   belongs_to :dealership
   belongs_to :vehicle, foreign_key: "stock_number", primary_key: "stock_number", optional: true
 

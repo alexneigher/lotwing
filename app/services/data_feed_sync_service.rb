@@ -26,13 +26,13 @@ class DataFeedSyncService
     end
 
     def download_file
-      Net::FTP.open('ftp.upperpark.com', 'alexn2018', 'r7e@89uWb9q') do |ftp|    
+      Net::FTP.open('ftp.upperpark.com', 'alexn2018', 'r7e@89uWb9q') do |ftp|
         ftp.chdir('/')
         datafile = ftp.nlst().last
         ftp.getbinaryfile(datafile, datafile, 1024) do |c|
           @vehicle_data << c
         end
-      end      
+      end
     end
 
     #this part should be its own class separate from the FTP connection parts
@@ -40,7 +40,7 @@ class DataFeedSyncService
       stock_numbers = []
       #split file on new line, and do looping magic
       rows = @vehicle_data.split("\n")
-      
+
       # #start at 1 because headers are first
       (1..rows.length - 1).each do |i|
         # each row = 1 vehicle
@@ -48,7 +48,7 @@ class DataFeedSyncService
         data = row.split("|")
         stock_numbers << data[1] #so we know which vehicles to delete later
 
-        vehicle = dealership.vehicles.find_or_create_by(stock_number: data[1])
+        vehicle = dealership.vehicles.with_deleted.find_or_create_by(stock_number: data[1])
         vehicle
           .update(
             vin: data[0],

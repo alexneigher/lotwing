@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200821235403) do
+ActiveRecord::Schema.define(version: 20200903205139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,7 +148,9 @@ ActiveRecord::Schema.define(version: 20200821235403) do
     t.text "f_i_pre_sell_product_list"
     t.bigint "sales_rep_id"
     t.bigint "split_rep_id"
+    t.datetime "deleted_at"
     t.index ["dealership_id"], name: "index_deals_on_dealership_id"
+    t.index ["deleted_at"], name: "index_deals_on_deleted_at"
     t.index ["sales_rep_id"], name: "index_deals_on_sales_rep_id"
     t.index ["split_rep_id"], name: "index_deals_on_split_rep_id"
   end
@@ -339,7 +341,9 @@ ActiveRecord::Schema.define(version: 20200821235403) do
     t.string "service_hold_creator"
     t.datetime "sales_hold_created_at"
     t.datetime "service_hold_created_at"
+    t.datetime "deleted_at"
     t.index ["dealership_id"], name: "index_vehicles_on_dealership_id"
+    t.index ["deleted_at"], name: "index_vehicles_on_deleted_at"
   end
 
   create_table "versions", force: :cascade do |t|

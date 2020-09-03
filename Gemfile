@@ -18,6 +18,8 @@ gem 'chunky_png'
 
 gem 'kaminari'
 
+gem 'acts_as_paranoid'
+
 gem 'dalli'
 
 gem 'rack-cors', :require => 'rack/cors'
