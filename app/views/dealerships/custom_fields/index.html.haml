@@ -1,0 +1,26 @@
+%h3.text-center= @dealership.name
+
+.container
+  = render partial: 'dealerships/partials/subnavs', locals: { active_tab: 'custom_fields' }
+
+  .row
+    .col-md-4
+      .card
+        .card-header
+          Key Board Locations
+        %ul.list-group.list-group-flush
+          - @dealership.key_board_locations.each do |k|
+            %li.list-group-item
+              = k.name
+              .pull-right
+                = link_to edit_key_board_location_path(k), remote: true do
+                  %i.fa.fa-pencil
+
+        .card-body
+          = form_for :key_board_location, url: key_board_locations_path(), method: :post do |f|
+            = f.text_field :name, class: 'form-control form-control-sm', placeholder: 'Name'
+            = f.submit 'Save', class: 'btn btn-sm btn-primary mt-2 pull-right'
+
+
+    .col-md-4
+      #keyBoardLocationFormContainer

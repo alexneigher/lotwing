@@ -1,0 +1,95 @@
+%h3.text-center= @dealership.name
+
+.container
+  = render partial: 'dealerships/partials/subnavs', locals: { active_tab: 'deleted_data' }
+
+  .row
+    .col-12
+      = form_for :filters, url: dealership_deleted_records_path(@dealership), method: :get, autocomplete: "off" do
+        .row.pt-1
+          .col-md-12.form-inline.w-100
+            .input-group.w-100.mb-3{style:'padding:10px 15px; border-radius: 5px; border:1px solid #ced4da;'}
+              .input-group.mr-1
+                .input-group-prepend
+                  %span.input-group-text{style:'padding: 0 5px;'}
+                    %i.fa.fa-list
+                = text_field_tag "filters[stock_number]", params.dig(:filters, :stock_number), placeholder: 'Stock #', class: 'form-control form-control-sm'
+              .input-group
+                .input-group-prepend
+                  %span.input-group-text{style:'padding: 0 5px;'}
+                    %i.fa.fa-calendar
+                = text_field_tag "filters[start_date]", params.dig(:filters, :start_date), autocomplete: "off", placeholder: 'Start Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
+              .input-group
+                - unless params.dig(:filters, :mtd) == '1'
+                  .input-group-prepend
+                    %span.input-group-text{style:'padding: 0 5px;'}
+                      %i.fa.fa-calendar
+                  = text_field_tag "filters[end_date]", params.dig(:filters, :end_date), autocomplete: "off", placeholder: 'End Date', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
+
+
+              = submit_tag 'Search', class: 'ml-2 btn btn-sm btn-outline-secondary'
+
+  .row
+    .col-md-6
+      %h5 Deleted Vehicles
+
+      .row
+        .col-12
+          .table-responsive
+            %table.table.table-bordered.table-striped.table-sm
+              %thead
+                %tr
+                  %th
+                    Stock #
+                  %th
+                    Date/Time deleted
+                  %th
+                    Team Member
+
+              %tbody.small
+                - @deleted_vehicles.each do |vehicle|
+                  %tr
+                    %td
+                      = vehicle.stock_number
+                    %td
+                      = vehicle.deleted_at.in_time_zone('US/Pacific').strftime("%m/%d/%Y %l:%M %p")
+                    %td
+                      = vehicle.versions&.last&.whodunnit
+
+
+    .col-md-6
+      %h5 Deleted Deals
+      .row
+        .col-12
+          .table-responsive
+            %table.table.table-bordered.table-striped.table-sm
+              %thead
+                %tr
+                  %th
+                    Stock #
+                  %th
+                    Client Name
+                  %th
+                    Date/Time deleted
+                  %th
+                    Team Member
+
+              %tbody.small
+                - @deleted_deals.each do |deal|
+                  %tr
+                    %td
+                      = deal.stock_number
+                    %td
+                      = deal.client_last_name
+                    %td
+                      = deal.deleted_at.in_time_zone('US/Pacific').strftime("%m/%d/%Y %l:%M %p")
+                    %td
+                      = deal.versions&.last&.whodunnit
+
+:javascript
+  $(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd'
+     });
+
+  });

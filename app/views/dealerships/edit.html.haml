@@ -1,40 +1,16 @@
 %h3.text-center= @dealership.name
 
+
 .container
-  %ul.nav.nav-tabs
-    %li
-      %a.nav-link.active{"data-toggle" => "tab", :href => "#dealership_info"} Dealership Info
-    - unless current_user.permission_level == "sales_rep"
-      %li
-        %a.nav-link{"data-toggle" => "tab", :href => "#team_members"} Team Members
-    %li
-      %a.nav-link{"data-toggle" => "tab", :href => "#custom_fields"} Custom Fields
+  = render partial: 'dealerships/partials/subnavs', locals: {active_tab: 'edit'}
 
-    - if current_user.permission_level == "admin"
-      %li
-        %a.nav-link{"data-toggle" => "tab", :href => "#payment_tab"} Payment Info
-
-    %li
-      %a.nav-link{"data-toggle" => "tab", :href => "#deleted_data_tab"} Deleted vehicles/deals
 
   - if flash[:error]
     .alert.alert-danger.mt-2
       = flash[:error]
 
-  .tab-content.pt-3
-    #dealership_info.tab-pane.active
-      = render partial: 'dealerships/partials/dealership_info'
-    #team_members.tab-pane
-      = render partial: 'dealerships/partials/team_members'
+  = render partial: 'dealerships/partials/dealership_info'
 
-    #custom_fields.tab-pane
-      = render partial: 'dealerships/partials/custom_fields'
-
-    #payment_tab.tab-pane
-      = render partial: 'dealerships/partials/payments'
-
-    #deleted_data_tab.tab-pane
-      = render partial: 'dealerships/partials/deleted_data'
 
 :javascript
   $(function() {
