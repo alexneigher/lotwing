@@ -2,6 +2,12 @@
   .col-6
     = "#{@vehicle.make} #{@vehicle.model} (#{@vehicle.stock_number})"
     %strong= @vehicle.vin
+    %br
+    %small
+      - if current_user.permission_level == "admin" || current_user.permission_level == "sales_manager"
+        = link_to vehicle_path(@vehicle), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure?'} do
+          %i.fa.fa-trash
+          Delivered (Delete)
   .col-6
     - if @vehicle.open_service_tickets.any?
       = link_to service_tickets_path(search: {stock_number: @vehicle.stock_number}) do
