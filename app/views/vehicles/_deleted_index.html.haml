@@ -26,13 +26,13 @@
               %td
                 = vehicle.year
               %td
-                = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
-                  = vehicle.make
+                = vehicle.make
               %td
-                = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
-                  = vehicle.model
-                  - if vehicle.user_created?
-                    (User Created)
+                = vehicle.model
+
+                - if vehicle.user_created?
+                  (User Created)
+
                 - if vehicle.sold?
                   = vehicle.sold_status
 
