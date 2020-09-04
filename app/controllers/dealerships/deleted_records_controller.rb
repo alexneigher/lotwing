@@ -28,4 +28,17 @@ class Dealerships::DeletedRecordsController < ApplicationController
     end
 
   end
+
+  #how to un-delete a record
+  def update
+    @dealership = current_user.dealership
+
+    redirect_to root_path unless params[:klass].in?(['Vehicle', 'Deal'])
+    @klass = params[:klass].downcase.pluralize
+
+    record = @dealership.send(@klass).with_deleted.find(params[:id])
+    record.recover
+
+    redirect_to dealership_deleted_records_path(@dealership)
+  end
 end

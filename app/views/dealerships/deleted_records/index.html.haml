@@ -45,7 +45,8 @@
                     Date/Time deleted
                   %th
                     Team Member
-
+                  %th
+                    Restore
               %tbody.small
                 - @deleted_vehicles.each do |vehicle|
                   %tr
@@ -55,6 +56,10 @@
                       = vehicle.deleted_at.in_time_zone('US/Pacific').strftime("%m/%d/%Y %l:%M %p")
                     %td
                       = vehicle.versions&.last&.whodunnit
+                    %td
+                      = link_to dealership_deleted_record_path(@dealership, vehicle.id, klass: vehicle.class), method: :put do
+                        %i.fa.fa-recycle
+                        Restore
 
 
     .col-md-6
@@ -73,6 +78,8 @@
                     Date/Time deleted
                   %th
                     Team Member
+                  %th
+                    Restore
 
               %tbody.small
                 - @deleted_deals.each do |deal|
@@ -85,6 +92,10 @@
                       = deal.deleted_at.in_time_zone('US/Pacific').strftime("%m/%d/%Y %l:%M %p")
                     %td
                       = deal.versions&.last&.whodunnit
+                    %td
+                      = link_to dealership_deleted_record_path(@dealership, deal.id, klass: deal.class), method: :put do
+                        %i.fa.fa-recycle
+                        Restore
 
 :javascript
   $(function() {

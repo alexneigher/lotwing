@@ -119,7 +119,7 @@ Rails.application.routes.draw do
   resources :dealerships, only: [:edit, :update] do
     resources :payment_plans, controller: 'dealerships/payment_plans', only: :create
     resources :users, controller: 'dealerships/users'
-    resources :deleted_records, controller: 'dealerships/deleted_records', only: :index
+    resources :deleted_records, controller: 'dealerships/deleted_records', only: [:index, :update]
     resources :team_members, controller: 'dealerships/team_members', only: :index
     resources :custom_fields, controller: 'dealerships/custom_fields', only: :index
     resources :payment_info, controller: 'dealerships/payment_info', only: :index
