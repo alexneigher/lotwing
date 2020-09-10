@@ -1,9 +1,23 @@
 .row
-  .col-8
-  .col-4
+  .col-12
     = form_tag home_user_activity_index_path, method: :get, remote: true do
-      = select_tag 'event_type', options_for_select(Event.event_types, @event_type), class: 'form-control form-control-sm', include_blank: 'All Actions', onChange: 'Rails.fire(this.form, "submit")'
-      = submit_tag 'submit', class: 'd-none'
+      .row.pt-1.mb-5
+        .col-md-12.form-inline.w-100
+          .input-group
+            .input-group-prepend
+              %span.input-group-text{style:'padding: 0 5px;'}
+                %i.fa.fa-calendar
+            = text_field_tag "start_date", params.dig(:start_date), autocomplete: "off", placeholder: 'Start Date', onChange: 'Rails.fire(this.form, "submit")', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
+          .input-group
+            - unless params.dig(:filters, :mtd) == '1'
+              .input-group-prepend
+                %span.input-group-text{style:'padding: 0 5px;'}
+                  %i.fa.fa-calendar
+              = text_field_tag "end_date", params.dig(:end_date), autocomplete: "off", placeholder: 'End Date', onChange: 'Rails.fire(this.form, "submit")', class: 'form-control form-control-sm mr-1 datepicker', style: 'width: 100px;'
+          .input-group
+
+            = select_tag 'event_type', options_for_select(Event.event_types, @event_type), class: 'form-control form-control-sm', include_blank: 'All Actions', onChange: 'Rails.fire(this.form, "submit")'
+            = submit_tag 'submit', class: 'd-none'
 .row.mb-2
   .col-12
     .row
@@ -34,3 +48,9 @@
               .col-4{class: ('text-orange' if event_count["mtd"]&.zero?) }
                 = event_count["mtd"]
 
+:javascript
+  $(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd'
+     });
+  });
