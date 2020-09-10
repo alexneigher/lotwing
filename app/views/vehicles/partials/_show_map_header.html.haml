@@ -5,7 +5,7 @@
     %br
     %small
       - if current_user.permission_level == "admin" || current_user.permission_level == "sales_manager"
-        = link_to vehicle_path(@vehicle), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure?'} do
+        = link_to vehicle_path(@vehicle, redirect_to_link: params[:redirect_to_link].presence), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure?'} do
           %i.fa.fa-trash
           Delivered (Delete)
   .col-6

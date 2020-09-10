@@ -58,6 +58,8 @@ class VehiclesController < ApplicationController
     @events = @vehicle.events.includes(:user, :resolutions)
     dealership = current_user.dealership
 
+    @redirect_to_link = params[:redirect_to_link]
+
     @vehicle_color = @vehicle.map_color
   end
 
@@ -98,6 +100,8 @@ class VehiclesController < ApplicationController
     #when triggering delete from a filtered lot view, sometimes there will be a display mode
     if params[:display_mode].present?
       redirect_to lot_view_path(display_mode: params[:display_mode])
+    elsif params[:redirect_to_link].present?
+      redirect_to params[:redirect_to_link]
     else
       redirect_to vehicles_path
     end
