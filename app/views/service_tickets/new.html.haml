@@ -7,9 +7,9 @@
     = f.submit "Create Service Ticket", class: 'btn btn-primary mb-3'
     %br
     %small.text-muted
-      ( You must create the ticket 
+      ( You must create the ticket
       before you can add jobs to it.)
-      
+
 :javascript
   $(function(){
     //setup before functions
@@ -27,7 +27,7 @@
     function doneTyping () {
       if ($input.val()){
         $('.loading-spin').removeClass('d-none');
-        
+
         $.ajax({
           url:"/service_tickets/stock_number_search",
           method: 'PUT',

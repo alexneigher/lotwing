@@ -8,6 +8,7 @@ class ServiceTicket < ApplicationRecord
   scope :complete, -> {where(status: 'Complete')}
 
   has_many :service_ticket_jobs, dependent: :destroy
+  has_many :service_ticket_departments, dependent: :destroy
 
   has_one :vehicle, foreign_key: "stock_number", primary_key: "stock_number"
   accepts_nested_attributes_for :service_ticket_jobs
@@ -18,7 +19,8 @@ class ServiceTicket < ApplicationRecord
 
   private
     def notify_dealership
-      ServiceTicketMailer.notify_about_service_ticket_created(self)
+      puts self
+      #ServiceTicketMailer.notify_about_service_ticket_created(self)
     end
 
     def maybe_persist_completed_time

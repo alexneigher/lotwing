@@ -1,0 +1,80 @@
+.modal{id: "createServiceTicketModal_#{dom_id(@vehicle)}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-lg{:role => "document"}
+    .modal-content
+      .modal-header
+        %h3 Create Service Ticket
+      = form_for :service_ticket, url: service_tickets_path, method: :post do |f|
+        .modal-body
+          = f.hidden_field :status, value: 'New'
+          = f.hidden_field :created_by_user_id, value: current_user.id
+          .form-group
+            .row
+              .col-3
+                %label Stock Number
+                = f.text_field :stock_number, value: @vehicle.stock_number, class: 'form-control'
+              .col-3
+                %label Make
+                = f.text_field :make, value: @vehicle.make, class: 'form-control'
+              .col-3
+                %label Model
+                = f.text_field :model, value: @vehicle.model, class: 'form-control'
+              .col-3
+                %label Year
+                = f.text_field :year, value: @vehicle.year, class: 'form-control'
+          .form-group
+            .row
+              .col-3
+                %label Vin
+                = f.text_field :vin, value: @vehicle.vin, class: 'form-control'
+              .col-3
+                %label Color
+                = f.text_field :color, value: @vehicle.color, class: 'form-control'
+              .col-3
+                %label Miles
+                = f.text_field :mileage, value: @vehicle.mileage, class: 'form-control'
+
+
+          .form-group
+            .row
+              .col-6
+                %label Complete By
+                = f.text_field :complete_by_datetime, value: (@service_ticket&.complete_by_datetime || DateTime.current).in_time_zone("Pacific Time (US & Canada)").strftime("%d %B %Y %l:%M %p %Z"), class: 'form-control'
+          .form-group
+            .row
+
+              .col-12
+                .job-form-fields-container
+                  .job-wrapper
+                    %label Job
+                    = text_area_tag "service_ticket_jobs[]title",nil, class: 'form-control'
+                    = hidden_field_tag 'service_ticket_jobs[]user_id', current_user.id
+                .btn.btn-sm.btn-secondary.mt-2#js-add-additional-job-btn
+                  Add additional job
+              .col-12
+                %hr
+                .mt-2
+                  .text-orange Select department(s) for ticket notification:
+                  .row
+                    .col-md-4
+                      %label
+                        = check_box_tag 'service_ticket_departments[]name', "service_department"
+                        Service Department
+                    .col-md-4
+                      %label
+                        = check_box_tag 'service_ticket_departments[]name', "collision_department"
+                        Collision Department
+                    .col-md-4
+                      %label
+                        = check_box_tag 'service_ticket_departments[]name', "parts_department"
+                        Parts Department
+
+
+        .modal-footer
+          = f.submit "Create Service Ticket", class: 'btn btn-primary'
+
+
+:javascript
+  $('#js-add-additional-job-btn').click(function(){
+    html = $('.job-wrapper').html();
+    $('.job-form-fields-container').append(html);
+  })

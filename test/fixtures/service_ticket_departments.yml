@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  service_ticket: one
+  is_complete: false
+  is_in_progress: false
+
+two:
+  name: MyString
+  service_ticket: two
+  is_complete: false
+  is_in_progress: false

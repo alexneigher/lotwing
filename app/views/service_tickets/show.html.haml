@@ -5,17 +5,17 @@
     = link_to "Edit details", edit_service_ticket_path(@service_ticket)
   .row.mt-3
     .col-md-4
-      %h4 
-        Service Ticket For: 
+      %h4
+        Service Ticket For:
         %span.text-orange= @service_ticket.stock_number
     .col-md-5
-      %h4 
-        Complete By: 
+      %h4
+        Complete By:
         - if @service_ticket.complete_by_datetime.present?
           %span.text-orange= @service_ticket.complete_by_datetime.in_time_zone("Pacific Time (US & Canada)").strftime("%d %B %Y %l:%M %p")
     .col-md-3
-      %h4 
-        Status: 
+      %h4
+        Status:
         %span.text-orange= @service_ticket.status
 
   %hr
@@ -45,7 +45,7 @@
                 = @service_ticket.mileage
               %td.py-1
                 = @service_ticket.year
-              %td.py-1 
+              %td.py-1
                 - if @service_ticket&.vehicle&.parking_space&.geo_info
                   / Button trigger modal
                   = link_to vehicle_show_map_path(@service_ticket&.vehicle), remote: true do
@@ -57,15 +57,18 @@
     .col-4
       .card
         .card-body
+          = @service_ticket.service_ticket_departments.inspect
+      .card
+        .card-body
           %h6.text-center For service department
 
           .row
             .col-md-6
               = link_to service_ticket_path(@service_ticket, service_ticket: {status: 'In Progress'}), method: :put do
-                %btn.btn.btn-primary.btn-block.btn-sm Mark in progress 
+                %btn.btn.btn-primary.btn-block.btn-sm Mark in progress
             .col-md-6
               = link_to service_ticket_path(@service_ticket, service_ticket: {status: 'Complete'}), method: :put do
-                %btn.btn.btn-success.btn-block.btn-sm Mark complete 
+                %btn.btn.btn-success.btn-block.btn-sm Mark complete
   .row
     .col-9
       %h4 Jobs
@@ -78,8 +81,8 @@
                 %small.text-muted= "#{job.user.full_name} - #{job.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m-%e-%Y")}"
               .col-3.text-right
                 = link_to "Add job note", "#", class: 'btn btn-info btn-sm', "aria-controls" => "collapseExample", "aria-expanded" => "false", "data-target" => "#newJobNote", "data-toggle" => "collapse"
-                
-               
+
+
             %h4.pt-0
               = job.title
             %hr
@@ -106,7 +109,7 @@
                     = f.text_area :text, rows: 2, placeholder: 'Add note text here', class: 'form-control'
                     = f.submit "Save note", class: 'btn btn-sm btn-primary mt-3 pull-right'
         %hr
-                
+
   .row
     .col-5
       .card.mb-2
@@ -131,13 +134,13 @@
           %span{"aria-hidden" => "true"} ×
       .modal-body
         .row
-          #map{ :style => "width: 100%; height: 400px" }        
+          #map{ :style => "width: 100%; height: 400px" }
           .d-none
             //place all dom-dependent info here
             %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
-            %input#dealership_map_zoom{value: current_user.dealership.map_zoom }          
+            %input#dealership_map_zoom{value: current_user.dealership.map_zoom }
       .footer
-        
+
 
 - if @service_ticket&.vehicle&.parking_space&.geo_info
   :javascript
@@ -145,7 +148,7 @@
       $('#mapModal').on('shown.bs.modal', function (event) {
         //the map was just shown, here we can extract just the vehicle in question. and render it to the map
         window.map.resize();
-      }); 
+      });
 
       mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleG5laWdoZXIiLCJhIjoiY2psZ3I1bTllMDF5ZjNwdDUydjQzMWJ1cCJ9.nG0jV5mQE65ySlh66w5faQ';
       window.map = new mapboxgl.Map({
@@ -160,8 +163,8 @@
             {
               id: 'background',
               type: 'background',
-              paint: { 
-                'background-color': 'white' 
+              paint: {
+                'background-color': 'white'
               }
             }
           ]
