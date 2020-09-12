@@ -49,7 +49,7 @@ module Dealerships
 
     private
       def user_params
-        params.require(:user).permit(:email, :full_name, :permission_level, :status, special_permissions: [], email_preference_attributes:[:id, :note_email, :duplicate_stock_number_email, :service_ticket_email] )
+        params.require(:user).permit(:email, :full_name, :permission_level, :status, special_permissions: [], email_preference_attributes:[:id, :note_email, :duplicate_stock_number_email, :service_department_email, :collision_department_email, :parts_department_email] )
       end
   end
 end

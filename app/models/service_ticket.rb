@@ -12,23 +12,4 @@ class ServiceTicket < ApplicationRecord
 
   has_one :vehicle, foreign_key: "stock_number", primary_key: "stock_number"
   accepts_nested_attributes_for :service_ticket_jobs
-
-  after_create :notify_dealership
-
-  after_update :maybe_persist_completed_time
-
-  private
-    def notify_dealership
-      puts self
-      #ServiceTicketMailer.notify_about_service_ticket_created(self)
-    end
-
-    def maybe_persist_completed_time
-      if self.saved_change_to_status? && self.status == "Complete"
-        # we just changes the status to complete, set the time
-        self.update( completed_at: DateTime.current )
-      end
-    end
-
-
 end

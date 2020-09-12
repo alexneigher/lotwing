@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200911035120) do
+ActiveRecord::Schema.define(version: 20200912180308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,9 @@ ActiveRecord::Schema.define(version: 20200911035120) do
     t.boolean "duplicate_stock_number_email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "service_department_email", default: false
+    t.boolean "collision_department_email", default: false
+    t.boolean "parts_department_email", default: false
     t.index ["user_id"], name: "index_email_preferences_on_user_id"
   end
 

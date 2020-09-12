@@ -22,13 +22,24 @@
 
               %br
               %label
-                = ff.check_box :service_ticket_email
-                Service Ticket Email
+                = ff.check_box :duplicate_stock_number_email
+                Duplicate Stock Number Email
 
               %br
               %label
-                = ff.check_box :duplicate_stock_number_email
-                Duplicate Stock Number Email
+                = ff.check_box :service_department_email
+                Service Department Email
+
+              %br
+              %label
+                = ff.check_box :collision_department_email
+                Collision Department Email
+
+              %br
+              %label
+                = ff.check_box :parts_department_email
+                Parts Department Email
+
             %br
             %label
               = f.collection_check_boxes(:special_permissions, { 'Generate Bar Codes': 'generate_bar_codes' }, :last, :first)

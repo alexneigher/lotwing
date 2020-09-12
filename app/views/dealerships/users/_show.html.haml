@@ -19,12 +19,19 @@
           %small
             %strong Note Email:
             = @user.email_preference.note_email?
-            %br
-            %strong Service Ticket Email:
-            = @user.email_preference.service_ticket_email?
+
             %br
             %strong Duplicate Stock Number Email:
             = @user.email_preference.duplicate_stock_number_email?
+            %br
+            %strong Service Department Email:
+            = @user.email_preference.service_department_email?
+            %br
+            %strong Collision Department Email:
+            = @user.email_preference.collision_department_email?
+            %br
+            %strong Parts Department Email:
+            = @user.email_preference.parts_department_email?
 
   .card-footer
     - unless @user == current_user || @user.permission_level == "admin"

@@ -1,21 +1,25 @@
 class ServiceTicketMailer < ActionMailer::Base
   default :from => "Lotwing Admin <admin@lotwing.herokuapp.com>"
 
-  def self.notify_about_service_ticket_created(service_ticket)
-    @service_ticket = service_ticket
+  def self.notify_about_service_ticket_created(service_ticket_department)
+    @service_ticket_department = service_ticket_department
+    @service_ticket = @service_ticket_department.service_ticket
+
+    department_email = @service_ticket_department.name + "_email"
 
     recipients = @service_ticket
                   .dealership
                   .users
                   .active
                   .joins(:email_preference)
-                  .where(email_preferences: {service_ticket_email: true})
+                  .where(email_preferences: {department_email => true})
                   .pluck(:email)
                   .uniq
 
     recipients.each do |email|
-      ServiceTicketMailer.new_service_ticket_created(service_ticket, email.strip).deliver
+      ServiceTicketMailer.new_service_ticket_created(@service_ticket, email.strip).deliver
     end
+
   end
 
   def new_service_ticket_created(service_ticket, email)

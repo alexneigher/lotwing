@@ -22,16 +22,30 @@
                 %br
                 = user.email
             .col-6
-              %strong Service Ticket Email Notifications
-              - @dealership_users.active.where(email_preferences: {service_ticket_email: true}).each do |user|
-                %br
-                = user.email
-          .row.mt-3
-            .col-6
               %strong Duplicate Stock Number Email Notifications
               - @dealership_users.active.where(email_preferences: {duplicate_stock_number_email: true}).each do |user|
                 %br
                 = user.email
+
+          .row.mt-3
+            .col-6
+              %strong Service Department Email Notifications
+              - @dealership_users.active.where(email_preferences: {service_department_email: true}).each do |user|
+                %br
+                = user.email
+            .col-6
+              %strong Collision Department Email Notifications
+              - @dealership_users.active.where(email_preferences: {collision_department_email: true}).each do |user|
+                %br
+                = user.email
+          .row.mt-3
+            .col-6
+              %strong Parts Department Email Notifications
+              - @dealership_users.active.where(email_preferences: {parts_department_email: true}).each do |user|
+                %br
+                = user.email
+
+
 
     .col-md-3
       .card.bg-light

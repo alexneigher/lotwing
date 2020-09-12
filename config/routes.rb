@@ -84,9 +84,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :notes, only: [:create, :edit, :update]
+  resources :service_ticket_departments, only: :update
 
-  resources :service_ticket_jobs, only: :create
+  resources :notes, only: [:create, :edit, :update]
 
   resources :suggested_trade_dealerships, only: :destroy
 

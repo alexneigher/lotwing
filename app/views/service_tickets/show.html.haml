@@ -21,7 +21,7 @@
   %hr
 
   .row
-    .col-8
+    .col-7
       .table-responsive.small
         %table.table.table-borderless
           %thead
@@ -54,21 +54,42 @@
             %tr
               %td{colspan: 6}
                 = @service_ticket.color
-    .col-4
+    .col-5
       .card
         .card-body
-          = @service_ticket.service_ticket_departments.inspect
-      .card
-        .card-body
-          %h6.text-center For service department
+          .row.small.no-gutters
+            .col-3
+              %div{style:"margin-top: 25px;"}
+                %label
+                  %strong.text-primary In Progress
+                %br
+                %label
+                  %strong.text-success Complete
 
-          .row
-            .col-md-6
-              = link_to service_ticket_path(@service_ticket, service_ticket: {status: 'In Progress'}), method: :put do
-                %btn.btn.btn-primary.btn-block.btn-sm Mark in progress
-            .col-md-6
-              = link_to service_ticket_path(@service_ticket, service_ticket: {status: 'Complete'}), method: :put do
-                %btn.btn.btn-success.btn-block.btn-sm Mark complete
+            - @service_ticket.service_ticket_departments.compact.each do |std|
+              .col-3.text-center
+                %strong= std.formatted_name
+                = form_for std, url: service_ticket_department_path(std) do |f|
+
+                  %label.mt-2
+                    = f.check_box :is_in_progress, onclick: 'this.form.submit()'
+                  %br
+                  %label
+                    = f.check_box :is_complete, onclick: 'this.form.submit()'
+                  = f.submit '', class: 'd-none'
+
+
+            - dept_names = @service_ticket.service_ticket_departments.pluck(:name).compact
+            - [ServiceTicketDepartment::ALL_DEPARTMENTS - dept_names].flatten.each do |remaining_department|
+              .col-3.text-center
+                %strong.text-muted
+                  = remaining_department.split("_").first.titleize + " Dept."
+                  %div
+                    %label.mt-2
+                      x
+                    %br
+                    %label
+                      x
   .row
     .col-9
       %h4 Jobs
@@ -108,21 +129,6 @@
                     = f.hidden_field :service_ticket_job_id, value: job.id
                     = f.text_area :text, rows: 2, placeholder: 'Add note text here', class: 'form-control'
                     = f.submit "Save note", class: 'btn btn-sm btn-primary mt-3 pull-right'
-        %hr
-
-  .row
-    .col-5
-      .card.mb-2
-        .card-header
-          Add new Job
-        .card-body
-          = form_for :service_ticket_job, url: service_ticket_jobs_path(), method: :post do |f|
-            = f.hidden_field :service_ticket_id, value: @service_ticket.id
-            = f.hidden_field :user_id, value: current_user.id
-            .form-group
-              %label Title
-              = f.text_area :title, rows: 3, placeholder: 'The blinker fluid is low', class: 'form-control'
-            = f.submit "Create Job", class: 'btn btn-sm pull-right btn-primary'
 
 
 #mapModal.modal{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}
@@ -197,4 +203,3 @@
       });
     })//$(function)
 
-  })
