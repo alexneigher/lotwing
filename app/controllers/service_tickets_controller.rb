@@ -39,7 +39,8 @@ class ServiceTicketsController < ApplicationController
         @service_ticket.service_ticket_departments.create(name: service_ticket_department[:name])
       end
 
-      redirect_to service_ticket_path(@service_ticket)
+      #todo redirect to the right vehicle selected
+      redirect_to vehicles_path
     else
       raise @service_ticket.errors.full_messages.to_s
     end
