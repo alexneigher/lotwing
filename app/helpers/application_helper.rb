@@ -77,4 +77,14 @@ module ApplicationHelper
     end
   end
 
+  def grouped_by_permission_for_select(users)
+    a = []
+    users.group_by(&:permission_level).each do |p, users|
+      a << ["----", nil]
+      users.each do |u|
+        a << [u.full_name, u.id]
+      end
+    end
+    return a
+  end
 end

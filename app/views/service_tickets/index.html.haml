@@ -2,8 +2,8 @@
   .row.mb-1
     .col-md-2
       %h3.text-center Service Tickets
-      
-    .col-md-10   
+
+    .col-md-10
       = form_for :filters, url: service_tickets_path, method: :get, autocomplete: "off" do
         .row
           .col-lg-2
@@ -23,11 +23,12 @@
               %th Year
               %th Written By
               %th Time in Shop
+              %th Dept.
               %th Status
-              
+
           %tbody
             %tr
-              %td{colspan: 8}
+              %td{colspan: 9}
                 %strong OPEN
             - @service_tickets.incomplete.order(created_at: :desc).each do |service_ticket|
               %tr
@@ -41,11 +42,12 @@
                 %td= service_ticket.created_by_user.full_name
                 %td
                   = distance_of_time_in_words(DateTime.current.in_time_zone("Pacific Time (US & Canada)"), service_ticket.created_at.in_time_zone("Pacific Time (US & Canada)") )
-                  
+                %td
+                  = service_ticket.service_ticket_departments.pluck(:name).map{|d| d[0]&.upcase}.join('')
                 %td.text-danger= service_ticket.status
 
             %tr
-              %td{colspan: 8}
+              %td{colspan: 9}
                 %strong COMPLETED
 
 
@@ -62,11 +64,11 @@
                 %td
                   - if service_ticket.completed_at
                     = distance_of_time_in_words(service_ticket.completed_at.in_time_zone("Pacific Time (US & Canada)"), service_ticket.created_at.in_time_zone("Pacific Time (US & Canada)") )
-
-                    
+                %td
+                  = service_ticket.service_ticket_departments.pluck(:name).map{|d| d[0]}.join(' ')
                 %td.text-danger= service_ticket.status
 
-   
-                
 
-            
+
+
+

@@ -1,7 +1,7 @@
 class ServiceTicketsController < ApplicationController
 
   def index
-    @service_tickets = current_user.dealership.service_tickets.includes(:created_by_user, :completed_by_user)
+    @service_tickets = current_user.dealership.service_tickets.includes(:created_by_user, :completed_by_user, :service_ticket_departments)
 
     if params.dig(:search, :stock_number)
       @service_tickets = @service_tickets.where(stock_number: params.dig(:search, :stock_number))

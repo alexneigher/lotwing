@@ -128,7 +128,14 @@
                   = form_for :note, url: notes_path(), method: :post do |f|
                     = f.hidden_field :service_ticket_job_id, value: job.id
                     = f.text_area :text, rows: 2, placeholder: 'Add note text here', class: 'form-control'
-                    = f.submit "Save note", class: 'btn btn-sm btn-primary mt-3 pull-right'
+                    .row
+                      .col-6
+                        %label Notify:
+                        - grouped_users = grouped_by_permission_for_select(current_user.dealership.users)
+                        - options = [['Service Dept.', 'service_department'], ['Collision Dept.', 'collision_department'], ['Parts Dept.', 'parts_department']].push(*grouped_users)
+                        = select_tag 'notify_by_email', options_for_select(options), class: 'form-control'
+                      .col-6
+                        = f.submit "Save note", class: 'btn btn-sm btn-primary mt-3 pull-right'
 
 
 #mapModal.modal{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}

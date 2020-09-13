@@ -2,7 +2,11 @@ class NotesController < ApplicationController
 
   def create
     @service_ticket_job = ServiceTicketJob.find(params[:note][:service_ticket_job_id])
-    @service_ticket_job.notes.create( note_params.merge(user_id: current_user.id) )
+    note = @service_ticket_job.notes.create( note_params.merge(user_id: current_user.id) )
+
+    if params[:notify_by_email].present?
+      NoteMailer.new_service_ticket_note(params[:notify_by_email], note.id)
+    end
 
     redirect_to service_ticket_path(@service_ticket_job.service_ticket)
   end
