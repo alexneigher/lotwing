@@ -3,7 +3,7 @@
     .modal-content
       .modal-header
         %h3 Create Service Ticket
-      = form_for :service_ticket, url: service_tickets_path, method: :post do |f|
+      = form_for :service_ticket, url: service_tickets_path, html: {class: 'service_ticket_form', onSubmit: "return validate_one_checkbox()"}, method: :post do |f|
         .modal-body
           = f.hidden_field :status, value: 'New'
           = f.hidden_field :created_by_user_id, value: current_user.id
@@ -55,26 +55,34 @@
                 .mt-2
                   .text-orange Select department(s) for ticket notification:
                   .row
+                    .col-12
+                      .checkbox-error.text-danger
                     .col-md-4
                       %label
-                        = check_box_tag 'service_ticket_departments[]name', "service_department"
+                        = check_box_tag 'service_ticket_departments[]name', "service_department", nil,onclick: "$('.js-submit-create-ticket').attr('disabled', false);"
                         Service Department
                     .col-md-4
                       %label
-                        = check_box_tag 'service_ticket_departments[]name', "collision_department"
+                        = check_box_tag 'service_ticket_departments[]name', "collision_department", nil,onclick: "$('.js-submit-create-ticket').attr('disabled', false);"
                         Collision Department
                     .col-md-4
                       %label
-                        = check_box_tag 'service_ticket_departments[]name', "parts_department"
+                        = check_box_tag 'service_ticket_departments[]name', "parts_department", nil,onclick: "$('.js-submit-create-ticket').attr('disabled', false);"
                         Parts Department
 
 
         .modal-footer
-          = f.submit "Create Service Ticket", class: 'btn btn-primary'
+          = f.submit "Create Service Ticket", class: 'btn btn-primary js-submit-create-ticket'
 
 
 :javascript
-  $('#js-add-additional-job-btn').click(function(){
-    html = $('.job-wrapper').html();
-    $('.job-form-fields-container').append(html);
-  })
+
+  function validate_one_checkbox() {
+    if($('.service_ticket_form input[type=checkbox]:checked').length > 0) {
+      ('.js-submit-create-ticket').attr('disabled', false);
+      return true
+    }else{
+      $('.checkbox-error').html('Please select a department');
+      return false
+    }
+  }
