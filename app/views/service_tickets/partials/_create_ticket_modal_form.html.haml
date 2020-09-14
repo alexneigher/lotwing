@@ -76,6 +76,10 @@
 
 
 :javascript
+  $('#js-add-additional-job-btn').click(function(){
+    html = $(".job-wrapper").html();
+    $('.job-form-fields-container').append(html);
+  })
 
   function validate_one_checkbox() {
     if($('.service_ticket_form input[type=checkbox]:checked').length > 0) {
