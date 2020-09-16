@@ -86,7 +86,7 @@ class DataFeedSyncService
           )
       end
 
-      dealership.vehicles.data_feed_deleteable.where.not(stock_number: stock_numbers).destroy_all #delete all data feed inventory that does not show up
+      dealership.vehicles.with_deleted.data_feed_deleteable.where.not(stock_number: stock_numbers).destroy_all #delete all data feed inventory that does not show up
       dealership.data_sync.update(last_run_at: DateTime.now)
     end
 
