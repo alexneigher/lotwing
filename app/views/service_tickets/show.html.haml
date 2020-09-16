@@ -66,7 +66,7 @@
                 %label
                   %strong.text-success Complete
 
-            - @service_ticket.service_ticket_departments.compact.each do |std|
+            - @service_ticket.service_ticket_departments.order(:id).compact.each do |std|
               .col-3.text-center
                 %strong= std.formatted_name
                 = form_for std, url: service_ticket_department_path(std) do |f|
@@ -79,7 +79,7 @@
                   = f.submit '', class: 'd-none'
 
 
-            - dept_names = @service_ticket.service_ticket_departments.pluck(:name).compact
+            - dept_names = @service_ticket.service_ticket_departments.order(:id).pluck(:name).compact
             - [ServiceTicketDepartment::ALL_DEPARTMENTS - dept_names].flatten.each do |remaining_department|
               .col-3.text-center
                 %strong.text-muted
