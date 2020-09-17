@@ -47,6 +47,8 @@
                     Team Member
                   %th
                     Restore
+                  %th
+                    Hard Delete
               %tbody.small
                 - @deleted_vehicles.each do |vehicle|
                   %tr
@@ -60,6 +62,11 @@
                       = link_to dealership_deleted_record_path(@dealership, vehicle.id, klass: vehicle.class), method: :put do
                         %i.fa.fa-recycle
                         Restore
+                    %td
+                      = link_to dealership_deleted_record_path(@dealership, vehicle.id, klass: vehicle.class), method: :delete do
+                        .text-danger
+                          %i.fa.fa-trash
+                          Delete
 
 
     .col-md-6
@@ -80,6 +87,8 @@
                     Team Member
                   %th
                     Restore
+                  %th
+                    Hard Delete
 
               %tbody.small
                 - @deleted_deals.each do |deal|
@@ -96,6 +105,12 @@
                       = link_to dealership_deleted_record_path(@dealership, deal.id, klass: deal.class), method: :put do
                         %i.fa.fa-recycle
                         Restore
+                    %td
+                      = link_to dealership_deleted_record_path(@dealership, deal.id, klass: deal.class), method: :delete do
+                        .text-danger
+                          %i.fa.fa-trash
+                          Delete
+
 
 :javascript
   $(function() {
