@@ -8,6 +8,9 @@
       %h4
         Service Ticket For:
         %span.text-orange= @service_ticket.stock_number
+        %br
+        Written By:
+        %span.text-orange= @service_ticket.created_by_user.full_name
     .col-md-5
       %h4
         Complete By:
