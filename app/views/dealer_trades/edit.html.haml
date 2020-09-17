@@ -105,22 +105,22 @@
               .col-md-5
                 .row
                   .col-md-4
-                    = f.text_field :trade_stock_number, placeholder: 'Stock # Trade', class: 'form-control'
+                    = f.text_field :trade_stock_number, placeholder: 'Stock # Trade', class: 'form-control', tabindex: "1"
 
                   .col-md-4
-                    = f.text_field :trade_color, placeholder: 'Trade Color', class: 'form-control'
+                    = f.text_field :trade_color, placeholder: 'Trade Color', class: 'form-control', tabindex: "2"
                   .col-md-4
-                    = f.text_field :trade_year, placeholder: 'Trade Year', class: 'form-control'
+                    = f.text_field :trade_year, placeholder: 'Trade Year', class: 'form-control', tabindex: "3"
                 .row.my-4
                   .col-md-8
-                    = f.text_field :trade_vin, placeholder: 'Trade VIN', class: 'form-control'
+                    = f.text_field :trade_vin, placeholder: 'Trade VIN', class: 'form-control', tabindex: "5"
                 .row
                   .col-12
                     %label Public Trade Notes
-                    = f.text_area :public_trade_notes, placeholder: '(Will be included on the print out)', rows: 2, class: 'form-control'
+                    = f.text_area :public_trade_notes, placeholder: '(Will be included on the print out)', rows: 2, class: 'form-control', tabindex: "6"
 
               .col-md-2
-                = f.text_field :trade_model, placeholder: 'Trade Model', class: 'form-control'
+                = f.text_field :trade_model, placeholder: 'Trade Model', class: 'form-control', tabindex: "4"
 
               .col-md-5.received-invoice-inputs
                 .row.no-gutters
@@ -128,25 +128,25 @@
                     %div.pt-2.pr-1
                       %strong Invoice
                   .col-6
-                    = f.text_field :received_invoice, placeholder: 'Received Invoice', class: 'form-control dynamic'
+                    = f.text_field :received_invoice, placeholder: 'Received Invoice', class: 'form-control dynamic', tabindex: "7"
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1
                       %strong + Accessories
                   .col-6
-                    = f.text_field :received_acc, placeholder: 'Received Acc', class: 'form-control dynamic'
+                    = f.text_field :received_acc, placeholder: 'Received Acc', class: 'form-control dynamic', tabindex: "8"
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1
                       %strong - Dealer Rebate
                   .col-6
-                    = f.text_field :received_rebate, placeholder: 'Received Rebate', class: 'form-control dynamic'
+                    = f.text_field :received_rebate, placeholder: 'Received Rebate', class: 'form-control dynamic', tabindex: "9"
                 .row.no-gutters.my-3
                   .col-6.text-right
                     %div.pt-2.pr-1
                       %strong Vehicle Delivered Total
                   .col-6
-                    = f.text_field :received_sum, placeholder: 'Received (Sum)', class: 'form-control'
+                    = f.text_field :received_sum, placeholder: 'Received (Sum)', class: 'form-control', tabindex: "10"
     .row.mt-2
       .col-4
         History
