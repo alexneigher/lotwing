@@ -1,0 +1,9 @@
+$('.loading-spin').addClass('d-none');
+
+<%- if @vehicle %>
+  $('#detail_job_make').val("<%= @vehicle.make %>");
+  $('#detail_job_model').val("<%= @vehicle.model %>");
+  $('#detail_job_year').val("<%= @vehicle.year %>");
+  $('#detail_job_color').val("<%= @vehicle.color %>");
+  $('#detail_job_vin').val("<%= @vehicle.vin %>");
+<% end %>

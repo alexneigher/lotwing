@@ -19,7 +19,11 @@ Rails.application.routes.draw do
 
   resources :barcodes, only: :create
 
-  resources :detail_jobs
+  resources :detail_jobs do
+    collection do
+      put :stock_number_search
+    end
+  end
 
   #for Mobile clients
   namespace :api do
