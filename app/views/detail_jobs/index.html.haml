@@ -1,16 +1,80 @@
-.container
+.container-fluid
   .row.mb-3
     .col-12
       %h3 Detail Board
     .col-12
       %a.btn.btn-primary.brn-sm{"data-target" => "#newDetailJob", "data-toggle" => "modal", :href => "#"} Add Job
-
+  %hr
   .row
     .col-12
-      - @detail_jobs.each do |job|
-        .row
-          .col-12
-            = job.inspect
+      - iterated = false
+      - @detail_jobs.group_by{ |j| j.must_be_completed_by.in_time_zone("US/Pacific").to_date }.each do |day, jobs|
+
+        %h3.text-center{class: ('mt-5' if iterated)}
+          = day.strftime("%A, %b #{day.day.ordinalize}")
+          = DateTime.current.in_time_zone("US/Pacific").strftime(' %l:%M %p') unless iterated
+          - iterated = true #use this to determine 1st time round for spacing
+
+
+        - jobs.each do |job|
+          .row.mb-3
+            .col-12
+              .row.no-gutters
+                .col-2.bg-blue.text-white.text-center{style: 'font-size:30px;'}
+                  = job.stock_number
+
+                .col-10{ class: detail_job_bg_class(job) }
+                  .row.py-1.px-2{ class: detail_job_text_color(job) }
+                    .col-3
+                      = job.jobs
+                    .col-3{style:'font-size: 20px;'}
+
+                      - if job.status == :complete
+                        Completed
+                      - else
+                        - time = job.must_be_completed_by.in_time_zone("US/Pacific")
+
+                        - if time.today?
+                          = time.strftime("Today %l:%M %p")
+                        - else
+                          = time.strftime("%A, %b #{time.day.ordinalize} %l:%M %p")
+                    .col-2
+                      - if job.detailer.present?
+                        = job.detailer.full_name
+                      - else
+                        = link_to "#" do
+                          %i.fa.fa-pencil
+                          Detailer missing
+
+                    .col-4.text-center
+                      .row
+                        .col-4
+                          .small
+                            %strong
+                              On the Job
+                          - #time between started at and now (if present)
+                          = "00:34:00"
+                        .col-4
+                          .small
+                            %strong
+                              Target
+                          - #time between must be completed by and now, positive OR negative if behind schedule
+                          = "01:22:00"
+                        .col-4
+                          = job.vehicle&.events&.last&.event_type&.titleize
+
+              .row.bg-dark.text-white.no-gutters.p-1
+                .col-4.text-center
+                  = "#{job.year} #{job.make} #{job.model} #{job.color}"
+                .col-4.text-center
+                  .row
+                    .col-6
+                      = job.vin
+                    .col-6
+                      = job.sales_rep&.full_name
+
+
+
 
 
 

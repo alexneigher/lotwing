@@ -19,7 +19,10 @@
 
                   .col-6
                     %label Complete By Time
-                    = text_field_tag 'complete_by_time', current_user.dealership.try(:settings) || 30.minutes.from_now.in_time_zone("US/Pacific").strftime("%l:%M"), class: 'form-control'
+                    = text_field_tag 'complete_by_time', current_user.dealership.try(:settings) || 30.minutes.from_now.in_time_zone("US/Pacific").strftime("%l:%M %p"), class: 'form-control'
+              .form-group
+                %label Jobs
+                =f.text_area :jobs, rows: 5, class: 'form-control'
             .col-6
               .form-group
                 %label Color
@@ -39,7 +42,7 @@
               %hr
               .form-group
                 %label Sales Rep
-                = f.select :sales_rep, options_for_select(current_user.dealership.users.active.pluck(:full_name, :id), current_user.id), {}, class: 'form-control mb-1'
+                = f.select :sales_rep_id, options_for_select(current_user.dealership.users.active.pluck(:full_name, :id), current_user.id), {}, class: 'form-control mb-1'
           .row
             .col-12
               = f.submit "Create Job", class: 'btn btn-primary'
