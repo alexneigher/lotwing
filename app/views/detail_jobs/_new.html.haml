@@ -1,0 +1,11 @@
+#newDetailJob.modal{"aria-hidden" => "true", "aria-labelledby" => "genericModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-lg{:role => "document"}
+    .modal-content
+      .modal-body
+        = form_for current_user.dealership.detail_jobs.new() , url: detail_jobs_path, method: :post do |f|
+          .row
+            .col-6
+              %h3 Detail Job
+
+              %label Stock Number
+              = f.text_field :stock_number, class: 'form-control'

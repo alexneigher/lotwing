@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200912180308) do
+ActiveRecord::Schema.define(version: 20200919173259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,6 +153,25 @@ ActiveRecord::Schema.define(version: 20200912180308) do
     t.index ["deleted_at"], name: "index_deals_on_deleted_at"
     t.index ["sales_rep_id"], name: "index_deals_on_sales_rep_id"
     t.index ["split_rep_id"], name: "index_deals_on_split_rep_id"
+  end
+
+  create_table "detail_jobs", force: :cascade do |t|
+    t.string "stock_number"
+    t.string "make"
+    t.string "model"
+    t.string "color"
+    t.string "year"
+    t.string "vin"
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.datetime "must_be_completed_by"
+    t.bigint "sales_rep_id"
+    t.bigint "detailer_id"
+    t.bigint "dealership_id"
+    t.string "jobs"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dealership_id"], name: "index_detail_jobs_on_dealership_id"
   end
 
   create_table "email_preferences", force: :cascade do |t|

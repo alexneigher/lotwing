@@ -71,6 +71,10 @@
             %li.nav-item
               = link_to service_tickets_path, class: 'nav-link' + (' active' if params[:controller] == 'service_tickets').to_s do
                 Service Tickets
+          - if current_user.email == 'aneigher@gmail.com'
+            %li.nav-item
+              = link_to detail_jobs_path, class: 'nav-link' + (' active' if params[:controller] == 'detail_jobs').to_s do
+                Detail Board
 
     = yield
     .container-fluid

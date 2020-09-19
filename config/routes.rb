@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   resources :barcodes, only: :create
 
+  resources :detail_jobs
+
   #for Mobile clients
   namespace :api do
     post "auth/login", controller: :authentication, action: :login
