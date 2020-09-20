@@ -11,6 +11,27 @@ class DetailJobsController < ApplicationController
     redirect_to detail_jobs_path
   end
 
+  def update
+    @dealership = current_user.dealership
+    @detail_job = @dealership.detail_jobs.find(params[:id])
+    @detail_job.update(detail_job_params)
+
+    redirect_to detail_jobs_path
+  end
+
+  def edit
+    @dealership = current_user.dealership
+    @detail_job = @dealership.detail_jobs.find(params[:id])
+  end
+
+  def destroy
+    @dealership = current_user.dealership
+    @detail_job = @dealership.detail_jobs.find(params[:id])
+    @detail_job.destroy
+
+    redirect_to detail_jobs_path
+  end
+
   def start_job
     @dealership = current_user.dealership
     @detail_job = @dealership.detail_jobs.find(params[:detail_job_id])
@@ -52,14 +73,18 @@ class DetailJobsController < ApplicationController
             :color,
             :jobs,
             :vin,
-            :sales_rep_id
+            :sales_rep_id,
+            :detailer_id
           )
-        .merge({must_be_completed_by: merged_completed_by_datetime})
+        .merge(merged_completed_by_datetime)
     end
 
     def merged_completed_by_datetime
-      timezone = Time.now.in_time_zone("US/Pacific").zone
-      DateTime.strptime("#{params[:complete_by_date]} #{params[:complete_by_time]} #{timezone}", "%Y-%m-%d %l:%M %p %Z")
+      if params[:complete_by_date].present? && params[:complete_by_time].present?
+        timezone = Time.now.in_time_zone("US/Pacific").zone
+        time = DateTime.strptime("#{params[:complete_by_date]} #{params[:complete_by_time]} #{timezone}", "%Y-%m-%d %l:%M %p %Z")
+        return {must_be_completed_by: time}
+      end
     end
 
 end

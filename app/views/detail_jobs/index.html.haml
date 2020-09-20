@@ -38,13 +38,16 @@
                           = time.strftime("Today %l:%M %p")
                         - else
                           = time.strftime("%A, %b #{time.day.ordinalize} %l:%M %p")
-                    .col-2
+                    .col-2.text-center
+                      .small
+                        %strong
+                          Detailer
                       - if job.detailer.present?
                         = job.detailer.full_name
                       - else
-                        = link_to "#" do
-                          %i.fa.fa-pencil
-                          Detailer missing
+                        %div
+                          = form_for job, url: detail_job_path(job), method: :put do |f|
+                            = f.select :detailer_id, options_for_select(current_user.dealership.users.active.pluck(:full_name, :id), job.detailer_id), {}, class: 'form-control mb-1 form-control-sm',:onchange => "this.form.submit();"
 
                     .col-4.text-center
                       .row
@@ -78,6 +81,9 @@
                     .col-6
                       = job.sales_rep&.full_name
                 .col-4.text-right
+                  = link_to edit_detail_job_path(job), remote: true, class: 'mr-3' do
+                    %i.fa.fa-pencil
+
                   - if job.status == :not_started
                     = link_to detail_job_start_job_path(job), method: :put do
                       %btn.btn.btn-sm.btn-success
@@ -90,11 +96,6 @@
                     = link_to detail_job_reset_job_path(job), method: :put do
                       %btn.btn.btn-sm.btn-secondary
                         RESET
-
-
-
-
-
 
 
 = render partial: 'detail_jobs/new'

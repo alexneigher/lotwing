@@ -1,0 +1,8 @@
+.modal-content
+  .modal-body
+    = form_for @detail_job, url: detail_job_path(@detail_job), method: :put do |f|
+      = render partial: 'detail_jobs/form', locals: {f: f, action: 'edit'}
+      .row
+        .col-12
+          = f.submit "Update Job", class: 'btn btn-primary'
+

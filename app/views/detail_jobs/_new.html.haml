@@ -3,74 +3,8 @@
     .modal-content
       .modal-body
         = form_for current_user.dealership.detail_jobs.new() , url: detail_jobs_path, method: :post do |f|
-          .row
-            .col-6
-              %h3 Detail Job
-              .form-group
-                %label Stock Number
-                %div{style: 'position:relative'}
-                  %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin{style:'position:absolute;right:10px;top:11px;'}
-                  = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control lookup-input'
-              .form-group
-                .row
-                  .col-6
-                    %label Complete By Date
-                    = text_field_tag 'complete_by_date', Date.today.strftime("%Y-%m-%d"), class: 'form-control'
-
-                  .col-6
-                    %label Complete By Time
-                    = text_field_tag 'complete_by_time', current_user.dealership.try(:settings) || 30.minutes.from_now.in_time_zone("US/Pacific").strftime("%l:%M %p"), class: 'form-control'
-              .form-group
-                %label Jobs
-                =f.text_area :jobs, rows: 5, class: 'form-control'
-            .col-6
-              .form-group
-                %label Color
-                = f.text_field :color, class: 'form-control'
-              .form-group
-                %label Make
-                = f.text_field :make, class: 'form-control'
-              .form-group
-                %label Model
-                = f.text_field :model, class: 'form-control'
-              .form-group
-                %label Year
-                = f.text_field :year, class: 'form-control'
-              .form-group
-                %label VIN
-                = f.text_field :vin, class: 'form-control'
-              %hr
-              .form-group
-                %label Sales Rep
-                = f.select :sales_rep_id, options_for_select(current_user.dealership.users.active.pluck(:full_name, :id), current_user.id), {}, class: 'form-control mb-1'
+          = render partial: 'detail_jobs/form', locals: {f: f, action: 'new'}
           .row
             .col-12
               = f.submit "Create Job", class: 'btn btn-primary'
 
-:javascript
-  $(function(){
-    //setup before functions
-    var typingTimer;                //timer identifier
-    var doneTypingInterval = 500;  //time in ms
-    var $input = $('#detail_job_stock_number');
-
-    //on keyup, start the countdown
-    $input.on('input', function () {
-      clearTimeout(typingTimer);
-      typingTimer = setTimeout(doneTyping, doneTypingInterval);
-    });
-
-    //user is "finished typing," populate the hidden form, and submit that one
-    function doneTyping () {
-      if ($input.val()){
-        $('.loading-spin').removeClass('d-none');
-
-        $.ajax({
-          url:"/detail_jobs/stock_number_search",
-          method: 'PUT',
-          data: { stock_number: $input.val() }
-        });
-      }
-    }
-
-  })
