@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   resources :barcodes, only: :create
 
   resources :detail_jobs do
+    put :start_job
+    put :complete_job
+    put :reset_job
     collection do
       put :stock_number_search
     end

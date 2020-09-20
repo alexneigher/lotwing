@@ -52,14 +52,19 @@
                           .small
                             %strong
                               On the Job
-                          - #time between started at and now (if present)
-                          = "00:34:00"
+                          - if job.started_at.present?
+                            = time_diff(job.started_at, job.completed_at || DateTime.current.utc)
+                          - else
+                            xx:xx:xx
                         .col-4
                           .small
                             %strong
                               Target
-                          - #time between must be completed by and now, positive OR negative if behind schedule
-                          = "01:22:00"
+                          - if job.must_be_completed_by.present?
+                            - #time between must be completed by and now, positive OR negative if behind schedule
+                            = time_diff(job.completed_at || DateTime.current.utc, job.must_be_completed_by.utc)
+                          - else
+                            xx::xx:xx
                         .col-4
                           = job.vehicle&.events&.last&.event_type&.titleize
 
@@ -72,6 +77,20 @@
                       = job.vin
                     .col-6
                       = job.sales_rep&.full_name
+                .col-4.text-right
+                  - if job.status == :not_started
+                    = link_to detail_job_start_job_path(job), method: :put do
+                      %btn.btn.btn-sm.btn-success
+                        START
+                  - elsif job.status == :in_progress
+                    = link_to detail_job_complete_job_path(job), method: :put do
+                      %btn.btn.btn-sm.btn-danger
+                        MARK DONE
+                  - elsif job.status == :complete
+                    = link_to detail_job_reset_job_path(job), method: :put do
+                      %btn.btn.btn-sm.btn-secondary
+                        RESET
+
 
 
 

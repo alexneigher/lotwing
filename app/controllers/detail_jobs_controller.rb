@@ -11,6 +11,31 @@ class DetailJobsController < ApplicationController
     redirect_to detail_jobs_path
   end
 
+  def start_job
+    @dealership = current_user.dealership
+    @detail_job = @dealership.detail_jobs.find(params[:detail_job_id])
+    @detail_job.update(started_at: DateTime.now)
+
+    redirect_to detail_jobs_path
+  end
+
+  def complete_job
+    @dealership = current_user.dealership
+    @detail_job = @dealership.detail_jobs.find(params[:detail_job_id])
+    @detail_job.update(completed_at: DateTime.now)
+
+    redirect_to detail_jobs_path
+  end
+
+  def reset_job
+    @dealership = current_user.dealership
+    @detail_job = @dealership.detail_jobs.find(params[:detail_job_id])
+    @detail_job.update(completed_at: nil, started_at: nil)
+
+    redirect_to detail_jobs_path
+  end
+
+
   def stock_number_search
     @vehicle = current_user.dealership.vehicles.find_by_stock_number(params[:stock_number])
   end
