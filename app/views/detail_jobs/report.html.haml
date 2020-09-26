@@ -1,1 +1,70 @@
-report.html.haml
+.container-fluid
+  .row.mb-1
+    .col-md-2
+      %h3 Detail Jobs
+      %small
+        (last 30 days)
+        %br
+        = link_to '< Detail Board', detail_jobs_path()
+
+
+    .col-md-10
+      .table-responsive.small{style: 'max-height: 80vh;'}
+        %table.table.table-striped.table-sm.mb-0.board-manager-table
+          %thead
+            %tr
+              %th
+                %i.fa.fa-pencil
+              %th Date
+              %th Stock #
+              %th Jobs
+              %th Detailer
+              %th Time on job
+              %th On time
+              %th Time overtime
+
+          %tbody
+            - @grouped_jobs.each do |date, jobs|
+              %tr
+                %td
+                %td.bg-light{colspan: 7}
+                  %strong
+                    = date
+
+              - jobs.each do |job|
+                %tr
+                  %td
+                    = link_to edit_detail_job_path(job), remote: true do
+                      %i.fa.fa-pencil.edit-icon
+                  %td
+                    = job.completed_at.in_time_zone("US/Pacific").to_date
+                  %td
+                    = job.stock_number
+                  %td
+                    - if job.add_dealership_default_task_1?
+                      = job.dealership.dealership_configuration.detail_board_task_1
+                    - if job.add_dealership_default_task_2?
+                      = job.dealership.dealership_configuration.detail_board_task_2
+                    - if job.add_dealership_default_task_3?
+                      = job.dealership.dealership_configuration.detail_board_task_3
+                    - if job.add_dealership_default_task_4?
+                      = job.dealership.dealership_configuration.detail_board_task_4
+                    = job.special_instructions
+                  %td
+                    = job.detailer&.full_name
+                  %td
+                    = time_diff(job.started_at, job.completed_at || DateTime.current.utc)
+
+                  - time_on_job = time_diff(job.completed_at || DateTime.current.utc, job.must_be_completed_by.utc)
+                  %td.font-20
+                    - if time_on_job.chars[0] == "-"
+                      %i.fa.fa-caret-down.text-danger
+                    - else
+                      %i.fa.fa-caret-up.text-success
+                  %td
+
+
+                    - if time_on_job.chars[0] == "-"
+                      = time_on_job
+
+

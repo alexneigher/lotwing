@@ -2,8 +2,13 @@
   .row.mb-3
     .col-12
       %h3 Detail Board
+
     .col-12
       %a.btn.btn-primary.brn-sm{"data-target" => "#newDetailJob", "data-toggle" => "modal", :href => "#"} Add Job
+      .pull-right
+        = link_to report_detail_jobs_path do
+          .btn.btn-secondary
+            Report
   %hr
   .row
     .col-12
