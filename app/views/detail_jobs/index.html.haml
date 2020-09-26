@@ -26,7 +26,18 @@
                 .col-10{ class: detail_job_bg_class(job) }
                   .row.py-1.px-2{ class: detail_job_text_color(job) }
                     .col-3
-                      TASKS
+                      - if job.add_dealership_default_task_1?
+                        = job.dealership.dealership_configuration.detail_board_task_1
+                      - if job.add_dealership_default_task_2?
+                        = job.dealership.dealership_configuration.detail_board_task_2
+                      %br
+                      - if job.add_dealership_default_task_3?
+                        = job.dealership.dealership_configuration.detail_board_task_3
+                      - if job.add_dealership_default_task_4?
+                        = job.dealership.dealership_configuration.detail_board_task_4
+                      %br
+                      = job.special_instructions
+
                     .col-3{style:'font-size: 20px;'}
 
                       - if job.status == :complete

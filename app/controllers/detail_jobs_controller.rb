@@ -78,7 +78,8 @@ class DetailJobsController < ApplicationController
             :add_dealership_default_task_1,
             :add_dealership_default_task_2,
             :add_dealership_default_task_3,
-            :add_dealership_default_task_4
+            :add_dealership_default_task_4,
+            :special_instructions
           )
         .merge(merged_completed_by_datetime)
     end

@@ -18,4 +18,17 @@ module DetailJobHelper
         "text-white"
       end
   end
+
+  def detail_job_complete_by_time(dealership)
+    current_time = Time.now.in_time_zone("US/Pacific")
+    custom_duration = dealership.dealership_configuration.detail_board_default_job_duration
+
+    additional_hours = custom_duration.split(":")[0]
+    additional_minutes = custom_duration.split(":")[1]
+
+    time_plus_hours = current_time + (additional_hours.to_i).hours
+    time_plus_minutes = time_plus_hours + (additional_minutes.to_i).minutes
+
+    time_plus_minutes.strftime("%l:%M %p")
+  end
 end
