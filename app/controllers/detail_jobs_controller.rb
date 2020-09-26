@@ -8,7 +8,6 @@ class DetailJobsController < ApplicationController
     @dealership = current_user.dealership
     @detail_job = @dealership.detail_jobs.create!(detail_job_params)
 
-    binding.pry
     if params[:redirect_url].present?
       redirect_to params[:redirect_url]
     else
@@ -61,6 +60,10 @@ class DetailJobsController < ApplicationController
     redirect_to detail_jobs_path
   end
 
+  def report
+    @dealership = current_user.dealership
+    @detail_jobs = @dealership.detail_jobs.includes(:sales_rep, :detailer, :vehicle)
+  end
 
   def stock_number_search
     @vehicle = current_user.dealership.vehicles.find_by_stock_number(params[:stock_number])

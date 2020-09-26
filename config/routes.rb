@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+det.application.routes.draw do
 
   namespace :webhooks do
     resources :payments, only: :create
@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     put :reset_job
     collection do
       put :stock_number_search
+      put :report
     end
   end
 
