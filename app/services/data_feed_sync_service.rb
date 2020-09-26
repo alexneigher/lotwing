@@ -48,7 +48,7 @@ class DataFeedSyncService
         data = row.split("|")
         stock_numbers << data[1] #so we know which vehicles to delete later
 
-        vehicle = dealership.vehicles.with_deleted.find_or_create_by(stock_number: data[1])
+        vehicle = dealership.vehicles.with_deleted.find_or_create_by(stock_number: data[1].upcase)
         vehicle
           .update(
             vin: data[0],

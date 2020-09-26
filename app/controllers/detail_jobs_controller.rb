@@ -6,9 +6,14 @@ class DetailJobsController < ApplicationController
 
   def create
     @dealership = current_user.dealership
-    @detail_job = @dealership.detail_jobs.create(detail_job_params)
+    @detail_job = @dealership.detail_jobs.create!(detail_job_params)
 
-    redirect_to detail_jobs_path
+    binding.pry
+    if params[:redirect_url].present?
+      redirect_to params[:redirect_url]
+    else
+      redirect_to detail_jobs_path
+    end
   end
 
   def update

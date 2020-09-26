@@ -17,6 +17,8 @@ class Vehicle < ApplicationRecord
 
   belongs_to :key_board_location, optional: true
 
+  has_one :detail_job, foreign_key: 'stock_number', primary_key: "stock_number"
+
   enum creation_source: [:data_feed_created, :user_created]
 
   enum usage_type: [:is_new, :is_used, :loaner, :lease_return, :wholesale_unit]
