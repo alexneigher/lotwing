@@ -74,7 +74,11 @@ class DetailJobsController < ApplicationController
             :jobs,
             :vin,
             :sales_rep_id,
-            :detailer_id
+            :detailer_id,
+            :add_dealership_default_task_1,
+            :add_dealership_default_task_2,
+            :add_dealership_default_task_3,
+            :add_dealership_default_task_4
           )
         .merge(merged_completed_by_datetime)
     end

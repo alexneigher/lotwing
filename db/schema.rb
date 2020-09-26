@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200919173259) do
+ActiveRecord::Schema.define(version: 20200926182428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,20 @@ ActiveRecord::Schema.define(version: 20200919173259) do
     t.datetime "updated_at", null: false
     t.string "dealer_code"
     t.index ["dealership_id"], name: "index_dealer_trades_on_dealership_id"
+  end
+
+  create_table "dealership_configurations", force: :cascade do |t|
+    t.bigint "dealership_id"
+    t.string "detail_board_task_1"
+    t.string "detail_board_task_2"
+    t.string "detail_board_task_3"
+    t.string "detail_board_task_4"
+    t.string "detail_board_default_job_duration"
+    t.boolean "show_detail_job_link_in_ui", default: true
+    t.boolean "allow_sales_reps_to_create_detail_jobs", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dealership_id"], name: "index_dealership_configurations_on_dealership_id"
   end
 
   create_table "dealerships", force: :cascade do |t|
@@ -168,9 +182,14 @@ ActiveRecord::Schema.define(version: 20200919173259) do
     t.bigint "sales_rep_id"
     t.bigint "detailer_id"
     t.bigint "dealership_id"
-    t.string "jobs"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "add_dealership_default_task_1", default: true
+    t.boolean "add_dealership_default_task_2", default: false
+    t.boolean "add_dealership_default_task_3", default: false
+    t.boolean "add_dealership_default_task_4", default: false
+    t.string "custom_task"
+    t.string "special_instructions"
     t.index ["dealership_id"], name: "index_detail_jobs_on_dealership_id"
   end
 
@@ -390,6 +409,7 @@ ActiveRecord::Schema.define(version: 20200919173259) do
   end
 
   add_foreign_key "data_syncs", "dealerships"
+  add_foreign_key "dealership_configurations", "dealerships"
   add_foreign_key "notes", "service_ticket_jobs"
   add_foreign_key "notes", "users"
   add_foreign_key "resolutions", "events"

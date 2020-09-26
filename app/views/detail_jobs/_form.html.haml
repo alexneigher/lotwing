@@ -16,8 +16,28 @@
           %label Complete By Time
           = text_field_tag 'complete_by_time', current_user.dealership.try(:settings) || 30.minutes.from_now.in_time_zone("US/Pacific").strftime("%l:%M %p"), class: 'form-control'
     .form-group
-      %label Jobs
-      =f.text_area :jobs, rows: 5, class: 'form-control'
+      %strong Tasks
+      .mb-1
+        %label
+          = f.check_box :add_dealership_default_task_1
+          = current_user.dealership.dealership_configuration.detail_board_task_1
+      .mb-1
+        %label
+          = f.check_box :add_dealership_default_task_2
+          = current_user.dealership.dealership_configuration.detail_board_task_2
+      .mb-1
+        %label
+          = f.check_box :add_dealership_default_task_3
+          = current_user.dealership.dealership_configuration.detail_board_task_3
+      .mb-1
+        %label
+          = f.check_box :add_dealership_default_task_4
+          = current_user.dealership.dealership_configuration.detail_board_task_4
+      .mb-1
+        %strong Special Instructions
+        = f.text_field :special_instructions, class: 'form-control', placeholder: 'Special Instructions (must be brief)'
+
+
   .col-6
     .form-group
       %label Color

@@ -132,6 +132,7 @@ Rails.application.routes.draw do
     resources :team_members, controller: 'dealerships/team_members', only: :index
     resources :custom_fields, controller: 'dealerships/custom_fields', only: :index
     resources :payment_info, controller: 'dealerships/payment_info', only: :index
+    resources :detail_job_config, controller: 'dealerships/detail_job_config', only: [:index, :update]
   end
 
   resources :sales_reps, only: :show do

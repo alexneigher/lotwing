@@ -15,10 +15,13 @@ class Dealership < ApplicationRecord
   has_many :service_tickets
   has_many :detail_jobs
 
+  has_one :dealership_configuration
+
   has_one :data_sync
   accepts_nested_attributes_for :data_sync
 
   after_create :create_data_sync
+  after_create :add_dealership_configuration
 
   def in_good_financial_standing?
     stripe_customer_id.present? &&
@@ -30,4 +33,9 @@ class Dealership < ApplicationRecord
     def create_data_sync
       self.create_data_sync
     end
+
+    def add_dealership_configuration
+      self.create_dealership_configuration
+    end
 end
+

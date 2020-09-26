@@ -1,0 +1,55 @@
+%h3.text-center= @dealership.name
+
+.container
+  = render partial: 'dealerships/partials/subnavs', locals: { active_tab: 'custom_fields' }
+
+  .row
+    .col-md-12
+      .card
+
+        .card-body
+          = form_for @dealership.dealership_configuration, url: dealership_detail_job_config_path(@dealership, @dealership.dealership_configuration), method: :put do |f|
+            %h4 Detail Department Job quick add items
+            %p Define the jobs to use in the detail screen for quick add
+            .row
+              .col-3
+                = f.text_field :detail_board_task_1, class: 'form-control mb-1', placeholder: 'Define quick add job 1'
+              .col-9.pt-2
+                This job will be the default job listed when creating a deal in Board Manager or VHS link.
+            .row
+              .col-3
+                = f.text_field :detail_board_task_2, class: 'form-control mb-1', placeholder: 'Define quick add job 2'
+            .row
+              .col-3
+                = f.text_field :detail_board_task_3, class: 'form-control mb-1', placeholder: 'Define quick add job 3'
+            .row
+              .col-3
+                = f.text_field :detail_board_task_4, class: 'form-control mb-1', placeholder: 'Define quick add job 4'
+
+            %hr
+            %h4 Set time for default job creation
+            %p Set the amount of time allowed to detail the car after creating job using the quick "Add Detail Job" button in Board Manager edit screen or the "Add Detail Job" link on any vehicles VHS page. This time can be manually altered by Sales Managers on detail board tab.
+            .row
+              .col-3
+                = f.text_field :detail_board_default_job_duration, value: f.object.detail_board_default_job_duration.presence || "00:00", class: 'form-control mb-1', placeholder: 'HH:MM', pattern: "[0-9]{2}:[0-9]{2}"
+              .col-9.pt-2
+                (Must match format "HH:MM")
+
+            %hr
+            %h4 Set Quick Add detail job button to Deal Edit screen
+            .form-group
+              %label
+                = f.check_box :show_detail_job_link_in_ui
+                Add Detail Job button to Deal Edit & VHS Screens.
+
+            %label
+              = f.check_box :allow_sales_reps_to_create_detail_jobs
+              Allow Sales Reps to create detail job.
+
+            .row
+              .col-12
+                = f.submit "Save Settings", class: 'btn btn-primary pull-right'
+
+
+    .col-md-4
+      #keyBoardLocationFormContainer
