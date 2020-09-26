@@ -42,35 +42,36 @@
     .container-fluid
       - if user_signed_in?
         %ul.nav.nav-tabs.nav-justified.mb-2
-          %li.nav-item
-            = link_to lot_view_path, class: 'nav-link' + (' active' if params[:controller] == 'home' && params[:action] == 'show').to_s do
-              Lot View
-
-          %li.nav-item
-            = link_to vehicles_path, class: 'nav-link' + (' active' if params[:controller] == 'vehicles' && params[:action] == 'index').to_s do
-              Vehicle Manager
-          - if current_user.permission_level == 'admin'
+          - unless current_user.permission_level.in?('detail_job_user')
             %li.nav-item
-              = link_to map_builder_path, class: 'nav-link' + (' active' if params[:action] == 'map_builder').to_s do
-                Map Builder
-          %li.nav-item
-            = link_to board_manager_path, class: 'nav-link' + (' active' if params[:controller] == 'board_managers' && params[:action] == 'show').to_s do
-              Board Manager
+              = link_to lot_view_path, class: 'nav-link' + (' active' if params[:controller] == 'home' && params[:action] == 'show').to_s do
+                Lot View
 
-          - if current_user.permission_level.in? ["admin", "sales_manager", "service_user"]
             %li.nav-item
-              = link_to check_requests_path, class: 'nav-link' + (' active' if params[:controller] == 'check_requests').to_s do
-                Check Requests
+              = link_to vehicles_path, class: 'nav-link' + (' active' if params[:controller] == 'vehicles' && params[:action] == 'index').to_s do
+                Vehicle Manager
+            - if current_user.permission_level == 'admin'
+              %li.nav-item
+                = link_to map_builder_path, class: 'nav-link' + (' active' if params[:action] == 'map_builder').to_s do
+                  Map Builder
+            %li.nav-item
+              = link_to board_manager_path, class: 'nav-link' + (' active' if params[:controller] == 'board_managers' && params[:action] == 'show').to_s do
+                Board Manager
 
-          - if current_user.permission_level.in? ["admin", "sales_manager"]
-            %li.nav-item
-              = link_to dealer_trades_path, class: 'nav-link' + (' active' if params[:controller] == 'dealer_trades').to_s do
-                Dealer Trades
+            - if current_user.permission_level.in? ["admin", "sales_manager", "service_user"]
+              %li.nav-item
+                = link_to check_requests_path, class: 'nav-link' + (' active' if params[:controller] == 'check_requests').to_s do
+                  Check Requests
 
-          - if current_user.permission_level.in? ["admin", "sales_manager", "service_user"]
-            %li.nav-item
-              = link_to service_tickets_path, class: 'nav-link' + (' active' if params[:controller] == 'service_tickets').to_s do
-                Service Tickets
+            - if current_user.permission_level.in? ["admin", "sales_manager"]
+              %li.nav-item
+                = link_to dealer_trades_path, class: 'nav-link' + (' active' if params[:controller] == 'dealer_trades').to_s do
+                  Dealer Trades
+
+            - if current_user.permission_level.in? ["admin", "sales_manager", "service_user"]
+              %li.nav-item
+                = link_to service_tickets_path, class: 'nav-link' + (' active' if params[:controller] == 'service_tickets').to_s do
+                  Service Tickets
           - if current_user.permission_level.in? ["admin"]
             %li.nav-item
               = link_to detail_jobs_path, class: 'nav-link' + (' active' if params[:controller] == 'detail_jobs').to_s do

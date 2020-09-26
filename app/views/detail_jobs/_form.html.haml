@@ -14,7 +14,8 @@
 
         .col-6
           %label Complete By Time
-          = text_field_tag 'complete_by_time', detail_job_complete_by_time(current_user.dealership), class: 'form-control'
+          - complete_by_time = f.object.must_be_completed_by&.in_time_zone("US/Pacific")&.strftime("%l:%M %p")
+          = text_field_tag 'complete_by_time', complete_by_time.presence || detail_job_complete_by_time(current_user.dealership), class: 'form-control'
     .form-group
       %strong Tasks
       .mb-1
