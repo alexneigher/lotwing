@@ -88,13 +88,14 @@
                             = time_diff(job.completed_at || DateTime.current.utc, job.must_be_completed_by.utc)
                           - else
                             xx::xx:xx
-                        .col-4{style: 'font-size: 30px;'}
+                        .col-4
                           - if job.vehicle&.events&.last&.event_type == "tag"
                             = link_to vehicle_show_map_path(job.vehicle), remote: true do
-                              %i.fa.fa-map-marker
-                          - elsif job.vehicle&.events&.last&.event_type == "test_drive"
-                            %i.fa.fa-car
-
+                              %i.fa.fa-map-marker{style: 'font-size: 30px;'}
+                          - elsif job.vehicle&.is_currently_on_test_drive?
+                            %div{style: 'font-size: 20px;'}
+                              %i.fa.fa-car
+                              =" ~> "
               .row.bg-dark.text-white.no-gutters.p-1
                 .col-4.text-center
                   = "#{job.year} #{job.make} #{job.model} #{job.color}"
