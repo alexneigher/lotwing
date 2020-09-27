@@ -1,7 +1,7 @@
 class DetailJobsController < ApplicationController
 
   def index
-    @detail_jobs = current_user.dealership.detail_jobs.includes(:sales_rep, :detailer, vehicle: :events).order(:must_be_completed_by)
+    @detail_jobs = current_user.dealership.detail_jobs.includes(:sales_rep, :detailer, vehicle: :events).order(must_be_completed_by: :desc)
   end
 
   def create
