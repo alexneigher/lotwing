@@ -25,7 +25,7 @@
           .row.mb-3
             .col-12
               .row.no-gutters
-                .col-2.bg-blue.text-white.text-center{style: 'font-size:30px;'}
+                .col-2.bg-blue.text-white.text-center{style: "font-size:30px; background-color: #{vehicle_usage_type_bg_color(job&.vehicle&.usage_type.presence || :is_new)}; text-color: #{vehicle_usage_type_text_color_class(job&.vehicle&.usage_type.presence || :is_new)}"}
                   = job.stock_number
 
                 .col-10{ class: detail_job_bg_class(job) }
@@ -63,7 +63,7 @@
                       - else
                         %div
                           = form_for job, url: detail_job_path(job), method: :put do |f|
-                            = f.select :detailer_id, options_for_select(current_user.dealership.users.active.pluck(:full_name, :id), job.detailer_id), {}, class: 'form-control mb-1 form-control-sm',:onchange => "this.form.submit();"
+                            = f.select :detailer_id, options_for_select(current_user.dealership.users.active.detail_job_user.pluck(:full_name, :id), job.detailer_id), {}, class: 'form-control mb-1 form-control-sm',:onchange => "this.form.submit();"
 
                     .col-4.text-center
                       .row
