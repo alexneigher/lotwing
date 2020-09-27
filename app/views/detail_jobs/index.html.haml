@@ -24,8 +24,10 @@
         %h3.text-center{class: ('mt-5' if iterated)}
           - if day < Date.today.in_time_zone("US/Pacific").to_date
             - unless in_the_past
-              %hr{:style => "height:5px;border:none;color:#333;background-color:#333;"}/
+              %div.bg-light.p-2.border.mb-3
+                PAST DETAILS
             - in_the_past = true
+
           = day.strftime("%A, %b #{day.day.ordinalize}")
           = DateTime.current.in_time_zone("US/Pacific").strftime(' %l:%M %p') unless iterated
           - iterated = true #use this to determine 1st time round for spacing
