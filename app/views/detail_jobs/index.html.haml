@@ -29,7 +29,7 @@
           .row.mb-3
             .col-12
               .row.no-gutters
-                .col-2.bg-blue.text-white.text-center{style: "font-size:30px; background-color: #{vehicle_usage_type_bg_color(job&.vehicle&.usage_type.presence || :is_new)}; text-color: #{vehicle_usage_type_text_color_class(job&.vehicle&.usage_type.presence || :is_new)}"}
+                .col-2.bg-blue.text-white.text-center{style: "font-size:30px; background-color: #{vehicle_usage_type_bg_color(job&.vehicle&.usage_type.presence || :is_new)}; color: #{vehicle_usage_type_text_color_class(job&.vehicle&.usage_type.presence || :is_new)}"}
                   = job.stock_number
 
                 .col-10{ class: detail_job_bg_class(job) }
