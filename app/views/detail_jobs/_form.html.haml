@@ -6,6 +6,8 @@
       %div{style: 'position:relative'}
         %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin{style:'position:absolute;right:10px;top:11px;'}
         = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control lookup-input'
+        .small.text-muted
+          Leave blank if non-stocking unit
     .form-group
       .row
         .col-6

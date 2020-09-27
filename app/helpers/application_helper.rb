@@ -39,6 +39,8 @@ module ApplicationHelper
         "#D13CEA"
       when "wholesale_unit"
         "#8D8C88"
+      else
+        "#bdbdbd"
       end
   end
 

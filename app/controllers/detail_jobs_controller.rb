@@ -67,6 +67,7 @@ class DetailJobsController < ApplicationController
     @dealership = current_user.dealership
     @detail_job = @dealership.detail_jobs.find(params[:detail_job_id])
     @detail_job.update(completed_at: DateTime.now)
+    DetailJobMailer.job_completed(@detail_job).deliver
 
     redirect_to detail_jobs_path
   end
