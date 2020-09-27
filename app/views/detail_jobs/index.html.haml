@@ -17,13 +17,18 @@
   .row
     .col-12
       - iterated = false
-      - @detail_jobs.group_by{ |j| j.must_be_completed_by.in_time_zone("US/Pacific").to_date }.each do |day, jobs|
+      - in_the_past = false
+      - all_detailers = current_user.dealership.users.active.detail_job_user.pluck(:full_name, :id)
 
+      - @detail_jobs.group_by{ |j| j.must_be_completed_by.in_time_zone("US/Pacific").to_date }.each do |day, jobs|
         %h3.text-center{class: ('mt-5' if iterated)}
+          - if day < Date.today.in_time_zone("US/Pacific").to_date
+            - unless in_the_past
+              %hr{:style => "height:5px;border:none;color:#333;background-color:#333;"}/
+            - in_the_past = true
           = day.strftime("%A, %b #{day.day.ordinalize}")
           = DateTime.current.in_time_zone("US/Pacific").strftime(' %l:%M %p') unless iterated
           - iterated = true #use this to determine 1st time round for spacing
-
 
         - jobs.each do |job|
           .row.mb-3
@@ -67,7 +72,7 @@
                       - else
                         %div
                           = form_for job, url: detail_job_path(job), method: :put do |f|
-                            = f.select :detailer_id, options_for_select(current_user.dealership.users.active.detail_job_user.pluck(:full_name, :id), job.detailer_id), {include_blank: 'Select Detailer'}, class: 'form-control mb-1 form-control-sm',:onchange => "this.form.submit();"
+                            = f.select :detailer_id, options_for_select(all_detailers, job.detailer_id), {include_blank: 'Select Detailer'}, class: 'form-control mb-1 form-control-sm',:onchange => "this.form.submit();"
 
                     .col-4.text-center
                       .row

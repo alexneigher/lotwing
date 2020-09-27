@@ -1,7 +1,22 @@
 class DetailJobsController < ApplicationController
 
   def index
-    @detail_jobs = current_user.dealership.detail_jobs.includes(:sales_rep, :detailer, vehicle: :events).order(must_be_completed_by: :desc)
+    sql = <<~SQL
+              CASE
+                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') = '"#{Date.today}"'
+                  THEN 0
+                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') > '"#{Date.today}"'
+                  THEN 1
+                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') < '"#{Date.today}"'
+                  THEN 2
+              END
+            SQL
+
+    @detail_jobs = current_user
+                    .dealership
+                    .detail_jobs
+                    .includes(:sales_rep, :detailer, vehicle: :events)
+                    .order(sql)
   end
 
   def create
