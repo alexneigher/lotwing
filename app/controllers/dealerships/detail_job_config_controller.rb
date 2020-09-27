@@ -8,7 +8,7 @@ module Dealerships
     def update
       @dealership = current_user.dealership
       @dealership.dealership_configuration.update(detail_job_config_params)
-
+      flash[:success] = "Your settings have been updated"
       redirect_to dealership_detail_job_config_index_path(@dealership)
     end
 

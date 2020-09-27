@@ -92,7 +92,12 @@
                               Target
                           - if job.must_be_completed_by.present?
                             - #time between must be completed by and now, positive OR negative if behind schedule
-                            = time_diff(job.completed_at || DateTime.current.utc, job.must_be_completed_by.utc)
+                            - time_on_job = time_diff(job.completed_at || DateTime.current.utc, job.must_be_completed_by.utc)
+                            = time_on_job
+                            - if time_on_job.chars[0] == "-"
+                              %i.fa.fa-caret-down.text-white.font-20
+                            - else
+                              %i.fa.fa-caret-up.text-blue.font-20
                           - else
                             xx::xx:xx
                         .col-4

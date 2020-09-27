@@ -81,7 +81,11 @@ class DetailJobsController < ApplicationController
 
   def report
     @dealership = current_user.dealership
-    @detail_jobs = @dealership.detail_jobs.includes(:sales_rep, :detailer, :vehicle).where("completed_at >= ?", 30.days.ago.beginning_of_day)
+    @detail_jobs = @dealership
+                    .detail_jobs
+                    .includes(:sales_rep, :detailer, :vehicle)
+                    .where("completed_at >= ?", 30.days.ago.beginning_of_day)
+                    .order(completed_at: :desc)
 
     @grouped_jobs = @detail_jobs.group_by{ |j| j.completed_at.in_time_zone("US/Pacific").to_date }
   end
