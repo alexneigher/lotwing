@@ -10,6 +10,10 @@
           .btn.btn-secondary
             Report
   %hr
+  - if flash[:error].present?
+    .alert.alert-danger
+      = flash[:error]
+
   .row
     .col-12
       - iterated = false
@@ -50,7 +54,7 @@
                       - else
                         - time = job.must_be_completed_by.in_time_zone("US/Pacific")
 
-                        - if time.today?
+                        - if time.to_date == Date.today.in_time_zone("US/Pacific").to_date
                           = time.strftime("Today %l:%M %p")
                         - else
                           = time.strftime("%A, %b #{time.day.ordinalize} %l:%M %p")
@@ -63,7 +67,7 @@
                       - else
                         %div
                           = form_for job, url: detail_job_path(job), method: :put do |f|
-                            = f.select :detailer_id, options_for_select(current_user.dealership.users.active.detail_job_user.pluck(:full_name, :id), job.detailer_id), {}, class: 'form-control mb-1 form-control-sm',:onchange => "this.form.submit();"
+                            = f.select :detailer_id, options_for_select(current_user.dealership.users.active.detail_job_user.pluck(:full_name, :id), job.detailer_id), {include_blank: 'Select Detailer'}, class: 'form-control mb-1 form-control-sm',:onchange => "this.form.submit();"
 
                     .col-4.text-center
                       .row

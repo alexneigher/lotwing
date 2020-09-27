@@ -39,7 +39,11 @@ class DetailJobsController < ApplicationController
   def start_job
     @dealership = current_user.dealership
     @detail_job = @dealership.detail_jobs.find(params[:detail_job_id])
-    @detail_job.update(started_at: DateTime.now)
+    if @detail_job.detailer.present?
+      @detail_job.update(started_at: DateTime.now)
+    else
+      flash[:error] = "You cannot start a job without a detailer"
+    end
 
     redirect_to detail_jobs_path
   end
