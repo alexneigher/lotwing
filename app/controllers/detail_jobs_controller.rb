@@ -12,11 +12,28 @@ class DetailJobsController < ApplicationController
               END
             SQL
 
+    sql1 = <<~SQL
+              CASE
+                WHEN started_at is not null and completed_at is null
+                  THEN 0
+
+                WHEN started_at is null and completed_at is null
+                  THEN 2
+
+                WHEN completed_at is not null
+                  THEN 3
+              END
+            SQL
+
+    sql2 = <<~SQL
+              must_be_completed_by ASC
+            SQL
+
     @detail_jobs = current_user
                     .dealership
                     .detail_jobs
                     .includes(:sales_rep, :detailer, vehicle: :events)
-                    .order(sql)
+                    .order(sql, sql1, sql2)
   end
 
   def create
