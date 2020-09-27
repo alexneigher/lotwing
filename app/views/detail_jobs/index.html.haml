@@ -90,6 +90,9 @@
                             xx::xx:xx
                         .col-4
                           = job.vehicle&.events&.last&.event_type&.titleize
+                          - if job.vehicle.present?
+                            = link_to vehicle_show_map_path(job.vehicle), remote: true do
+                              %i.fa.fa-map-marker
 
               .row.bg-dark.text-white.no-gutters.p-1
                 .col-4.text-center
@@ -119,3 +122,5 @@
 
 
 = render partial: 'detail_jobs/new'
+
+= render partial: 'shared/map_popover'
