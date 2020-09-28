@@ -95,9 +95,9 @@
                             - time_on_job = time_diff(job.completed_at || DateTime.current.utc, job.must_be_completed_by.utc)
                             = time_on_job
                             - if time_on_job.chars[0] == "-"
-                              %i.fa.fa-caret-down.text-white.font-20
+                              %i.fa.fa-caret-down.text-white{style:'font-size: 30px'}
                             - else
-                              %i.fa.fa-caret-up.text-blue.font-20
+                              %i.fa.fa-caret-up.text-blue{style:'font-size: 30px'}
                           - else
                             xx::xx:xx
                         .col-4
