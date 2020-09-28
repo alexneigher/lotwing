@@ -69,6 +69,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+
+  root :to => 'detail_jobs#index', :constraints => lambda { |request| request.env['warden'].user&.permission_level&.in?('detail_job_user') }
   root "board_managers#show"
 
   resources :dealer_trades do
