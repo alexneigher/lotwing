@@ -3,11 +3,11 @@ class DetailJobsController < ApplicationController
   def index
     sql = <<~SQL
               CASE
-                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') = '"#{Date.today}"'
+                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') = '"#{DateTime.current.in_time_zone('US/Pacific').to_date}"'
                   THEN 0
-                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') > '"#{Date.today}"'
+                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') > '"#{DateTime.current.in_time_zone('US/Pacific').to_date}"'
                   THEN 1
-                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') < '"#{Date.today}"'
+                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') < '"#{DateTime.current.in_time_zone('US/Pacific').to_date}"'
                   THEN 2
               END
             SQL
