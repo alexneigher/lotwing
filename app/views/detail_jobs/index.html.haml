@@ -23,7 +23,7 @@
 
       - @detail_jobs.group_by{ |j| j.must_be_completed_by.in_time_zone("US/Pacific").to_date }.each do |day, jobs|
         %h3.text-center{class: ('mt-5' if iterated)}
-          - if day < Date.today.in_time_zone("US/Pacific").to_date
+          - if day < DateTime.current.in_time_zone("US/Pacific").to_date
             - unless in_the_past
               %div.bg-light.p-2.border.mb-3
                 PAST DETAILS
