@@ -4,8 +4,8 @@
       %h3 Detail Board
 
     .col-12
-      %a.btn.btn-primary.brn-sm{"data-target" => "#newDetailJob", "data-toggle" => "modal", :href => "#"} Add Job
       - unless current_user.permission_level.in?("detail_job_user")
+        %a.btn.btn-primary.brn-sm{"data-target" => "#newDetailJob", "data-toggle" => "modal", :href => "#"} Add Job
         .pull-right
           = link_to report_detail_jobs_path do
             .btn.btn-secondary
