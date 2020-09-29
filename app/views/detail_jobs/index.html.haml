@@ -102,7 +102,7 @@
                           - else
                             xx::xx:xx
                         .col-4
-                          - if vehicle.current_parking_tag.present?
+                          - if job&.vehicle&.current_parking_tag.present?
                             = link_to vehicle_show_map_path(job.vehicle), remote: true do
                               %i.fa.fa-map-marker{style: 'font-size: 30px;'}
                           - elsif job.vehicle&.is_currently_on_test_drive?
