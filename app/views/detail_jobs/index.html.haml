@@ -5,11 +5,20 @@
 
     .col-12
       - unless current_user.permission_level.in?("detail_job_user")
-        %a.btn.btn-primary.brn-sm{"data-target" => "#newDetailJob", "data-toggle" => "modal", :href => "#"} Add Job
-        .pull-right
-          = link_to report_detail_jobs_path do
-            .btn.btn-secondary
-              Report
+        - # if the current user is a sales rep only allow this button to be shown if dealership settings allows
+        - if current_user.permission_level.in?("sales_rep")
+          - if current_user.dealership.dealership_configuration.allow_sales_reps_to_create_detail_jobs?
+            %a.btn.btn-primary.brn-sm{"data-target" => "#newDetailJob", "data-toggle" => "modal", :href => "#"} Add Job
+            .pull-right
+              = link_to report_detail_jobs_path do
+                .btn.btn-secondary
+                  Report
+        - else
+          %a.btn.btn-primary.brn-sm{"data-target" => "#newDetailJob", "data-toggle" => "modal", :href => "#"} Add Job
+          .pull-right
+            = link_to report_detail_jobs_path do
+              .btn.btn-secondary
+                Report
   %hr
   - if flash[:error].present?
     .alert.alert-danger
@@ -120,8 +129,14 @@
                       = job.sales_rep&.full_name
                 .col-4.text-right
                   - unless current_user.permission_level.in?("detail_job_user")
-                    = link_to edit_detail_job_path(job), remote: true, class: 'mr-3' do
-                      %i.fa.fa-pencil
+
+                    - if current_user.permission_level.in?("sales_rep")
+                      - if current_user.dealership.dealership_configuration.allow_sales_reps_to_create_detail_jobs?
+                        = link_to edit_detail_job_path(job), remote: true, class: 'mr-3' do
+                          %i.fa.fa-pencil
+                    - else
+                      = link_to edit_detail_job_path(job), remote: true, class: 'mr-3' do
+                        %i.fa.fa-pencil
 
                   - if job.status == :not_started
                     = link_to detail_job_start_job_path(job), method: :put do
