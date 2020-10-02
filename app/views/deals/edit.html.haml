@@ -115,13 +115,25 @@
           = link_to 'Delete deal', deal_path(@deal), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger'
 
         - if current_user.dealership.dealership_configuration.show_detail_job_link_in_ui?
-          .pull-right
-            - if current_user.dealership.detail_jobs.where(stock_number: @deal.stock_number).any?
-              = link_to detail_jobs_path do
-                View Detail Job
-            - else
-              = link_to detail_jobs_path(redirect_url: edit_deal_path(@deal), complete_by_date: DateTime.current.in_time_zone("US/Pacific").strftime("%Y-%m-%d"), complete_by_time: detail_job_complete_by_time(current_user.dealership), detail_job: {stock_number: @deal.stock_number, make: @deal.make, model: @deal.model, year: @deal.year, color: @deal.vehicle&.color, sales_rep_id: current_user.id, vin: @deal&.vehicle&.vin }), method: :post, data: {confirm: 'Are you sure you want to create a new Detail Job?'} do
-                .btn.btn-primary Add Detail Job
+
+          - if current_user.permission_level.in?("sales_rep")
+            - if current_user.dealership.dealership_configuration.allow_sales_reps_to_create_detail_jobs?
+              .pull-right
+                - if current_user.dealership.detail_jobs.where(stock_number: @deal.stock_number).any?
+                  = link_to detail_jobs_path do
+                    View Detail Job
+                - else
+                  = link_to detail_jobs_path(redirect_url: edit_deal_path(@deal), complete_by_date: DateTime.current.in_time_zone("US/Pacific").strftime("%Y-%m-%d"), complete_by_time: detail_job_complete_by_time(current_user.dealership), detail_job: {stock_number: @deal.stock_number, make: @deal.make, model: @deal.model, year: @deal.year, color: @deal.vehicle&.color, sales_rep_id: current_user.id, vin: @deal&.vehicle&.vin }), method: :post, data: {confirm: 'Are you sure you want to create a new Detail Job?'} do
+                    .btn.btn-primary Add Detail Job
+          - else
+            .pull-right
+              - if current_user.dealership.detail_jobs.where(stock_number: @deal.stock_number).any?
+                = link_to detail_jobs_path do
+                  View Detail Job
+              - else
+                = link_to detail_jobs_path(redirect_url: edit_deal_path(@deal), complete_by_date: DateTime.current.in_time_zone("US/Pacific").strftime("%Y-%m-%d"), complete_by_time: detail_job_complete_by_time(current_user.dealership), detail_job: {stock_number: @deal.stock_number, make: @deal.make, model: @deal.model, year: @deal.year, color: @deal.vehicle&.color, sales_rep_id: current_user.id, vin: @deal&.vehicle&.vin }), method: :post, data: {confirm: 'Are you sure you want to create a new Detail Job?'} do
+                  .btn.btn-primary Add Detail Job
+
       .col-md-6.text-center
         %a.btn.btn-primary.mx-2{"data-target" => "#dealCreateModal", "data-toggle" => "modal", :href => "#"} Update
         #dealCreateModal.modal

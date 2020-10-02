@@ -47,13 +47,24 @@
           Create service ticket
         %br
         - if current_user.dealership.dealership_configuration.show_detail_job_link_in_ui?
-          .small
-            - if @vehicle.detail_job.present?
-              = link_to detail_jobs_path do
-                View detail job
-            - else
-              = link_to detail_jobs_path(redirect_url: vehicles_path, complete_by_date: DateTime.current.in_time_zone("US/Pacific").strftime("%Y-%m-%d"), complete_by_time: detail_job_complete_by_time(current_user.dealership), detail_job: {stock_number: @vehicle.stock_number, make: @vehicle.make, model: @vehicle.model, year: @vehicle.year, color: @vehicle&.color, sales_rep_id: current_user.id, vin: @vehicle&.vin }), data: {confirm: 'Are you sure you want to create a detail job?'}, method: :post do
-                Create detail job
+          - if current_user.permission_level.in?("sales_rep")
+            - if current_user.dealership.dealership_configuration.allow_sales_reps_to_create_detail_jobs?
+              .small
+                - if @vehicle.detail_job.present?
+                  = link_to detail_jobs_path do
+                    View detail job
+                - else
+                  = link_to detail_jobs_path(redirect_url: vehicles_path, complete_by_date: DateTime.current.in_time_zone("US/Pacific").strftime("%Y-%m-%d"), complete_by_time: detail_job_complete_by_time(current_user.dealership), detail_job: {stock_number: @vehicle.stock_number, make: @vehicle.make, model: @vehicle.model, year: @vehicle.year, color: @vehicle&.color, sales_rep_id: current_user.id, vin: @vehicle&.vin }), data: {confirm: 'Are you sure you want to create a detail job?'}, method: :post do
+                    Create detail job
+          - else
+            .small
+              - if @vehicle.detail_job.present?
+                = link_to detail_jobs_path do
+                  View detail job
+              - else
+                = link_to detail_jobs_path(redirect_url: vehicles_path, complete_by_date: DateTime.current.in_time_zone("US/Pacific").strftime("%Y-%m-%d"), complete_by_time: detail_job_complete_by_time(current_user.dealership), detail_job: {stock_number: @vehicle.stock_number, make: @vehicle.make, model: @vehicle.model, year: @vehicle.year, color: @vehicle&.color, sales_rep_id: current_user.id, vin: @vehicle&.vin }), data: {confirm: 'Are you sure you want to create a detail job?'}, method: :post do
+                  Create detail job
+
         = link_to "Hold options", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#holdsContainer_#{dom_id(@vehicle)}", "data-toggle" => "collapse"
 
         - if @vehicle.vin.present? && @vehicle.stock_number.present? && current_user.special_permissions.include?('generate_bar_codes')
