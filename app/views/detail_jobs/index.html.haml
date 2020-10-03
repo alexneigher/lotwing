@@ -135,13 +135,14 @@
 
                 .col-4
                   .pull-left
-                    - if job.is_paused
-                      = link_to detail_job_unpause_job_path(job), method: :put do
-                        = "PAUSED #{job.most_recently_paused_at.in_time_zone("US/Pacific").strftime("%l:%M %p") }"
-                        %i.fa.fa-play-circle.text-white{style: 'font-size: 25px;'}
-                    - else
-                      = link_to detail_job_pause_job_path(job), method: :put do
-                        %i.fa.fa-pause-circle.text-white{style: 'font-size: 25px;'}
+                    - if job.status == :in_progress
+                      - if job.is_paused
+                        = link_to detail_job_unpause_job_path(job), method: :put do
+                          = "PAUSED #{job.most_recently_paused_at.in_time_zone("US/Pacific").strftime("%l:%M %p") }"
+                          %i.fa.fa-play-circle.text-white{style: 'font-size: 25px;'}
+                      - else
+                        = link_to detail_job_pause_job_path(job), method: :put do
+                          %i.fa.fa-pause-circle.text-white{style: 'font-size: 25px;'}
                   .pull-right
 
                     - unless current_user.permission_level.in?("detail_job_user")
