@@ -82,9 +82,10 @@
                       - if job.detailer.present?
                         = job.detailer.full_name
                       - else
-                        %div
-                          = form_for job, url: detail_job_path(job), method: :put do |f|
-                            = f.select :detailer_id, options_for_select(all_detailers, job.detailer_id), {include_blank: 'Select Detailer'}, class: 'form-control mb-1 form-control-sm',:onchange => "this.form.submit();"
+                        - if current_user.permission_level.in?("detail_job_user")
+                          %div
+                            = form_for job, url: detail_job_path(job), method: :put do |f|
+                              = f.select :detailer_id, options_for_select(all_detailers, job.detailer_id), {include_blank: 'Select Detailer'}, class: 'form-control mb-1 form-control-sm',:onchange => "this.form.submit();"
 
                     .col-4.text-center
                       .row
@@ -142,10 +143,14 @@
                     = link_to detail_job_start_job_path(job), method: :put do
                       %btn.btn.btn-sm.btn-success
                         START
+
                   - elsif job.status == :in_progress
+                    = link_to "Pause", detail_job_pause_job_path(job), method: :put
+
                     = link_to detail_job_complete_job_path(job), method: :put do
                       %btn.btn.btn-sm.btn-danger
                         MARK DONE
+
                   - elsif job.status == :complete
                     = link_to detail_job_reset_job_path(job), method: :put do
                       %btn.btn.btn-sm.btn-secondary

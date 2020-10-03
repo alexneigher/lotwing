@@ -63,8 +63,9 @@
       = f.select :sales_rep_id, options_for_select(current_user.dealership.users.active.pluck(:full_name, :id), current_user.id), {}, class: 'form-control mb-1'
     - if action == "edit"
       .form-group
-        %label Detailer
-        = f.select :detailer_id, options_for_select(current_user.dealership.users.active.pluck(:full_name, :id), f.object.detailer_id), {}, class: 'form-control mb-1'
+        - if current_user.permission_level.in?("detail_job_user")
+          %label Detailer
+          = f.select :detailer_id, options_for_select(current_user.dealership.users.active.pluck(:full_name, :id), f.object.detailer_id), {}, class: 'form-control mb-1'
 
       .form-group.text-right
         = link_to detail_job_path(f.object), class: 'text-danger', method: :delete do
