@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     put :start_job
     put :complete_job
     put :reset_job
+    put :pause_job
+    put :unpause_job
     collection do
       put :stock_number_search
       get :report

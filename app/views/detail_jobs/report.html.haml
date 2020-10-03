@@ -53,7 +53,7 @@
                   %td
                     = job.detailer&.full_name
                   %td
-                    = time_diff(job.started_at, job.completed_at || DateTime.current.utc)
+                    = time_diff(job.started_at + job.pause_duration_seconds.seconds, job.completed_at || DateTime.current.utc)
 
                   - time_on_job = time_diff(job.completed_at || DateTime.current.utc, job.must_be_completed_by.utc)
                   %td.font-20

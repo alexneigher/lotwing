@@ -1,4 +1,5 @@
 class DetailJobsController < ApplicationController
+  include ApplicationHelper
 
   def index
     sql = <<~SQL
@@ -92,10 +93,30 @@ class DetailJobsController < ApplicationController
   def reset_job
     @dealership = current_user.dealership
     @detail_job = @dealership.detail_jobs.find(params[:detail_job_id])
-    @detail_job.update(completed_at: nil, started_at: nil)
+    @detail_job.update(completed_at: nil, started_at: nil, pause_duration_seconds: 0, most_recently_paused_at: nil, is_paused: false)
 
     redirect_to detail_jobs_path
   end
+
+  def pause_job
+    @dealership = current_user.dealership
+    @detail_job = @dealership.detail_jobs.find(params[:detail_job_id])
+
+    @detail_job.update!(is_paused: true, most_recently_paused_at: DateTime.current)
+
+    redirect_to detail_jobs_path
+  end
+
+  def unpause_job
+    @dealership = current_user.dealership
+    @detail_job = @dealership.detail_jobs.find(params[:detail_job_id])
+
+    pause_duration_seconds = (DateTime.current.to_i - @detail_job.most_recently_paused_at.to_i)
+
+    @detail_job.update!(is_paused: false, most_recently_paused_at: nil, pause_duration_seconds: (@detail_job.pause_duration_seconds + pause_duration_seconds) )
+    redirect_to detail_jobs_path
+  end
+
 
   def report
     @dealership = current_user.dealership

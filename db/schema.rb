@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200926182428) do
+ActiveRecord::Schema.define(version: 20201003174123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,9 @@ ActiveRecord::Schema.define(version: 20200926182428) do
     t.boolean "add_dealership_default_task_4", default: false
     t.string "custom_task"
     t.string "special_instructions"
+    t.boolean "is_paused", default: false
+    t.integer "pause_duration_seconds", default: 0
+    t.datetime "most_recently_paused_at"
     t.index ["dealership_id"], name: "index_detail_jobs_on_dealership_id"
   end
 
