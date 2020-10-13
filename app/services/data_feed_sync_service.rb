@@ -26,9 +26,10 @@ class DataFeedSyncService
     end
 
     def download_file
-      Net::FTP.open('ftp.upperpark.com', 'alexn2018', 'r7e@89uWb9q') do |ftp|
+      Net::FTP.open('ftp.upperpark.com', 'alexn2020@upperpark.com', 'r7e@89uWb9q') do |ftp|
         ftp.chdir('/')
         datafile = ftp.nlst().last
+
         ftp.getbinaryfile(datafile, datafile, 1024) do |c|
           @vehicle_data << c
         end
