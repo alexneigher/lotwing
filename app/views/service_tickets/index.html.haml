@@ -29,7 +29,7 @@
 
           %tbody
             %tr
-              %td{colspan: 9}
+              %td{colspan: 10}
                 %strong OPEN
             - @service_tickets.incomplete.order(created_at: :desc).each do |service_ticket|
               %tr
@@ -49,7 +49,7 @@
                 %td.text-danger= service_ticket.status
 
             %tr
-              %td{colspan: 9}
+              %td{colspan: 10}
                 %strong COMPLETED
 
 
