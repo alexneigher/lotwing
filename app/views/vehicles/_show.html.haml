@@ -159,8 +159,12 @@
                       %br
                       = "Time in shop #{distance_of_time_in_words(ticket.completed_at.in_time_zone('Pacific Time (US & Canada)'), ticket.created_at.in_time_zone('Pacific Time (US & Canada)') )}"
 
+      - i = 0
       - grouped_events.each do |k, events|
-        .tab-pane{:role => "tabpanel", id: "#{k}_#{dom_id(@vehicle)}", class: ('active in' unless has_completed_tickets) }
+        - #iterator used for "active in" class
+        - i += 1
+
+        .tab-pane{:role => "tabpanel", id: "#{k}_#{dom_id(@vehicle)}", class: ('active in' if !has_completed_tickets && i == 1) }
           %table.table.table-bordered.table-striped.table-sm.mb-0
             %tbody
               - events.sort_by{|s| s.created_at}.reverse.each do |event|
