@@ -67,10 +67,6 @@ class ServiceTicketsController < ApplicationController
       formatted_complete_by_datetime = {complete_by_datetime: datetime}
     end
 
-    if service_ticket_params[:status] == "Complete"
-      @service_ticket.vehicle.update(service_hold: false, service_hold_notes: nil)
-    end
-
     @service_ticket.update(service_ticket_params.merge(formatted_complete_by_datetime))
 
     redirect_to service_ticket_path(@service_ticket)

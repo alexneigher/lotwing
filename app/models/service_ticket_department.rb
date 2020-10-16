@@ -23,6 +23,7 @@ class ServiceTicketDepartment < ApplicationRecord
       # all are complete, so update status and set completed at
       if all_complete
         service_ticket.update( completed_at: DateTime.current, status: 'Complete' )
+        service_ticket.vehicle&.update( service_hold: false, service_hold_notes: nil,service_hold_creator: nil, service_hold_created_at: nil )
 
       elsif any_in_progress
         # if any are in progress, mark ticket in progress
