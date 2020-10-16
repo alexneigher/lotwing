@@ -12,4 +12,21 @@ class ServiceTicket < ApplicationRecord
 
   has_one :vehicle, foreign_key: "stock_number", primary_key: "stock_number"
   accepts_nested_attributes_for :service_ticket_jobs
+
+  after_create :maybe_update_vehicle_data
+
+  private
+    #after create try to make the vehicle more populated
+
+    def maybe_update_vehicle_data
+      return unless vehicle
+
+      vehicle.update(
+        make: (vehicle.make.presence || self.make),
+        model: (vehicle.model.presence || self.model),
+        year: (vehicle.year.presence || self.year),
+        vin: (vehicle.vin.presence || self.vin),
+        color: (vehicle.color.presence || self.color),
+      )
+    end
 end
