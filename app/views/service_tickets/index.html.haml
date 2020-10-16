@@ -19,7 +19,8 @@
                 %i.fa.fa-pencil
               %th Date
               %th Stock #
-              %th VIN
+              %th Make
+              %th Model
               %th Year
               %th Written By
               %th Time in Shop
@@ -37,7 +38,8 @@
                     %i.fa.fa-pencil.edit-icon
                 %td= service_ticket.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%Y-%m-%d")
                 %td= service_ticket.stock_number
-                %td= service_ticket.vin
+                %td= service_ticket.make
+                %td= service_ticket.model
                 %td= service_ticket.year
                 %td= service_ticket.created_by_user.full_name
                 %td
