@@ -132,11 +132,11 @@
     %ul.nav.nav-tabs.mt-0{:role => "tablist"}
       - has_completed_tickets = false
 
-      - if @vehicle.completed_service_tickets.any?
+      - if @vehicle.service_tickets.complete.any?
         - has_completed_tickets = true
         %li.nav-item
           %a.nav-link{"data-toggle" => "tab", :href => "#service_tickets_#{dom_id(@vehicle)}", :role => "tab", class: 'active'}
-            Srv Tickets (#{@vehicle.completed_service_tickets.count})
+            Srv Tickets (#{@vehicle.service_tickets.complete.count})
 
       - grouped_events = @events.group_by(&:event_type)
       - grouped_events.keys.each_with_index do |key, i|
@@ -150,7 +150,7 @@
           %table.table.table-bordered.table-striped.table-sm.mb-0
             %table.table.table-bordered.table-striped.table-sm.mb-0
               %tbody
-                - @vehicle.completed_service_tickets.each do |ticket|
+                - @vehicle.service_tickets.complete.each do |ticket|
                   %tr
                     %td
                       Service Ticket
