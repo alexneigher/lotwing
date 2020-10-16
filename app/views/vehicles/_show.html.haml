@@ -128,17 +128,39 @@
     = render partial: 'vehicles/partials/show_recent_events'
 
     %hr.mt-0
-    - grouped_events = @events.group_by(&:event_type)
 
     %ul.nav.nav-tabs.mt-0{:role => "tablist"}
+      - has_completed_tickets = false
 
+      - if @vehicle.service_tickets.any?
+        - has_completed_tickets = true
+        %li.nav-item
+          %a.nav-link{"data-toggle" => "tab", :href => "#service_tickets_#{dom_id(@vehicle)}", :role => "tab", class: 'active'}
+            Srv Tickets (#{@vehicle.service_tickets.count})
+
+      - grouped_events = @events.group_by(&:event_type)
       - grouped_events.keys.each_with_index do |key, i|
         %li.nav-item
-          %a.nav-link{"data-toggle" => "tab", :href => "##{key}_#{dom_id(@vehicle)}", :role => "tab", class: ('active' if i == 0)}
+          %a.nav-link{"data-toggle" => "tab", :href => "##{key}_#{dom_id(@vehicle)}", :role => "tab", class: ('active' if i == 0 && !has_completed_tickets) }
             = "#{key.titleize} (#{grouped_events[key].count})"
+
     .tab-content.mt-3
+      - if has_completed_tickets
+        .tab-pane{:role => "tabpanel", id: "service_tickets_#{dom_id(@vehicle)}", class: 'active in' }
+          %table.table.table-bordered.table-striped.table-sm.mb-0
+            %table.table.table-bordered.table-striped.table-sm.mb-0
+              %tbody
+                - @vehicle.service_tickets.each do |ticket|
+                  %tr
+                    %td
+                      Service Ticket
+                    %td
+                      = "Final close at #{ticket.completed_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p')}"
+                      %br
+                      = "Time in shop #{distance_of_time_in_words(ticket.completed_at.in_time_zone('Pacific Time (US & Canada)'), ticket.created_at.in_time_zone('Pacific Time (US & Canada)') )}"
+
       - grouped_events.each do |k, events|
-        .tab-pane{:role => "tabpanel", id: "#{k}_#{dom_id(@vehicle)}", class: ('active in' if grouped_events.first[0] == k).to_s }
+        .tab-pane{:role => "tabpanel", id: "#{k}_#{dom_id(@vehicle)}", class: ('active in' unless has_completed_tickets) }
           %table.table.table-bordered.table-striped.table-sm.mb-0
             %tbody
               - events.sort_by{|s| s.created_at}.reverse.each do |event|
