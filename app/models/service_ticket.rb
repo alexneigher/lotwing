@@ -18,14 +18,22 @@ class ServiceTicket < ApplicationRecord
   private
     # after create try to make the vehicle more populated, only for user created vehicles
     def maybe_update_vehicle_data
-      return unless vehicle&.user_created?
+      return unless vehicle
+
+      update_hash = {}
+
+      if vehicle.user_created?
+        update_hash =
+          { make: self.make,
+            model: self.model,
+            year: self.year,
+            vin: self.vin,
+            color: self.color
+          }
+      end
 
       vehicle.update(
-        make: self.make,
-        model: self.model,
-        year: self.year,
-        vin: self.vin,
-        color: self.color,
+        {mileage: self.mileage}.merge(update_hash)
       )
     end
 end
