@@ -16,6 +16,8 @@
         - hh, mm = mm.divmod(60)
         - dd, hh = hh.divmod(24)
         = "#{pluralize(dd, 'day')} #{pluralize(hh, 'hour')}"
+    %span.text-primary.small.pl-1
+      = vehicle.sales_hold_notes
 .mt-3
   %strong{style:'margin-bottom:-2px;'} Service Holds
 %div{style:'font-size:9px;margin-bottom:10px;'}
@@ -42,3 +44,8 @@
         - count = (DateTime.current.to_date - vehicle.created_at.to_date).to_i
 
       = pluralize(count, "day")
+    %span.text-primary.small.pl-1
+      - vehicle.service_tickets.each do |ticket|
+        - if ticket.status == "In Progress"
+          = " (#{ticket.service_ticket_departments.pluck(:name).map{|d| d[0].upcase}.join(',')}) "
+          = ticket.status

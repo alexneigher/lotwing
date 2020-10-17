@@ -11,7 +11,7 @@ class HomeController < ApplicationController
 
     @vehicles_with_sales_holds = current_user.dealership.vehicles.where(sales_hold: true)
 
-    @vehicles_with_service_holds = current_user.dealership.vehicles.where(service_hold: true)
+    @vehicles_with_service_holds = current_user.dealership.vehicles.includes(service_tickets: :service_ticket_departments).where(service_hold: true)
   end
 
   def lot_view_info_bar
