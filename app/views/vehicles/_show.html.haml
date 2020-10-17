@@ -1,12 +1,15 @@
-=# @vehicle.inspect
-.card.mb-1
+.card.mb-1{style: 'border: 2px solid #212529;'}
   .card-body.pb-0
     - if flash[:success].present?
       .row{id: 'updateFlash'}
         .col-12
           .alert.alert-success.p1y
             = flash[:success]
-
+    .row
+      .col-12
+        %h4
+          %strong
+            VHS: Vehicle History Screen
     .row
       .col-6
         = "#{@vehicle.make} #{@vehicle.model} (#{@vehicle.stock_number}) History"

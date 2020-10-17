@@ -16,17 +16,16 @@ class ServiceTicket < ApplicationRecord
   after_create :maybe_update_vehicle_data
 
   private
-    #after create try to make the vehicle more populated
-
+    # after create try to make the vehicle more populated, only for user created vehicles
     def maybe_update_vehicle_data
-      return unless vehicle
+      return unless vehicle&.user_created?
 
       vehicle.update(
-        make: (vehicle.make.presence || self.make),
-        model: (vehicle.model.presence || self.model),
-        year: (vehicle.year.presence || self.year),
-        vin: (vehicle.vin.presence || self.vin),
-        color: (vehicle.color.presence || self.color),
+        make: self.make,
+        model: self.model,
+        year: self.year,
+        vin: self.vin,
+        color: self.color,
       )
     end
 end
