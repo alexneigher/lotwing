@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201003174123) do
+ActiveRecord::Schema.define(version: 20201018165059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,7 +193,9 @@ ActiveRecord::Schema.define(version: 20201003174123) do
     t.boolean "is_paused", default: false
     t.integer "pause_duration_seconds", default: 0
     t.datetime "most_recently_paused_at"
+    t.bigint "most_recently_paused_by_user_id"
     t.index ["dealership_id"], name: "index_detail_jobs_on_dealership_id"
+    t.index ["most_recently_paused_by_user_id"], name: "index_detail_jobs_on_most_recently_paused_by_user_id"
   end
 
   create_table "email_preferences", force: :cascade do |t|

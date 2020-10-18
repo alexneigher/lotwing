@@ -32,7 +32,6 @@
 
 = render partial: 'shared/map_popover'
 
-
 :javascript
    var time = new Date().getTime();
    $(document.body).bind("mousemove keypress", function(e) {
@@ -40,11 +39,12 @@
    });
 
    function refresh() {
-      if(new Date().getTime() - time >= 30000)
+      if(new Date().getTime() - time >= 30000){
         window.location.reload(true);
-      else
+      }
+      else{
         setTimeout(refresh, 5000);
-      end
+      }
    }
 
    setTimeout(refresh, 5000);

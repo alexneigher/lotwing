@@ -76,7 +76,7 @@ class DetailJobsController < ApplicationController
   def reset_job
     @dealership = current_user.dealership
     @detail_job = @dealership.detail_jobs.find(params[:detail_job_id])
-    @detail_job.update(completed_at: nil, started_at: nil, pause_duration_seconds: 0, most_recently_paused_at: nil, is_paused: false)
+    @detail_job.update(completed_at: nil, started_at: nil, pause_duration_seconds: 0, most_recently_paused_at: nil, most_recently_paused_by_user_id: nil, is_paused: false)
 
     redirect_to detail_jobs_path
   end
@@ -85,7 +85,7 @@ class DetailJobsController < ApplicationController
     @dealership = current_user.dealership
     @detail_job = @dealership.detail_jobs.find(params[:detail_job_id])
 
-    @detail_job.update!(is_paused: true, most_recently_paused_at: DateTime.current)
+    @detail_job.update!(is_paused: true, most_recently_paused_at: DateTime.current, most_recently_paused_by_user_id: current_user.id)
 
     redirect_to detail_jobs_path
   end
@@ -96,7 +96,7 @@ class DetailJobsController < ApplicationController
 
     pause_duration_seconds = (DateTime.current.to_i - @detail_job.most_recently_paused_at.to_i)
 
-    @detail_job.update!(is_paused: false, most_recently_paused_at: nil, pause_duration_seconds: (@detail_job.pause_duration_seconds + pause_duration_seconds) )
+    @detail_job.update!(is_paused: false, most_recently_paused_by_user_id: nil, most_recently_paused_at: nil, pause_duration_seconds: (@detail_job.pause_duration_seconds + pause_duration_seconds) )
     redirect_to detail_jobs_path
   end
 
