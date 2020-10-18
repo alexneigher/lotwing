@@ -2,39 +2,22 @@ class DetailJobsController < ApplicationController
   include ApplicationHelper
 
   def index
-    sql = <<~SQL
-              CASE
-                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') = '"#{DateTime.current.in_time_zone('US/Pacific').to_date}"'
-                  THEN 0
-                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') > '"#{DateTime.current.in_time_zone('US/Pacific').to_date}"'
-                  THEN 1
-                WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') < '"#{DateTime.current.in_time_zone('US/Pacific').to_date}"'
-                  THEN 2
-              END
-            SQL
 
-    sql1 = <<~SQL
-              CASE
-                WHEN started_at is not null and completed_at is null
-                  THEN 0
+    @upcoming_detail_jobs = current_user
+                              .dealership
+                              .detail_jobs
+                              .includes(:sales_rep, :detailer, vehicle: :events)
+                              .where("DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') >= ?",  DateTime.current.in_time_zone('US/Pacific').to_date)
+                              .order(DetailJob.sort_by_date, DetailJob.sort_by_status)
+                              .order(must_be_completed_by: :asc)
 
-                WHEN started_at is null and completed_at is null
-                  THEN 2
+    @historical_detail_jobs = current_user
+                                .dealership
+                                .detail_jobs
+                                .where("DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') < ?",  DateTime.current.in_time_zone('US/Pacific').to_date)
+                                .includes(:sales_rep, :detailer, vehicle: :events)
+                                .order(must_be_completed_by: :desc)
 
-                WHEN completed_at is not null
-                  THEN 3
-              END
-            SQL
-
-    sql2 = <<~SQL
-              must_be_completed_by ASC
-            SQL
-
-    @detail_jobs = current_user
-                    .dealership
-                    .detail_jobs
-                    .includes(:sales_rep, :detailer, vehicle: :events)
-                    .order(sql, sql1, sql2)
   end
 
   def create

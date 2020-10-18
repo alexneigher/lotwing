@@ -13,4 +13,31 @@ class DetailJob < ApplicationRecord
 
     return :complete if completed_at.present?
   end
+
+  def self.sort_by_date
+    <<~SQL
+      CASE
+        WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') = '"#{DateTime.current.in_time_zone('US/Pacific').to_date}"'
+          THEN 0
+        WHEN DATE(must_be_completed_by at time zone 'utc' at time zone 'america/los_angeles') > '"#{DateTime.current.in_time_zone('US/Pacific').to_date}"'
+          THEN 1
+      END
+    SQL
+  end
+
+  def self.sort_by_status
+    <<~SQL
+      CASE
+        WHEN started_at is not null and completed_at is null
+          THEN 0
+
+        WHEN started_at is null and completed_at is null
+          THEN 2
+
+        WHEN completed_at is not null
+          THEN 3
+      END
+    SQL
+
+  end
 end

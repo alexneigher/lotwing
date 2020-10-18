@@ -31,4 +31,8 @@ module DetailJobHelper
 
     time_plus_minutes.strftime("%l:%M %p")
   end
+
+  def all_detailers
+    current_user.dealership.users.active.detail_job_user.pluck(:full_name, :id)
+  end
 end
