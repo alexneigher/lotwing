@@ -5,6 +5,10 @@
 
 - @vehicles_with_sales_holds.each do |vehicle|
   %div.mb-2.small
+    - if vehicle.parking_space&.geo_info
+      / Button trigger modal
+      = link_to vehicle_show_map_path(vehicle), remote: true do
+        %i.fa.fa-map-marker
     = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
       = "(#{vehicle.stock_number})"
     = vehicle.sales_hold_creator
@@ -26,6 +30,11 @@
 
 - @vehicles_with_service_holds.each do |vehicle|
   %div.mb-2.small
+    - if vehicle.parking_space&.geo_info
+      / Button trigger modal
+      = link_to vehicle_show_map_path(vehicle), remote: true do
+        %i.fa.fa-map-marker
+
     = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
       = "(#{vehicle.stock_number})"
     = vehicle.service_hold_creator
