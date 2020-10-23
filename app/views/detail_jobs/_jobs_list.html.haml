@@ -40,7 +40,7 @@
                     - else
                       - time = job.must_be_completed_by.in_time_zone("US/Pacific")
 
-                      - if time.to_date == Date.today.in_time_zone("US/Pacific").to_date
+                      - if time.to_date == DateTime.current.in_time_zone("US/Pacific").to_date
                         = time.strftime("Today %l:%M %p")
                       - else
                         = time.strftime("%A, %b #{time.day.ordinalize} %l:%M %p")
