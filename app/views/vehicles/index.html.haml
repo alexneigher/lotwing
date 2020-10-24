@@ -12,6 +12,8 @@
       #vehicle_data_container
       = render partial: 'vehicles/new_vehicle_groupings_container'
 
+      = render partial: 'vehicles/user_created_groupings_container'
+
       -if current_user.special_permissions.include?('generate_bar_codes')
         %hr
 

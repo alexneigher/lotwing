@@ -152,6 +152,7 @@ Rails.application.routes.draw do
     collection do
       get :inventory_count
       get :new_vehicle_groupings
+      get :user_created_vehicle_groupings
     end
   end
 

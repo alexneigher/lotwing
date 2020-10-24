@@ -80,7 +80,22 @@ class VehiclesController < ApplicationController
   # route used by right side of VM page to render grouped new vehicles
   def new_vehicle_groupings
     dealership = current_user.dealership
-    @vehicles = dealership.vehicles.where(usage_type: "is_new").group_by(&:model).sort_by{ |key| key }.to_h
+    @vehicles = dealership
+                  .vehicles
+                  .where(usage_type: "is_new")
+                  .data_feed_created
+                  .group_by(&:model).sort_by{ |key| key }
+                  .to_h
+  end
+
+  def user_created_vehicle_groupings
+    dealership = current_user.dealership
+    @vehicles = dealership
+                  .vehicles
+                  .where(usage_type: ["is_new", "is_used"] )
+                  .user_created
+                  .group_by(&:usage_type).sort_by{ |key| key }
+                  .to_h
   end
 
 

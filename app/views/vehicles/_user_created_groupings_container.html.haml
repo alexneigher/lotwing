@@ -1,0 +1,10 @@
+%hr
+#user-created-groupings-container
+  %i.fa.fa-refresh.fa-spin
+  :javascript
+    $(function(){
+      $.ajax({
+        url:"/vehicles/user_created_vehicle_groupings?#{params.to_unsafe_h.to_query}",
+        method: "get",
+      });
+    })
