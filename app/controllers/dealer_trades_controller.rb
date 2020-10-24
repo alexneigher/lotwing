@@ -2,7 +2,7 @@ class DealerTradesController < ApplicationController
   before_action :set_paper_trail_whodunnit, only: [:update, :create]
 
   def index
-    @dealer_trades = current_user.dealership.dealer_trades
+    @dealer_trades = current_user.dealership.dealer_trades.order("Date(date_created) DESC")
 
     if params.dig(:search, :query).present?
       @dealer_trades = @dealer_trades
@@ -39,9 +39,9 @@ class DealerTradesController < ApplicationController
     if params.dig(:sort).present?
       params.dig(:sort).each do |k,v|
         if k == "date_created"
-          @dealer_trades = @dealer_trades.order("Date(date_created) #{v}")
+          @dealer_trades = @dealer_trades.unscope(:order).order("Date(date_created) #{v}")
         else
-          @dealer_trades = @dealer_trades.order(k => v)
+          @dealer_trades = @dealer_trades.unscope(:order).order(k => v)
         end
       end
     end
