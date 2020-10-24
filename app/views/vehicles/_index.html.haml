@@ -9,6 +9,13 @@
     .table-responsive.vehicle-table{style: 'max-height: 75vh;'}
       %table.table.table-bordered.table-striped.table-sm
         %thead
+          %tr.text-center
+            %td{colspan: 1}
+              %strong Location
+            %td
+            %td{colspan:2}
+              %strong Vehicle History Screen
+            %td
           %tr
             %th
               = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}) do
