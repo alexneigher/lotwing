@@ -37,7 +37,14 @@
                   = link_to service_ticket_path(service_ticket) do
                     %i.fa.fa-pencil.edit-icon
                 %td= service_ticket.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%Y-%m-%d")
-                %td= service_ticket.stock_number
+                %td
+                  - if service_ticket&.vehicle&.parking_space&.geo_info
+                    = link_to vehicle_show_map_path(service_ticket&.vehicle), remote: true do
+                      %i.fa.fa-map-marker
+                      = service_ticket.stock_number
+                  - else
+                    = service_ticket.stock_number
+
                 %td= service_ticket.make
                 %td= service_ticket.model
                 %td= service_ticket.year
@@ -74,4 +81,5 @@
 
 
 
+= render partial: 'shared/map_popover'
 

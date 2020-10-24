@@ -12,8 +12,8 @@
         .card-header
           %small
             Total Trades All Time: #{@dealer_trades.count}
-        
-    .col-md-10   
+
+    .col-md-10
       .row
         .col-2
           = link_to 'New Trade', new_dealer_trade_path, class: 'btn btn-primary btn-sm mb-1'
@@ -35,14 +35,14 @@
                   = hidden_field_tag "search[trade_options][our_trade]", 0
                   = check_box_tag 'search[trade_options][our_trade]', 1, params.dig(:search, :trade_options, :our_trade).to_i == 1 || params.dig(:search,:trade_options, :our_trade).nil?, class: 'mr-1'
                   Our Trade
-              .input-group  
+              .input-group
                 %label.mr-2{onclick: "$(this).parents('form').submit();"}
                   = hidden_field_tag "search[trade_options][our_purchase]", 0
                   = check_box_tag 'search[trade_options][our_purchase]', 1, params.dig(:search, :trade_options, :our_purchase).to_i == 1 || params.dig(:search,:trade_options, :our_purchase).nil?, class: 'mr-1'
                   Our Purchase
 
-              
-                
+
+
               .input-group
                 .input-group-prepend
                   %span.input-group-text{style:'padding: 0 5px;'}
@@ -103,7 +103,7 @@
               %th Difference
               %th Stock Number
               %th Trade
-              
+
           %tbody
             - @dealer_trades.each do |dealer_trade|
               %tr
@@ -120,7 +120,14 @@
                 %td= dealer_trade.trade_dealer_contact
                 %td= dealer_trade.desk_manager
                 %td= dealer_trade.trade_difference
-                %td= dealer_trade.stock_number
+                %td
+                  - if dealer_trade&.vehicle&.parking_space&.geo_info
+                    = link_to vehicle_show_map_path(dealer_trade&.vehicle), remote: true do
+                      %i.fa.fa-map-marker
+                      = dealer_trade.stock_number
+                  - else
+                    = dealer_trade.stock_number
+
                 %td
                   - if dealer_trade.your_trade
                     Your Trade
@@ -131,7 +138,7 @@
                   - elsif dealer_trade.our_purchase
                     Our Purchase
 
-            
+
 :javascript
   $(function() {
     $('.datepicker').datepicker({
