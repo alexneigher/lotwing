@@ -12,6 +12,10 @@ class VehiclesController < ApplicationController
       @vehicles = @vehicles.where(usage_type: params.dig(:filter, :usage_type))
     end
 
+    if params.dig(:filter, :creation_source).present?
+      @vehicles = @vehicles.where(creation_source: params.dig(:filter, :creation_source))
+    end
+
     if params.dig(:sortings).present?
       params.dig(:sortings).each do |k,v|
         @vehicles = @vehicles.order(k => v)

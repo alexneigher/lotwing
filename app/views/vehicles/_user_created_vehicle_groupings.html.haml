@@ -1,7 +1,7 @@
 .row.no-gutters
   - @vehicles.each do |usage_type, vehicles|
     .col-4.small
-      = link_to vehicles_path(filter: {usage_type: usage_type}) do
+      = link_to vehicles_path(filter: {usage_type: usage_type, creation_source: 'user_created'}) do
 
         - if usage_type == "is_new"
           %strong= "New UCV (#{vehicles.count})"
