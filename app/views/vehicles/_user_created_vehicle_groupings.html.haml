@@ -5,10 +5,12 @@
 
         - if usage_type == "is_new"
           %strong= "New UCV (#{vehicles.count})"
-        - else
+        - elsif usage_type == "is_used"
           %strong= "Used UCV (#{vehicles.count})"
+        - elsif usage_type == "wholesale_unit"
+          %strong= "Trd/Whl UCV (#{vehicles.count})"
 
-      %div{class: ('collapse' if params.dig(:filter,:usage_type) != usage_type) }
+      %div{class: ('collapse' unless (params.dig(:filter,:usage_type) == usage_type && params.dig(:filter,:creation_source) == "user_created" )) }
 
         - vehicles.group_by(&:year).each do |year, vehicles|
 

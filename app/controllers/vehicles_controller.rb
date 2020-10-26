@@ -96,7 +96,7 @@ class VehiclesController < ApplicationController
     dealership = current_user.dealership
     @vehicles = dealership
                   .vehicles
-                  .where(usage_type: ["is_new", "is_used"] )
+                  .where(usage_type: ["is_new", "is_used", "wholesale_unit"] )
                   .user_created
                   .group_by(&:usage_type).sort_by{ |key| key }
                   .to_h
