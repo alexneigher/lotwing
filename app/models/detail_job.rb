@@ -7,6 +7,8 @@ class DetailJob < ApplicationRecord
 
   has_one :vehicle, foreign_key: "stock_number", primary_key: "stock_number"
 
+  before_save :capitalize_stock_number
+
   def status
     return :not_started if started_at.nil?
 
@@ -41,4 +43,11 @@ class DetailJob < ApplicationRecord
     SQL
 
   end
+
+  private
+    def capitalize_stock_number
+      return unless stock_number.present?
+
+      self.stock_number = stock_number.upcase
+    end
 end
