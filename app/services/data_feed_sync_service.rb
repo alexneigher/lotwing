@@ -59,7 +59,7 @@ class DataFeedSyncService
             trim_level: data[5],
             body_style: data[6],
             transmission: data[7],
-            mileage: data[8].presence || 0,
+            mileage: mileage_calculation(vehicle, data),
             engine: data[9],
             engine_size: data[10],
             model_code: data[11],
@@ -91,4 +91,10 @@ class DataFeedSyncService
       dealership.data_sync.update(last_run_at: DateTime.now)
     end
 
+
+    def mileage_calculation(vehicle, data)
+      return vehicle.mileage if vehicle.mileage.present? && vehicle.mileage > 0
+
+      return data[8].presence || 0
+    end
 end
