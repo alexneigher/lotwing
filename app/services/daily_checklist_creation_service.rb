@@ -15,8 +15,7 @@ class DailyChecklistCreationService
       create_red_level_items(checklist)
 
       # do yellow level items, they are all optionally configured
-
-
+      create_yellow_level_items(checklist)
 
     end
 
@@ -67,6 +66,43 @@ class DailyChecklistCreationService
     end
 
     def create_yellow_level_items(checklist)
+      # first check to see if the used UCV checks are defined
+      if checklist.should_check_for_used_ucv?
+        vehicles = dealership
+                    .vehicles
+                    .where(creation_source: :user_created)
+                    .where("DATE(vehicles.created_at) <= ?", checklist.used_ucv_check_duration.days.ago)
+        if vehicles.any?
+          checklist.checklist_items.create(
+            item_tier: :yellow,
+            title: "You have #{ActionController::Base.helpers.pluralize(vehicles.count, 'used UCV')} older than #{ActionController::Base.helpers.pluralize(checklist.used_ucv_check_duration, 'day')}."
+          )
+        end
+      end
+
+      # then check to see if the New UCV checks are defined
+      if checklist.should_check_for_new_ucv?
+        vehicles = dealership
+                    .vehicles
+                    .where(creation_source: :user_created)
+                    .where("DATE(vehicles.created_at) <= ?", checklist.new_ucv_check_duration.days.ago)
+        if vehicles.any?
+          checklist.checklist_items.create(
+            item_tier: :yellow,
+            title: "You have #{ActionController::Base.helpers.pluralize(vehicles.count, 'new UCV')} older than #{ActionController::Base.helpers.pluralize(checklist.new_ucv_check_duration, 'day')}."
+          )
+        end
+      end
+
+      # check to see if there are any custom events
+      if checklist.sales_manager_custom_items.any?
+        checklist.sales_manager_custom_items.each do |item|
+          checklist.checklist_items.create(
+            item_tier: :yellow,
+            title: item
+          )
+        end
+      end
 
     end
 

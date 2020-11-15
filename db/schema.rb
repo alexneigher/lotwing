@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201115202648) do
+ActiveRecord::Schema.define(version: 20201115231036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,13 @@ ActiveRecord::Schema.define(version: 20201115202648) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "include_check_for_test_drives_longer_than"
+    t.integer "include_check_for_used_ucv_older_than"
+    t.integer "include_check_for_new_ucv_older_than"
+    t.jsonb "sales_managers_custom_reminder_checklist_items"
+    t.text "days_of_the_week_to_show_sales_manager_notifications", default: ["0", "0", "0", "0", "0", "0", "0"], array: true
+    t.integer "include_check_for_srv_loaner_older_than"
+    t.jsonb "service_managers_custom_reminder_checklist_items"
+    t.text "days_of_the_week_to_show_service_manager_notifications", default: ["0", "0", "0", "0", "0", "0", "0"], array: true
     t.index ["dealership_id"], name: "index_dealership_configurations_on_dealership_id"
   end
 

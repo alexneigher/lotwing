@@ -51,6 +51,22 @@
                         = "Item marked complete by #{item.completed_by_user.full_name} #{item.completed_at.in_time_zone("US/Pacific").strftime("%l:%M %p")}"
 
                 %hr
+          %h5
+            %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
+            Yellow Level Notifications
+          .row.justify-content-center
+            .col-11
+              - current_user.dealership.current_daily_checklist.yellow_level_notifications.order(:id).each do |item|
+                = form_for item, url: checklist_item_path(item), method: :put do |f|
+                  %label
+                    = check_box_tag "complete", 1, item.completed_at.present?
+                    = item.title
+                    = submit_tag
+                    -if item.completed_at?
+                      .text-blue.small
+                        = "Item marked complete by #{item.completed_by_user.full_name} #{item.completed_at.in_time_zone("US/Pacific").strftime("%l:%M %p")}"
+
+                %hr
 
         .modal-footer
           %button.btn.btn-outline-secondar
