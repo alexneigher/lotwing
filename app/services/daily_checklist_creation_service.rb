@@ -11,11 +11,12 @@ class DailyChecklistCreationService
 
       # add all appropriate checklist items based on
 
-      # "required, mandatory items"
+      # do red level items, 2 are required, one is optionally configured
       create_red_level_items(checklist)
 
+      # do yellow level items, they are all optionally configured
 
-      # optional dealership configurable items
+
 
     end
 
@@ -62,6 +63,10 @@ class DailyChecklistCreationService
           )
         end
       end
+
+    end
+
+    def create_yellow_level_items(checklist)
 
     end
 

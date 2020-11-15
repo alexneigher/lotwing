@@ -6,12 +6,14 @@
     .col-lg-4
       = render partial: 'home/display_modes'
 
+      %br
+      = render partial: 'layouts/shared/daily_checklist_notification_icons', locals: { icons_only: false }
+
       %hr
       - if params.dig(:display_mode) == "hold_vehicles"
         = render partial: 'home/hold_stats'
       - else
         = render partial: 'home/lot_view_stats'
-
 
 
     .col-lg-8{style: 'position: relative;'}

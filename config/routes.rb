@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   resources :barcodes, only: :create
 
+  resources :checklist_items, only: :update
+
   resources :detail_jobs do
     put :start_job
     put :complete_job

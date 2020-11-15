@@ -15,7 +15,42 @@
 
 - else
   -# make them links to the modal
-  %i.fa.fa-exclamation.bg-danger.px-2.p-1.text-white{style: 'border-radius: 4px;'}
-  %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
+  - if current_user.dealership.current_daily_checklist.uncompleted_red_level_notifications.any?
+    %a{"data-target" => "#redYellowChecklistItemsModal", "data-toggle" => "modal", :href => "#"}
+      %i.fa.fa-exclamation.bg-danger.px-2.p-1.text-white{style: 'border-radius: 4px;'}
+
+  - if current_user.dealership.current_daily_checklist.uncompleted_yellow_level_notifications.any?
+    %a{"data-target" => "#redYellowChecklistItemsModal", "data-toggle" => "modal", :href => "#"}
+      %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
   %span.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
     SRV
+
+
+  #redYellowChecklistItemsModal.modal
+    .modal-dialog.modal-lg
+      .modal-content
+        / Modal Header
+        .modal-header
+          %h4.modal-title Daily Checklist - #{Time.now.in_time_zone("US/Pacific").to_date.strftime("%A, %d %b %Y")}
+          %button.close{"data-dismiss" => "modal", :type => "button"} ×
+        / Modal body
+        .modal-body
+          %h5
+            %i.fa.fa-exclamation.bg-danger.px-2.p-1.text-white{style: 'border-radius: 4px;'}
+            Red Level Notifications
+          .row.justify-content-center
+            .col-11
+              - current_user.dealership.current_daily_checklist.red_level_notifications.order(:id).each do |item|
+                = form_for item, url: checklist_item_path(item), method: :put do |f|
+                  %label
+                    = check_box_tag "complete", 1, item.completed_at.present?
+                    = item.title
+                    = submit_tag
+                    -if item.completed_at?
+                      .text-blue.small
+                        = "Item marked complete by #{item.completed_by_user.full_name} #{item.completed_at.in_time_zone("US/Pacific").strftime("%l:%M %p")}"
+
+                %hr
+
+        .modal-footer
+          %button.btn.btn-outline-secondar
