@@ -16,6 +16,7 @@ class DailyChecklistCreationService
 
 
       # optional dealership configurable items
+
     end
 
   end
@@ -41,6 +42,27 @@ class DailyChecklistCreationService
           title: "You have #{ActionController::Base.helpers.pluralize(lost_vehicles.count, 'lost vehicle')}. Find #{ActionController::Base.helpers.pluralize(lost_vehicles.count, 'vehicle')} and tag."
         )
       end
+
+      #if the dealership has configured it, check for test drives lasting longer than xx days
+      if checklist.should_check_for_test_drives?
+        vehicles = dealership
+                    .vehicles
+                    .where(usage_type: ["is_new", "is_used", "lease_return", "wholesale_unit"])
+                    .joins(:events)
+                    .where
+                    .not(events: {started_at: nil})
+                    .where(events: {ended_at: nil})
+                    .where(events: {event_type: ["test_drive", "fuel_vehicle"]})
+                    .where("DATE(events.created_at) <= ?", checklist.test_drive_check_duration.days.ago)
+
+        if vehicles.any?
+          checklist.checklist_items.create(
+            item_tier: :red,
+            title: "You have #{ActionController::Base.helpers.pluralize(vehicles.count, 'stock vehicle')} on test drives for more than #{ActionController::Base.helpers.pluralize(checklist.test_drive_check_duration, 'day')}."
+          )
+        end
+      end
+
     end
 
     def dealership

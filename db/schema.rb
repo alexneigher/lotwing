@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201115170816) do
+ActiveRecord::Schema.define(version: 20201115202648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20201115170816) do
     t.boolean "allow_sales_reps_to_create_detail_jobs", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "include_check_for_test_drives_longer_than"
     t.index ["dealership_id"], name: "index_dealership_configurations_on_dealership_id"
   end
 
