@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201018165059) do
+ActiveRecord::Schema.define(version: 20201115170816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,25 @@ ActiveRecord::Schema.define(version: 20201018165059) do
     t.datetime "updated_at", null: false
     t.date "request_date"
     t.index ["dealership_id"], name: "index_check_requests_on_dealership_id"
+  end
+
+  create_table "checklist_items", force: :cascade do |t|
+    t.datetime "completed_at"
+    t.bigint "completed_by_user_id"
+    t.string "title"
+    t.string "item_tier"
+    t.bigint "daily_checklist_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["completed_by_user_id"], name: "index_checklist_items_on_completed_by_user_id"
+    t.index ["daily_checklist_id"], name: "index_checklist_items_on_daily_checklist_id"
+  end
+
+  create_table "daily_checklists", force: :cascade do |t|
+    t.bigint "dealership_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dealership_id"], name: "index_daily_checklists_on_dealership_id"
   end
 
   create_table "data_syncs", force: :cascade do |t|

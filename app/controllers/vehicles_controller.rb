@@ -28,7 +28,7 @@ class VehiclesController < ApplicationController
     end
 
     if params.dig(:filter, :no_tag).present?
-      @vehicles = Vehicle.where(id: vehicles_missing_tags(@dealership, @vehicles).pluck(:id))
+      @vehicles = Vehicle.where(id: Vehicle.missing_tags(@dealership, @vehicles).pluck(:id))
       @deleted_vehicles = @dealership.vehicles.only_deleted
     end
 
@@ -77,7 +77,7 @@ class VehiclesController < ApplicationController
 
     @grouped_vehicles = vehicles.group(:usage_type).count
 
-    @vehicles_missing_tags_length = vehicles_missing_tags(dealership, vehicles).length
+    @vehicles_missing_tags_length = Vehicle.missing_tags(dealership, vehicles).length
 
   end
 
@@ -158,15 +158,6 @@ class VehiclesController < ApplicationController
 
     def vehicle_params
       params.require(:vehicle).permit(:make, :model, :year, :vin, :color, :dealership_id, :usage_type, :sales_hold, :service_hold, :sales_hold_notes, :service_hold_notes, :stock_number )
-    end
-
-    def vehicles_missing_tags(dealership, vehicles)
-      currently_parked_vehicle_ids = dealership.shapes.where(shape_type: 'parking_space').joins(:vehicle).pluck(:vehicle_id)
-      active_test_drive_vehicle_ids = dealership.events.where(event_type: ['test_drive', 'fuel_vehicle'], ended_at: nil).includes(:tag).pluck(:vehicle_id)
-
-      all_vehicles_not_on_test_drives = vehicles.reject{|v| v.id.in?(active_test_drive_vehicle_ids) }
-
-      vehicles_missing_tags = (all_vehicles_not_on_test_drives || []).reject{|v| v.id.in?(currently_parked_vehicle_ids)}
     end
 
 end

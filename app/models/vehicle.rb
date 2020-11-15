@@ -33,6 +33,13 @@ class Vehicle < ApplicationRecord
     Rails.cache.clear
   end
 
+  def self.missing_tags(dealership, vehicles)
+    currently_parked_vehicle_ids = dealership.shapes.where(shape_type: 'parking_space').joins(:vehicle).pluck(:vehicle_id)
+    active_test_drive_vehicle_ids = dealership.events.where(event_type: ['test_drive', 'fuel_vehicle'], ended_at: nil).includes(:tag).pluck(:vehicle_id)
+    all_vehicles_not_on_test_drives = vehicles.reject{|v| v.id.in?(active_test_drive_vehicle_ids) }
+    vehicles_missing_tags = (all_vehicles_not_on_test_drives || []).reject{|v| v.id.in?(currently_parked_vehicle_ids)}
+  end
+
   def full_description
     "#{year} #{make} #{model}"
   end

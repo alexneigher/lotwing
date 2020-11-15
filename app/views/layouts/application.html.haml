@@ -46,6 +46,7 @@
             %li.nav-item
               = link_to lot_view_path, class: 'nav-link' + (' active' if params[:controller] == 'home' && params[:action] == 'show').to_s do
                 Lot View
+                = render partial: 'layouts/shared/daily_checklist_notification_icons', locals: { icons_only: true }
 
             %li.nav-item
               = link_to vehicles_path, class: 'nav-link' + (' active' if params[:controller] == 'vehicles' && params[:action] == 'index').to_s do

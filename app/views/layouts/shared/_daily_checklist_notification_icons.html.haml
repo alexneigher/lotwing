@@ -1,0 +1,21 @@
+=# current_user.dealership.current_daily_checklist
+
+- if icons_only
+  -# just indicate that there are notifications
+
+  - if current_user.dealership.current_daily_checklist.uncompleted_red_level_notifications.any?
+    %i.fa.fa-exclamation.bg-danger.px-2.p-1.text-white{style: 'border-radius: 4px;'}
+
+  - if current_user.dealership.current_daily_checklist.uncompleted_yellow_level_notifications.any?
+    %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
+
+
+  %span.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
+    SRV
+
+- else
+  -# make them links to the modal
+  %i.fa.fa-exclamation.bg-danger.px-2.p-1.text-white{style: 'border-radius: 4px;'}
+  %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
+  %span.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
+    SRV
