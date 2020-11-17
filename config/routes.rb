@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   resources :barcodes, only: :create
 
+  resources :checklist_items, only: :update
+
   resources :detail_jobs do
     put :start_job
     put :complete_job
@@ -138,6 +140,7 @@ Rails.application.routes.draw do
     resources :custom_fields, controller: 'dealerships/custom_fields', only: :index
     resources :payment_info, controller: 'dealerships/payment_info', only: :index
     resources :detail_job_config, controller: 'dealerships/detail_job_config', only: [:index, :update]
+    resources :daily_checklist_config, controller: 'dealerships/daily_checklist_config', only: [:index, :update]
   end
 
   resources :sales_reps, only: :show do

@@ -20,6 +20,9 @@ class Dealership < ApplicationRecord
   has_one :data_sync
   accepts_nested_attributes_for :data_sync
 
+  has_many :daily_checklists
+  has_one :current_daily_checklist, -> { where("DATE(created_at) = ?", Time.current.to_date ) }, class_name: 'DailyChecklist'
+
   after_create :create_data_sync
   after_create :add_dealership_configuration
 

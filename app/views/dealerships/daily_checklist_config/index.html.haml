@@ -1,0 +1,108 @@
+%h3.text-center= @dealership.name
+
+.container
+  = render partial: 'dealerships/partials/subnavs', locals: { active_tab: 'daily_checklist_config' }
+
+  .row
+    .col-12
+      .card
+        .card-body
+          = form_for @dealership.dealership_configuration, url: dealership_daily_checklist_config_path(@dealership, @dealership.dealership_configuration), method: :put do |f|
+            %h4 Sales Managers
+            .row
+              .col-1
+                %i.fa.fa-exclamation.bg-danger.px-2.p-1.text-white{style: 'border-radius: 4px;'}
+              .col-11
+                %strong Sales Manager's Red Level system notifications
+                %br
+
+                %i Note on vehicle
+                %br
+                %i Lost Vehicle
+            .row
+              .col-1
+              .col-11.mt-3
+                %strong Sales Manager's custom notifications
+                %br
+                %small
+                  %i Stock Vehicle left on test drive for more than
+                  = f.text_field :include_check_for_test_drives_longer_than, placeholder: 'xx', style: 'width: 50px;'
+                  days
+                  %br
+                  (if days left empty, no notifications will be shown)
+
+
+            .row.mt-3
+              .col-1
+                %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
+              .col-11
+                %strong Sales Manager's Yellow Level system notifications
+                %br
+                %small
+                  %i User Created Vehicle (UCV) NEW CAR older than
+                  = f.text_field :include_check_for_new_ucv_older_than, placeholder: 'xx', style: 'width: 50px;'
+                  days
+                  %br
+                  (if days left empty, no notifications will be shown)
+                %br
+                %small
+                  %i User Created Vehicle (UCV) USED CAR older than
+                  = f.text_field :include_check_for_used_ucv_older_than, placeholder: 'xx', style: 'width: 50px;'
+                  days
+                  %br
+                  (if days left empty, no notifications will be shown)
+
+            .row.mt-3
+              .col-12
+                %strong Sales Managers Custom Reminders
+            .row
+              .col-1
+              .col-11
+                Create up to 3 custom checklist notifications for Sales Manangers
+
+                - (0..2).each do |i|
+
+                  = text_field_tag "dealership_configuration[sales_managers_custom_reminder_checklist_items][]", nil, value: f.object.sales_managers_custom_reminder_checklist_items.try(:[], i) || "", class: 'form-control mb-1', placeholder: "Custom Item #{i+1}"
+
+
+
+            %hr
+            %hr
+
+            .row
+              .col-12
+                %h4 Service Managers
+            .row
+              .col-1
+              .col-11
+                Service Manager notifications can only be completed by Service Managers
+
+
+
+            .row.mt-3
+              .col-1
+                %span.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'} SRV
+              .col-11
+                %strong Service Manager Yellow level system notifications
+                %br
+                %small
+                  %i You have a Service Loaner out for longer than
+                  = f.text_field :include_check_for_srv_loaner_older_than, placeholder: 'xx', style: 'width: 50px;'
+                  days
+                  %br
+                  (if days left empty, no notifications will be shown)
+
+            .row.mt-3
+              .col-12
+                %strong Service Managers Custom Reminders
+            .row
+              .col-1
+              .col-11
+                Create up to 2 custom checklist notifications for Service Manangers
+
+                - (0..1).each do |i|
+
+                  = text_field_tag "dealership_configuration[service_managers_custom_reminder_checklist_items][]", nil, value: f.object.service_managers_custom_reminder_checklist_items.try(:[], i) || "", class: 'form-control mb-1', placeholder: "Custom Item #{i+1}"
+            .row
+              .col-12
+                = f.submit "Update Daily Checklist Settings", class: 'btn btn-primary mt-3 pull-right'

@@ -25,6 +25,11 @@
     = link_to dealership_deleted_records_path(@dealership), class: "nav-link #{('active') if active_tab == 'deleted_data'}" do
       Deleted vehicles/deals
 
-    %li
-    = link_to dealership_detail_job_config_index_path(@dealership), class: "nav-link #{('active') if active_tab == 'deleted_data'}" do
+  %li
+    = link_to dealership_detail_job_config_index_path(@dealership), class: "nav-link #{('active') if active_tab == 'detail_job_config'}" do
       Detail Job Config
+
+  - if current_user.permission_level == "admin"
+    %li
+      = link_to dealership_daily_checklist_config_index_path(@dealership), class: "nav-link #{('active') if active_tab == 'daily_checklist_config'}" do
+        Daily Checklist Config
