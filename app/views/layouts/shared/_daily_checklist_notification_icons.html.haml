@@ -1,27 +1,32 @@
 - return nil unless current_user.dealership.current_daily_checklist.present?
 
+- return nil unless current_user.permission_level == "admin"
+
 - if icons_only
   -# just indicate that there are notifications
 
-  - if current_user.dealership.current_daily_checklist.uncompleted_sales_manager_red_level_notifications.any?
-    %i.fa.fa-exclamation.bg-danger.px-2.p-1.text-white{style: 'border-radius: 4px;'}
+  - if current_user.dealership.current_daily_checklist.uncompleted_sales_manager_red_level_notifications.any? || current_user.dealership.current_daily_checklist.uncompleted_sales_manager_yellow_level_notifications.any?
 
-  - if current_user.dealership.current_daily_checklist.uncompleted_sales_manager_yellow_level_notifications.any?
-    %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
+    - if current_user.dealership.current_daily_checklist.uncompleted_sales_manager_red_level_notifications.any?
+      %i.fa.fa-exclamation.bg-danger.px-2.p-1.text-white{style: 'border-radius: 4px;font-size: 10px'}
+
+    - else
+      %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;font-size: 10px'}
 
   - if current_user.dealership.current_daily_checklist.uncompleted_service_manager_yellow_level_notifications.any?
-    %span.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
+    %span.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;font-size: 10px'}
       SRV
 
 - else
   -# make them links to the modal
-  - if current_user.dealership.current_daily_checklist.uncompleted_sales_manager_red_level_notifications.any?
-    %a{"data-target" => "#SalesManagerChecklistItemsModal", "data-toggle" => "modal", :href => "#"}
-      %i.fa.fa-exclamation.bg-danger.px-2.p-1.text-white{style: 'border-radius: 4px;'}
+  - if current_user.dealership.current_daily_checklist.uncompleted_sales_manager_red_level_notifications.any? || current_user.dealership.current_daily_checklist.uncompleted_sales_manager_yellow_level_notifications.any?
 
-  - if current_user.dealership.current_daily_checklist.uncompleted_sales_manager_yellow_level_notifications.any?
-    %a{"data-target" => "#SalesManagerChecklistItemsModal", "data-toggle" => "modal", :href => "#"}
-      %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
+    - if current_user.dealership.current_daily_checklist.uncompleted_sales_manager_red_level_notifications.any?
+      %a{"data-target" => "#SalesManagerChecklistItemsModal", "data-toggle" => "modal", :href => "#"}
+        %i.fa.fa-exclamation.bg-danger.px-2.p-1.text-white{style: 'border-radius: 4px;'}
+    - else
+      %a{"data-target" => "#SalesManagerChecklistItemsModal", "data-toggle" => "modal", :href => "#"}
+        %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
 
   - if current_user.dealership.current_daily_checklist.uncompleted_service_manager_yellow_level_notifications.any?
     %a{"data-target" => "#ServiceManagerChecklistItemsModal", "data-toggle" => "modal", :href => "#"}
@@ -46,14 +51,13 @@
               - current_user.dealership.current_daily_checklist.sales_manager_red_level_notifications.order(:id).each do |item|
                 = form_for item, url: checklist_item_path(item), method: :put do |f|
                   %label
-                    = check_box_tag "complete", 1, item.completed_at.present?
+                    = check_box_tag "complete", 1, item.completed_at.present?, onchange: "$(this).parents('form').submit();"
                     = item.title
-                    = submit_tag
                     -if item.completed_at?
                       .text-blue.small
                         = "Item marked complete by #{item.completed_by_user.full_name} #{item.completed_at.in_time_zone("US/Pacific").strftime("%l:%M %p")}"
 
-                %hr
+                %hr.mt-0
           %h5
             %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
             Yellow Level Notifications
@@ -62,14 +66,13 @@
               - current_user.dealership.current_daily_checklist.sales_manager_yellow_level_notifications.order(:id).each do |item|
                 = form_for item, url: checklist_item_path(item), method: :put do |f|
                   %label
-                    = check_box_tag "complete", 1, item.completed_at.present?
+                    = check_box_tag "complete", 1, item.completed_at.present?, onchange: "$(this).parents('form').submit();"
                     = item.title
-                    = submit_tag
                     -if item.completed_at?
                       .text-blue.small
                         = "Item marked complete by #{item.completed_by_user.full_name} #{item.completed_at.in_time_zone("US/Pacific").strftime("%l:%M %p")}"
 
-                %hr
+                %hr.mt-0
 
         .modal-footer
           %button.btn.btn-outline-secondary
@@ -90,14 +93,10 @@
               - current_user.dealership.current_daily_checklist.service_manager_yellow_level_notifications.order(:id).each do |item|
                 = form_for item, url: checklist_item_path(item), method: :put do |f|
                   %label
-                    = check_box_tag "complete", 1, item.completed_at.present?
+                    = check_box_tag "complete", 1, item.completed_at.present?, onchange: "$(this).parents('form').submit();"
                     = item.title
-                    = submit_tag
                     -if item.completed_at?
                       .text-blue.small
                         = "Item marked complete by #{item.completed_by_user.full_name} #{item.completed_at.in_time_zone("US/Pacific").strftime("%l:%M %p")}"
 
-                %hr
-
-        .modal-footer
-          %button.btn.btn-outline-secondar
+                %hr.mt-0
