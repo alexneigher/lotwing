@@ -29,6 +29,7 @@
     = link_to dealership_detail_job_config_index_path(@dealership), class: "nav-link #{('active') if active_tab == 'detail_job_config'}" do
       Detail Job Config
 
-  %li
-    = link_to dealership_daily_checklist_config_index_path(@dealership), class: "nav-link #{('active') if active_tab == 'daily_checklist_config'}" do
-      Daily Checklist Config
+  - if current_user.permission_level == "admin"
+    %li
+      = link_to dealership_daily_checklist_config_index_path(@dealership), class: "nav-link #{('active') if active_tab == 'daily_checklist_config'}" do
+        Daily Checklist Config
