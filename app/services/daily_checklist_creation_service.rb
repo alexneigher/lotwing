@@ -72,6 +72,7 @@ class DailyChecklistCreationService
       if checklist.should_check_for_used_ucv?
         vehicles = dealership
                     .vehicles
+                    .where(usage_type: 'is_used')
                     .where(creation_source: :user_created)
                     .where("DATE(vehicles.created_at) <= ?", checklist.used_ucv_check_duration.days.ago)
         if vehicles.any?
@@ -86,6 +87,7 @@ class DailyChecklistCreationService
       if checklist.should_check_for_new_ucv?
         vehicles = dealership
                     .vehicles
+                    .where(usage_type: 'is_new')
                     .where(creation_source: :user_created)
                     .where("DATE(vehicles.created_at) <= ?", checklist.new_ucv_check_duration.days.ago)
         if vehicles.any?
