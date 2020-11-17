@@ -12,11 +12,13 @@ class DailyChecklistCreationService
       # add all appropriate checklist items based on
 
       # do red level items, 2 are required, one is optionally configured
-      create_red_level_items(checklist)
+      create_sales_manager_red_level_items(checklist)
 
       # do yellow level items, they are all optionally configured
-      create_yellow_level_items(checklist)
+      create_sales_manager_yellow_level_items(checklist)
 
+      #do yellow level service manager items
+      create_service_manager_yellow_level_items(checklist)
     end
 
   end
@@ -24,12 +26,12 @@ class DailyChecklistCreationService
 
   private
 
-    def create_red_level_items(checklist)
+    def create_sales_manager_red_level_items(checklist)
       # first do notes left on vehicles
       notes = dealership.events.where(event_type: "note", acknowledged: :false)
       if notes.any?
         checklist.checklist_items.create(
-          item_tier: :red,
+          item_tier: :sales_manager_red,
           title: "You have #{ActionController::Base.helpers.pluralize(notes.count, 'vehicle')} with notes that have not been cleared- check map, click on vehicle and resolve note (write service ticket if necessary)"
         )
       end
@@ -38,7 +40,7 @@ class DailyChecklistCreationService
       lost_vehicles = Vehicle.missing_tags(dealership, dealership.vehicles)
       if lost_vehicles.any?
         checklist.checklist_items.create(
-          item_tier: :red,
+          item_tier: :sales_manager_red,
           title: "You have #{ActionController::Base.helpers.pluralize(lost_vehicles.count, 'lost vehicle')}. Find #{ActionController::Base.helpers.pluralize(lost_vehicles.count, 'vehicle')} and tag."
         )
       end
@@ -57,7 +59,7 @@ class DailyChecklistCreationService
 
         if vehicles.any?
           checklist.checklist_items.create(
-            item_tier: :red,
+            item_tier: :sales_manager_red,
             title: "You have #{ActionController::Base.helpers.pluralize(vehicles.count, 'stock vehicle')} on test drives for more than #{ActionController::Base.helpers.pluralize(checklist.test_drive_check_duration, 'day')}."
           )
         end
@@ -65,7 +67,7 @@ class DailyChecklistCreationService
 
     end
 
-    def create_yellow_level_items(checklist)
+    def create_sales_manager_yellow_level_items(checklist)
       # first check to see if the used UCV checks are defined
       if checklist.should_check_for_used_ucv?
         vehicles = dealership
@@ -74,7 +76,7 @@ class DailyChecklistCreationService
                     .where("DATE(vehicles.created_at) <= ?", checklist.used_ucv_check_duration.days.ago)
         if vehicles.any?
           checklist.checklist_items.create(
-            item_tier: :yellow,
+            item_tier: :sales_manager_yellow,
             title: "You have #{ActionController::Base.helpers.pluralize(vehicles.count, 'used UCV')} older than #{ActionController::Base.helpers.pluralize(checklist.used_ucv_check_duration, 'day')}."
           )
         end
@@ -88,7 +90,7 @@ class DailyChecklistCreationService
                     .where("DATE(vehicles.created_at) <= ?", checklist.new_ucv_check_duration.days.ago)
         if vehicles.any?
           checklist.checklist_items.create(
-            item_tier: :yellow,
+            item_tier: :sales_manager_yellow,
             title: "You have #{ActionController::Base.helpers.pluralize(vehicles.count, 'new UCV')} older than #{ActionController::Base.helpers.pluralize(checklist.new_ucv_check_duration, 'day')}."
           )
         end
@@ -98,12 +100,44 @@ class DailyChecklistCreationService
       if checklist.sales_manager_custom_items.any?
         checklist.sales_manager_custom_items.each do |item|
           checklist.checklist_items.create(
-            item_tier: :yellow,
+            item_tier: :sales_manager_yellow,
             title: item
           )
         end
       end
 
+    end
+
+
+    def create_service_manager_yellow_level_items(checklist)
+      if checklist.should_check_for_service_loaner?
+        vehicles = dealership
+                    .vehicles
+                    .where(usage_type: "loaner")
+                    .joins(:events)
+                    .where
+                    .not(events: {started_at: nil})
+                    .where(events: {ended_at: nil})
+                    .where(events: {event_type: ["test_drive", "fuel_vehicle"]})
+                    .where("DATE(events.created_at) <= ?", checklist.service_loaner_duration.days.ago)
+
+        if vehicles.any?
+          checklist.checklist_items.create(
+            item_tier: :service_manager_yellow,
+            title: "You have #{ActionController::Base.helpers.pluralize(vehicles.count, 'service loaner')} older than #{ActionController::Base.helpers.pluralize(checklist.service_loaner_duration, 'day')}."
+          )
+        end
+      end
+
+      # check to see if there are any custom events
+      if checklist.service_manager_custom_items.any?
+        checklist.service_manager_custom_items.each do |item|
+          checklist.checklist_items.create(
+            item_tier: :service_manager_yellow,
+            title: item
+          )
+        end
+      end
     end
 
     def dealership
