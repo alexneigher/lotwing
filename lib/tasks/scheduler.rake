@@ -27,3 +27,10 @@ task :duplicate_stock_number_search => :environment do
     end
   end
 end
+
+desc "Daily Checlist Generation"
+task :generate_daily_checklists => :environment do
+  Dealership.all.each do |dealership|
+    DailyChecklistCreationService.new(dealership.id).perform!
+  end
+end
