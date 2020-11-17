@@ -127,7 +127,7 @@ class DailyChecklistCreationService
         if vehicles.any?
           checklist.checklist_items.create(
             item_tier: :service_manager_yellow,
-            title: "You have #{ActionController::Base.helpers.pluralize(vehicles.count, 'service loaner')} older than #{ActionController::Base.helpers.pluralize(checklist.service_loaner_duration, 'day')}."
+            title: "You have #{ActionController::Base.helpers.pluralize(vehicles.count, 'service loaner')} out for more than #{ActionController::Base.helpers.pluralize(checklist.service_loaner_duration, 'day')}."
           )
         end
       end
