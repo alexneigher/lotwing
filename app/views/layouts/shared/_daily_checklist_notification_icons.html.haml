@@ -74,8 +74,26 @@
 
                 %hr.mt-0
 
-        .modal-footer
-          %button.btn.btn-outline-secondary
+          .row
+            .col-12
+              .btn.btn-primary.pull-right.mb-2{data: {target:"#add-notes-container", toggle:'collapse'}}
+                Add Note
+
+          #add-notes-container.collapse
+            = form_for :note, url: daily_checklist_notes_path(current_user.dealership.current_daily_checklist), method: :post do |f|
+              = f.text_area :text, class: 'form-control', rows: 2, placeholder: 'Add note text here'
+              = f.submit 'Create Note', class: 'btn btn-sm btn-success pull-right mt-2'
+
+        - if current_user.dealership.current_daily_checklist.notes.any?
+          .modal-footer.d-block
+            .row
+
+              - current_user.dealership.current_daily_checklist.notes.each do |note|
+                .col-12
+                  .text-blue
+                    = "#{note.created_at.in_time_zone("US/Pacific").strftime('%m-%d-%Y %l:%M %p')} #{note.user&.full_name} wrote: #{note.text}"
+                    %hr.mt-0
+
   #ServiceManagerChecklistItemsModal.modal
     .modal-dialog.modal-lg
       .modal-content
@@ -100,3 +118,22 @@
                         = "Item marked complete by #{item.completed_by_user.full_name} #{item.completed_at.in_time_zone("US/Pacific").strftime("%l:%M %p")}"
 
                 %hr.mt-0
+          .row
+            .col-12
+              .btn.btn-primary.pull-right.mb-2{data: {target:"#add-notes-container-srv", toggle:'collapse'}}
+                Add Note
+
+          #add-notes-container-srv.collapse
+            = form_for :note, url: daily_checklist_notes_path(current_user.dealership.current_daily_checklist), method: :post do |f|
+              = f.text_area :text, class: 'form-control', rows: 2, placeholder: 'Add note text here'
+              = f.submit 'Create Note', class: 'btn btn-sm btn-success pull-right mt-2'
+
+        - if current_user.dealership.current_daily_checklist.notes.any?
+          .modal-footer.d-block
+            .row
+
+              - current_user.dealership.current_daily_checklist.notes.each do |note|
+                .col-12
+                  .text-blue
+                    = "#{note.created_at.in_time_zone("US/Pacific").strftime('%m-%d-%Y %l:%M %p')} #{note.user&.full_name} wrote: #{note.text}"
+                    %hr.mt-0

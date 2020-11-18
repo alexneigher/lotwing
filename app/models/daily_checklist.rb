@@ -2,6 +2,7 @@ class DailyChecklist < ApplicationRecord
   belongs_to :dealership
   has_many :checklist_items, dependent: :destroy
 
+  has_many :notes
   has_many :uncompleted_sales_manager_red_level_notifications, -> { where(item_tier: "sales_manager_red", completed_at: nil)} , class_name: 'ChecklistItem'
   has_many :sales_manager_red_level_notifications, -> { where(item_tier: "sales_manager_red")} , class_name: 'ChecklistItem'
 

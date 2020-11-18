@@ -102,6 +102,10 @@ Rails.application.routes.draw do
 
   resources :service_ticket_departments, only: :update
 
+  resources :daily_checklists, only: [] do
+    resources :notes, only: :create, controller: 'daily_checklists/notes'
+  end
+
   resources :notes, only: [:create, :edit, :update]
 
   resources :suggested_trade_dealerships, only: :destroy
