@@ -41,11 +41,11 @@ class DailyChecklist < ApplicationRecord
   end
 
   def sales_manager_custom_items
-    dealership.dealership_configuration.sales_managers_custom_reminder_checklist_items
+    dealership.dealership_configuration.sales_managers_custom_reminder_checklist_items || []
   end
 
    def service_manager_custom_items
-    dealership.dealership_configuration.service_managers_custom_reminder_checklist_items
+    dealership.dealership_configuration.service_managers_custom_reminder_checklist_items || []
   end
 
   def should_check_for_service_loaner?
@@ -55,6 +55,21 @@ class DailyChecklist < ApplicationRecord
 
   def service_loaner_duration
     dealership.dealership_configuration.include_check_for_srv_loaner_older_than
+  end
+
+  def should_run_today_for?(team_name)
+    current_weekday = Time.current.in_time_zone("US/Pacific").wday
+
+    if team_name == :sales
+      dealership
+        .dealership_configuration
+        .days_of_the_week_to_show_sales_manager_notifications[current_weekday].to_i
+
+    elsif team_name == :service
+      dealership
+        .dealership_configuration
+        .days_of_the_week_to_show_service_manager_notifications[current_weekday].to_i
+    end
   end
 
 end
