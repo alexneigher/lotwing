@@ -64,6 +64,17 @@
 
                   = text_field_tag "dealership_configuration[sales_managers_custom_reminder_checklist_items][]", nil, value: f.object.sales_managers_custom_reminder_checklist_items.try(:[], i) || "", class: 'form-control mb-1', placeholder: "Custom Item #{i+1}"
 
+            .row.mt-3
+              .col-12
+                %strong Show Sales Notifications On:
+                %br
+
+                - (0..6).each do |i|
+                  .pull-left.mr-4.text-center
+                    = hidden_field_tag "[days_of_the_week_to_show_sales_manager_notifications][#{Date::ABBR_DAYNAMES[i]}]", 0
+                    = check_box_tag "[days_of_the_week_to_show_sales_manager_notifications][#{Date::ABBR_DAYNAMES[i]}]", 1, f.object.days_of_the_week_to_show_sales_manager_notifications.try(:[], i) == "1"
+                    %br
+                    = Date::ABBR_DAYNAMES[i]
 
 
             %hr
@@ -103,6 +114,19 @@
                 - (0..1).each do |i|
 
                   = text_field_tag "dealership_configuration[service_managers_custom_reminder_checklist_items][]", nil, value: f.object.service_managers_custom_reminder_checklist_items.try(:[], i) || "", class: 'form-control mb-1', placeholder: "Custom Item #{i+1}"
+
+            .row.mt-3
+              .col-12
+                %strong Show Service Notifications On:
+                %br
+
+                - (0..6).each do |i|
+                  .pull-left.mr-4.text-center
+                    = hidden_field_tag "[days_of_the_week_to_show_service_manager_notifications][#{Date::ABBR_DAYNAMES[i]}]", 0
+                    = check_box_tag "[days_of_the_week_to_show_service_manager_notifications][#{Date::ABBR_DAYNAMES[i]}]", 1, f.object.days_of_the_week_to_show_service_manager_notifications.try(:[], i) == "1"
+                    %br
+                    = Date::ABBR_DAYNAMES[i]
+
             .row
               .col-12
                 = f.submit "Update Daily Checklist Settings", class: 'btn btn-primary mt-3 pull-right'

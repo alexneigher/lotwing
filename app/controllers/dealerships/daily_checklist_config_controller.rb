@@ -6,7 +6,10 @@ class Dealerships::DailyChecklistConfigController < ApplicationController
 
   def update
     @dealership = current_user.dealership
-    @dealership.dealership_configuration.update(daily_checklist_config_params)
+    @dealership.dealership_configuration.update!(daily_checklist_config_params.merge(
+            days_of_the_week_to_show_sales_manager_notifications: params[:days_of_the_week_to_show_sales_manager_notifications]&.values&.map(&:to_i),
+            days_of_the_week_to_show_service_manager_notifications: params[:days_of_the_week_to_show_service_manager_notifications]&.values&.map(&:to_i)
+          ))
 
     flash[:success] = "Your settings have been updated"
     redirect_to dealership_daily_checklist_config_index_path(@dealership)
@@ -21,8 +24,9 @@ class Dealerships::DailyChecklistConfigController < ApplicationController
             :include_check_for_new_ucv_older_than,
             :include_check_for_used_ucv_older_than,
             :include_check_for_srv_loaner_older_than,
-            service_managers_custom_reminder_checklist_items: [],
-            sales_managers_custom_reminder_checklist_items: []
+            sales_managers_custom_reminder_checklist_items: [],
+            days_of_the_week_to_show_sales_manager_notifications: [],
+            days_of_the_week_to_show_service_manager_notifications: []
           )
     end
 
