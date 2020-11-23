@@ -1,0 +1,43 @@
+.modal{id: id}
+  .modal-dialog.modal-lg
+    .modal-content
+      / Modal Header
+      .modal-header
+        %h4.modal-title Daily Checklist - #{checklist.created_at.in_time_zone("US/Pacific").to_date.strftime("%A, %d %b %Y")}
+        %button.close{"data-dismiss" => "modal", :type => "button"} ×
+      / Modal body
+      .modal-body
+        %h5
+          %i.fa.fa-check.bg-warning.px-2.p-1.text-dark{style: 'border-radius: 4px;'}
+          Yellow Level Notifications
+        .row.justify-content-center
+          .col-11
+            - checklist.service_manager_yellow_level_notifications.order(:id).each do |item|
+              = form_for item, url: checklist_item_path(item), method: :put do |f|
+                %label
+                  = check_box_tag "complete", 1, item.completed_at.present?, onchange: "$(this).parents('form').submit();"
+                  = item.title
+                  -if item.completed_at?
+                    .text-blue.small
+                      = "Item marked complete by #{item.completed_by_user.full_name} #{item.completed_at.in_time_zone("US/Pacific").strftime("%l:%M %p")}"
+
+              %hr.mt-0
+        .row
+          .col-12
+            .btn.btn-primary.pull-right.mb-2{data: {target:"#add-notes-container-srv", toggle:'collapse'}}
+              Add Note
+
+        #add-notes-container-srv.collapse
+          = form_for :note, url: daily_checklist_notes_path(checklist), method: :post do |f|
+            = f.text_area :text, class: 'form-control', rows: 2, placeholder: 'Add note text here'
+            = f.submit 'Create Note', class: 'btn btn-sm btn-success pull-right mt-2'
+
+      - if checklist.notes.any?
+        .modal-footer.d-block
+          .row
+
+            - checklist.notes.each do |note|
+              .col-12
+                .text-blue
+                  = "#{note.created_at.in_time_zone("US/Pacific").strftime('%m-%d-%Y %l:%M %p')} #{note.user&.full_name} wrote: #{note.text}"
+                  %hr.mt-0

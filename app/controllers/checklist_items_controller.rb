@@ -1,8 +1,7 @@
 class ChecklistItemsController < ApplicationController
 
   def update
-    daily_checklist = current_user.dealership.current_daily_checklist
-    checklist_item = daily_checklist.checklist_items.find(params[:id])
+    checklist_item = ChecklistItem.find(params[:id])
 
     if params[:complete] == "1"
       checklist_item

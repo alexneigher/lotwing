@@ -72,4 +72,18 @@ class DailyChecklist < ApplicationRecord
     end
   end
 
+  def all_items_completed_for?(team_name)
+    if team_name == :sales
+      checklist_items
+        .where(item_tier: ["sales_manager_red", "sales_manager_yellow"])
+        .all?{ |i| i.completed_at.present? }
+    elsif team_name == :service
+      checklist_items
+        .where(item_tier: ["service_manager_yellow"])
+        .all?{ |i| i.completed_at.present? }
+    end
+
+
+  end
+
 end
