@@ -13,7 +13,7 @@
         .row.justify-content-center
           .col-11
             - checklist.sales_manager_red_level_notifications.order(:id).each do |item|
-              = form_for item, url: checklist_item_path(item), method: :put do |f|
+              = form_for item, url: checklist_item_path(item, redirect_to: redirect_to), method: :put do |f|
                 %label
                   = check_box_tag "complete", 1, item.completed_at.present?, onchange: "$(this).parents('form').submit();"
                   = item.title
@@ -28,7 +28,7 @@
         .row.justify-content-center
           .col-11
             - checklist.sales_manager_yellow_level_notifications.order(:id).each do |item|
-              = form_for item, url: checklist_item_path(item), method: :put do |f|
+              = form_for item, url: checklist_item_path(item, redirect_to: redirect_to), method: :put do |f|
                 %label
                   = check_box_tag "complete", 1, item.completed_at.present?, onchange: "$(this).parents('form').submit();"
                   = item.title

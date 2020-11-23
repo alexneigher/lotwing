@@ -2,6 +2,8 @@
 
 - return nil unless current_user.permission_level == "admin"
 
+- redirect_to = redirect_to || nil
+
 - if icons_only
   -# just indicate that there are notifications
 
@@ -34,7 +36,7 @@
         SRV
 
 
-  = render partial: 'layouts/shared/daily_checklists/sales_manager_items', locals:{id:'SalesManagerChecklistItemsModal', checklist: current_user.dealership.current_daily_checklist}
+  = render partial: 'layouts/shared/daily_checklists/sales_manager_items', locals:{id:'SalesManagerChecklistItemsModal', checklist: current_user.dealership.current_daily_checklist, redirect_to: redirect_to}
 
-  = render partial: 'layouts/shared/daily_checklists/service_manager_items', locals:{id:'ServiceManagerChecklistItemsModal', checklist: current_user.dealership.current_daily_checklist}
+  = render partial: 'layouts/shared/daily_checklists/service_manager_items', locals:{id:'ServiceManagerChecklistItemsModal', checklist: current_user.dealership.current_daily_checklist, redirect_to: redirect_to}
 

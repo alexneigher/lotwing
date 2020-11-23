@@ -17,6 +17,10 @@ class ChecklistItemsController < ApplicationController
         )
     end
 
-    redirect_to lot_view_path
+    if params[:redirect_to].present?
+        redirect_to params[:redirect_to]
+    else
+      redirect_to lot_view_path
+    end
   end
 end

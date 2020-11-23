@@ -151,11 +151,11 @@
                     %a{"data-target" => "#sales-#{dom_id(checklist)}", "data-toggle" => "modal", :href => "#"}
                       %span.rounded.p-2.text-white{class: checklist.all_items_completed_for?(:sales) ? 'bg-success' : 'bg-danger'} Sales Mgr
 
-                    = render partial: 'layouts/shared/daily_checklists/sales_manager_items', locals:{id:"sales-#{dom_id(checklist)}", checklist: checklist}
+                    = render partial: 'layouts/shared/daily_checklists/sales_manager_items', locals:{id:"sales-#{dom_id(checklist)}", checklist: checklist, redirect_to: dealership_daily_checklist_config_index_path(@dealership)}
 
                   .col-4
                     %a{"data-target" => "#service-#{dom_id(checklist)}", "data-toggle" => "modal", :href => "#"}
                       %span.rounded.p-2.text-white{class: checklist.all_items_completed_for?(:service) ? 'bg-success' : 'bg-danger'} Service Mgr
 
-                    = render partial: 'layouts/shared/daily_checklists/service_manager_items', locals:{id:"service-#{dom_id(checklist)}", checklist: checklist}
+                    = render partial: 'layouts/shared/daily_checklists/service_manager_items', locals:{id:"service-#{dom_id(checklist)}", checklist: checklist, redirect_to: dealership_daily_checklist_config_index_path(@dealership)}
 
