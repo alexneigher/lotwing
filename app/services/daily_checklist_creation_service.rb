@@ -116,6 +116,7 @@ class DailyChecklistCreationService
         checklist.sales_manager_custom_items.each do |item|
 
           next unless ChecklistItem.should_repeat_today?(item)
+
           checklist.checklist_items.create!(
             item_tier: :sales_manager_yellow,
             title: item['text']
