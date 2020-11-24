@@ -9,11 +9,11 @@ class ChecklistItem < ApplicationRecord
   # used for the custom JSON array of text and repeat interval columns
   # sales_managers_custom_reminder_checklist_items & service_managers_custom_reminder_checklist_items
   def self.should_repeat_today?(item)
-    return true unless item.try(:[], "repeat_every")&.present?
-    return true unless item.try(:[], "anchor_date")&.present?
+    return true unless item.try(:[], "repeat_every").present?
+    return true unless item.try(:[], "anchor_date").present?
 
     # ignore this item if no text is present
-    return false unless item.try(:[], "text")&.present?
+    return false unless item.try(:[], "text").present?
 
     anchor_date = item["anchor_date"].to_date
     date_today = Time.current.in_time_zone("US/Pacific").to_date

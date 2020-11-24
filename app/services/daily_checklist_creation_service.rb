@@ -149,7 +149,9 @@ class DailyChecklistCreationService
       # check to see if there are any custom events
       if checklist.service_manager_custom_items.any?
         checklist.service_manager_custom_items.each do |item|
-          next if item.blank?
+
+          next unless ChecklistItem.should_repeat_today?(item)
+
           checklist.checklist_items.create!(
             item_tier: :service_manager_yellow,
             title: item['text']
