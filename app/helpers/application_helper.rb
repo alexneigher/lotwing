@@ -73,7 +73,7 @@ module ApplicationHelper
        "Add/Modify Sales Users<br>Delete Vehicles<br>Modify Stock Number<br>Create Service Tickets<br>Create/modify/delete deals".html_safe
       when 'sales_rep'
         "Create vehicles".html_safe
-      when "service_user"
+      when "service_user", "service_manager"
         "Complete service tickets<br>Add/modify service users".html_safe
       when "sales_rep"
     end

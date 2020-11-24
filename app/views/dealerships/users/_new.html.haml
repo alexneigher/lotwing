@@ -1,11 +1,11 @@
 %li.list-group-item
   = form_for :user, url: dealership_users_path(current_user.dealership), method: :post do |f|
     = f.text_field :full_name, class: 'form-control mb-2', placeholder: 'Full name', required: true
-    
+
     = f.email_field :email, class: 'form-control mb-2', placeholder: 'Email', required: true
-    
+
     .form-group
       %label Permission Level
-      = f.select :permission_level, options_for_select([['Sales Rep', "sales_rep"], ['Sales Manager', "sales_manager"], ['Service User', "service_user"], ['Admin', "admin"]]), {}, class: 'form-control'
-    
+      = f.select :permission_level, options_for_select([['Sales Rep', "sales_rep"], ['Sales Manager', "sales_manager"], ['Service User', "service_user"], ['Service Manager', "service_manager"], ['Admin', "admin"]]), {}, class: 'form-control'
+
     = f.submit 'Add', class: 'btn btn-primary'

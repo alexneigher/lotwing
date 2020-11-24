@@ -59,7 +59,7 @@
               = link_to board_manager_path, class: 'nav-link' + (' active' if params[:controller] == 'board_managers' && params[:action] == 'show').to_s do
                 Board Manager
 
-            - if current_user.permission_level.in? ["admin", "sales_manager", "service_user"]
+            - if current_user.permission_level.in? ["admin", "sales_manager", "service_user", "service_manager"]
               %li.nav-item
                 = link_to check_requests_path, class: 'nav-link' + (' active' if params[:controller] == 'check_requests').to_s do
                   Check Requests
@@ -69,7 +69,7 @@
                 = link_to dealer_trades_path, class: 'nav-link' + (' active' if params[:controller] == 'dealer_trades').to_s do
                   Dealer Trades
 
-            - if current_user.permission_level.in? ["admin", "sales_manager", "service_user"]
+            - if current_user.permission_level.in? ["admin", "sales_manager", "service_user", "service_manager"]
               %li.nav-item
                 = link_to service_tickets_path, class: 'nav-link' + (' active' if params[:controller] == 'service_tickets').to_s do
                   Service Tickets
