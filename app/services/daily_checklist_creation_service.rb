@@ -114,10 +114,11 @@ class DailyChecklistCreationService
       if checklist.sales_manager_custom_items.any?
 
         checklist.sales_manager_custom_items.each do |item|
-          next if item.blank?
+
+          next unless ChecklistItem.should_repeat_today?(item)
           checklist.checklist_items.create!(
             item_tier: :sales_manager_yellow,
-            title: item
+            title: item['text']
           )
         end
       end
@@ -151,7 +152,7 @@ class DailyChecklistCreationService
           next if item.blank?
           checklist.checklist_items.create!(
             item_tier: :service_manager_yellow,
-            title: item
+            title: item['text']
           )
         end
       end

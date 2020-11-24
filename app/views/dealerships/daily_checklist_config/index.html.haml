@@ -64,8 +64,15 @@
                     Create up to 3 custom checklist notifications for Sales Manangers
 
                     - (0..2).each do |i|
+                      .row
+                        .col-12
+                          = text_field_tag "dealership_configuration[sales_managers_custom_reminder_checklist_items][]text", nil, value: f.object.sales_managers_custom_reminder_checklist_items.try(:[], i).try(:[], 'text') || "", class: 'mb-1', placeholder: "Custom Item #{i+1}", style: 'width: 75%;'
+                          repeat
 
-                      = text_field_tag "dealership_configuration[sales_managers_custom_reminder_checklist_items][]", nil, value: f.object.sales_managers_custom_reminder_checklist_items.try(:[], i) || "", class: 'form-control mb-1', placeholder: "Custom Item #{i+1}"
+                          = text_field_tag "dealership_configuration[sales_managers_custom_reminder_checklist_items][]repeat_every", nil, value: f.object.sales_managers_custom_reminder_checklist_items.try(:[], i).try(:[], 'repeat_every') || "", class: 'mb-1', placeholder: "x", style: 'width: 5%;'
+                          days
+
+                          = hidden_field_tag "dealership_configuration[sales_managers_custom_reminder_checklist_items][]anchor_date", nil, value: f.object.sales_managers_custom_reminder_checklist_items.try(:[], i).try(:[], 'anchor_date') || Time.current.in_time_zone("US/Pacific").to_date
 
                 .row.mt-3
                   .col-12
@@ -115,8 +122,15 @@
                     Create up to 2 custom checklist notifications for Service Manangers
 
                     - (0..1).each do |i|
+                      .row
+                        .col-12
+                          = text_field_tag "dealership_configuration[service_managers_custom_reminder_checklist_items][]text", nil, value: f.object.service_managers_custom_reminder_checklist_items.try(:[], i).try(:[], 'text') || "", class: 'mb-1', placeholder: "Custom Item #{i+1}", style: 'width: 75%;'
+                          repeat
 
-                      = text_field_tag "dealership_configuration[service_managers_custom_reminder_checklist_items][]", nil, value: f.object.service_managers_custom_reminder_checklist_items.try(:[], i) || "", class: 'form-control mb-1', placeholder: "Custom Item #{i+1}"
+                          = text_field_tag "dealership_configuration[service_managers_custom_reminder_checklist_items][]repeat_every", nil, value: f.object.service_managers_custom_reminder_checklist_items.try(:[], i).try(:[], 'repeat_every') || "", class: 'mb-1', placeholder: "x", style: 'width: 5%;'
+                          days
+
+                          = hidden_field_tag "dealership_configuration[service_managers_custom_reminder_checklist_items][]anchor_date", nil, value: f.object.service_managers_custom_reminder_checklist_items.try(:[], i).try(:[], 'anchor_date') || Time.current.in_time_zone("US/Pacific").to_date
 
                 .row.mt-3
                   .col-12
