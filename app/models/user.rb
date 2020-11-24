@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :events
   has_one :email_preference
 
-  enum permission_level: [:sales_rep, :sales_manager, :admin, :service_user, :detail_job_user]
+  enum permission_level: [:sales_rep, :sales_manager, :admin, :service_user, :detail_job_user, :service_manager]
   enum status: [:active, :deactivated]
 
   after_create :set_default_email_preference
