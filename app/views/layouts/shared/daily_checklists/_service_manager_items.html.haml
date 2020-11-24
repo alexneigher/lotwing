@@ -15,7 +15,7 @@
             - checklist.service_manager_yellow_level_notifications.order(:id).each do |item|
               = form_for item, url: checklist_item_path(item, redirect_to: redirect_to), method: :put do |f|
                 %label
-                  - if current_user.permission_level.in?(["service_manager", "admin"]
+                  - if current_user.permission_level.in?(["service_manager", "admin"])
                     = check_box_tag "complete", 1, item.completed_at.present?, onchange: "$(this).parents('form').submit();"
                   = item.title
                   -if item.completed_at?
