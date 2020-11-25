@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201122201041) do
+ActiveRecord::Schema.define(version: 20201125224220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -272,6 +272,16 @@ ActiveRecord::Schema.define(version: 20201122201041) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
+  create_table "parking_lots", force: :cascade do |t|
+    t.bigint "dealership_id"
+    t.boolean "is_primary_lot", default: false
+    t.string "name"
+    t.string "initials"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dealership_id"], name: "index_parking_lots_on_dealership_id"
+  end
+
   create_table "resolutions", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "user_id"
@@ -331,7 +341,9 @@ ActiveRecord::Schema.define(version: 20201122201041) do
     t.bigint "dealership_id"
     t.datetime "most_recently_tagged_at"
     t.boolean "temporary", default: false
+    t.bigint "parking_lot_id"
     t.index ["dealership_id"], name: "index_shapes_on_dealership_id"
+    t.index ["parking_lot_id"], name: "index_shapes_on_parking_lot_id"
   end
 
   create_table "suggested_trade_dealerships", force: :cascade do |t|
@@ -446,6 +458,7 @@ ActiveRecord::Schema.define(version: 20201122201041) do
   add_foreign_key "dealership_configurations", "dealerships"
   add_foreign_key "notes", "service_ticket_jobs"
   add_foreign_key "notes", "users"
+  add_foreign_key "parking_lots", "dealerships"
   add_foreign_key "resolutions", "events"
   add_foreign_key "resolutions", "users"
   add_foreign_key "service_ticket_departments", "service_tickets"

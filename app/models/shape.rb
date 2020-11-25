@@ -1,5 +1,6 @@
 class Shape < ApplicationRecord
   belongs_to :dealership
+  belongs_to :parking_lot
 
   has_many :tags
   has_many :vehicles, through: :tags
