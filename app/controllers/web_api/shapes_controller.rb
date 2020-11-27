@@ -1,9 +1,11 @@
 module WebApi
   class ShapesController < ApplicationController
+    before_action :set_dealership
+    before_action :set_parking_lot
 
     def index
-      @shapes = current_user.dealership.shapes.where.not(shape_type: 'parking_space').order(shape_type: :desc).all
-      @parking_spaces = current_user.dealership.shapes.where(shape_type: 'parking_space')
+      @shapes = @dealership.shapes.where.not(shape_type: 'parking_space').order(shape_type: :desc).all
+      @parking_spaces = @dealership.shapes.where(shape_type: 'parking_space')
 
       render json: @shapes
                       .group_by{|s| s.shape_type.pluralize}
@@ -13,22 +15,45 @@ module WebApi
     end
 
     def parking_lots
-      @parking_lot = current_user.dealership.shapes.where(shape_type: 'parking_lot')
+      @parking_lot = @dealership
+                      .shapes
+                      .where(
+                        shape_type: 'parking_lot',
+                        parking_lot: @current_parking_lot
+                      )
+
       render json: {parking_lots: @parking_lot}
     end
 
     def buildings
-      @building = current_user.dealership.shapes.where(shape_type: 'building')
+      @building = @dealership
+                    .shapes
+                    .where(
+                      shape_type: 'building',
+                      parking_lot: @current_parking_lot
+                    )
+
       render json: {buildings: @building}
     end
 
     def landscaping
-      @landscaping = current_user.dealership.shapes.where(shape_type: 'landscaping')
+      @landscaping = @dealership
+                      .shapes
+                      .where(
+                        shape_type: 'landscaping',
+                        parking_lot: @current_parking_lot
+                      )
       render json: {landscaping: @landscaping}
     end
 
     def parking_spaces
-      @parking_spaces = current_user.dealership.shapes.where(shape_type: 'parking_space')
+
+      @parking_spaces = @dealership
+                          .shapes
+                          .where(
+                                  shape_type: 'parking_space',
+                                  parking_lot: @current_parking_lot
+                                )
 
       @new_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "is_new", sold_status: nil})
       @used_vehicle_occupied_space = @parking_spaces.joins(:vehicle).where(vehicles: {usage_type: "is_used", sold_status: nil})
@@ -70,7 +95,7 @@ module WebApi
 
     def show
       html = ''
-      @shape = current_user.dealership.shapes.find(params[:id])
+      @shape = @dealership.shapes.find(params[:id])
 
       vehicles = @shape.vehicles.includes(:tags).where(tags: {active: true})
 
@@ -91,6 +116,14 @@ module WebApi
     end
 
     private
+      def set_dealership
+        @dealership = current_user.dealership
+      end
+
+      def set_parking_lot
+        @current_parking_lot = (@dealership.parking_lots.find_by_name(params[:parking_lot]) || @dealership.primary_parking_lot)
+      end
+
       def maybe_filter_by_older_than_4_days
         return unless params.dig(:display_mode) == "no_tag_4_days"
 
@@ -110,7 +143,7 @@ module WebApi
       def maybe_filter_by_no_movement_14_days
         return unless params.dig(:display_mode) == "no_movement_14_days"
 
-        recent_change_stall_vehicle_ids = current_user.dealership.events.joins(:tag).where(event_type: 'change_stall').where("events.created_at >= ?", 14.days.ago).pluck(:vehicle_id)
+        recent_change_stall_vehicle_ids = @dealership.events.joins(:tag).where(event_type: 'change_stall').where("events.created_at >= ?", 14.days.ago).pluck(:vehicle_id)
 
         @new_vehicle_occupied_space = @new_vehicle_occupied_space.where.not(vehicles: {id: recent_change_stall_vehicle_ids}).where("vehicles.created_at < ?", 14.days.ago)
         @used_vehicle_occupied_space = @used_vehicle_occupied_space.where.not(vehicles: {id: recent_change_stall_vehicle_ids}).where("vehicles.created_at < ?", 14.days.ago)
