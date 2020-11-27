@@ -1,7 +1,5 @@
 - return nil unless current_user.dealership.current_daily_checklist.present?
 
-- return nil unless current_user.permission_level == "admin"
-
 - redirect_to = redirect_to || nil
 
 - if icons_only
