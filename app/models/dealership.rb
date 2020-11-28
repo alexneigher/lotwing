@@ -14,7 +14,7 @@ class Dealership < ApplicationRecord
   has_many :check_requests
   has_many :service_tickets
   has_many :detail_jobs
-
+  has_many :parking_lots
   has_one :dealership_configuration
 
   has_one :data_sync
@@ -30,6 +30,10 @@ class Dealership < ApplicationRecord
     stripe_customer_id.present? &&
     stripe_subscription_id.present? &&
     most_recent_payment_received_at >= Date.today.beginning_of_month
+  end
+
+  def primary_parking_lot
+    parking_lots.find_by(is_primary_lot: true)
   end
 
   private

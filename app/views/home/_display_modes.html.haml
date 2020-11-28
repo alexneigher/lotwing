@@ -1,25 +1,38 @@
 %h5 Map Display Mode
-= link_to lot_view_path do
-  %btn.btn.btn-sm{class: (params.dig(:display_mode).nil? ? 'btn-primary':'btn-outline-primary')} All Vehicles
 
-= link_to lot_view_path(display_mode: :no_tag_4_days) do
-  %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_tag_4_days' ? 'btn-primary':'btn-outline-primary')} No tag 4 days
+- if current_user.email = "aneigher@gmail.com"
+  .row.mb-3
+    .col-12
+      - @dealership.parking_lots.each do |lot|
+        - active_classes = @current_parking_lot.name == lot.name ? 'bg-primary text-white':'bg-light text-dark'
 
-= link_to lot_view_path(display_mode: :hold_vehicles) do
-  %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'hold_vehicles' ? 'btn-primary':'btn-outline-primary')} Hold Vehicles
+        = link_to lot_view_path(parking_lot_name: lot.name), class: " small mr-1 rounded border #{active_classes}  p-2" do
+          = lot.name
 
-= link_to lot_view_path(display_mode: :no_test_drives) do
-  %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_test_drives' ? 'btn-primary':'btn-outline-primary')} No test drives
+.row
+  .col-12.mt-2
+    = link_to lot_view_path do
+      %btn.btn.btn-sm{class: (params.dig(:display_mode).nil? ? 'btn-primary':'btn-outline-primary')} All Vehicles
 
-.small.text-orange.cursor-pointer.mt-1{data: {target:"#more-display-modes", toggle:'collapse'}} more options
+    = link_to lot_view_path(display_mode: :no_tag_4_days) do
+      %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_tag_4_days' ? 'btn-primary':'btn-outline-primary')} No tag 4 days
 
-%div{id:"more-display-modes", class: ('collapse' unless params.dig(:display_mode).in?(['age_90_days_old','age_60_days_old','no_movement_14_days']) ) }
-  .pt-1
-    = link_to lot_view_path(display_mode: :age_90_days_old) do
-      %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'age_90_days_old' ? 'btn-primary':'btn-outline-primary')} 90+ days old (N)
+    = link_to lot_view_path(display_mode: :hold_vehicles) do
+      %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'hold_vehicles' ? 'btn-primary':'btn-outline-primary')} Hold Vehicles
 
-    = link_to lot_view_path(display_mode: :age_60_days_old) do
-      %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'age_60_days_old' ? 'btn-primary':'btn-outline-primary')} 60+ days old (U)
+    = link_to lot_view_path(display_mode: :no_test_drives) do
+      %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_test_drives' ? 'btn-primary':'btn-outline-primary')} No test drives
 
-    = link_to lot_view_path(display_mode: :no_movement_14_days) do
-      %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_movement_14_days' ? 'btn-primary':'btn-outline-primary')} No movement 14 days
+    %div{id:"more-display-modes", class: ('collapse' unless params.dig(:display_mode).in?(['age_90_days_old','age_60_days_old','no_movement_14_days']) ) }
+      .pt-1
+        = link_to lot_view_path(display_mode: :age_90_days_old) do
+          %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'age_90_days_old' ? 'btn-primary':'btn-outline-primary')} 90+ days old (N)
+
+        = link_to lot_view_path(display_mode: :age_60_days_old) do
+          %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'age_60_days_old' ? 'btn-primary':'btn-outline-primary')} 60+ days old (U)
+
+        = link_to lot_view_path(display_mode: :no_movement_14_days) do
+          %btn.btn.btn-sm{class: (params.dig(:display_mode) == 'no_movement_14_days' ? 'btn-primary':'btn-outline-primary')} No movement 14 days
+
+    .small.text-orange.cursor-pointer.mt-1{data: {target:"#more-display-modes", toggle:'collapse'}}
+      more options
