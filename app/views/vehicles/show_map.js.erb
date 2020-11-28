@@ -5,27 +5,64 @@ $('#mapModal .footer').html('<%= j(render partial: "vehicles/partials/show_map_f
 setTimeout(function(){
 
   layer = window.map.getLayer('singleVehicle');
+
   if (layer){
     window.map.removeLayer('singleVehicle');
     window.map.removeSource('singleVehicle');
+
+    window.map.removeLayer('lots-smooth-bordersparking_lots');
+    window.map.removeLayer('parking_lots');
+    window.map.removeSource('parking_lots');
+
+    window.map.removeLayer('lots-smooth-bordersbuildings');
+    window.map.removeLayer('buildings');
+    window.map.removeSource('buildings');
+
+    window.map.removeLayer('lots-smooth-bordersparking_spaces');
+    window.map.removeLayer('parking_spaces');
+    window.map.removeSource('parking_spaces');
+
   }
-  window.map.addLayer({
-    'id': 'singleVehicle',
-    'type': 'fill',
-    'source': {
-        'type': 'geojson',
-        "data": {
-                  "type": "Feature",
-                  "geometry": <%= raw(@vehicle.parking_space&.geo_info['geometry'].to_json) %>
-                }
+
+  parking_lot_name = '<%= @parking_lot_name %>';
+
+  $.ajax({
+    url:"/web_api/shapes?parking_lot_name=" + parking_lot_name + "",
+    dataType: "json",
+    success: function(data){
+      add_shapes_to_map(data, window.map, 'parking_lots');
+      add_shapes_to_map(data, window.map, 'buildings');
+      add_shapes_to_map(data, window.map, 'parking_spaces');
+
+      center_map(data);
+
+
+      window.map.addLayer({
+        'id': 'singleVehicle',
+        'type': 'fill',
+        'source': {
+            'type': 'geojson',
+            "data": {
+                      "type": "Feature",
+                      "geometry": <%= raw(@vehicle.parking_space&.geo_info['geometry'].to_json) %>
+                    }
+        },
+        'layout': {},
+        'paint': {
+          'fill-color': "<%= @vehicle_color %>",
+        }
+      });
+
+      map.flyTo({center: <%= raw(@vehicle.parking_space&.geo_info['geometry']['coordinates'][0][0].to_json) %> });
+
     },
-    'layout': {},
-    'paint': {
-      'fill-color': "<%= @vehicle_color %>",
+    error: function (xhr) {
+      alert(xhr.statusText)
     }
   });
 
-  map.flyTo({center: <%= raw(@vehicle.parking_space&.geo_info['geometry']['coordinates'][0][0].to_json) %> });
+
+
 
 }, 300);
 

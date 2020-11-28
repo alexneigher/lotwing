@@ -12,31 +12,14 @@ $(function(){
         {
           id: 'background',
           type: 'background',
-          paint: { 
-            'background-color': 'white' 
+          paint: {
+            'background-color': 'white'
           }
         }
       ]
     }
   });
 
-  window.map.on('load', function () {
-
-    $.ajax({
-      url:"/web_api/shapes",
-      dataType: "json",
-      success: function(data){
-        add_shapes_to_map(data, window.map, 'parking_lots');
-        add_shapes_to_map(data, window.map, 'buildings');
-        add_shapes_to_map(data, window.map, 'parking_spaces');
-
-        center_map(data);
-      },
-      error: function (xhr) {
-        alert(xhr.statusText)
-      }
-    });
-  });
 })//$(function)
 
 

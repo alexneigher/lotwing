@@ -62,6 +62,8 @@ class VehiclesController < ApplicationController
     @events = @vehicle.events.includes(:user, :resolutions)
     dealership = current_user.dealership
 
+    @parking_lot_name = @vehicle.parking_space.parking_lot.name
+
     @redirect_to_link = params[:redirect_to_link]
 
     @vehicle_color = @vehicle.map_color
