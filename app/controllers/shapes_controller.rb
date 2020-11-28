@@ -11,7 +11,8 @@ class ShapesController < ApplicationController
         Shape.create!(
           dealership_id: current_user.dealership.id,
           geo_info: geo,
-          shape_type: params[:shape][:shape_type].to_i
+          shape_type: params[:shape][:shape_type].to_i,
+          parking_lot_id: params[:shape][:parking_lot_id].to_i
         )
       end
     end

@@ -15,6 +15,10 @@
                 %label
                   %small Shape Type
                 = f.select :shape_type, Shape.shape_types.to_a, {}, class: 'form-control'
+
+                %label
+                  %small Parking lot
+                = f.select :parking_lot_id, ParkingLot.pluck(:name, :id), {}, class: 'form-control'
               .col-6
                 %label
                   %small Number of Shapes

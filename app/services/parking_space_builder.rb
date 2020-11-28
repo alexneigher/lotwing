@@ -3,6 +3,7 @@ class ParkingSpaceBuilder
   def initialize(params, dealership_id)
     @geo_info = JSON.parse(params[:shape][:geo_info])
     @horizontal_splits = params[:shape][:horizontal_splits].to_i
+    @parking_lot_id = params[:shape][:parking_lot_id].to_i
     @dealership_id = dealership_id
   end
 
@@ -13,17 +14,17 @@ class ParkingSpaceBuilder
     end
   end
 
-  def save_shape(shape)    
+  def save_shape(shape)
     first_point = shape['geometry']['coordinates'].first.first
     second_point = shape['geometry']['coordinates'].first.second
     third_point = shape['geometry']['coordinates'].first.third
     fourth_point = shape['geometry']['coordinates'].first.fourth
-    
+
     a = Geokit::LatLng.new(first_point[1], first_point[0])
     b = Geokit::LatLng.new(second_point[1], second_point[0])
     c = Geokit::LatLng.new(third_point[1], third_point[0])
     d = Geokit::LatLng.new(fourth_point[1], fourth_point[0])
-    
+
     corners = [a, b, c, d]
 
     if @horizontal_splits == 0
@@ -31,7 +32,7 @@ class ParkingSpaceBuilder
     elsif @horizontal_splits == 1
 
       corners = [a, corners[0].midpoint_to(corners[1]), b, c, corners[2].midpoint_to(corners[3]), d]
-    
+
     elsif @horizontal_splits == 3
       ab = a.midpoint_to(b)
       see_dee = c.midpoint_to(d)
@@ -70,8 +71,8 @@ class ParkingSpaceBuilder
                     corners[corners.length - (i + 1)],
                     corners[i],
                   ]
-      
-    end  
+
+    end
 
     new_shapes.each do |shape|
       geo = {"id"=> SecureRandom.hex(15),
@@ -87,13 +88,14 @@ class ParkingSpaceBuilder
           "type"=>"Polygon"}
        }
 
-       Shape.create!( 
+       Shape.create!(
          dealership_id: @dealership_id,
-         geo_info: geo, 
-         shape_type: 0
+         geo_info: geo,
+         shape_type: 0,
+         parking_lot_id: @parking_lot_id
        )
 
     end
-    
+
   end
 end
