@@ -1,6 +1,6 @@
 %h5 Map Display Mode
 
-- if current_user.email = "aneigher@gmail.com"
+- if current_user.permission_level == "admin"
   .row.mb-3
     .col-12
       - @dealership.parking_lots.each do |lot|
