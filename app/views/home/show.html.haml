@@ -17,6 +17,7 @@
 
 
     .col-lg-8{style: 'position: relative;'}
+
       #vehicle_data_container
 
       #map{ :style => "width: 100%; height: 550px" }
@@ -44,5 +45,5 @@
             })
       .d-none
         //place all dom-dependent info here
-        %input#dealership_map_bearing{value: current_user.dealership.map_bearing }
-        %input#dealership_map_zoom{value: current_user.dealership.map_zoom }
+        %input#dealership_map_bearing{value: @current_parking_lot.map_bearing }
+        %input#dealership_map_zoom{value: @current_parking_lot.map_zoom }

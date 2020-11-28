@@ -1,6 +1,9 @@
 function fetch_data_and_render(shape_type){
+
+  parking_lot = getUrlParameter("parking_lot_name") || '';
+
   $.ajax({
-    url:"/web_api/shapes/"+shape_type,
+    url:"/web_api/shapes/"+shape_type + "?parking_lot_name=" + parking_lot + "",
     dataType: "json",
     success: function(data){
       add_shapes_to_map(data, window.map, shape_type);

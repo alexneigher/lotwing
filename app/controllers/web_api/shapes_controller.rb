@@ -21,7 +21,6 @@ module WebApi
                         shape_type: 'parking_lot',
                         parking_lot: @current_parking_lot
                       )
-
       render json: {parking_lots: @parking_lot}
     end
 
@@ -121,7 +120,7 @@ module WebApi
       end
 
       def set_parking_lot
-        @current_parking_lot = (@dealership.parking_lots.find_by_name(params[:parking_lot]) || @dealership.primary_parking_lot)
+        @current_parking_lot = (@dealership.parking_lots.find_by_name(params[:parking_lot_name]) || @dealership.primary_parking_lot)
       end
 
       def maybe_filter_by_older_than_4_days

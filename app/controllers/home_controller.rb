@@ -1,17 +1,18 @@
 class HomeController < ApplicationController
+  before_action :set_parking_lot
 
   def show
-    dealership = current_user.dealership
+    @dealership = current_user.dealership
 
-    @events_from_24h = current_user.dealership.events.includes(:user).where(events: {created_at: [24.hours.ago..DateTime.current]})
+    @events_from_24h = @dealership.events.includes(:user).where(events: {created_at: [24.hours.ago..DateTime.current]})
 
-    @events_from_today = current_user.dealership.events.includes(:user).where(events: {created_at: [DateTime.current.in_time_zone("Pacific Time (US & Canada)").beginning_of_day..DateTime.current]})
+    @events_from_today = @dealership.events.includes(:user).where(events: {created_at: [DateTime.current.in_time_zone("Pacific Time (US & Canada)").beginning_of_day..DateTime.current]})
 
-    @vehicles_off_lot = current_user.dealership.vehicles.joins(:events).where.not(events: {started_at: nil}).where(events: {ended_at: nil}).where(events: {event_type: ["test_drive", "fuel_vehicle"]})
+    @vehicles_off_lot = @dealership.vehicles.joins(:events).where.not(events: {started_at: nil}).where(events: {ended_at: nil}).where(events: {event_type: ["test_drive", "fuel_vehicle"]})
 
-    @vehicles_with_sales_holds = current_user.dealership.vehicles.where(sales_hold: true)
+    @vehicles_with_sales_holds = @dealership.vehicles.where(sales_hold: true)
 
-    @vehicles_with_service_holds = current_user.dealership.vehicles.includes(service_tickets: :service_ticket_departments).where(service_hold: true)
+    @vehicles_with_service_holds = @dealership.vehicles.includes(service_tickets: :service_ticket_departments).where(service_hold: true)
   end
 
   def lot_view_info_bar
@@ -35,4 +36,9 @@ class HomeController < ApplicationController
   def map_builder
     @shapes = current_user.dealership.shapes.order(:id).all
   end
+
+  private
+    def set_parking_lot
+      @current_parking_lot = (current_user.dealership.parking_lots.find_by_name(params[:parking_lot_name]) || current_user.dealership.primary_parking_lot)
+    end
 end

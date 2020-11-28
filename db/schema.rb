@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201125224220) do
+ActiveRecord::Schema.define(version: 20201128001548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -279,6 +279,8 @@ ActiveRecord::Schema.define(version: 20201125224220) do
     t.string "initials"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "map_bearing"
+    t.decimal "map_zoom"
     t.index ["dealership_id"], name: "index_parking_lots_on_dealership_id"
   end
 
