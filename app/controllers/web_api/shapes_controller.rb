@@ -5,7 +5,7 @@ module WebApi
 
     def index
       @shapes = @dealership.shapes.where(parking_lot: @current_parking_lot).where.not(shape_type: 'parking_space').order(shape_type: :desc).all
-      @parking_spaces = @dealership.shapes.where(shape_type: 'parking_space', parking_lot: @current_parking_lot);
+      @parking_spaces = @dealership.shapes.where(shape_type: 'parking_space', parking_lot: @current_parking_lot)
 
       render json: @shapes
                       .group_by{|s| s.shape_type.pluralize}

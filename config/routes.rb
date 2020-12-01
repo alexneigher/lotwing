@@ -53,6 +53,8 @@ Rails.application.routes.draw do
 
     resource :active_drives
 
+    resources :parking_lots, only: :index
+
     resources :deals do
       collection do
         get :mtd
