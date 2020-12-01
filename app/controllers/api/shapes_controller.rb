@@ -43,7 +43,6 @@ module Api
     end
 
     def parking_spaces
-      binding.pry
       @parking_spaces = @dealership
                           .shapes
                           .where(
