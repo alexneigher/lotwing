@@ -63,6 +63,20 @@
     #user-activity-container
       %i.fa.fa-refresh.fa-spin
 
+- if @vehicles_on_charge.any?
+  %hr
+  %h5 Vehicles On Charge
+  - @vehicles_on_charge.each do |vehicle|
+    %div.mb-2.small
+      - event = vehicle.events.where('event_type': 'charge_vehicle').last
+      .small
+        = event.user.full_name
+        = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
+          (#{vehicle.stock_number})
+
+        - time_diff = Time.now - event.started_at.in_time_zone("Pacific Time (US & Canada)")
+
+        = time_diff(event.started_at, Time.current)
 
 %hr
 %h5{style:'margin-bottom:-2px;'} Vehicles Currently Off Lot

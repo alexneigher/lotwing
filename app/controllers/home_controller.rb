@@ -10,6 +10,8 @@ class HomeController < ApplicationController
 
     @vehicles_off_lot = @dealership.vehicles.joins(:events).where.not(events: {started_at: nil}).where(events: {ended_at: nil}).where(events: {event_type: ["test_drive", "fuel_vehicle"]})
 
+    @vehicles_on_charge = @dealership.vehicles.joins(:events).where.not(events: {started_at: nil}).where(events: {ended_at: nil}).where(events: {event_type:"charge_vehicle"})
+
     @vehicles_with_sales_holds = @dealership.vehicles.where(sales_hold: true)
 
     @vehicles_with_service_holds = @dealership.vehicles.includes(service_tickets: :service_ticket_departments).where(service_hold: true)

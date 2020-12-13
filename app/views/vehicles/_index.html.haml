@@ -59,6 +59,11 @@
                 %td{style: "background-color: #{vehicle_usage_type_bg_color(vehicle.usage_type)}" }
                   = link_to vehicle_show_map_path(vehicle), class: vehicle_usage_type_text_color_class(vehicle.usage_type), remote: true do
                     = vehicle.stock_number
+
+                  - if vehicle.is_currently_charging?
+                    .pull-right
+                      %i.fa.fa-bolt.text-orange.pr-2
+
               - else
                 - is_on_test_drive = vehicle.is_currently_on_test_drive?
 

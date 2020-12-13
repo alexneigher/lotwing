@@ -56,6 +56,14 @@ class Vehicle < ApplicationRecord
     return false
   end
 
+  def is_currently_charging?
+    most_recent_event = events.order(created_at: :desc)&.first
+
+    return false unless most_recent_event
+    return true if (most_recent_event.event_type.in?(["charge_vehicle"]) && most_recent_event.ended_at.nil?)
+    return false
+  end
+
   def map_color
     case usage_type
       when "is_new"
