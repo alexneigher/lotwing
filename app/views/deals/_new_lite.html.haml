@@ -1,0 +1,80 @@
+.container-fluid
+  .row
+    .col-12
+      - if flash[:error].present?
+        .alert.alert-danger
+          = flash[:error]
+  .row
+    .col-md-12
+      %h3 Board Manager (Lite) - Deal Entry
+  = form_for @deal, url: deals_path, method: :post do |f|
+    .row.mt-4
+      .col-md-2
+        = f.date_field :deal_date, value: DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date, class: 'form-control'
+        = f.text_field :client_last_name, placeholder: 'Client Last Name', class: 'form-control mb-1'
+        %div{style: 'position:relative'}
+          %i.fa.fa-spin.fa-refresh.text-muted.d-none.loading-spin{style:'position:absolute;right:10px;top:11px;'}
+          = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control mb-1'
+        = f.text_field :trade, placeholder: 'Trade', class: 'form-control mb-1'
+        - reps = sales_reps_for_pickers(current_user.dealership.users.active)
+        = f.select :sales_rep_id, options_for_select(reps, disabled: "-----"), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
+        = f.select :split_rep_id, options_for_select(reps, disabled: "-----"), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
+      .col-md-2
+        = f.text_field :make, placeholder: 'Make', class: 'form-control mb-1'
+        = f.text_field :model, placeholder: 'Model', class: 'form-control mb-1'
+        = f.text_field :year, placeholder: 'Year', class: 'form-control mb-1'
+        = f.hidden_field :model_code
+
+        %label
+          = f.check_box :is_used
+          Is Used
+        %label
+          = f.check_box :certified_pre_owned
+          CPO
+        %hr
+
+    .row.mb-5
+      .col-md-2
+      .col-md-6.text-center
+        %a.btn.btn-primary.mx-2{"data-target" => "#dealCreateModal", "data-toggle" => "modal", :href => "#"} Submit
+        #dealCreateModal.modal
+          .modal-dialog.modal-sm
+            .modal-content
+              .modal-body
+                Is this vehicle leaving the lot today?
+
+              .modal-footer
+                = f.button 'No, place sales <br>hold on vehicle.'.html_safe, name: 'create_with_hold', value: "create_with_hold", class: 'btn bg-orange text-white mr-auto', style: 'font-size:12px; line-height:13px;'
+
+                = f.button 'Yes, leaving lot <br> today, no hold.'.html_safe, class: 'btn bg-green text-white ml-auto', style: 'font-size:12px; line-height:13px;'
+
+        = f.submit 'Store Entry', class: 'btn btn-outline-secondary mx-2'
+
+
+:javascript
+  $(function(){
+    //setup before functions
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 500;  //time in ms
+    var $input = $('#deal_stock_number');
+
+    //on keyup, start the countdown
+    $input.on('input', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    });
+
+    //user is "finished typing," populate the hidden form, and submit that one
+    function doneTyping () {
+      if ($input.val()){
+        $('.loading-spin').removeClass('d-none');
+
+        $.ajax({
+          url:"/deals/stock_number_search",
+          method: 'PUT',
+          data: { stock_number: $input.val() }
+        });
+      }
+    }
+
+  })

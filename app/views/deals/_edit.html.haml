@@ -1,0 +1,150 @@
+.container-fluid
+  = form_for @deal, url: deal_path(@deal), method: :put do |f|
+
+    .row
+      .col-8
+        %h3 Board Manager - Editing #{@deal.client_last_name}
+      .col-4.text-right
+
+        %span{ onclick: 'setTimeout(function(){document.location.href = "/board-manager"}, 0)' }
+          = f.submit 'Print Cover Sheet', class: 'btn btn-sm btn-secondary mt-2', :formtarget => "_blank"
+        %br
+        = link_to "Print Sold Sheet", deal_print_sold_sheet_path(@deal, format: :pdf), target: "_blank", class: 'btn btn-sm btn-secondary mt-2'
+
+    .row.mt-4
+      .col-md-2
+        - unless current_user.permission_level == "sales_rep"
+          = f.date_field :deal_date, class: 'form-control'
+        = f.text_field :client_last_name, placeholder: 'Client Last Name', class: 'form-control mb-1'
+        = f.text_field :source, placeholder: 'Source', class: 'form-control mb-1'
+        = f.text_field :stock_number, placeholder: 'Stock #', class: 'form-control mb-1'
+        = f.text_field :trade, placeholder: 'Trade', class: 'form-control mb-1'
+        - reps = sales_reps_for_pickers(current_user.dealership.users.active)
+        = f.select :sales_rep_id, options_for_select(reps, selected: @deal.sales_rep_id, disabled: '-----'), {include_blank: 'Sales Rep'}, class: 'form-control mb-1'
+
+        = f.select :split_rep_id, options_for_select(reps, selected: @deal.split_rep_id, disabled: '-----'), {include_blank: 'Split Rep'}, class: 'form-control mb-1'
+
+        = f.text_field :city, placeholder: 'City', class: 'form-control mb-1'
+
+        %a{"data-target" => "#historyModal", "data-toggle" => "modal", :href => "#"} Show History
+
+
+        / The Modal
+        #historyModal.modal
+          .modal-dialog.modal-lg
+            .modal-content
+              / Modal Header
+              .modal-header
+                %h4.modal-title Deal History - #{@deal.client_last_name}
+                %button.close{"data-dismiss" => "modal", :type => "button"} ×
+              / Modal body
+              .modal-body
+                - @deal.versions.includes(:item).reverse_each do |version|
+                  %small
+                    %strong
+                      = version.created_at.in_time_zone("Pacific Time (US & Canada)").strftime('%a, %d %b %Y %l:%M %p')
+                    = "(#{version.whodunnit})"
+                    %br
+                    - version.changeset.each do |key, value|
+                      - next if key == "updated_at"
+                      changed
+                      %strong= key
+                      to
+                      = value[1]
+                  %hr
+              .modal-footer
+                %button.btn.btn-outline-secondary{"data-dismiss" => "modal", :type => "button"} Close
+      .col-md-2
+        = f.text_field :make, placeholder: 'Make', class: 'form-control mb-1'
+        = f.text_field :model, placeholder: 'Model', class: 'form-control mb-1'
+        = f.text_field :year, placeholder: 'Year', class: 'form-control mb-1'
+        %label
+          = f.check_box :is_used
+          Is Used
+        %label
+          = f.check_box :certified_pre_owned
+          CPO
+        %hr
+        %label
+          = f.check_box :f_i_pre_sell
+          F&I Pre-sell
+        = f.text_area :f_i_pre_sell_product_list, placeholder: 'F&I Pre-sell products', class: 'form-control', rows: 3
+      .col-md-2
+        = f.select :result, options_for_select(['Deposit', 'P-Trip', 'Trip', 'N/C'], @deal.result), {include_blank: 'Result'}, class: 'form-control mb-1'
+        = f.select :report_status, options_for_select(['New RDR Done', "Need to X",'Not RDR\'d', 'Not RDR\'d Supp/Part', 'CPO RDR Done', 'N/A (Used Car, non CPO)'], @deal.report_status), {include_blank: 'Report Status'}, class: 'form-control mb-1'
+        = f.text_field :deal_number, placeholder: 'Deal Number', class: 'form-control mb-1'
+        = f.text_field :pay_method, placeholder: 'Pay Method', class: 'form-control mb-1'
+        = f.select :deal_type, options_for_select(['Retail', 'One Pay', 'Lease', 'Cash', 'RB'], @deal.deal_type), {include_blank: 'Deal Type'}, class: 'form-control mb-1'
+        = f.number_field :selling_price, placeholder: 'Selling Price', class: 'form-control mb-1'
+        = f.number_field :down_payment, placeholder: 'Down Payment', step: 0.01, class: 'form-control mb-1'
+        = f.text_field :term, placeholder: 'Term', class: 'form-control mb-1'
+      .col-md-2
+        = f.text_field :bank_name, placeholder: 'Bank Name', class: 'form-control mb-1'
+        = f.number_field :quoted_payment, placeholder: 'Quoted Payment', step: 0.01, class: 'form-control mb-1'
+        = f.text_field :rate_apr, placeholder: 'Rate APR', class: 'form-control mb-1'
+        = f.text_field :miles_per_year, placeholder: 'Miles Per Year (LSE)', class: 'form-control mb-1'
+        = f.text_area :rebates, placeholder: 'Rebates', class: 'form-control mb-1', rows: 3
+        = f.text_area :bulletin_number, placeholder: 'Bulletin Number', class: 'form-control mb-1', rows: 3
+        = f.select :desk_manager, options_for_select(current_user.dealership.users.active.sales_manager.pluck(:full_name), @deal.desk_manager), {include_blank: 'Desk Manager'}, class: 'form-control mb-1'
+        = f.select :finance_manager, options_for_select(current_user.dealership.users.active.sales_manager.pluck(:full_name), @deal.finance_manager), {include_blank: 'Finance Manager'}, class: 'form-control mb-1'
+        %label
+          = f.check_box :dealer_demo
+          Dealer Demo
+        %label
+          = f.check_box :loaner_car
+          Loaner Car
+        = f.text_field :disclosure, placeholder: 'Disclosure', class: 'form-control mb-1'
+      .col-md-2
+        = f.number_field :trade_allowance, placeholder: 'Trade Allowance', class: 'form-control mb-1'
+        = f.number_field :trade_acv, placeholder: 'Trade ACV', class: 'form-control mb-1'
+        = f.number_field :trade_payoff_amount, placeholder: 'Trade Payoff Amount', class: 'form-control mb-1'
+        = f.text_field :trade_bank_name, placeholder: 'Trade Bank Name', class: 'form-control mb-1'
+        = f.text_field :good_through_date, placeholder: 'Good Through Date', class: 'form-control mb-1'
+        = f.text_field :trade_account_number, placeholder: 'Trade Account Number', class: 'form-control mb-1'
+        = f.text_area :send_payoff_address, placeholder: 'Send Payoff Address', rows: 3, class: 'form-control mb-1'
+        = f.text_field :time_agreed, placeholder: 'Time Agreed', class: 'form-control mb-1'
+        = f.text_field :time_in_finance, placeholder: 'Time In - Finance', class: 'form-control mb-1'
+        = f.text_field :time_out_finance, placeholder: 'Time Out - Finance', class: 'form-control mb-1'
+        = f.text_field :menu_number, placeholder: 'Menu Number', class: 'form-control mb-1'
+        = f.select :deal_status, options_for_select(['Closed', 'Not Closed']), {include_blank: 'Deal Status'}, class: 'form-control mb-1'
+        = f.text_area :deal_notes, placeholder: 'Deal Notes', class: 'form-control mb-1', rows: 3
+
+    .row.mb-5
+      .col-md-4
+        - unless current_user.permission_level == 'sales_rep'
+          = link_to 'Delete deal', deal_path(@deal), method: :delete, data: {confirm: "Are you sure?"}, class: 'text-danger'
+
+        - if current_user.dealership.dealership_configuration.show_detail_job_link_in_ui?
+
+          - if current_user.permission_level.in?("sales_rep")
+            - if current_user.dealership.dealership_configuration.allow_sales_reps_to_create_detail_jobs?
+              .pull-right
+                - if current_user.dealership.detail_jobs.where(stock_number: @deal.stock_number).any?
+                  = link_to detail_jobs_path do
+                    View Detail Job
+                - else
+                  = link_to detail_jobs_path(redirect_url: edit_deal_path(@deal), complete_by_date: DateTime.current.in_time_zone("US/Pacific").strftime("%Y-%m-%d"), complete_by_time: detail_job_complete_by_time(current_user.dealership), detail_job: {stock_number: @deal.stock_number, make: @deal.make, model: @deal.model, year: @deal.year, color: @deal.vehicle&.color, sales_rep_id: current_user.id, vin: @deal&.vehicle&.vin }), method: :post, data: {confirm: 'Are you sure you want to create a new Detail Job?'} do
+                    .btn.btn-primary Add Detail Job
+          - else
+            .pull-right
+              - if current_user.dealership.detail_jobs.where(stock_number: @deal.stock_number).any?
+                = link_to detail_jobs_path do
+                  View Detail Job
+              - else
+                = link_to detail_jobs_path(redirect_url: edit_deal_path(@deal), complete_by_date: DateTime.current.in_time_zone("US/Pacific").strftime("%Y-%m-%d"), complete_by_time: detail_job_complete_by_time(current_user.dealership), detail_job: {stock_number: @deal.stock_number, make: @deal.make, model: @deal.model, year: @deal.year, color: @deal.vehicle&.color, sales_rep_id: current_user.id, vin: @deal&.vehicle&.vin }), method: :post, data: {confirm: 'Are you sure you want to create a new Detail Job?'} do
+                  .btn.btn-primary Add Detail Job
+
+      .col-md-6.text-center
+        %a.btn.btn-primary.mx-2{"data-target" => "#dealCreateModal", "data-toggle" => "modal", :href => "#"} Update
+        #dealCreateModal.modal
+          .modal-dialog.modal-sm
+            .modal-content
+              .modal-body
+                Is this vehicle leaving the lot today?
+
+              .modal-footer
+                = f.button 'No, place sales <br>hold on vehicle.'.html_safe, name: 'create_with_hold', value: "create_with_hold", class: 'btn bg-orange text-white mr-auto', style: 'font-size:12px; line-height:13px;'
+
+                = f.button 'Yes, leaving lot <br> today, no hold.'.html_safe, name: 'create_with_hold', value: "create_without_hold", class: 'btn bg-green text-white ml-auto', style: 'font-size:12px; line-height:13px;'
+
+        = f.submit 'Store Entry', class: 'btn btn-outline-secondary mx-2'

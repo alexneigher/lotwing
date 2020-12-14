@@ -44,6 +44,26 @@
               - @dealership_users.active.where(email_preferences: {parts_department_email: true}).each do |user|
                 %br
                 = user.email
+      .card.mt-2
+        .card-header
+          LotWing Feature Management
+        .card-body
+          .row
+            = f.fields_for :dealership_configuration do |ff|
+              .col-6
+                .form-group
+                  %label
+                    = ff.check_box :use_full_board_manager
+                    Full Board Manager
+                  %br
+                  .small.text-muted
+                    %em
+                      (If unchecked, Board Manager Lite will be enabled)
+                .form-group
+                  %label
+                    = ff.check_box :use_sales_rep_averages
+                    Use 90 Day Average Charts
+
 
 
 

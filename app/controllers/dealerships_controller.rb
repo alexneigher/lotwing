@@ -15,6 +15,15 @@ class DealershipsController < ApplicationController
 
   private
     def dealership_params
-      params.require(:dealership).permit(:map_bearing, :map_zoom, :custom_mtd_start_date, :name, data_sync_attributes: [ :id, :provider_id ])
+      params
+        .require(:dealership)
+        .permit(
+            :map_bearing,
+            :map_zoom,
+            :custom_mtd_start_date,
+            :name,
+            dealership_configuration_attributes: [:id, :use_full_board_manager, :use_sales_rep_averages],
+            data_sync_attributes: [ :id, :provider_id ]
+        )
     end
 end

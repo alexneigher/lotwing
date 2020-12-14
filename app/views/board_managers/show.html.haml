@@ -1,60 +1,58 @@
 .container-fluid
   .row.mb-1
-    .col-md-2
-      %h3.mb-2.text-center Sales Board
-      .text-center
-        .small
-          - grouped = @deals.included_in_counts.where(stored: false).group_by(&:is_used)
-          .row.no-gutters
-            .col-lg-6
-              .bg-blue.text-white.rounded
-                .py-1
-                  = "New: #{grouped[false]&.length || 0}"
-            .col-lg-6
-              .bg-green.rounded
-                .py-1
-                  = "Used: #{grouped[true]&.length || 0}"
+    - if current_user.dealership.dealership_configuration.use_sales_rep_averages?
+      .col-md-2
+        %h3.mb-2.text-center Sales Board
+        .text-center
+          .small
+            - grouped = @deals.included_in_counts.where(stored: false).group_by(&:is_used)
+            .row.no-gutters
+              .col-lg-6
+                .bg-blue.text-white.rounded
+                  .py-1
+                    = "New: #{grouped[false]&.length || 0}"
+              .col-lg-6
+                .bg-green.rounded
+                  .py-1
+                    = "Used: #{grouped[true]&.length || 0}"
 
-        .text-left.small.pt-3
-          .row.no-gutters
-            .col-md-8{style:'font-size:11px;padding-right:4px;border-right: 1px solid #efefef;'}
-              .text-center
-                Sales Reps
-              %small
-                - deal_rep_attribution_counts(@deals.included_in_counts.where(stored: false)).sort_by{ |k, v| v[:new] + v[:used] }.reverse_each do |rep_id, deals|
-                  - u = User.find(rep_id)
-                  = "<b>#{u.full_name.presence || 'Unknown Rep'}</b> (#{number_with_precision(deals[:new] + deals[:used], significant: true, precision: 3, strip_insignificant_zeros: true)})".html_safe
-                  %br
-                  = "#{number_with_precision(deals[:new], significant: true, precision: 3, strip_insignificant_zeros: true)} New"
-                  &#183;
-                  = "#{number_with_precision(deals[:used], significant: true, precision: 3, strip_insignificant_zeros: true)} Used"
+          .text-left.small.pt-3
+            .row.no-gutters
+              .col-md-8{style:'font-size:11px;padding-right:4px;border-right: 1px solid #efefef;'}
+                .text-center
+                  Sales Reps
+                %small
+                  - deal_rep_attribution_counts(@deals.included_in_counts.where(stored: false)).sort_by{ |k, v| v[:new] + v[:used] }.reverse_each do |rep_id, deals|
+                    - u = User.find(rep_id)
+                    = "<b>#{u.full_name.presence || 'Unknown Rep'}</b> (#{number_with_precision(deals[:new] + deals[:used], significant: true, precision: 3, strip_insignificant_zeros: true)})".html_safe
+                    %br
+                    = "#{number_with_precision(deals[:new], significant: true, precision: 3, strip_insignificant_zeros: true)} New"
+                    &#183;
+                    = "#{number_with_precision(deals[:used], significant: true, precision: 3, strip_insignificant_zeros: true)} Used"
 
-                  .pull-right
-                    %div{style: 'margin-top: -8px'}
+                    .pull-right
+                      %div{style: 'margin-top: -8px'}
 
-                      - if u.present?
-                        = link_to sales_rep_analytics_path(u), style: 'padding: 10px 0;', target: "_blank" do
-                          - if u.sales_rep_above_monthly_moving_average?
-                            %i.fa.fa-arrow-up.text-success
-                          - else
-                            %i.fa.fa-arrow-down.text-danger
-                  .clearfix
+                        - if u.present?
+                          = link_to sales_rep_analytics_path(u), style: 'padding: 10px 0;', target: "_blank" do
+                            - if u.sales_rep_above_monthly_moving_average?
+                              %i.fa.fa-arrow-up.text-success
+                            - else
+                              %i.fa.fa-arrow-down.text-danger
+                    .clearfix
+                    %hr.my-1
 
-                  %hr.my-1
+              .col-md-4{style:'font-size:11px;padding-left:4px;'}
+                .text-center
+                  New By Model
+                %small
+                  - @grouped_by_vehicle.reverse_each do |model, deals|
+                    .text-center
+                      = model
+                      = " (#{deals.count})"
+                    %hr.my-1
 
-
-            .col-md-4{style:'font-size:11px;padding-left:4px;'}
-              .text-center
-                New By Model
-              %small
-                - @grouped_by_vehicle.reverse_each do |model, deals|
-                  .text-center
-                    = model
-                    = " (#{deals.count})"
-                  %hr.my-1
-
-
-    .col-md-10
+    .col
       = link_to 'New Entry', new_deal_path, class: 'btn btn-primary btn-sm'
 
       .dropdown.show.pull-right
@@ -126,12 +124,13 @@
               %th Last
               %th Stock #
               %th
-                = link_to board_manager_path(sortings: {source: params.dig(:sortings, :source) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
-                  Source
-                  - if params.dig(:sortings, :source) == "asc"
-                    %i.fa.fa-sort-up
-                  - else
-                    %i.fa.fa-sort-down
+                - if current_user.dealership.dealership_configuration.use_full_board_manager?
+                  = link_to board_manager_path(sortings: {source: params.dig(:sortings, :source) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                    Source
+                    - if params.dig(:sortings, :source) == "asc"
+                      %i.fa.fa-sort-up
+                    - else
+                      %i.fa.fa-sort-down
               %th
                 = link_to board_manager_path(sortings: {is_used: params.dig(:sortings, :is_used) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
                   New
@@ -156,26 +155,29 @@
                   - else
                     %i.fa.fa-sort-down
               %th
-                = link_to board_manager_path(sortings: {city: params.dig(:sortings, :city) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
-                  City
-                  - if params.dig(:sortings, :city) == "asc"
-                    %i.fa.fa-sort-up
-                  - else
-                    %i.fa.fa-sort-down
+                - if current_user.dealership.dealership_configuration.use_full_board_manager?
+                  = link_to board_manager_path(sortings: {city: params.dig(:sortings, :city) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                    City
+                    - if params.dig(:sortings, :city) == "asc"
+                      %i.fa.fa-sort-up
+                    - else
+                      %i.fa.fa-sort-down
               %th
-                = link_to board_manager_path(sortings: {result: params.dig(:sortings, :result) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
-                  Result
-                  - if params.dig(:sortings, :result) == "asc"
-                    %i.fa.fa-sort-up
-                  - else
-                    %i.fa.fa-sort-down
+                - if current_user.dealership.dealership_configuration.use_full_board_manager?
+                  = link_to board_manager_path(sortings: {result: params.dig(:sortings, :result) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                    Result
+                    - if params.dig(:sortings, :result) == "asc"
+                      %i.fa.fa-sort-up
+                    - else
+                      %i.fa.fa-sort-down
               %th
-                = link_to board_manager_path(sortings: {report_status: params.dig(:sortings, :report_status) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
-                  Report
-                  - if params.dig(:sortings, :report_status) == "asc"
-                    %i.fa.fa-sort-up
-                  - else
-                    %i.fa.fa-sort-down
+                - if current_user.dealership.dealership_configuration.use_full_board_manager?
+                  = link_to board_manager_path(sortings: {report_status: params.dig(:sortings, :report_status) == 'asc' ? "desc": "asc"}, filters: params[:filters].as_json ) do
+                    Report
+                    - if params.dig(:sortings, :report_status) == "asc"
+                      %i.fa.fa-sort-up
+                    - else
+                      %i.fa.fa-sort-down
 
           %tbody
             - @grouped_deals.reverse_each do |date, deals|

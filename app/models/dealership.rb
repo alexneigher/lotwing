@@ -15,7 +15,10 @@ class Dealership < ApplicationRecord
   has_many :service_tickets
   has_many :detail_jobs
   has_many :parking_lots
+
   has_one :dealership_configuration
+  accepts_nested_attributes_for :dealership_configuration
+
 
   has_one :data_sync
   accepts_nested_attributes_for :data_sync
