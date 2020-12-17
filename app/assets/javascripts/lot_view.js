@@ -33,14 +33,16 @@ $(function(){
   map.on('click', 'sold_vehicle_spaces', open_popup);
 
   window.map.on('load', function () {
-    fetch_data_and_render('parking_lots')
+
+    fetch_data_and_render('parking_lots');
+
     setTimeout(function(){
       fetch_data_and_render('buildings');
-    }, 200);
+    }, 1000);
 
     setTimeout(function(){
       fetch_data_and_render('landscaping');
-    },400);
+    },700);
 
 
     setTimeout(function(){
