@@ -11,7 +11,7 @@ module Api
     def update
       @event.update(event_params)
 
-      if event_params[:started_at].present? && event_params[:event_type] != "charge_vehicle"
+      if event_params[:started_at].present? && !@event.charge_vehicle?
         @event.tag.update!(active: false) #this "removes" the vehicle from the lot since the test drive has formally been started
       end
 
