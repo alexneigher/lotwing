@@ -13,6 +13,8 @@ module EventsHelper
         "Vehicle has a new odometer reading. (#{event.event_details})"
       when "fuel_vehicle"
         "Vehicle was taken for fuel."
+      when "charge_vehicle"
+        "Vehicle was placed on charge."
     end
   end
 end

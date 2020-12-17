@@ -174,7 +174,7 @@
                 %tr
                   %td= event.event_type.upcase
                   %td
-                    = "Created By #{event.user.full_name} #{event.created_at.in_time_zone("US/Pacific").strftime('%m/%d/%Y %l:%M %p')}"
+                    = "By #{event.user.full_name} #{event.created_at.in_time_zone("US/Pacific").strftime('%m/%d/%Y %l:%M %p')}"
                     %br
                     = event.event_details
                   %td
