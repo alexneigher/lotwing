@@ -28,7 +28,7 @@
         - if @events.charge_vehicle.any?
           .small
             %strong Total Charge Time:
-            - seconds_diff = @events.charge_vehicle.map{|e| e.ended_at - e.started_at}.sum
+            - seconds_diff = @events.charge_vehicle.map{|e| (e.ended_at || DateTime.current) - e.started_at}.sum
 
             - hours = seconds_diff / 3600
             - seconds_diff -= hours * 3600
