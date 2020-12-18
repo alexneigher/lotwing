@@ -28,17 +28,9 @@
         - if @events.charge_vehicle.any?
           .small
             %strong Total Charge Time:
-            - seconds_diff = @events.charge_vehicle.map{|e| (e.ended_at || DateTime.current) - e.started_at}.sum
+            - t = @events.charge_vehicle.map{|e| (e.ended_at || DateTime.current) - e.started_at}.sum.to_f
+            = Time.at(t).utc.strftime("%H:%M:%S")
 
-            - hours = seconds_diff / 3600
-            - seconds_diff -= hours * 3600
-
-            - minutes = seconds_diff / 60
-            - seconds_diff -= minutes * 60
-
-            - seconds = seconds_diff
-
-            = "#{(hours.round).to_s.rjust(2, '0')}:#{minutes.round.to_s.rjust(2, '0')}:#{seconds.round.to_s.rjust(2, '0')}"
             - if @vehicle.is_currently_charging?
               %span.text-success
                 Currently Charging
