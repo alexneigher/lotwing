@@ -1,39 +1,20 @@
 //small container
-%div{style: 'width:50%;border: 1px solid #e0e0e0;position:relative; padding: 10px 15px;'}
-  = wicked_pdf_image_tag 'logo_black_small.png', style: 'position:absolute; width: 150px; top: 10px; right: 20px;'
+%div{style: 'width: 3in; height: 3in; border: 1px solid #e0e0e0;position:relative; padding: 10px 15px;'}
 
-  %h1{style:'font-size: 40px;margin-bottom:0;margin-top: 0;margin-top:10px;'}= @stock_number
+  %div{style: 'margin-bottom:50px;font-size: 20px;'}
+    %strong
+      = @vehicle.vin
+    %br
+    = "#{@vehicle.year} #{@vehicle.make}"
+    %br
+    = "#{@vehicle.color} - #{@vehicle.model}"
 
-  %div{style:'text-align: center;font-size: 35px;margin-top:20px;'}
-    = "#{@vehicle.year} #{@vehicle.make} #{@vehicle.model}"
-
-  %h4
-    - @vin.each_char.each do |char|
-      %div{style:'text-align:center; border:1px solid #e0e0e0;padding:2px 3px;margin:0 2px;float:left;'}
-        = char
-
-  %div
-    = image_tag(html_barcode(@vin), style: 'width: 90%;margin:50px auto 0;')
-
-
-
-
-
-//big container
-%div{style: 'width:90%;border: 1px solid #e0e0e0;position:relative; padding: 10px 15px; margin-top:80px;'}
-  = wicked_pdf_image_tag 'logo_black_small.png', style: 'position:absolute; width: 150px; top: 10px; right: 20px;'
-
-  %h1{style:'font-size: 40px;margin-bottom:0;margin-top:20px;float:left;'}
-    = @stock_number
-
-  %div{style:'float: left;padding-top:20px;padding-left: 20px;font-size: 30px;'}
-    = "#{@vehicle.year} #{@vehicle.make} #{@vehicle.model}"
-
-    %h4
-      - @vin.each_char.each do |char|
-        %div{style:'text-align:center; border:1px solid #e0e0e0;padding:2px 3px;margin:0 2px;float:left;'}
-          = char
+  %div{style:' width: 50%;float:left;'}
+    = image_tag @png.to_data_url, style: "width: 100%;"
+  %div{style:' width: 50%;float:left;font-size: 40px;text-align:center'}
+    %strong
+      = @vehicle.stock_number
+    = wicked_pdf_image_tag('logo_black_small.png', style: 'width: 80%;display:block;margin:auto;padding-top:65px;')
+  %div{style: 'clear:both'}
 
 
-  %div
-    = image_tag(html_barcode(@vin), style: 'width: 90%;margin:20px auto 0;')

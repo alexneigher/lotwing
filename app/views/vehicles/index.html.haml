@@ -18,7 +18,7 @@
         %hr
 
         %h5
-          = link_to "Generate Barcode", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#barCodeContainer", "data-toggle" => "collapse"
+          = link_to "Generate QR Code", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#barCodeContainer", "data-toggle" => "collapse"
 
         .collapse{id: "barCodeContainer"}
           = form_for :barcode, url: barcodes_path(format: :pdf), method: :post do

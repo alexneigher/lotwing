@@ -16,6 +16,8 @@ gem 'pg', '~> 0.20'
 gem 'barby'
 gem 'chunky_png'
 
+gem 'rqrcode'
+
 gem 'kaminari'
 
 gem 'acts_as_paranoid'

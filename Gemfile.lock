@@ -209,6 +209,10 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rqrcode (1.1.2)
+      chunky_png (~> 1.0)
+      rqrcode_core (~> 0.1)
+    rqrcode_core (0.1.2)
     ruby_dep (1.5.0)
     rubyzip (1.3.0)
     sass (3.5.7)
@@ -304,6 +308,7 @@ DEPENDENCIES
   puma (~> 3.7)
   rack-cors
   rails (~> 5.1.6)
+  rqrcode
   sass-rails (~> 5.0)
   selenium-webdriver
   simple_command
