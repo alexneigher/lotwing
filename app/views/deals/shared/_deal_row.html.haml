@@ -26,7 +26,7 @@
         %i.fa.fa-map-marker
         = deal.stock_number
 
-    - elsif deal.vehicle&.is_currently_on_test_drive?
+    - elsif deal&.vehicle&.is_currently_on_test_drive?
       %i.fa.fa-car
       = " ~> "
       = deal.stock_number
