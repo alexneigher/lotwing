@@ -1,20 +1,26 @@
 //small container
 %div{style: 'width: 3in; height: 3in; border: 1px solid #e0e0e0;position:relative; padding: 10px 15px;'}
 
-  %div{style: 'margin-bottom:50px;font-size: 20px;'}
-    %strong
-      = @vehicle.vin
+  %div{style: 'width: 50%; float: left;'}
+    = wicked_pdf_image_tag('logo_black_small.png', style: 'width: 80%;margin-left: -5px;')
+    %strong{style: 'font-size: 40px;text-align:center;'}
+      = @vehicle.stock_number
+
     %br
     = "#{@vehicle.year} #{@vehicle.make}"
     %br
-    = "#{@vehicle.color} - #{@vehicle.model}"
+    = @vehicle.model
+    %br
+    = @vehicle.color
 
   %div{style:' width: 50%;float:left;'}
-    = image_tag @png.to_data_url, style: "width: 100%;"
-  %div{style:' width: 50%;float:left;font-size: 35px;text-align:center'}
-    %strong
-      = @vehicle.stock_number
-    = wicked_pdf_image_tag('logo_black_small.png', style: 'width: 80%;display:block;margin:auto;padding-top:65px;')
+    = image_tag @png.to_data_url, style: "width: 100%;margin-top:10px;"
+
+
   %div{style: 'clear:both'}
+  %div{style:'margin-top:30px;text-align:center;font-size: 25px;'}
+    %strong
+      = @vehicle.vin
+
 
 
