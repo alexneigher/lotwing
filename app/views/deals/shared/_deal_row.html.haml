@@ -21,13 +21,18 @@
           HOLD ON MAP
 
   %td
-
-    - if deal.vehicle.present?
+    - if deal&.vehicle&.current_parking_tag.present?
       = link_to vehicle_show_map_path(deal.vehicle, redirect_to_link: board_manager_path(params.to_unsafe_h)), remote: true do
         %i.fa.fa-map-marker
         = deal.stock_number
+
+    - elsif deal.vehicle&.is_currently_on_test_drive?
+      %i.fa.fa-car
+      = " ~> "
+      = deal.stock_number
     - else
       = deal.stock_number
+
   %td= deal.source
 
   - if deal.is_used
