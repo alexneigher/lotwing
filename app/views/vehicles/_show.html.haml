@@ -28,7 +28,8 @@
         - if @events.charge_vehicle.any?
           .small
             %strong Total Charge Time:
-            - t = @events.charge_vehicle.map{|e| (e.ended_at || DateTime.current) - e.started_at}.sum.to_f
+            - t = @events.charge_vehicle.map{|e| (e.ended_at.presence || Time.now) - e.started_at}.sum.to_f
+
             = Time.at(t).utc.strftime("%H:%M:%S")
 
             - if @vehicle.is_currently_charging?

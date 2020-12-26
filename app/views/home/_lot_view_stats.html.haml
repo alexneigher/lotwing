@@ -22,7 +22,7 @@
         .small
           - events.group_by(&:user).sort.each do |user, events|
             = "#{user.full_name} (#{events.count})"
-            - if event_type.in?(["create_vehicle", "test_drive"])
+            - if event_type.in?(["create_vehicle", "test_drive", "charge_vehicle"])
               - events.each do |event|
                 - if event.tag.nil?
                   - stock_number = eval(event.event_details).to_h["stock_number"]
@@ -47,7 +47,7 @@
         .small
           - events.group_by(&:user).sort.each do |user, events|
             = "#{user.full_name} (#{events.count})"
-            - if event_type.in?(["create_vehicle", "test_drive"])
+            - if event_type.in?(["create_vehicle", "test_drive", "charge_vehicle"])
               - events.each do |event|
                 - if event.tag.nil?
                   - stock_number = eval(event.event_details).to_h["stock_number"]
