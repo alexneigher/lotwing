@@ -25,7 +25,7 @@ class Vehicle < ApplicationRecord
 
   scope :data_feed_deleteable, -> { where(creation_source: :data_feed_created, sales_hold: false, service_hold: false) }
 
-  validates_uniqueness_of :stock_number
+  validates_uniqueness_of :stock_number, scope: :dealership_id
 
   before_save :upcase_stock_number
   before_save :titleize_make_and_model
