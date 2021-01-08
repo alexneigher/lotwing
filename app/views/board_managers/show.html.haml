@@ -48,7 +48,7 @@
                 %small
                   - @grouped_by_vehicle.reverse_each do |model, deals|
                     .text-center
-                      = link_to board_manager_path(filters: params[:filters].to_unsafe_hash.merge(model:model) ) do
+                      = link_to board_manager_path(filters: (params[:filters]&.to_unsafe_hash.presence || {}).merge(model:model) ) do
                         = model
                         = " (#{deals.count})"
                     %hr.my-1
