@@ -10,6 +10,9 @@ class DealsController < ApplicationController
   def create
     @deal = current_user.dealership.deals.create(deal_params)
     if @deal.valid?
+
+      maybe_create_sales_hold(@deal.reload.vehicle)
+
       flash[:error] = nil
       redirect_to board_manager_path
     else
