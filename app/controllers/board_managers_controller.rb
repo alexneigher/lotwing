@@ -33,6 +33,13 @@ class BoardManagersController < ApplicationController
       deals = deals.where(is_used: false, stored: false, model: params.dig(:filters, :model) )
     end
 
+    #filter by sales rep
+     #filter by new model groupings
+    if params.dig(:filters, :sales_rep_id).present?
+      deals = deals.where(sales_rep_id: params.dig(:filters, :sales_rep_id) )
+    end
+
+
     if params.dig(:filters, :new_vehicles).present? || params.dig(:filters, :used).present?
       if params.dig(:filters, :new_vehicles) == '0' && params.dig(:filters, :used) == "1"
         deals = deals.where(is_used: true)
