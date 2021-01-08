@@ -5,20 +5,20 @@ class BoardManagersController < ApplicationController
 
     if params.dig(:filters, :mtd) == '1'
       sql = <<~SQL
-              CASE 
-                WHEN is_used = true 
-                  THEN deal_date >= '"#{DateTime.current.in_time_zone("Pacific Time (US & Canada)").beginning_of_month}"' 
+              CASE
+                WHEN is_used = true
+                  THEN deal_date >= '"#{DateTime.current.in_time_zone("Pacific Time (US & Canada)").beginning_of_month}"'
                 ELSE deal_date >= '"#{current_user.dealership.custom_mtd_start_date}"'
-              END    
+              END
             SQL
 
       deals = deals.where(sql)
 
     elsif params.dig(:filters, :start_date).present?
       start_date = DateTime.strptime(params.dig(:filters, :start_date), "%Y-%m-%d").beginning_of_day
-      
+
       end_date = DateTime.strptime(params.dig(:filters, :end_date).presence || Date.today.strftime("%Y-%m-%d"), "%Y-%m-%d").end_of_day
-      
+
       deals = deals.where("deal_date >= ? AND deal_date <= ?", start_date, end_date)
     else
       deals = deals.where("deal_date >= ?", DateTime.current.in_time_zone("Pacific Time (US & Canada)").to_date)
@@ -26,6 +26,11 @@ class BoardManagersController < ApplicationController
 
     if params.dig(:filters, :query).present?
       deals = current_user.dealership.deals.where(stored: false).where("client_last_name ILIKE ? OR stock_number ILIKE ?", "%#{params.dig(:filters, :query)}%", "%#{params.dig(:filters, :query)}%")
+    end
+
+    #filter by new model groupings
+    if params.dig(:filters, :model).present?
+      deals = deals.where(is_used: false, stored: false, model: params.dig(:filters, :model) )
     end
 
     if params.dig(:filters, :new_vehicles).present? || params.dig(:filters, :used).present?
@@ -39,7 +44,7 @@ class BoardManagersController < ApplicationController
         deals = deals.none
       end
     end
-    
+
     if params.dig(:sortings).present?
       params.dig(:sortings).each do |k,v|
         if k == "sales_rep"
@@ -52,7 +57,7 @@ class BoardManagersController < ApplicationController
     end
 
     @deals = deals
-      
+
     @grouped_deals = deals.group_by{|d| d.deal_date}.sort_by{|k, v| k}.to_h
 
     @grouped_by_vehicle = deals.where(is_used: false, stored: false).group_by{|d| d.model}.sort_by{ |k, v| v.count }.to_h
@@ -71,7 +76,7 @@ class BoardManagersController < ApplicationController
     else
       @deals = current_user.dealership.deals.included_in_counts.where(stored: false, is_used: false).where("deal_date >= ?", current_user.dealership.custom_mtd_start_date)
     end
-    
+
     @grouped_deals = @deals.group_by{|d| d.model}.sort_by{ |k, v| v.count }.to_h
   end
 
@@ -80,9 +85,9 @@ class BoardManagersController < ApplicationController
 
     if params.dig(:filters, :start_date).present?
       start_date = DateTime.strptime(params.dig(:filters, :start_date, :vehicle), "%Y-%m-%d").beginning_of_day
-      
+
       end_date = DateTime.strptime(params.dig(:filters, :end_date).presence || Date.today, "%Y-%m-%d").end_of_day
-      
+
       @deals = @deals.where("deal_date >= ? AND deal_date <= ?", start_date, end_date)
     end
 
