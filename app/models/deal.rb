@@ -31,10 +31,10 @@ class Deal < ApplicationRecord
     end
 
     def maybe_update_vehicle
-      #we edited the vehicle associated with this deal, un-mark-as-sold the old vehicle
+      #we edited the vehicle associated with this deal, take the old vehicle and mark it as not sold and release any holds on it
       if saved_change_to_stock_number && saved_change_to_stock_number&.compact&.length > 1
         v = Vehicle.find_by(stock_number: saved_change_to_stock_number[0])
-        v&.update(sold_status: nil)
+        v&.update(sold_status: nil, sales_hold: false, sales_hold_notes: nil)
       end
 
       #edit current vehicle status

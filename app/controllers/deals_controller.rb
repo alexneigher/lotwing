@@ -22,7 +22,7 @@ class DealsController < ApplicationController
     @deal = current_user.dealership.deals.find(params[:id])
     @deal.update(deal_params)
 
-    maybe_create_sales_hold(@deal.vehicle)
+    maybe_create_sales_hold(@deal.reload.vehicle)
 
     if params[:commit] == "Print Cover Sheet"
       redirect_to deal_cover_sheet_path(@deal, format: :pdf) and return
@@ -143,6 +143,7 @@ class DealsController < ApplicationController
     end
 
     def maybe_create_sales_hold(vehicle)
+
       return unless vehicle.present?
       if params[:create_with_hold] == "create_with_hold" || params[:commit] == 'Store Entry'
 

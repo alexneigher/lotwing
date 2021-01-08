@@ -88,11 +88,16 @@
     = form_for @vehicle, url: vehicle_path(@vehicle), remote: true, method: :put do |f|
       - if current_user.permission_level.in? ["admin", "sales_manager"]
         .row
-          .col-3.small
-            = link_to "Update stock number", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#stockNumberContainer_#{dom_id(@vehicle)}", "data-toggle" => "collapse"
+          .col-9.small
+            = link_to "Update stock number & VIN", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#stockNumberContainer_#{dom_id(@vehicle)}", "data-toggle" => "collapse"
             .collapse{id: "stockNumberContainer_#{dom_id(@vehicle)}"}
-              %label Stock Number
-              = f.text_field :stock_number, class: 'form-control form-control-sm'
+              .row
+                .col-4
+                  %label Stock Number
+                  = f.text_field :stock_number, class: 'form-control form-control-sm'
+                .col-8
+                  %label VIN
+                  = f.text_field :vin, class: 'form-control form-control-sm'
 
       .row.mb-3
         .col-2
