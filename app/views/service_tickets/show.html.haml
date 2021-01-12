@@ -24,7 +24,7 @@
   %hr
 
   .row
-    .col-7
+    .col-6
       .table-responsive.small
         %table.table.table-borderless
           %thead
@@ -57,7 +57,7 @@
             %tr
               %td{colspan: 6}
                 = @service_ticket.color
-    .col-5
+    .col-6
       .card
         .card-body
           .row.small.no-gutters
@@ -76,9 +76,18 @@
 
                   %label.mt-2
                     = f.check_box :is_in_progress, onclick: 'this.form.submit()'
+                    - if std.is_in_progress?
+                      %span{title: service_ticket_department_ownership_text(std, :in_progress_by_user, :marked_in_progress_at), data:{toggle: "tooltip", placement: "top", html: 'true'}}
+                        %i.fa.fa-info-circle.ml-1.font-20.text-muted
+
+
                   %br
                   %label
                     = f.check_box :is_complete, onclick: 'this.form.submit()'
+                    - if std.is_complete?
+                      %span{title: service_ticket_department_ownership_text(std, :completed_by_user, :completed_at), data:{toggle: "tooltip", placement: "top", html: 'true'}}
+                        %i.fa.fa-info-circle.ml-1.font-20.text-muted
+
                   = f.submit '', class: 'd-none'
 
 

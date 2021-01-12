@@ -5,6 +5,9 @@ class ServiceTicketDepartment < ApplicationRecord
 
   after_create :notify_users
 
+  belongs_to :in_progress_by_user, class_name: "User", optional: true
+  belongs_to :completed_by_user, class_name: "User", optional: true
+
   ALL_DEPARTMENTS = ["service_department", "collision_department", "parts_department"]
 
   def formatted_name

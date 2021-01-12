@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201214000822) do
+ActiveRecord::Schema.define(version: 20210112054320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,6 +303,12 @@ ActiveRecord::Schema.define(version: 20201214000822) do
     t.boolean "is_in_progress", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "completed_by_user_id"
+    t.bigint "in_progress_by_user_id"
+    t.datetime "completed_at"
+    t.datetime "marked_in_progress_at"
+    t.index ["completed_by_user_id"], name: "index_service_ticket_departments_on_completed_by_user_id"
+    t.index ["in_progress_by_user_id"], name: "index_service_ticket_departments_on_in_progress_by_user_id"
     t.index ["service_ticket_id"], name: "index_service_ticket_departments_on_service_ticket_id"
   end
 
