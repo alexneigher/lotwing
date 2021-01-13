@@ -15,6 +15,11 @@ module Api
         @event.tag.update!(active: false) #this "removes" the vehicle from the lot since the test drive has formally been started
       end
 
+      #ending events also posts to this endpoint, do event ending specific behaviors here
+      if @event.fuel_vehicle?
+        @event.tag.vehicle.update!(recently_fueled: true)
+      end
+
       json_response(@event)
       head :no_content
     end

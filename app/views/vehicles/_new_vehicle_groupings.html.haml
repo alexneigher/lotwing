@@ -14,7 +14,8 @@
               %div
                 - vehicles.each do |vehicle|
                   = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
-                    %span.text-blue= vehicle.stock_number
+                    %span{class: (vehicle.recently_fueled? ? "text-green":"text-blue")}
+                      = vehicle.stock_number
                   = vehicle.color
                   = number_to_currency vehicle.sale_price
                   %br
