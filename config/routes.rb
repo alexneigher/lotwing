@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
 
   resources :barcodes, only: :create
+  get "barcodes", to: 'barcodes#show'
 
   resources :checklist_items, only: :update
 

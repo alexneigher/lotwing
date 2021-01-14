@@ -1,3 +1,5 @@
+= javascript_include_tag('multi-qr-generation.js')
+
 .container-fluid
   .row
     .col-sm-6
@@ -18,7 +20,17 @@
         %hr
 
         %h5
-          = link_to "Generate QR Code", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#barCodeContainer", "data-toggle" => "collapse"
+          .row
+            .col-6
+              = link_to "Manually Generate QR Code", "#", class: 'small', "aria-expanded" => "false", "data-target" => "#barCodeContainer", "data-toggle" => "collapse"
+            .col-6
+              .btn.btn-sm.btn-outline-primary.js-activate-multi-qr-mode
+                Activate Multi QR Mode
+              .btn.btn-sm.btn-outline-secondary.d-none.js-submit-multi-qr-mode
+                Generate All
+
+
+
 
         .collapse{id: "barCodeContainer"}
           = form_for :barcode, url: barcodes_path(format: :pdf), method: :post do

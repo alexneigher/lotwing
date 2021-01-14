@@ -82,7 +82,7 @@
 
         - if @vehicle.vin.present? && @vehicle.stock_number.present? && current_user.special_permissions.include?('generate_bar_codes')
           %br
-          = link_to "Generate QR Code", barcodes_path(format: :pdf, vin: @vehicle.vin, stock_number: @vehicle.stock_number), method: :post, class: 'small'
+          = link_to "Generate QR Code", barcodes_path(format: :pdf, vin: @vehicle.vin, stock_number: @vehicle.stock_number), class: 'small'
 
     %hr.m00
     = form_for @vehicle, url: vehicle_path(@vehicle), remote: true, method: :put do |f|

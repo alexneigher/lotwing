@@ -16,6 +16,7 @@
             %td{colspan:2}
               %strong Vehicle History Screen
             %td
+            %td.qr-code-toggle.d-none
           %tr
             %th
               = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}) do
@@ -52,6 +53,8 @@
                   %i.fa.fa-sort-up
                 - else
                   %i.fa.fa-sort-down
+            %th.qr-code-toggle.d-none.text-center
+              %i.fa.fa-qrcode
         %tbody.small
           - @vehicles.each do |vehicle|
             %tr{id: dom_id(vehicle)}
@@ -111,5 +114,7 @@
                 - else
                   = (DateTime.current.to_date - vehicle.created_at.to_date).to_i
                 days
+              %td.qr-code-toggle.d-none.text-center
+                = check_box_tag 'qr-code', 0, nil, class: 'multi-qr-code-toggle', data: {stock_number: vehicle.stock_number, vin: vehicle.vin}
 
       = paginate @vehicles
