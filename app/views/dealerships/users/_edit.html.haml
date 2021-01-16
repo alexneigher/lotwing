@@ -42,7 +42,11 @@
 
             %br
             %label
-              = f.collection_check_boxes(:special_permissions, { 'Generate Bar Codes': 'generate_bar_codes' }, :last, :first)
+              = f.collection_check_boxes :special_permissions, { 'Generate Bar Codes': 'generate_bar_codes', "Allow RDR status update": "allow_rdr_status_updates" }, :last, :first do |b|
+                %label
+                  = b.check_box
+                  = b.text
+                %br
 
 
 

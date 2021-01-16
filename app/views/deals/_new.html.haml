@@ -40,7 +40,6 @@
         = f.text_area :f_i_pre_sell_product_list, placeholder: 'F&I Pre-sell products', class: 'form-control', rows: 3
       .col-md-2
         = f.select :result, options_for_select(['Deposit', 'P-Trip', 'Trip', 'N/C']), {include_blank: 'Result'}, class: 'form-control mb-1'
-        = f.select :report_status, options_for_select(['New RDR Done', "Need to X",'Not RDR\'d', 'Not RDR\'d Supp/Part', 'CPO RDR Done', 'N/A (Used Car, non CPO)']), {include_blank: 'Report Status'}, class: 'form-control mb-1'
         = f.text_field :deal_number, placeholder: 'Deal Number', class: 'form-control mb-1'
         = f.text_field :pay_method, placeholder: 'Pay Method', class: 'form-control mb-1'
         = f.select :deal_type, options_for_select(['Retail', 'One Pay', 'Lease', 'Cash', 'RB']), {include_blank: 'Deal Type'}, class: 'form-control mb-1'
@@ -78,6 +77,10 @@
         = f.text_field :time_out_finance, placeholder: 'Time Out - Finance', class: 'form-control mb-1'
         = f.text_field :menu_number, placeholder: 'Menu Number', class: 'form-control mb-1'
         = f.select :deal_status, options_for_select(['Closed', 'Not Closed']), {include_blank: 'Deal Status'}, class: 'form-control mb-1'
+
+        - if current_user.special_permissions.include?('allow_rdr_status_updates')
+
+          = f.select :report_status, options_for_select(['New RDR Done', "Need to X",'Not RDR\'d', 'Not RDR\'d Supp/Part', 'CPO RDR Done', 'N/A (Used Car, non CPO)']), {include_blank: 'Report Status'}, class: 'form-control mb-1'
     .row.mb-5
       .col-md-2
       .col-md-6.text-center
