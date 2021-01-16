@@ -34,3 +34,9 @@ task :generate_daily_checklists => :environment do
     DailyChecklistCreationService.new(dealership.id).perform!
   end
 end
+
+desc "Hard delete old deleted records"
+task :hard_delete_old_records => :environment do
+  Vehicle.only_deleted.where("deleted_at <= ?", 30.days.ago).destroy_all
+  Deal.only_deleted.where("deleted_at <= ?", 90.days.ago).destroy_all
+end

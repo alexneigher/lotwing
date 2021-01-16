@@ -3,9 +3,9 @@ class Dealerships::DeletedRecordsController < ApplicationController
   def index
     @dealership = current_user.dealership
 
-    @deleted_vehicles = @dealership.vehicles.includes(:versions).only_deleted
+    @deleted_vehicles = @dealership.vehicles.order(deleted_at: :desc).includes(:versions).only_deleted
 
-    @deleted_deals = @dealership.deals.includes(:versions).only_deleted
+    @deleted_deals = @dealership.deals.order(deleted_at: :desc).includes(:versions).only_deleted
 
 
     if params.dig(:filters, :stock_number).present?

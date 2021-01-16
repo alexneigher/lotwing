@@ -143,7 +143,7 @@
                     .row
                       .col-6
                         %label Notify:
-                        - grouped_users = grouped_by_permission_for_select(current_user.dealership.users)
+                        - grouped_users = grouped_by_permission_for_select(current_user.dealership.users.active)
                         - options = [['Service Dept.', 'service_department'], ['Collision Dept.', 'collision_department'], ['Parts Dept.', 'parts_department']].push(*grouped_users)
                         = select_tag 'notify_by_email', options_for_select(options), class: 'form-control'
                       .col-6
