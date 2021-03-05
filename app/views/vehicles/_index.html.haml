@@ -19,40 +19,56 @@
             %td.qr-code-toggle.d-none
           %tr
             %th
-              = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}) do
+              - #you cannot sort once the model filter is applied
+              - if params.dig(:filter, :model).present?
                 Stock #
-                - if params.dig(:sortings, :stock_number) == "asc"
-                  %i.fa.fa-sort-up
-                - else
-                  %i.fa.fa-sort-down
+              - else
+                = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {stock_number: params.dig(:sortings, :stock_number) == 'asc' ? "desc": "asc"}) do
+                  Stock #
+                  - if params.dig(:sortings, :stock_number) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
             %th
-              = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {year: params.dig(:sortings, :year) == 'asc' ? "desc": "asc"}) do
+              - if params.dig(:filter, :model).present?
                 Year
-                - if params.dig(:sortings, :year) == "asc"
-                  %i.fa.fa-sort-up
-                - else
-                  %i.fa.fa-sort-down
+              - else
+                = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {year: params.dig(:sortings, :year) == 'asc' ? "desc": "asc"}) do
+                  Year
+                  - if params.dig(:sortings, :year) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
             %th
-              = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {make: params.dig(:sortings, :make) == 'asc' ? "desc": "asc"}) do
+              - if params.dig(:filter, :model).present?
                 Make
-                - if params.dig(:sortings, :make) == "asc"
-                  %i.fa.fa-sort-up
-                - else
-                  %i.fa.fa-sort-down
+              - else
+                = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {make: params.dig(:sortings, :make) == 'asc' ? "desc": "asc"}) do
+                  Make
+                  - if params.dig(:sortings, :make) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
             %th
-              = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {model: params.dig(:sortings, :model) == 'asc' ? "desc": "asc"}) do
+              - if params.dig(:filter, :model).present?
                 Model
-                - if params.dig(:sortings, :model) == "asc"
-                  %i.fa.fa-sort-up
-                - else
-                  %i.fa.fa-sort-down
+              - else
+                = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {model: params.dig(:sortings, :model) == 'asc' ? "desc": "asc"}) do
+                  Model
+                  - if params.dig(:sortings, :model) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
             %th
-              = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {age_in_days: params.dig(:sortings, :age_in_days) == 'asc' ? "desc": "asc"}) do
+              - if params.dig(:filter, :model).present?
                 Age
-                - if params.dig(:sortings, :age_in_days) == "asc"
-                  %i.fa.fa-sort-up
-                - else
-                  %i.fa.fa-sort-down
+              - else
+                = link_to vehicles_path(filter:{usage_type: params.dig(:filter,:usage_type)}, sortings: {age_in_days: params.dig(:sortings, :age_in_days) == 'asc' ? "desc": "asc"}) do
+                  Age
+                  - if params.dig(:sortings, :age_in_days) == "asc"
+                    %i.fa.fa-sort-up
+                  - else
+                    %i.fa.fa-sort-down
             %th.qr-code-toggle.d-none.text-center
               %i.fa.fa-qrcode
         %tbody.small

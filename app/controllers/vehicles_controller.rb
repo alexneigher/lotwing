@@ -24,7 +24,14 @@ class VehiclesController < ApplicationController
 
     #model filters should only ever show new vehicles
     if params.dig(:filter, :model).present?
-      @vehicles = @vehicles.where(usage_type: 'is_new', model: params.dig(:filter, :model))
+      @vehicles = @vehicles
+                    .where(usage_type: 'is_new', model: params.dig(:filter, :model))
+                    .order(age_in_days: :desc)
+    end
+
+    if params.dig(:filter, :trim_level).present?
+      @vehicles = @vehicles
+                    .where(trim_level: params.dig(:filter, :trim_level))
     end
 
     if params.dig(:filter, :no_tag).present?

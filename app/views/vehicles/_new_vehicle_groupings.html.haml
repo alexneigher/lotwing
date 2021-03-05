@@ -10,7 +10,8 @@
           %h4.mb0= "#{year.presence || 'Unknown'} (#{vehicles.count})"
           - vehicles.group_by(&:trim_level).each do |trim_level, vehicles|
             .mt-2
-              %strong.text-default #{trim_level.presence || 'Unknown'} (#{vehicles.count})
+              = link_to vehicles_path(filter: {model: model, trim_level: trim_level}) do
+                %strong{class: (params.dig(:filter, :trim_level) == trim_level ? "":"text-default")} #{trim_level.presence || 'Unknown'} (#{vehicles.count})
               %div
                 - vehicles.each do |vehicle|
                   = link_to vehicle_show_info_modal_path(vehicle), remote: true, onclick:"$('#vehicle_data_container').html('Loading...');" do
