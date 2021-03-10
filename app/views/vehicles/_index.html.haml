@@ -101,7 +101,7 @@
                 = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
                   = vehicle.make
               %td
-                = link_to vehicle_path(vehicle), onclick: 'show_loading();', remote: true do
+                = link_to vehicle_path(vehicle), onclick: 'show_loading();', class: 'js-model-link', remote: true do
                   = vehicle.model
                   - if vehicle.user_created?
                     (User Created)

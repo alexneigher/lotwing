@@ -50,6 +50,20 @@
 
 :javascript
   $(function(){
+    //check to see if we should render a vehicle directly
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const vehicle_id = urlParams.get('vehicle_id')
+
+    if (vehicle_id){
+      show_loading();
+
+      $.ajax({
+        url:"/vehicles/"+vehicle_id+"",
+        method: 'GET',
+      });
+
+    }
 
     $(document).on('click', '.close', function(){
       hide_vehicle_data();

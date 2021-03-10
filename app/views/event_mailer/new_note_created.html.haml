@@ -19,7 +19,7 @@
                   %td{:style => "padding-top:0;padding-bottom:0;padding-right:25px;padding-left:25px;font-size:14px;line-height:20px;letter-spacing:.3px;"}
                     %p{style: 'font-size: 18px; color: #000; font-family: Trebuchet MS;line-height: 28px;'}
                       #{@event.user.full_name} added a new note to vehicle
-                      = link_to @event.tag.vehicle.stock_number, vehicles_url(stock_number: @event.tag.vehicle.stock_number)
+                      = link_to @event.tag.vehicle.stock_number, vehicles_url(vehicle_id: @event.tag.vehicle.id)
 
 
                       %div{style:'background-color: #efefef;padding: 10px;color: #000; font-family: Trebuchet MS;line-height: 28px;'}
